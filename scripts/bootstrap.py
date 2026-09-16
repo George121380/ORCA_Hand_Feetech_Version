@@ -15,6 +15,40 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def extract_snapshot(payload: bytes, stage: Path) -> None:
+    """Extract a GitHub snapshot, preserving links confined to the snapshot."""
+    stage = stage.resolve()
+    links = []
+    with tarfile.open(fileobj=io.BytesIO(payload)) as archive:
+        for member in archive.getmembers():
+            parts = Path(member.name).parts[1:]
+            if not parts:
+                continue
+            if Path(member.name).is_absolute() or ".." in parts or member.islnk():
+                raise RuntimeError(f"Unsupported archive member: {member.name}")
+            path = stage.joinpath(*parts)
+            if not path.resolve().is_relative_to(stage):
+                raise RuntimeError(f"Archive path escapes snapshot: {member.name}")
+            if member.issym():
+                links.append((path, member.linkname))
+            elif member.isdir():
+                path.mkdir(parents=True, exist_ok=True)
+            elif member.isfile():
+                path.parent.mkdir(parents=True, exist_ok=True)
+                with archive.extractfile(member) as source, path.open("wb") as dest:
+                    shutil.copyfileobj(source, dest)
+            else:
+                raise RuntimeError(f"Unsupported archive member: {member.name}")
+    # Defer links until regular files are written so extraction never writes
+    # through an archive-provided symlink. Official v1 models link to ../assets.
+    for path, target in links:
+        resolved = (path.parent / target).resolve()
+        if Path(target).is_absolute() or not resolved.is_relative_to(stage):
+            raise RuntimeError(f"Archive link escapes snapshot: {path.relative_to(stage)}")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.symlink_to(target)
+
+
 def install(name: str, spec: dict) -> str:
     parent = ROOT / ".upstream"
     parent.mkdir(exist_ok=True)
@@ -30,21 +64,7 @@ def install(name: str, spec: dict) -> str:
     with tempfile.TemporaryDirectory(dir=parent, prefix=f".{name}-") as tmp:
         stage = Path(tmp) / "content"
         stage.mkdir()
-        with tarfile.open(fileobj=io.BytesIO(payload)) as archive:
-            for member in archive.getmembers():
-                parts = Path(member.name).parts[1:]
-                if not parts:
-                    continue
-                if ".." in parts or member.issym() or member.islnk():
-                    raise RuntimeError(f"Unsupported archive member: {member.name}")
-                member.name = str(Path(*parts))
-                if member.isdir():
-                    (stage / member.name).mkdir(parents=True, exist_ok=True)
-                elif member.isfile():
-                    path = stage / member.name
-                    path.parent.mkdir(parents=True, exist_ok=True)
-                    with archive.extractfile(member) as source, path.open("wb") as dest:
-                        shutil.copyfileobj(source, dest)
+        extract_snapshot(payload, stage)
         (stage / ".orca-source.json").write_text(json.dumps({
             **spec, "archive_sha256": hashlib.sha256(payload).hexdigest()
         }, indent=2) + "\n")
