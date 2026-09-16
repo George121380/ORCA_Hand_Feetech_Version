@@ -86,7 +86,7 @@ Mac 原生摄像头完成 **40 秒、640×480、20 Hz** 引导录制：800 帧�
 
 **实时摄像头跟随质量**：已在 Mac 摄像头上跑通网页内的实时骨架与仿真联动，现场观察约 19 FPS。多角度、快速运动和复杂遮挡尚需系统评估，拇指与捏合映射仍需改进。
 
-**Linux / NVIDIA**：依赖已解析为 Linux CPU wheel，CI 工作流已编写，尚未实际运行 Linux CI 或远程设备。GPU 无需作为首版运行前提。
+**Linux / NVIDIA**：2026-09-15 的 [Ubuntu 22.04 CPU CI](https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/35053184668) 已通过首次安装、Ruff、30 项测试（2 项跳过）、mock 控制、2,048 步 PPO 训练和模型重载推理。该工作流安装 hardware/train extras，跳过未安装视觉依赖的测试，不包含摄像头、离屏视频渲染或实体舵机验证。NVIDIA GPU 尚未验证，首版无需 GPU。
 
 复现本机检查：
 

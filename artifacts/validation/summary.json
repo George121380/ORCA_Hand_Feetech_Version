@@ -2,7 +2,7 @@
   "date": "2026-09-14",
   "platform": "macOS 15.7.3 / Apple M4 Max / Python 3.11.1",
   "hardware_tested": false,
-  "linux_tested": false,
+  "linux_tested": true,
   "training_steps_requested": 120000,
   "training_steps_actual": 120832,
   "training_seeds": [
@@ -224,5 +224,24 @@
     "drops": 6,
     "mean_final_angle_error_deg": 43.93570821622511,
     "scope": "Simulation, palm-supported +/-90 degree pen-axis reorientation. Experimental policy; not reliable or validated on hardware."
+  },
+  "linux_ci": {
+    "date": "2026-09-15",
+    "platform": "Ubuntu 22.04 / CPU",
+    "commit": "89879946a2f2ea9594a03ac58155f89a48660087",
+    "url": "https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/35053184668",
+    "conclusion": "success",
+    "tests_passed": 30,
+    "tests_skipped": 2,
+    "checks": [
+      "fresh upstream installation",
+      "locked hardware/train dependencies",
+      "ruff",
+      "pytest",
+      "mock control",
+      "2048-step PPO training",
+      "checkpoint reload and inference"
+    ],
+    "scope": "No teleop extras, camera, offscreen video rendering, GPU, or physical servos tested."
   }
 }
