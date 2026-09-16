@@ -1,0 +1,1196 @@
+{
+  "scope": "Simulation teacher policy, palm-supported free pen, target axis rotation +/-90 degrees; not continuous finger spinning or real hardware",
+  "evaluations": {
+    "hold": {
+      "task_id": "orca-v1-pen-reorientation-v1",
+      "policy": "hold",
+      "turn_degrees": 90,
+      "episodes": 32,
+      "success_rate": 0.0,
+      "drop_rate": 0.0,
+      "mean_final_angle_error_deg": 90.37709456621873,
+      "mean_best_angle_error_deg": 87.24487042163886,
+      "mean_episode_duration_s": 10.0,
+      "results": [
+        {
+          "seed": 20000,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 87.18119364562011,
+          "best_angle_error_deg": 87.1351021065265,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20001,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 91.92853056716488,
+          "best_angle_error_deg": 89.58755571307202,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20002,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 80.04315471057993,
+          "best_angle_error_deg": 80.04315471057993,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20003,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 95.52237566992902,
+          "best_angle_error_deg": 89.51515857195795,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20004,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 92.06650051637924,
+          "best_angle_error_deg": 88.65827793989446,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20005,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 95.40000964305649,
+          "best_angle_error_deg": 84.9969463572775,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20006,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 88.81591560660624,
+          "best_angle_error_deg": 88.81591560660624,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20007,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 84.03016528131211,
+          "best_angle_error_deg": 84.03016528131211,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20008,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 91.93663899812522,
+          "best_angle_error_deg": 89.33056121977695,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20009,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 95.4259979840748,
+          "best_angle_error_deg": 89.90036187406673,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20010,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 101.83280716290201,
+          "best_angle_error_deg": 85.36752605638999,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20011,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 96.69514784278736,
+          "best_angle_error_deg": 89.91349022191025,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20012,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 87.76087709345494,
+          "best_angle_error_deg": 87.76087709345494,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20013,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 91.67165730600021,
+          "best_angle_error_deg": 89.20998897923657,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20014,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 91.0548072473166,
+          "best_angle_error_deg": 89.65791278639061,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20015,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 92.57906177472024,
+          "best_angle_error_deg": 88.80875409626104,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20016,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 81.49063229529472,
+          "best_angle_error_deg": 81.49063229529472,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20017,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 92.55904260361203,
+          "best_angle_error_deg": 88.88909866251576,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20018,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 84.951141115593,
+          "best_angle_error_deg": 84.951141115593,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20019,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 78.48897348131916,
+          "best_angle_error_deg": 78.48897348131916,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20020,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 91.22107779646626,
+          "best_angle_error_deg": 89.28895967197903,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20021,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 95.51686063444535,
+          "best_angle_error_deg": 89.94568535414885,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20022,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 92.71101800753591,
+          "best_angle_error_deg": 88.4237834855149,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20023,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 87.07982567476886,
+          "best_angle_error_deg": 87.03092058611269,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20024,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 83.93625890017438,
+          "best_angle_error_deg": 83.93625890017438,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20025,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 102.8859585040157,
+          "best_angle_error_deg": 85.50542512829288,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20026,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 91.23064595820611,
+          "best_angle_error_deg": 88.55077803195296,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20027,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 88.50472340256387,
+          "best_angle_error_deg": 88.50472340256387,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20028,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 88.3830074160411,
+          "best_angle_error_deg": 88.3830074160411,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20029,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 92.83900746150306,
+          "best_angle_error_deg": 89.44460140008783,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20030,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 88.70359207601103,
+          "best_angle_error_deg": 88.70359207601103,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20031,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 87.62041974141928,
+          "best_angle_error_deg": 87.5665238701279,
+          "duration_s": 10.0
+        }
+      ]
+    },
+    "random": {
+      "task_id": "orca-v1-pen-reorientation-v1",
+      "policy": "random",
+      "turn_degrees": 90,
+      "episodes": 32,
+      "success_rate": 0.0,
+      "drop_rate": 0.40625,
+      "mean_final_angle_error_deg": 93.31168451423164,
+      "mean_best_angle_error_deg": 79.87084317458911,
+      "mean_episode_duration_s": 7.7890625,
+      "results": [
+        {
+          "seed": 20000,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 95.13454827220207,
+          "best_angle_error_deg": 85.75038182426238,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20001,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 114.48372122355389,
+          "best_angle_error_deg": 90.07725534096896,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20002,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 100.43889613734538,
+          "best_angle_error_deg": 89.21075688506858,
+          "duration_s": 0.7000000000000001
+        },
+        {
+          "seed": 20003,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 101.68480284690868,
+          "best_angle_error_deg": 89.80862608864868,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20004,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 125.57747313786807,
+          "best_angle_error_deg": 89.05832693810939,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20005,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 80.70531068686255,
+          "best_angle_error_deg": 80.63118276951464,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20006,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 99.29285425039383,
+          "best_angle_error_deg": 89.85550007480225,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20007,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 87.90044553660056,
+          "best_angle_error_deg": 85.09942606745992,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20008,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 108.94528570698995,
+          "best_angle_error_deg": 85.14121425782959,
+          "duration_s": 8.55
+        },
+        {
+          "seed": 20009,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 100.57472489438055,
+          "best_angle_error_deg": 88.76547178144124,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20010,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 37.36437635485655,
+          "best_angle_error_deg": 37.36437635485655,
+          "duration_s": 3.95
+        },
+        {
+          "seed": 20011,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 111.254125929713,
+          "best_angle_error_deg": 89.01730603099003,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20012,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 93.61116345320175,
+          "best_angle_error_deg": 85.18836481195163,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20013,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 111.88098248054241,
+          "best_angle_error_deg": 84.71017235519099,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20014,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 91.06724422725634,
+          "best_angle_error_deg": 88.52150264504785,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20015,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 104.88622320187979,
+          "best_angle_error_deg": 88.85665932263964,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20016,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 102.14492916482372,
+          "best_angle_error_deg": 90.32463042002526,
+          "duration_s": 8.6
+        },
+        {
+          "seed": 20017,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 92.83607240311038,
+          "best_angle_error_deg": 81.51180909688418,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20018,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 65.28946101278797,
+          "best_angle_error_deg": 60.05752404307584,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20019,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 86.69179461553898,
+          "best_angle_error_deg": 71.18278123222409,
+          "duration_s": 2.75
+        },
+        {
+          "seed": 20020,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 24.21726855741811,
+          "best_angle_error_deg": 24.21726855741811,
+          "duration_s": 5.25
+        },
+        {
+          "seed": 20021,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 104.17544899685224,
+          "best_angle_error_deg": 88.11472212862026,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20022,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 96.14826229952934,
+          "best_angle_error_deg": 87.04390450692058,
+          "duration_s": 0.55
+        },
+        {
+          "seed": 20023,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 85.01690142869275,
+          "best_angle_error_deg": 84.34932383091595,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20024,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 95.03711861670924,
+          "best_angle_error_deg": 86.2468489299579,
+          "duration_s": 2.75
+        },
+        {
+          "seed": 20025,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 98.95038024788332,
+          "best_angle_error_deg": 87.98331703207228,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20026,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 105.61502219967385,
+          "best_angle_error_deg": 88.07280511204765,
+          "duration_s": 5.8500000000000005
+        },
+        {
+          "seed": 20027,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 73.36164295181082,
+          "best_angle_error_deg": 73.36164295181082,
+          "duration_s": 1.05
+        },
+        {
+          "seed": 20028,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 72.31887923703674,
+          "best_angle_error_deg": 72.31887923703674,
+          "duration_s": 3.35
+        },
+        {
+          "seed": 20029,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 97.5105337047046,
+          "best_angle_error_deg": 63.953227278799936,
+          "duration_s": 7.050000000000001
+        },
+        {
+          "seed": 20030,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 136.0374405574507,
+          "best_angle_error_deg": 64.25120355942548,
+          "duration_s": 8.85
+        },
+        {
+          "seed": 20031,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 85.82057012083435,
+          "best_angle_error_deg": 85.82057012083435,
+          "duration_s": 10.0
+        }
+      ]
+    },
+    "pilot": {
+      "task_id": "orca-v1-pen-reorientation-v1",
+      "policy": "ppo",
+      "turn_degrees": 90,
+      "episodes": 32,
+      "success_rate": 0.0,
+      "drop_rate": 0.0,
+      "mean_final_angle_error_deg": 55.67731987615124,
+      "mean_best_angle_error_deg": 49.334488008224845,
+      "mean_episode_duration_s": 10.0,
+      "results": [
+        {
+          "seed": 20000,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 39.72996038982546,
+          "best_angle_error_deg": 33.494607352790545,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20001,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 68.11340655836787,
+          "best_angle_error_deg": 62.07317603825322,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20002,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 44.01730341301152,
+          "best_angle_error_deg": 31.9450622812258,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20003,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 66.18381040898929,
+          "best_angle_error_deg": 63.599554617542125,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20004,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 69.0391941665566,
+          "best_angle_error_deg": 62.79832404671978,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20005,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 64.92791088580634,
+          "best_angle_error_deg": 63.79460636823932,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20006,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 51.388819547645724,
+          "best_angle_error_deg": 45.83849927744798,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20007,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 39.00437745393706,
+          "best_angle_error_deg": 36.661905238388435,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20008,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 69.36696927068354,
+          "best_angle_error_deg": 62.56484871644541,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20009,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 65.73852578925622,
+          "best_angle_error_deg": 62.6434555545054,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20010,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 65.1346056417614,
+          "best_angle_error_deg": 63.28854716858286,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20011,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 54.147745110860015,
+          "best_angle_error_deg": 53.87803739184195,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20012,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 47.783306260631825,
+          "best_angle_error_deg": 42.89870556949214,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20013,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 68.77957894201683,
+          "best_angle_error_deg": 62.38448296942691,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20014,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 66.47801505007648,
+          "best_angle_error_deg": 61.010973060119625,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20015,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 69.72097861849876,
+          "best_angle_error_deg": 63.335683853557505,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20016,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 45.55110129683943,
+          "best_angle_error_deg": 38.93252135375536,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20017,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 69.61486327103782,
+          "best_angle_error_deg": 63.268396738390656,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20018,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 44.2110339683217,
+          "best_angle_error_deg": 30.712269553316595,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20019,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 44.33034962983484,
+          "best_angle_error_deg": 39.42334534797752,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20020,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 66.94268038056669,
+          "best_angle_error_deg": 61.224697944145504,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20021,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 64.64840923880706,
+          "best_angle_error_deg": 61.10344784952339,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20022,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 69.75337308145453,
+          "best_angle_error_deg": 63.47569201237564,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20023,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 33.70685944434588,
+          "best_angle_error_deg": 30.283532959355398,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20024,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 43.25979102353718,
+          "best_angle_error_deg": 34.05991667936148,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20025,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 63.64773373657206,
+          "best_angle_error_deg": 63.157937762944584,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20026,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 67.60036530905059,
+          "best_angle_error_deg": 61.544521296751874,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20027,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 25.611953081422644,
+          "best_angle_error_deg": 21.336335979565177,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20028,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 46.000673281797,
+          "best_angle_error_deg": 35.91190798115427,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20029,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 52.861187390870114,
+          "best_angle_error_deg": 52.861187390870114,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20030,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 45.777115293185744,
+          "best_angle_error_deg": 26.108882569688372,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20031,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 48.60223910127153,
+          "best_angle_error_deg": 23.088553339440104,
+          "duration_s": 10.0
+        }
+      ]
+    },
+    "ppo": {
+      "task_id": "orca-v1-pen-reorientation-v1",
+      "policy": "ppo",
+      "turn_degrees": 90,
+      "episodes": 32,
+      "success_rate": 0.03125,
+      "drop_rate": 0.1875,
+      "mean_final_angle_error_deg": 43.93570821622511,
+      "mean_best_angle_error_deg": 31.024160560506854,
+      "mean_episode_duration_s": 8.604687499999999,
+      "results": [
+        {
+          "seed": 20000,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 25.11297903096561,
+          "best_angle_error_deg": 24.86239159412113,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20001,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 30.053173810415093,
+          "best_angle_error_deg": 26.897745915569633,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20002,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 29.939187917998524,
+          "best_angle_error_deg": 29.563481936312435,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20003,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 14.281174203602971,
+          "best_angle_error_deg": 14.281174203602971,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20004,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 20.02912417029263,
+          "best_angle_error_deg": 20.02912417029263,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20005,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 68.43169454423966,
+          "best_angle_error_deg": 68.43169454423966,
+          "duration_s": 0.7000000000000001
+        },
+        {
+          "seed": 20006,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 69.07206837760859,
+          "best_angle_error_deg": 66.85519808331615,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20007,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 46.45746569965068,
+          "best_angle_error_deg": 35.86306996010256,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20008,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 19.009667550278227,
+          "best_angle_error_deg": 19.009667550278227,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20009,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 84.71137343741383,
+          "best_angle_error_deg": 16.840020492528424,
+          "duration_s": 8.0
+        },
+        {
+          "seed": 20010,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 74.92569778263847,
+          "best_angle_error_deg": 74.92569778263847,
+          "duration_s": 0.7000000000000001
+        },
+        {
+          "seed": 20011,
+          "success": true,
+          "dropped": false,
+          "final_angle_error_deg": 2.577596869740578,
+          "best_angle_error_deg": 2.3098297038356894,
+          "duration_s": 7.5
+        },
+        {
+          "seed": 20012,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 64.61348049849096,
+          "best_angle_error_deg": 55.39155438523491,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20013,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 19.353605595403305,
+          "best_angle_error_deg": 19.268523885947815,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20014,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 16.16074953521177,
+          "best_angle_error_deg": 16.16074953521177,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20015,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 32.72240291269183,
+          "best_angle_error_deg": 32.72240291269183,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20016,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 34.880905431969076,
+          "best_angle_error_deg": 34.7968277840616,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20017,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 19.903633367100976,
+          "best_angle_error_deg": 19.829360924067416,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20018,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 42.29400766463911,
+          "best_angle_error_deg": 27.50144127326914,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20019,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 162.14077082093178,
+          "best_angle_error_deg": 18.681567403695237,
+          "duration_s": 3.9000000000000004
+        },
+        {
+          "seed": 20020,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 16.84410141488133,
+          "best_angle_error_deg": 16.839517802448913,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20021,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 13.25075580628207,
+          "best_angle_error_deg": 13.25075580628207,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20022,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 20.278007655005727,
+          "best_angle_error_deg": 20.278007655005727,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20023,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 26.63038685161578,
+          "best_angle_error_deg": 26.447931008027833,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20024,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 35.30262319233676,
+          "best_angle_error_deg": 25.11749938444596,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20025,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 75.16023027812136,
+          "best_angle_error_deg": 75.16023027812136,
+          "duration_s": 0.6000000000000001
+        },
+        {
+          "seed": 20026,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 29.463708845693166,
+          "best_angle_error_deg": 29.463708845693166,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20027,
+          "success": false,
+          "dropped": true,
+          "final_angle_error_deg": 153.93670207414144,
+          "best_angle_error_deg": 19.21390088871362,
+          "duration_s": 3.95
+        },
+        {
+          "seed": 20028,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 24.963126515278105,
+          "best_angle_error_deg": 24.904551688784103,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20029,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 77.9396410096614,
+          "best_angle_error_deg": 65.93167995396867,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20030,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 26.58830905349704,
+          "best_angle_error_deg": 26.34361061605837,
+          "duration_s": 10.0
+        },
+        {
+          "seed": 20031,
+          "success": false,
+          "dropped": false,
+          "final_angle_error_deg": 28.914311001405785,
+          "best_angle_error_deg": 25.60021996765188,
+          "duration_s": 10.0
+        }
+      ]
+    }
+  },
+  "training": {
+    "pilot": {
+      "task_id": "orca-v1-pen-reorientation-v1",
+      "joint_names": [
+        "thumb_mcp",
+        "thumb_abd",
+        "thumb_pip",
+        "thumb_dip",
+        "index_abd",
+        "index_mcp",
+        "index_pip",
+        "middle_abd",
+        "middle_mcp",
+        "middle_pip",
+        "ring_abd",
+        "ring_mcp",
+        "ring_pip",
+        "pinky_abd",
+        "pinky_mcp",
+        "pinky_pip",
+        "wrist"
+      ],
+      "turn_degrees": 90,
+      "requested_steps": 120000,
+      "seed": 0,
+      "num_envs": 4,
+      "observations": "69D simulator state: finger q,dq,previous command; pen relative position,axis,velocity; goal axis; six hand-contact flags",
+      "actions": "16 finger setpoint increments, bounded to 0.8 rad/s, fixed wrist",
+      "acceptance": "axis error <10 deg, displacement <4 cm, hand contact, linear speed <0.1 m/s and angular speed <1 rad/s, held for 0.5 s",
+      "upstream": {
+        "checked_at": "2026-09-14",
+        "repositories": {
+          "orca_core": {
+            "repository": "orcahand/orca_core",
+            "commit": "4a99afd8ef8b368d4cb84a10e4a1d5e732aca660"
+          },
+          "orca_sim": {
+            "repository": "orcahand/orca_sim",
+            "commit": "05e00dafd0a6eb2186d69d4e351c252a7bcffadd"
+          },
+          "orca_teleop": {
+            "repository": "orcahand/orca_teleop",
+            "commit": "062ddeb8c2b182d5c9cd8bd406cb07a532c97fc8"
+          },
+          "orcahand_description": {
+            "repository": "orcahand/orcahand_description",
+            "commit": "b9b349a21ee0238c62b6cf92ae7597027867adf8"
+          }
+        },
+        "servo_sdk": {
+          "package": "ftservo-python-sdk",
+          "version": "2.0.0",
+          "reference": "https://github.com/ftservo/FTServo_Python/tree/a203373036723e0d98c6c49b67cf09a9ee299220"
+        }
+      },
+      "actual_steps": 120832
+    },
+    "ppo": {
+      "task_id": "orca-v1-pen-reorientation-v1",
+      "joint_names": [
+        "thumb_mcp",
+        "thumb_abd",
+        "thumb_pip",
+        "thumb_dip",
+        "index_abd",
+        "index_mcp",
+        "index_pip",
+        "middle_abd",
+        "middle_mcp",
+        "middle_pip",
+        "ring_abd",
+        "ring_mcp",
+        "ring_pip",
+        "pinky_abd",
+        "pinky_mcp",
+        "pinky_pip",
+        "wrist"
+      ],
+      "turn_degrees": 90,
+      "requested_steps": 330000,
+      "seed": 0,
+      "num_envs": 4,
+      "resume_from": "runs/pen-ppo-continued/checkpoint_270832_steps.zip",
+      "observations": "69D simulator state: finger q,dq,previous command; pen relative position,axis,velocity; goal axis; six hand-contact flags",
+      "actions": "16 finger setpoint increments, bounded to 0.8 rad/s, fixed wrist",
+      "acceptance": "axis error <10 deg, displacement <4 cm, hand contact, linear speed <0.1 m/s and angular speed <1 rad/s, held for 0.5 s",
+      "upstream": {
+        "checked_at": "2026-09-14",
+        "repositories": {
+          "orca_core": {
+            "repository": "orcahand/orca_core",
+            "commit": "4a99afd8ef8b368d4cb84a10e4a1d5e732aca660"
+          },
+          "orca_sim": {
+            "repository": "orcahand/orca_sim",
+            "commit": "05e00dafd0a6eb2186d69d4e351c252a7bcffadd"
+          },
+          "orca_teleop": {
+            "repository": "orcahand/orca_teleop",
+            "commit": "062ddeb8c2b182d5c9cd8bd406cb07a532c97fc8"
+          },
+          "orcahand_description": {
+            "repository": "orcahand/orcahand_description",
+            "commit": "b9b349a21ee0238c62b6cf92ae7597027867adf8"
+          }
+        },
+        "servo_sdk": {
+          "package": "ftservo-python-sdk",
+          "version": "2.0.0",
+          "reference": "https://github.com/ftservo/FTServo_Python/tree/a203373036723e0d98c6c49b67cf09a9ee299220"
+        }
+      },
+      "actual_steps": 601584
+    }
+  }
+}

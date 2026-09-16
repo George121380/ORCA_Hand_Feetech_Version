@@ -1,0 +1,10 @@
+{
+  "checked_at": "2026-09-14",
+  "repositories": {
+    "orca_core": {"repository": "orcahand/orca_core", "commit": "4a99afd8ef8b368d4cb84a10e4a1d5e732aca660"},
+    "orca_sim": {"repository": "orcahand/orca_sim", "commit": "05e00dafd0a6eb2186d69d4e351c252a7bcffadd"},
+    "orca_teleop": {"repository": "orcahand/orca_teleop", "commit": "062ddeb8c2b182d5c9cd8bd406cb07a532c97fc8"},
+    "orcahand_description": {"repository": "orcahand/orcahand_description", "commit": "b9b349a21ee0238c62b6cf92ae7597027867adf8"}
+  },
+  "servo_sdk": {"package": "ftservo-python-sdk", "version": "2.0.0", "reference": "https://github.com/ftservo/FTServo_Python/tree/a203373036723e0d98c6c49b67cf09a9ee299220"}
+}

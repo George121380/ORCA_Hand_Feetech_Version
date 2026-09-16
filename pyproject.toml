@@ -1,0 +1,51 @@
+[project]
+name = "orca-feetech"
+version = "0.1.0"
+description = "ORCA Hand v1 with STS3215: control, simulation, learning and RGB teleoperation"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+dependencies = ["numpy>=2.2.6,<3", "pyyaml>=6,<7", "orca-core==0.4.1"]
+
+[project.optional-dependencies]
+hardware = ["ftservo-python-sdk==2.0.0"]
+sim = ["orca-sim==0.1.0", "mujoco>=3.3,<4", "imageio[ffmpeg]>=2.37", "matplotlib>=3.10"]
+train = ["orca-feetech[sim]", "stable-baselines3==2.9.0", "tensorboard>=2.19", "torch>=2.8,<3"]
+teleop = ["orca-feetech[sim]", "orca-teleop[adaptive,mediapipe]==0.1.0", "pin>=3.8,<4", "torch>=2.8,<3"]
+
+[dependency-groups]
+dev = ["pytest>=8,<9", "ruff>=0.11"]
+
+[project.scripts]
+orca-hand = "orca_feetech.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/orca_feetech"]
+
+[tool.uv.sources]
+orca-core = { path = ".upstream/orca_core" }
+orca-sim = { path = ".upstream/orca_sim" }
+orca-teleop = { path = ".upstream/orca_teleop" }
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv]
+override-dependencies = ["orca-core==0.4.1", "orca-sim==0.1.0", "opencv-python==4.11.0.86", "opencv-contrib-python==4.11.0.86"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["sim: requires MuJoCo", "teleop: requires MediaPipe and Pinocchio", "learning: training/inference smoke test"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ORCA · 真人摄像头验证</title>
+<style>
+*{box-sizing:border-box}body{font:15px/1.8 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:#f6f8f4;color:#193235;max-width:1120px;margin:36px auto;padding:0 22px}h1{font-size:32px;line-height:1.3;margin:12px 0}h2{font-size:22px;margin:28px 0 12px}p{margin:10px 0}video{display:block;width:100%;aspect-ratio:8/3;background:#152e32;border-radius:10px}.stats{display:flex;gap:32px;flex-wrap:wrap;margin:24px 0}.stat-value{font-size:28px;font-weight:650;line-height:1.3}.eyebrow{font-size:12px;letter-spacing:1.8px;color:#53766c}table{border-collapse:collapse;width:100%;background:white;font-size:14px}td,th{border-bottom:1px solid #dce3dc;padding:12px;text-align:left;white-space:nowrap}.table-wrap{overflow:auto}a{color:#157963}.note{background:#e7f1e9;padding:16px 20px;border-radius:6px}.warning{background:#f3ebdc}.findings{padding-left:22px}.findings li{margin:7px 0}small,.muted{color:#607170}.seeks{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}button{font:inherit;font-size:13px;background:white;border:1px solid #b8ccc2;border-radius:6px;padding:6px 12px;color:#193235;cursor:pointer}button:hover,button:focus-visible{background:#daebe0}summary{cursor:pointer;color:#157963;margin-top:24px}footer{margin-top:26px;font-size:12px;overflow-wrap:anywhere}@media(max-width:600px){body{margin:22px auto;padding:0 14px}h1{font-size:26px}.stats{gap:20px}.stats>div{width:calc(50% - 10px)}td,th{padding:9px}.note{padding:12px 15px}}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">ORCA HAND V1 · __SOURCE__</div><h1>人手视频，映射到仿真手</h1><p>左：输入录像与检测骨架；右：官方重定向器驱动的 ORCA v1 仿真。</p></header>
+<video id="comparison" controls playsinline preload="metadata" src="comparison.mp4"></video>
+<nav class="seeks" aria-label="跳转到动作片段">__SEEKS__</nav>
+<div class="stats">__STATS__</div>
+__REVIEW__
+<h2>逐阶段记录</h2>
+<p class="muted">下表按页面提示时间划分，实际动作可能稍晚；动作名称来自录制指引。</p>
+<div class="table-wrap"><table><thead><tr><th>提示动作</th><th>时间</th><th>检测帧 / 处理帧</th><th>有效目标</th></tr></thead><tbody>__PHASES__</tbody></table></div>
+<p>__HOLD__</p>
+<div class="note"><strong>测量范围</strong><br>__SOURCE__录制完成后运行检测、重定向、仿真与记录。处理耗时 P50 为 __P50__ ms、P95 为 __P95__ ms，尚未测量实时摄像头到运动的完整延迟。检测帧数不能作为姿态精度；本轮没有真人三维关节真值，也未连接实体舵机。</div>
+<footer><p><a href="validation.json">完整验证数据 JSON</a> · <a href="analysis/tracking.png">目标与反馈曲线</a> · <a href="input.mp4">输入录像</a></p><p>本机目录：__FOLDER__</p></footer>
+<script>
+const video = document.getElementById('comparison');
+document.querySelectorAll('[data-seek]').forEach(button => button.addEventListener('click', () => {
+  video.currentTime = Number(button.dataset.seek);
+  video.pause();
+  video.scrollIntoView({block:'center',behavior:'smooth'});
+}));
+</script>
+</body></html>

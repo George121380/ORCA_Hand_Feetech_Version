@@ -1,0 +1,227 @@
+{
+  "date": "2026-09-14",
+  "platform": "macOS 15.7.3 / Apple M4 Max / Python 3.11.1",
+  "hardware_tested": false,
+  "linux_tested": false,
+  "training_steps_requested": 120000,
+  "training_steps_actual": 120832,
+  "training_seeds": [
+    0,
+    1,
+    2
+  ],
+  "evaluation_seeds": "20000..20099",
+  "evaluations": {
+    "seed0": {
+      "policy": "ppo",
+      "checkpoint": "runs/ppo/seed0/policy.zip",
+      "episodes": 100,
+      "success_rate": 1.0,
+      "mean_mae_deg": 1.8341991386157244,
+      "final_mae_deg": 1.1139313614236956,
+      "moving_goal": false,
+      "acceptance": "MAE <= 5 degrees for 0.5 seconds within each 5-second episode"
+    },
+    "seed1": {
+      "policy": "ppo",
+      "checkpoint": "runs/ppo/seed1/policy.zip",
+      "episodes": 100,
+      "success_rate": 1.0,
+      "mean_mae_deg": 1.630798186720566,
+      "final_mae_deg": 0.911707697721436,
+      "moving_goal": false,
+      "acceptance": "MAE <= 5 degrees for 0.5 seconds within each 5-second episode"
+    },
+    "seed2": {
+      "policy": "ppo",
+      "checkpoint": "runs/ppo/seed2/policy.zip",
+      "episodes": 100,
+      "success_rate": 1.0,
+      "mean_mae_deg": 1.4521415281002243,
+      "final_mae_deg": 0.7413156599021553,
+      "moving_goal": false,
+      "acceptance": "MAE <= 5 degrees for 0.5 seconds within each 5-second episode"
+    },
+    "baseline": {
+      "policy": "baseline",
+      "checkpoint": null,
+      "episodes": 100,
+      "success_rate": 1.0,
+      "mean_mae_deg": 0.8847458467753142,
+      "final_mae_deg": 0.13856262798233174,
+      "moving_goal": false,
+      "acceptance": "MAE <= 5 degrees for 0.5 seconds within each 5-second episode"
+    },
+    "random": {
+      "policy": "random",
+      "checkpoint": null,
+      "episodes": 100,
+      "success_rate": 0.14,
+      "mean_mae_deg": 12.636631153780884,
+      "final_mae_deg": 12.779330881141,
+      "moving_goal": false,
+      "acceptance": "MAE <= 5 degrees for 0.5 seconds within each 5-second episode"
+    },
+    "moving-goal": {
+      "policy": "ppo",
+      "checkpoint": "runs/ppo/seed0/policy.zip",
+      "episodes": 100,
+      "success_rate": 1.0,
+      "mean_mae_deg": 2.7695476849741305,
+      "final_mae_deg": 2.0744098459554694,
+      "moving_goal": true,
+      "acceptance": "MAE <= 5 degrees for 0.5 seconds within each 5-second episode"
+    }
+  },
+  "vision_fixture": {
+    "source": "local/fixtures/mediapipe_fixture.mp4",
+    "backend": "sim",
+    "frames": 170,
+    "detected_frames": 149,
+    "commanded_frames": 119,
+    "processing_p50_ms": 43.3648340003856,
+    "processing_p95_ms": 60.18287309925654,
+    "note": "Monocular estimated 3D; wrist held at model neutral; source timestamps retained",
+    "scope": "Google test-image sequence plus black frames; not a live-camera benchmark",
+    "adaptation": "v1 URDF fingertips without extra offsets; virtual DIP at distal midpoint"
+  },
+  "automated_tests": {
+    "tests": 32,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "ruff": "passed"
+  },
+  "camera_capture_tested": true,
+  "camera_recording_pipeline_tested": true,
+  "live_camera_inference_tested": true,
+  "vision_camera_recording": {
+    "scope": "Mac native camera recording processed offline in simulation; no physical hardware or live inference test",
+    "duration_s": 40.0,
+    "unique_camera_frames": 800,
+    "repeated_frames": 0,
+    "frames": 800,
+    "detected_frames": 682,
+    "commanded_frames": 652,
+    "processing_p50_ms": 36.552500001562294,
+    "processing_p95_ms": 43.47983959996782,
+    "review": {
+      "first_detected_s": 3.55,
+      "first_commanded_s": 5.05,
+      "post_calibration_dropouts": [
+        {
+          "start_s": 34.6,
+          "last_invalid_s": 36.9,
+          "resumed_s": 36.95,
+          "frames": 47,
+          "commands_held": true
+        }
+      ],
+      "main_guided_interval": {
+        "start_s": 8,
+        "end_s": 32,
+        "frames": 480,
+        "detected_frames": 480,
+        "commanded_frames": 480
+      },
+      "phase_kinematics": [
+        {
+          "name": "张开右手",
+          "tail_start_s": 6,
+          "tail_end_s": 8,
+          "valid_samples": 40,
+          "sim_target_to_feedback_mae_deg": 0.39683663606735636,
+          "sim_thumb_index_tip_gap_median_mm": 104.09047131996957,
+          "target_thumb_index_tip_gap_median_mm": 103.85309734942032,
+          "mediapipe_estimated_thumb_index_gap_median_mm": 85.41881080544522
+        },
+        {
+          "name": "缓慢握拳",
+          "tail_start_s": 12,
+          "tail_end_s": 14,
+          "valid_samples": 40,
+          "sim_target_to_feedback_mae_deg": 6.277255588138053,
+          "sim_thumb_index_tip_gap_median_mm": 36.00675978002995,
+          "target_thumb_index_tip_gap_median_mm": 36.14154723079429,
+          "mediapipe_estimated_thumb_index_gap_median_mm": 40.435282542370395
+        },
+        {
+          "name": "只伸食指",
+          "tail_start_s": 18,
+          "tail_end_s": 20,
+          "valid_samples": 40,
+          "sim_target_to_feedback_mae_deg": 5.1328161846932,
+          "sim_thumb_index_tip_gap_median_mm": 70.73167241535582,
+          "target_thumb_index_tip_gap_median_mm": 82.7530151129989,
+          "mediapipe_estimated_thumb_index_gap_median_mm": 83.6278988189983
+        },
+        {
+          "name": "竖起拇指",
+          "tail_start_s": 24,
+          "tail_end_s": 26,
+          "valid_samples": 40,
+          "sim_target_to_feedback_mae_deg": 1.2957132122333808,
+          "sim_thumb_index_tip_gap_median_mm": 90.04586686479377,
+          "target_thumb_index_tip_gap_median_mm": 90.54911952673055,
+          "mediapipe_estimated_thumb_index_gap_median_mm": 75.90088267956534
+        },
+        {
+          "name": "拇指与食指捏合",
+          "tail_start_s": 30,
+          "tail_end_s": 32,
+          "valid_samples": 40,
+          "sim_target_to_feedback_mae_deg": 0.8358087811655384,
+          "sim_thumb_index_tip_gap_median_mm": 12.109851907099735,
+          "target_thumb_index_tip_gap_median_mm": 11.883670018745317,
+          "mediapipe_estimated_thumb_index_gap_median_mm": 21.6101327103584
+        },
+        {
+          "name": "把手移出画面",
+          "tail_start_s": 33,
+          "tail_end_s": 35,
+          "valid_samples": 32,
+          "sim_target_to_feedback_mae_deg": 1.6803203789582515,
+          "sim_thumb_index_tip_gap_median_mm": 18.327185958922005,
+          "target_thumb_index_tip_gap_median_mm": 18.364976226366167,
+          "mediapipe_estimated_thumb_index_gap_median_mm": 25.319988533651166
+        },
+        {
+          "name": "重新张开右手",
+          "tail_start_s": 38,
+          "tail_end_s": 40,
+          "valid_samples": 40,
+          "sim_target_to_feedback_mae_deg": 0.24167880411315537,
+          "sim_thumb_index_tip_gap_median_mm": 88.40459846004393,
+          "target_thumb_index_tip_gap_median_mm": 87.61552919730059,
+          "mediapipe_estimated_thumb_index_gap_median_mm": 73.95097263046725
+        }
+      ],
+      "method": "Pinned v1 URDF forward kinematics; q_URDF = q_MJCF - joint.ref; phase final 2 s, valid frames only",
+      "limits": "Tip-frame origin distances are not mesh contact gaps. Monocular landmarks are estimates, not ground truth. Joint MAE compares robot target to simulated feedback over 16 finger joints."
+    }
+  },
+  "vision_live": {
+    "scope": "Mac native camera to browser: detected skeleton and official ORCA simulation update online; no hardware test or pose ground truth",
+    "observation_s": 12,
+    "observations": 60,
+    "observed_fps_range": [
+      19.12078386091292,
+      19.602340142405712
+    ],
+    "last_100_frames_processing_p50_ms": 43.956499503110535,
+    "last_100_frames_processing_p95_ms": 53.29078095310251,
+    "all_sampled_states_tracking": true,
+    "sampled_commands_vary": true,
+    "live_dropout_tested": false,
+    "targeted_regression_tests_passed": 13
+  },
+  "pen_reorientation": {
+    "task_id": "orca-v1-pen-reorientation-v1",
+    "training_steps": 601584,
+    "episodes": 32,
+    "successes": 1,
+    "drops": 6,
+    "mean_final_angle_error_deg": 43.93570821622511,
+    "scope": "Simulation, palm-supported +/-90 degree pen-axis reorientation. Experimental policy; not reliable or validated on hardware."
+  }
+}

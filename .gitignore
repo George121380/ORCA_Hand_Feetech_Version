@@ -3,3 +3,13 @@
 __pycache__/
 *.py[cod]
 dev/
+.venv/
+.upstream/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+runs/
+local/
+__pypackages__/

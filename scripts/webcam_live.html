@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ORCA · 实时手部跟随</title><link rel="icon" href="data:,">
+<style>
+:root{color-scheme:light}*{box-sizing:border-box}body{margin:0;background:#f6f8f4;color:#193235;font:15px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}.wrap{max-width:1320px;margin:auto;padding:25px 30px}header{display:flex;align-items:center;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid #dce3dc;font-size:12px;letter-spacing:1px;color:#607170}h1{font-size:34px;line-height:1.3;margin:25px 0 9px}p{margin:8px 0;color:#607170}.intro{display:flex;justify-content:space-between;gap:20px;align-items:center}.badge{white-space:nowrap;padding:6px 14px;border-radius:20px;background:#e5ebe6;font-size:13px}.badge.live{background:#d7edde;color:#126346}.badge.warning{background:#f1e4cf;color:#875717}.views{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}.view{background:#163036;border-radius:10px;overflow:hidden;position:relative;aspect-ratio:4/3}.view img{display:block;width:100%;height:100%;object-fit:contain}.view img.mirrored{transform:scaleX(-1)}.view-label{position:absolute;top:12px;left:12px;padding:4px 10px;background:#122c32db;color:#dcece4;border-radius:4px;font-size:12px;z-index:1}.placeholder{position:absolute;inset:0;display:grid;place-content:center;text-align:center;color:#bdcdc6;font-size:18px;padding:30px}.placeholder small{font-size:13px;color:#8ba59a}.status{display:flex;justify-content:space-between;gap:20px;align-items:center;margin:18px 0;background:#e7f0e7;border-radius:6px;padding:13px 16px}.status strong{font-weight:550}progress{width:110px;height:8px;accent-color:#157963}.actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}button{border:0;border-radius:5px;padding:11px 20px;background:#193235;color:white;font:inherit;font-size:14px;cursor:pointer}button.secondary{background:#e4ece6;color:#193235}button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible{outline:3px solid #6598bc;outline-offset:3px}label{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:13px;color:#607170;cursor:pointer}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:24px 0;margin-top:5px;border-bottom:1px solid #dce3dc}.stats strong{font-size:27px;font-weight:600;font-variant-numeric:tabular-nums}.stats span{display:block;font-size:12px;color:#607170}.instructions{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin:24px 0}.instructions b{font-size:14px;font-weight:550}.instructions p{font-size:13px;margin:5px 0}.small{font-size:12px;color:#607170}footer{margin-top:24px;font-size:12px;color:#607170}a{color:#157963}.hidden{display:none!important}#error{color:#a04725;font-size:13px;white-space:pre-wrap}@media(max-width:700px){.wrap{padding:18px}.views{grid-template-columns:1fr}.intro{align-items:flex-start}h1{font-size:28px}.intro p{font-size:13px}.stats{grid-template-columns:repeat(2,1fr)}.instructions{grid-template-columns:1fr;gap:10px}header span{display:none}.actions label{width:100%;margin:3px 0}.status{font-size:13px}.badge{margin-top:26px;padding:4px 8px}}
+</style></head>
+<body><main class="wrap">
+<header><strong>ORCA LAB / LIVE TELEOPERATION</strong><span>MAC 摄像头 → 人手骨架 → ORCA V1 仿真</span></header>
+<div class="intro"><div><h1>你的手动，仿真手跟随</h1><p>两侧显示同一输入帧对应的检测与仿真结果。开始后张开右手，保持稳定约 2 秒。</p></div><div class="badge" id="badge">待启动</div></div>
+<section class="views" aria-label="实时人手与仿真对照">
+<div class="view"><span class="view-label">01 / 摄像头与骨架</span><img id="camera" class="hidden mirrored" alt="实时摄像头与右手检测骨架"><div class="placeholder" id="camera-empty">准备好你的右手<small>整只手入镜，手掌朝向摄像头</small></div></div>
+<div class="view"><span class="view-label">02 / ORCA v1 · MuJoCo</span><img id="simulation" class="hidden" alt="实时 ORCA v1 仿真手"><div class="placeholder" id="simulation-empty">等待启动仿真<small>张开、握拳、只伸食指、捏合</small></div></div>
+</section>
+<div class="status"><strong id="message" aria-live="polite">点击开始，张开右手完成标定。</strong><progress id="calibration" max="30" value="0" aria-label="尺度标定进度"></progress></div>
+<div class="actions"><button id="start">开始实时跟随</button><button id="reset" class="secondary" disabled>重新标定</button><button id="stop" class="secondary" disabled>停止并关闭摄像头</button><label><input id="mirror" type="checkbox" checked>镜像显示摄像头</label></div>
+<p id="error" role="alert"></p>
+<section class="stats" aria-label="实时运行指标">
+<div><strong id="fps">—</strong><span>处理帧率 / FPS</span></div><div><strong id="processing">—</strong><span>每帧处理 / ms</span></div><div><strong id="age">—</strong><span>画面年龄估算 / ms</span></div><div><strong id="count">0</strong><span>已生成控制目标 / 帧</span></div>
+</section>
+<div class="instructions"><div><b>01 · 标定后慢慢做动作</b><p>五指张开、手掌朝镜头。完成 30 帧尺度标定后，可以缓慢握拳、伸食指和捏合。</p></div><div><b>02 · 丢手时保持</b><p>右手移出画面时保持当前命令；回到画面后继续跟随。手腕固定在中立位置。</p></div><div><b>03 · 换位置后重新标定</b><p>映射明显不合适时，张开右手点击“重新标定”。拇指方向与捏合仍有已知偏差。</p></div></div>
+<p class="small">画面年龄从本机读取到相机帧计时，包含浏览器请求往返与图片解码的保守估计，不包含传感器曝光和屏幕扫描延迟。</p>
+<footer>本机实时处理 · 只控制仿真手 · 不录制视频 · 关闭页面后自动停止。<a href="http://127.0.0.1:8766/report.html" target="_blank" rel="noopener">查看上一轮录像验证</a></footer>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id),names={ready:'待启动',initializing:'正在启动',awaiting_hand:'等待右手',calibrating:'尺度标定',tracking:'实时跟随',holding:'丢手保持',rejected:'本帧保持',stale:'输入过期',stopping:'正在停止',stopped:'已停止',error:'运行出错'};
+let lastFrame='',lastDisplayed=0,busy=false,connected=false,running=false;
+async function action(name){
+  busy=true;updateButtons();$('error').textContent='';
+  try{const response=await fetch('/api/'+name,{method:'POST'});const result=await response.json();if(!response.ok)throw new Error(result.error||'操作失败');if(name==='start'){lastFrame='';$('message').textContent='正在启动摄像头与仿真…';}}
+  catch(error){$('error').textContent=error.message}finally{busy=false;updateButtons()}
+}
+function updateButtons(){$('start').disabled=busy||running||!connected;$('stop').disabled=busy||!running;$('reset').disabled=busy||!running;}
+for(const name of ['start','stop'])$(name).addEventListener('click',()=>action(name));
+$('reset').addEventListener('click',()=>action('recalibrate'));
+$('mirror').addEventListener('change',()=>$('camera').classList.toggle('mirrored',$('mirror').checked));
+async function poll(){
+  const began=performance.now();
+  try{
+    const response=await fetch('/api/frame?after='+encodeURIComponent(lastFrame),{signal:AbortSignal.timeout(4000)});
+    if(!response.ok)throw new Error('实时服务返回错误');
+    const data=await response.json();connected=true;running=data.running;
+    $('badge').textContent=names[data.status]||data.status;
+    $('badge').className='badge'+(data.status==='tracking'?' live':['holding','stale','rejected','error'].includes(data.status)?' warning':'');
+    $('message').textContent=data.message;
+    $('calibration').value=data.calibrated?30:(data.calibration_frames||0);
+    $('calibration').classList.toggle('hidden',data.calibrated||!running);
+    $('fps').textContent=data.fps?.toFixed(1)||'—';$('processing').textContent=data.processing_ms?.toFixed(0)||'—';$('count').textContent=data.commanded_frames||0;
+    if(data.pair&&running){
+      const images=await Promise.all(['camera','simulation'].map(async name=>{const img=new Image();img.src='data:image/jpeg;base64,'+data.pair[name];await img.decode();return {name,img}}));
+      for(const {name,img} of images){$(name).src=img.src;$(name).classList.remove('hidden');$(name+'-empty').classList.add('hidden')}
+      lastFrame=data.generation+':'+data.frame_id;lastDisplayed=performance.now();
+      $('age').textContent=Math.round(data.frame_age_ms+performance.now()-began);
+    }
+    if(!running){$('fps').textContent='—';$('age').textContent='—';}
+    if(data.status==='error')$('error').textContent=data.message;
+    if(running&&lastDisplayed&&performance.now()-lastDisplayed>2000&&data.status!=='initializing'){$('badge').textContent='画面暂停';$('age').textContent='—'}
+  }catch(error){connected=false;$('badge').textContent='连接中断';$('badge').className='badge warning';$('message').textContent='正在重连本机实时服务…';$('fps').textContent='—';$('age').textContent='—'}
+  updateButtons();setTimeout(poll,connected&&running?15:500);
+}
+window.addEventListener('pagehide',()=>{if(running)navigator.sendBeacon('/api/stop','')});
+poll();
+</script></body></html>

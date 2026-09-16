@@ -1,0 +1,24 @@
+name: Software checks
+on:
+  push:
+    paths: ['src/**', 'tests/**', 'scripts/**', 'configs/**', 'pyproject.toml', 'uv.lock', 'upstream.lock.json', '.github/workflows/software.yml']
+  pull_request:
+    paths: ['src/**', 'tests/**', 'scripts/**', 'configs/**', 'pyproject.toml', 'uv.lock', 'upstream.lock.json', '.github/workflows/software.yml']
+
+jobs:
+  simulation:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install uv==0.6.12
+      - run: python scripts/bootstrap.py
+      - run: uv sync --frozen --extra hardware --extra train
+      - run: .venv/bin/ruff check src scripts tests
+      - run: .venv/bin/pytest -q
+      - run: .venv/bin/orca-hand demo --backend mock --headless --fast --output runs/ci-mock
+      - run: .venv/bin/orca-hand train --steps 2048 --num-envs 1 --output runs/ci-policy
+      - run: .venv/bin/orca-hand infer --checkpoint runs/ci-policy/policy.zip --episodes 2 --output runs/ci-inference

@@ -1,0 +1,112 @@
+# 候选 ID 来源于装配教程；全部需要逐关节核验，尤其是拇指根部。
+# 复制到 local/hand.yaml，填写 port 后按 docs/software/hardware.md 标定。
+model_id: orca-v1-right
+port: null
+baudrate: 1000000
+speed: 60
+acceleration: 10
+max_temperature_c: 55
+calibrated: false
+joints:
+  thumb_mcp:
+    motor_id: 13
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  thumb_abd:
+    motor_id: 14
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  thumb_pip:
+    motor_id: 16
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  thumb_dip:
+    motor_id: 15
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  index_abd:
+    motor_id: 3
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  index_mcp:
+    motor_id: 2
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  index_pip:
+    motor_id: 1
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  middle_abd:
+    motor_id: 4
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  middle_mcp:
+    motor_id: 9
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  middle_pip:
+    motor_id: 8
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  ring_abd:
+    motor_id: 12
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  ring_mcp:
+    motor_id: 10
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  ring_pip:
+    motor_id: 11
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  pinky_abd:
+    motor_id: 5
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  pinky_mcp:
+    motor_id: 7
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  pinky_pip:
+    motor_id: 6
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
+  wrist:
+    motor_id: 17
+    verified: false
+    model_number: null
+    model_angles_deg: null
+    ticks: null
