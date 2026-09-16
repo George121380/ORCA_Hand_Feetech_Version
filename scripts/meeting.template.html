@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<meta name="description" content="A five-slide introduction to our Feetech ORCA Hand, live teleoperation, and early pen reorientation experiments.">
+<title>ORCA Hand — From motion to manipulation</title>
+<style>
+:root{--ink:#142d37;--muted:#5b6f74;--paper:#f4f3ec;--teal:#147e77;--mint:#8edac1;--orange:#cf693f;--line:#d6dcd5;--scale:1}
+*{box-sizing:border-box}body{margin:0;background:#10252e;color:var(--ink);font-family:Arial,Helvetica,sans-serif;overflow:hidden}button,a{touch-action:manipulation}button{font:inherit;cursor:pointer}a{color:inherit;text-underline-offset:5px}button:focus-visible,a:focus-visible{outline:3px solid #e59b5e;outline-offset:5px}
+#stage{position:absolute;left:50%;top:calc((100% - 68px)/2);width:1600px;height:900px;transform:translate(-50%,-50%) scale(var(--scale));transform-origin:center;overflow:hidden;background:var(--paper)}
+.slide{position:absolute;inset:0;padding:65px 82px 60px;background:var(--paper);display:flex;flex-direction:column}.slide[hidden]{display:none}.dark{background:#142d37;color:var(--paper)}.eyebrow{margin:0 0 25px;font-size:17px;letter-spacing:3px;text-transform:uppercase;font-weight:700;color:var(--teal)}.dark .eyebrow{color:var(--mint)}h1,h2,h3,p,figure{margin:0}h1{font-size:85px;line-height:1.01;font-weight:700;letter-spacing:-4px}h2{font-size:58px;line-height:1.08;letter-spacing:-2px;max-width:1280px}h3{font-size:29px;line-height:1.2;letter-spacing:-.5px}.sub{font-size:26px;line-height:1.4;color:var(--muted);margin-top:20px}.dark .sub{color:#bacbc9}.foot{margin-top:auto;padding-top:23px;display:flex;justify-content:space-between;gap:35px;border-top:1px solid var(--line);font-size:19px;color:var(--muted);line-height:1.4}.dark .foot{border-color:#405761;color:#bacbc9}.accent{color:var(--teal)}.dark .accent{color:var(--mint)}.mono{font-variant-numeric:tabular-nums}.small{font-size:19px;line-height:1.45;color:var(--muted)}.dark .small{color:#bacbc9}
+.cover-grid{display:grid;grid-template-columns:1.02fr 1fr;gap:65px;align-items:center;flex:1;margin-bottom:42px}.cover-grid h1 span{display:block}.cover-grid .sub{max-width:550px;font-size:29px;margin-top:30px}.cover-media{position:relative}.cover-media video{width:100%;height:460px;object-fit:cover;background:#213f56}.media-label{display:flex;justify-content:space-between;gap:20px;margin-top:13px;font-size:17px;line-height:1.35;color:var(--muted)}.dark .media-label{color:#bacbc9}.hardware-line{font-size:21px;line-height:1.5;color:#bacbc9;margin-top:38px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);margin:40px 0 30px;border-top:1px solid var(--line)}.step{padding:20px 25px 0 0;position:relative}.step:before{content:"";position:absolute;top:-4px;left:0;width:7px;height:7px;border-radius:50%;background:var(--teal)}.step .num{font-size:16px;letter-spacing:2px;color:var(--teal);display:block;margin-bottom:12px}.step h3{font-size:26px}.step p{font-size:21px;color:var(--muted);margin-top:8px}
+.teleop-content{display:grid;grid-template-columns:930px 1fr;gap:55px;margin-bottom:30px;align-items:center}.teleop-content video{width:930px;height:349px;object-fit:contain;background:#172e3a}.live-stat strong{font-size:78px;letter-spacing:-3px;font-weight:500;color:var(--teal)}.live-stat p{font-size:22px;line-height:1.45;margin-top:12px}.action-link{display:inline-block;font-size:19px;font-weight:700;margin-top:22px;text-decoration:none;border-bottom:2px solid var(--teal);padding-bottom:5px}.live-stat .small{font-size:17px;margin-top:12px}
+.task-content{display:grid;grid-template-columns:535px 1fr;gap:60px;flex:1;align-items:center;padding:30px 0}.definition{border-top:1px solid var(--line);padding:19px 0}.definition .tag{font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:8px}.definition p{font-size:25px;line-height:1.32}.task-video{width:100%;height:460px;object-fit:contain;background:#172e3a}.selected{color:var(--orange);font-weight:700}.legend{display:flex;gap:28px;font-size:19px;margin-top:10px}.legend span:before{content:"";display:inline-block;width:17px;height:6px;margin-right:9px;vertical-align:middle;background:#ddb739}.legend span:last-child:before{background:#74bda4}
+.results-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:100px;flex:1;align-items:center;padding:20px 0 40px}.chart-heading{font-size:23px;margin-bottom:34px}.chart-heading span{display:block;font-size:18px;margin-top:7px;color:var(--muted)}.bar-row{margin:24px 0}.bar-label{display:flex;justify-content:space-between;font-size:25px;margin-bottom:11px}.bar-track{height:23px;background:#e3e6dd}.bar{height:100%;background:#99aaa9}.bar.pilot{background:#75a99c}.bar.final{background:var(--teal)}.chart-note{font-size:18px;line-height:1.4;color:var(--muted);margin-top:25px}.outcomes{border-left:1px solid var(--line);padding-left:55px}.outcome{margin-bottom:29px}.outcome strong{font-size:85px;letter-spacing:-4px;font-weight:500;line-height:1}.outcome strong span{font-size:48px;letter-spacing:-2px;color:var(--muted)}.outcome p{display:inline-block;font-size:25px;line-height:1.35;margin-left:25px}.outcome.bad strong{color:var(--orange)}.outcomes .small{max-width:430px}.conclusion{font-size:27px;color:var(--teal);font-weight:700;margin-bottom:28px}
+.roadmap{margin:37px 0 30px}.roadmap-row{display:grid;grid-template-columns:70px 390px 1fr;gap:20px;padding:28px 0;border-top:1px solid #405761;align-items:baseline}.roadmap-row .index{font-size:20px;color:var(--mint)}.roadmap-row h3{font-size:31px}.roadmap-row p{font-size:24px;line-height:1.35;color:#bacbc9}.milestone{font-size:33px;line-height:1.3;max-width:1050px;margin:16px 0 35px}.milestone span{display:block;font-size:16px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mint);margin-bottom:13px}.dark .foot a{text-decoration:none;border-bottom:1px solid #8edac1}
+.toolbar{height:68px;position:fixed;bottom:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 28px;color:#d4e0df;font-size:13px;background:#10252e}.toolbar button{color:inherit;background:none;border:1px solid #44606a;border-radius:3px;padding:9px 13px;font-size:13px}.toolbar button:hover{background:#233d46}.toolbar button:disabled{opacity:.3;cursor:default}.toolbar .group{display:flex;align-items:center;gap:12px}.toolbar .keys{color:#9ab2b7}.slide-count{font-variant-numeric:tabular-nums;width:48px;text-align:center}.progress{position:fixed;bottom:68px;left:0;height:3px;background:var(--mint);transition:width .2s}.notes{position:fixed;z-index:3;inset:12% 15% auto;max-height:72%;overflow:auto;padding:35px 40px;background:var(--paper);box-shadow:0 12px 100px #000a;color:var(--ink);font-size:20px;line-height:1.6}.notes[hidden]{display:none}.notes header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.notes h2{font-size:30px;letter-spacing:-1px}.notes button{background:transparent;border:1px solid var(--line);padding:8px 15px}.notes p{margin:12px 0}.notes .sources{font-size:16px;border-top:1px solid var(--line);margin-top:20px;padding-top:15px}.speaker-notes{display:none}.status{position:fixed;right:30px;bottom:82px;background:var(--paper);color:var(--ink);padding:12px;max-width:400px}.status:empty{display:none}
+@media(max-width:700px){.toolbar{padding:0 10px}.toolbar .keys,.toolbar .brand{display:none}.toolbar button{padding:9px}.notes{inset:8% 5% auto;padding:20px;font-size:17px}}
+@media(prefers-reduced-motion:reduce){.progress{transition:none}}
+@media print{@page{size:16in 9in;margin:0}body{background:white;overflow:visible}#stage{position:static;transform:none;width:auto;height:auto;overflow:visible}.slide,.slide[hidden]{display:flex!important;position:relative;width:1600px;height:900px;break-after:page;page-break-after:always;print-color-adjust:exact;-webkit-print-color-adjust:exact}.toolbar,.progress,.notes,.status{display:none!important}}
+</style>
+</head>
+<body>
+<main id="stage" aria-label="ORCA Hand presentation">
+<section class="slide dark" aria-labelledby="title-1" data-title="The idea">
+  <p class="eyebrow">ORCA HAND / TEAM DISCUSSION</p>
+  <div class="cover-grid">
+    <div>
+      <h1 id="title-1"><span>From motion</span><span>to <em style="font-style:normal;color:var(--mint)">manipulation.</em></span></h1>
+      <p class="sub">A low-cost robot hand for teleoperation and learning dexterous skills.</p>
+      <p class="hardware-line">ORCA Hand v1 · Right hand<br>17 Feetech STS3215 servos</p>
+    </div>
+    <figure class="cover-media">
+      <video muted loop playsinline controls preload="metadata" poster="__GESTURE_POSTER__" src="__GESTURE_VIDEO__" aria-label="Basic hand gestures in the official ORCA simulation"></video>
+      <figcaption class="media-label"><span>Working simulation · basic motion control</span><span>MuJoCo</span></figcaption>
+    </figure>
+  </div>
+  <div class="foot"><span>Reuse official ORCA models and retargeting.</span><span>First object skill: pen reorientation</span></div>
+  <aside class="speaker-notes">
+    <p>I have assembled an ORCA Hand v1 with Feetech servos. The idea is to build a shared platform for learning useful manipulation skills, starting with a pen.</p>
+    <p>The current software runs on my Mac. We reuse pinned official ORCA models and the official retargeting solver, with adaptations for v1 and a dedicated Feetech driver. Physical control still needs servo mapping, calibration, and on-hand validation.</p>
+    <p class="sources">Sources: <a href="https://github.com/orcahand/orca_sim">Official ORCA simulation</a> · <a href="https://github.com/orcahand/orca_teleop">Official teleoperation</a> · <a href="https://github.com/George121380/ORCA_Hand_Feetech_Version/blob/main/upstream.lock.json">Pinned versions</a></p>
+  </aside>
+</section>
+<section class="slide" hidden aria-labelledby="title-2" data-title="Live teleoperation">
+  <p class="eyebrow">01 / WHAT WORKS TODAY</p>
+  <h2 id="title-2">Your hand drives the simulated hand.</h2>
+  <div class="steps">
+    <div class="step"><span class="num">01</span><h3>Mac camera</h3><p>RGB video</p></div>
+    <div class="step"><span class="num">02</span><h3>Hand pose</h3><p>MediaPipe · 21 landmarks</p></div>
+    <div class="step"><span class="num">03</span><h3>Retargeting</h3><p>Official ORCA solver</p></div>
+    <div class="step"><span class="num">04</span><h3>Simulation</h3><p>Joint targets in MuJoCo</p></div>
+  </div>
+  <div class="teleop-content">
+    <figure>
+      <video muted loop playsinline controls preload="metadata" poster="__TELEOP_POSTER__" src="__TELEOP_VIDEO__" aria-label="Retargeting demo using a sequence of MediaPipe test images"></video>
+      <figcaption class="media-label"><span>Recorded pipeline example: test-image sequence</span><span>Live camera demo available separately</span></figcaption>
+    </figure>
+    <div class="live-stat"><strong class="mono">~19 FPS</strong><p>Observed with the Mac camera<br>and browser simulation view.</p><a class="action-link" href="http://127.0.0.1:8767/" target="_blank" rel="noopener">Open live demo ↗</a><p class="small">On this Mac · requires the local camera server.</p></div>
+  </div>
+  <div class="foot"><span>Live camera tracking has been demonstrated.</span><span>Physical hand control awaits calibration.</span></div>
+  <aside class="speaker-notes">
+    <p>This pipeline is already running online: the browser shows the detected human hand and the simulated ORCA hand side by side. We observed roughly 19 FPS on an Apple M4 Max. This is an observed refresh rate, not a pose-accuracy benchmark.</p>
+    <p>The embedded clip uses public MediaPipe test images. It is an offline pipeline example, not footage from the live session. The optional live demo needs <code>.venv/bin/python scripts/webcam_live.py</code>. Open the demo, start tracking, and hold the right hand open for calibration. Stop the camera after the demo.</p>
+    <p class="sources">Sources: <a href="https://github.com/George121380/ORCA_Hand_Feetech_Version/blob/main/docs/software/validation.md">Validation report</a> · <a href="https://github.com/George121380/ORCA_Hand_Feetech_Version/blob/main/artifacts/validation/summary.json">Measurements</a></p>
+  </aside>
+</section>
+<section class="slide" hidden aria-labelledby="title-3" data-title="Pen task">
+  <p class="eyebrow">02 / THE FIRST OBJECT SKILL</p>
+  <h2 id="title-3">Teach the hand to turn a pen.</h2>
+  <p class="sub">First milestone: a 90° turn, held steadily for 0.5 seconds.</p>
+  <div class="task-content">
+    <div>
+      <div class="definition"><p class="tag">What the policy sees</p><p>Hand state + pen position, direction, and motion.</p></div>
+      <div class="definition"><p class="tag">What it controls</p><p>16 finger joints; the wrist stays fixed.</p></div>
+      <div class="definition"><p class="tag">What earns reward</p><p>Turn toward the goal, maintain contact, avoid dropping.</p></div>
+    </div>
+    <figure>
+      <video class="task-video" muted loop playsinline controls preload="metadata" poster="__PEN_POSTER__" src="__PEN_VIDEO__" aria-label="Selected successful pen reorientation trial in simulation"></video>
+      <figcaption class="media-label"><span class="selected">Selected success · __SUCCESSES__ of __TRIALS__ evaluation trials</span><span>7.5 s replay</span></figcaption>
+      <div class="legend"><span>Physical pen</span><span>Target direction</span></div>
+    </figure>
+  </div>
+  <div class="foot"><span>Palm support allowed · free object with contact physics</span><span>Continuous pen spinning is a later goal.</span></div>
+  <aside class="speaker-notes">
+    <p>The earlier PPO task only tracked joint-angle targets. It validated the training and inference pipeline; direct position control actually performed better. This new task introduces an object, contact, and the risk of dropping it.</p>
+    <p>PPO is a reinforcement learning algorithm: it tries finger movements in simulation and updates a policy to increase reward. The pen is a free body, moved by gravity and physical contact. There is no scripted rotation or attachment during an episode.</p>
+    <p>Success requires direction error below 10°, displacement below 4 cm, hand contact, low linear and angular speed, all held for 0.5 seconds. The clip is the single successful trial (seed 20011), independently replayed. It is not representative of reliability.</p>
+    <p>The policy uses simulator object state. The webcam pipeline tracks the human hand, not the pen, so deploying this policy requires additional object-state estimation.</p>
+    <p class="sources">Sources: <a href="https://github.com/George121380/ORCA_Hand_Feetech_Version/blob/main/docs/software/pen.md">Task specification</a> · <a href="https://github.com/George121380/ORCA_Hand_Feetech_Version/blob/main/src/orca_feetech/pen.py">Environment and success checks</a></p>
+  </aside>
+</section>
+<section class="slide" hidden aria-labelledby="title-4" data-title="Early results">
+  <p class="eyebrow">03 / EARLY RESULTS</p>
+  <h2 id="title-4">It learns to rotate. Reliability is still low.</h2>
+  <p class="sub">__TRAINING_STEPS__ simulation steps · __TRIALS__ held-out evaluation trials per policy</p>
+  <div class="results-layout">
+    <div role="img" aria-label="Mean final direction error: hold __HOLD_ERROR__ degrees; early PPO __PILOT_ERROR__ degrees; latest PPO __PPO_ERROR__ degrees. Lower is better.">
+      <p class="chart-heading">Mean final direction error<span>Degrees · lower is better · all trials, including drops</span></p>
+      <div class="bar-row"><div class="bar-label"><span>Hold position</span><strong class="mono">__HOLD_ERROR__°</strong></div><div class="bar-track"><div class="bar" style="width:__HOLD_WIDTH__"></div></div></div>
+      <div class="bar-row"><div class="bar-label"><span>Early PPO</span><strong class="mono">__PILOT_ERROR__°</strong></div><div class="bar-track"><div class="bar pilot" style="width:__PILOT_WIDTH__"></div></div></div>
+      <div class="bar-row"><div class="bar-label"><span>Latest PPO</span><strong class="mono accent">__PPO_ERROR__°</strong></div><div class="bar-track"><div class="bar final" style="width:__PPO_WIDTH__"></div></div></div>
+      <p class="chart-note">Same evaluation seeds and 90° target distribution.<br>Early PPO: 120,832 steps. Latest PPO: __TRAINING_STEPS__ steps.</p>
+    </div>
+    <div class="outcomes">
+      <div class="outcome"><strong class="mono">__SUCCESSES__<span> / __TRIALS__</span></strong><p>successful<br>turns</p></div>
+      <div class="outcome bad"><strong class="mono">__DROPS__<span> / __TRIALS__</span></strong><p>pen<br>drops</p></div>
+      <p class="small">A promising experiment, with substantial work left on grasp stability and consistency.</p>
+    </div>
+  </div>
+  <p class="conclusion">Next: learn a stable grasp, then increase the turn angle.</p>
+  <div class="foot"><span>One training run · small evaluation set</span><span>Simulation only · no hardware policy validation</span></div>
+  <aside class="speaker-notes">
+    <p>The mean final direction error decreased from 90.4° for holding still to 43.9° for the latest policy. But only one of 32 trials met the full success criterion, and six dropped the pen. Lower average angle error does not mean the manipulation problem is solved.</p>
+    <p>The next proposed experiment is a staged curriculum: stabilize the initial grasp, start with small target angles, and gradually increase difficulty. We should compare success and drop rates over varied starts and repeat training with more seeds before drawing strong conclusions.</p>
+    <p class="sources">Source: <a href="https://github.com/George121380/ORCA_Hand_Feetech_Version/blob/main/artifacts/validation/pen/summary.json">Full evaluation results and training configuration</a></p>
+  </aside>
+</section>
+<section class="slide dark" hidden aria-labelledby="title-5" data-title="What we can build together">
+  <p class="eyebrow">04 / WHAT WE CAN BUILD TOGETHER</p>
+  <h2 id="title-5">One platform. Three ways to contribute.</h2>
+  <div class="roadmap">
+    <div class="roadmap-row"><span class="index">01</span><h3>Learn reliable skills</h3><p>Stable grasp, small-angle curriculum,<br>then larger turns and continuous spinning.</p></div>
+    <div class="roadmap-row"><span class="index">02</span><h3>Improve perception</h3><p>Better thumb and pinch retargeting.<br>Track the pen for real-world feedback.</p></div>
+    <div class="roadmap-row"><span class="index">03</span><h3>Connect the real hand</h3><p>Calibrate servos and tendon motion.<br>Validate low-speed control and transfer.</p></div>
+  </div>
+  <p class="milestone"><span>Proposed next milestone</span>Repeatable 90° pen turns across varied starting states.</p>
+  <div class="foot"><span>Discussion: which workstream should each of us take?</span><a href="https://github.com/George121380/ORCA_Hand_Feetech_Version" target="_blank" rel="noopener">Code &amp; reproducible experiments ↗</a></div>
+  <aside class="speaker-notes">
+    <p>I would like us to choose a practical next milestone and divide the work. A reliable 90° pen turn is a concrete first target. Continuous spinning and tool-use tasks, such as turning a screw, can follow once we have stable contact control.</p>
+    <p>There are three independent areas: simulation learning, perception, and physical integration. For hardware, the driver and safeguards exist, but actual servo mapping, calibration, tendon behavior, and low-speed motion must be measured. For policy transfer, we also need object tracking and a better match between simulated and real dynamics.</p>
+    <p>The repository includes setup instructions, pretrained experimental policies, validation results, and offline HTML demos. This deck also works offline; only external links and the optional live camera demo need services.</p>
+  </aside>
+</section>
+</main>
+<div class="progress" aria-hidden="true"></div>
+<nav class="toolbar" aria-label="Presentation controls">
+  <div class="group"><span class="brand">ORCA HAND</span><span class="keys">← → slides · P video · F fullscreen · N notes</span></div>
+  <div class="group"><button id="notes-toggle" type="button" aria-expanded="false" aria-controls="notes-panel">Notes</button><button id="fullscreen" type="button">Fullscreen</button><button id="prev" type="button" aria-label="Previous slide">←</button><span class="slide-count" aria-live="polite">1 / 5</span><button id="next" type="button" aria-label="Next slide">→</button></div>
+</nav>
+<aside id="notes-panel" class="notes" role="dialog" aria-labelledby="notes-heading" hidden><header><h2 id="notes-heading">Speaker notes</h2><button id="notes-close" type="button">Close notes</button></header><div id="notes-body"></div></aside>
+<div id="status" class="status" role="status"></div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const notes=document.getElementById('notes-panel');
+let index=0;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function fit(){document.documentElement.style.setProperty('--scale',Math.min(innerWidth/1600,Math.max(1,innerHeight-68)/900));}
+function show(next){
+  index=Math.max(0,Math.min(slides.length-1,next));
+  slides.forEach((slide,i)=>{slide.hidden=i!==index;slide.querySelectorAll('video').forEach(video=>{if(i===index&&!reduced){video.play().catch(()=>{});}else{video.pause();}});});
+  document.querySelector('.slide-count').textContent=`${index+1} / ${slides.length}`;
+  document.querySelector('.progress').style.width=`${(index+1)/slides.length*100}%`;
+  document.getElementById('prev').disabled=index===0;
+  document.getElementById('next').disabled=index===slides.length-1;
+  document.getElementById('notes-body').innerHTML=slides[index].querySelector('.speaker-notes').innerHTML;
+  document.title=`${index+1}. ${slides[index].dataset.title} — ORCA Hand`;
+  history.replaceState(null,'',`#${index+1}`);
+}
+function toggleNotes(force){notes.hidden=force===undefined?!notes.hidden:!force;document.getElementById('notes-toggle').setAttribute('aria-expanded',String(!notes.hidden));if(!notes.hidden){document.getElementById('notes-close').focus();}else{document.getElementById('notes-toggle').focus();}}
+async function fullscreen(){try{if(document.fullscreenElement){await document.exitFullscreen();}else{await document.documentElement.requestFullscreen();}}catch{document.getElementById('status').textContent='Use your browser’s fullscreen command to present.';}}
+function toggleVideo(){const video=slides[index].querySelector('video');if(video){if(video.paused){video.play().catch(()=>{});}else{video.pause();}}}
+document.getElementById('prev').addEventListener('click',()=>show(index-1));
+document.getElementById('next').addEventListener('click',()=>show(index+1));
+document.getElementById('notes-toggle').addEventListener('click',()=>toggleNotes());
+document.getElementById('notes-close').addEventListener('click',()=>toggleNotes(false));
+document.getElementById('fullscreen').addEventListener('click',fullscreen);
+document.addEventListener('fullscreenchange',()=>{document.getElementById('fullscreen').textContent=document.fullscreenElement?'Exit fullscreen':'Fullscreen';});
+document.addEventListener('keydown',event=>{
+  if(event.altKey||event.ctrlKey||event.metaKey||event.target.closest('input,textarea,select,[contenteditable="true"]'))return;
+  if(event.key==='Escape'&&!notes.hidden){toggleNotes(false);return;}
+  if(event.key.toLowerCase()==='n'){event.preventDefault();toggleNotes();return;}
+  if(!notes.hidden)return;
+  if(['ArrowRight','PageDown'].includes(event.key)){event.preventDefault();show(index+1);}
+  else if(['ArrowLeft','PageUp'].includes(event.key)){event.preventDefault();show(index-1);}
+  else if(event.key===' '&&!event.target.closest('button,a,video')){event.preventDefault();show(index+1);}
+  else if(event.key==='Home'){event.preventDefault();show(0);}
+  else if(event.key==='End'){event.preventDefault();show(slides.length-1);}
+  else if(event.key.toLowerCase()==='f'){event.preventDefault();fullscreen();}
+  else if(event.key.toLowerCase()==='p'){event.preventDefault();toggleVideo();}
+});
+window.addEventListener('resize',fit);
+window.addEventListener('hashchange',()=>show((parseInt(location.hash.slice(1),10)||1)-1));
+document.addEventListener('visibilitychange',()=>{if(document.hidden){slides.forEach(s=>s.querySelectorAll('video').forEach(v=>v.pause()));}});
+fit();show((parseInt(location.hash.slice(1),10)||1)-1);
+</script>
+</body>
+</html>

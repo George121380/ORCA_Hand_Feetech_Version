@@ -6,7 +6,7 @@
 
 ## 已验证
 
-本机自动化测试 **32 项通过**，Ruff 检查通过。测试摘要与运行范围记录在 `artifacts/validation/summary.json`。
+本机自动化测试 **35 项通过**（2026-09-15 复核），Ruff 检查通过。测试摘要与运行范围记录在 `artifacts/validation/summary.json`。
 
 - 固定提交的官方依赖安装，MuJoCo v1 加载、具名关节映射和离屏渲染。
 - URDF/MJCF 的 18 个共同节点，在基础手势和随机姿态下位置／旋转一致。

@@ -86,11 +86,12 @@
     "adaptation": "v1 URDF fingertips without extra offsets; virtual DIP at distal midpoint"
   },
   "automated_tests": {
-    "tests": 32,
+    "tests": 35,
     "failures": 0,
     "errors": 0,
     "skipped": 0,
-    "ruff": "passed"
+    "ruff": "passed",
+    "last_verified": "2026-09-15"
   },
   "camera_capture_tested": true,
   "camera_recording_pipeline_tested": true,
@@ -126,7 +127,7 @@
       },
       "phase_kinematics": [
         {
-          "name": "张开右手",
+          "name": "\u5f20\u5f00\u53f3\u624b",
           "tail_start_s": 6,
           "tail_end_s": 8,
           "valid_samples": 40,
@@ -136,7 +137,7 @@
           "mediapipe_estimated_thumb_index_gap_median_mm": 85.41881080544522
         },
         {
-          "name": "缓慢握拳",
+          "name": "\u7f13\u6162\u63e1\u62f3",
           "tail_start_s": 12,
           "tail_end_s": 14,
           "valid_samples": 40,
@@ -146,7 +147,7 @@
           "mediapipe_estimated_thumb_index_gap_median_mm": 40.435282542370395
         },
         {
-          "name": "只伸食指",
+          "name": "\u53ea\u4f38\u98df\u6307",
           "tail_start_s": 18,
           "tail_end_s": 20,
           "valid_samples": 40,
@@ -156,7 +157,7 @@
           "mediapipe_estimated_thumb_index_gap_median_mm": 83.6278988189983
         },
         {
-          "name": "竖起拇指",
+          "name": "\u7ad6\u8d77\u62c7\u6307",
           "tail_start_s": 24,
           "tail_end_s": 26,
           "valid_samples": 40,
@@ -166,7 +167,7 @@
           "mediapipe_estimated_thumb_index_gap_median_mm": 75.90088267956534
         },
         {
-          "name": "拇指与食指捏合",
+          "name": "\u62c7\u6307\u4e0e\u98df\u6307\u634f\u5408",
           "tail_start_s": 30,
           "tail_end_s": 32,
           "valid_samples": 40,
@@ -176,7 +177,7 @@
           "mediapipe_estimated_thumb_index_gap_median_mm": 21.6101327103584
         },
         {
-          "name": "把手移出画面",
+          "name": "\u628a\u624b\u79fb\u51fa\u753b\u9762",
           "tail_start_s": 33,
           "tail_end_s": 35,
           "valid_samples": 32,
@@ -186,7 +187,7 @@
           "mediapipe_estimated_thumb_index_gap_median_mm": 25.319988533651166
         },
         {
-          "name": "重新张开右手",
+          "name": "\u91cd\u65b0\u5f20\u5f00\u53f3\u624b",
           "tail_start_s": 38,
           "tail_end_s": 40,
           "valid_samples": 40,

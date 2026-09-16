@@ -2,6 +2,8 @@
 
 基于 **ORCA Hand v1 右手、17 个 STS3215 V12 舵机**的复现项目，包含硬件装配资料，以及真机控制、仿真学习和 RGB 视频遥操作软件。
 
+**[英文会议 Slides（5 页）](docs/meeting.html)**：项目想法、实时遥操作、转笔任务与团队下一步。下载 HTML 后可离线播放内嵌视频；方向键翻页，`F` 全屏，`N` 显示英文讲稿。见 [演示说明](docs/software/meeting.md)。
+
 ![ORCA v1 基础动作](docs/assets/software/gestures.gif)
 
 **[打开 HTML 实验结果页](docs/results.html)**：视频演示、PPO 交互对比和逐关节轨迹。下载 HTML 后用浏览器打开即可，视频与数据均已内嵌，无需联网。
