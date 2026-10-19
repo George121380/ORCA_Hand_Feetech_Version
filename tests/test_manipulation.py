@@ -178,7 +178,8 @@ def test_checkpoint_roundtrip_and_reject_changed_geometry(tmp_path):
     from orca_feetech.model import JOINT_NAMES
     from orca_feetech.paths import provenance
     config = TaskConfig(object="pen")
-    env = ManipulationEnv(config)
+    from stable_baselines3.common.monitor import Monitor
+    env = Monitor(ManipulationEnv(config), str(tmp_path / "logged-env"))
     try:
         obs, _ = env.reset(seed=33)
         model = PPO("MlpPolicy", env, device="cpu", n_steps=16, batch_size=16,

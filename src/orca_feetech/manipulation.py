@@ -159,7 +159,7 @@ class ManipulationEnv(gym.Env):
         self.config = config or TaskConfig()
         self.model = build_model(self.config)
         self.data = mujoco.MjData(self.model)
-        self.spec = ModelSpec.load()
+        self.hand_spec = ModelSpec.load()
         self.lower, self.upper = limits(self.config)
         self.qadr = np.array([self.model.joint("right_" + n).qposadr[0] for n in JOINT_NAMES])
         self.actuators = np.array([self.model.actuator("right_" + n + "_actuator").id for n in JOINT_NAMES])
@@ -215,8 +215,8 @@ class ManipulationEnv(gym.Env):
         self._randomize()
         for attempt in range(30):
             mujoco.mj_resetData(self.model, self.data)
-            self.data.qpos[self.qadr] = self.spec.neutral
-            self.data.ctrl[self.actuators] = self.spec.neutral
+            self.data.qpos[self.qadr] = self.hand_spec.neutral
+            self.data.ctrl[self.actuators] = self.hand_spec.neutral
             height = .21 if self.config.object == "cube" else .192
             self.data.qpos[self.oq:self.oq + 3] = [.135 + self.np_random.uniform(-.003, .003),
                                                   .049 + self.np_random.uniform(-.003, .003), height]
@@ -236,9 +236,9 @@ class ManipulationEnv(gym.Env):
             raise ValueError("Direction must be -1 or 1")
         self.increment = yaw_rotation(np.deg2rad(self.config.angle) * self.direction)
         self.goal = self.increment @ rot
-        self.codec = ActionCodec(self.config, self.spec.neutral)
+        self.codec = ActionCodec(self.config, self.hand_spec.neutral)
         self.observer = ObservationCodec(self.config)
-        self.queue = deque([self.spec.neutral.copy() for _ in range(self.delay + 1)], maxlen=self.delay + 1)
+        self.queue = deque([self.hand_spec.neutral.copy() for _ in range(self.delay + 1)], maxlen=self.delay + 1)
         self.steps = self.stable = self.completed = 0
         self.age = 0.
         self.valid = True
