@@ -132,7 +132,9 @@ def wilson(successes, n):
 
 
 def evaluate(args):
+    import torch
     from stable_baselines3 import PPO
+    torch.set_num_threads(1)
     config, meta = load_config(args.checkpoint)
     if args.seed < 20000:
         raise ValueError("Use held-out evaluation seeds >=20000")

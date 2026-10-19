@@ -15,7 +15,11 @@ from orca_feetech.checkpoint import load_config
 
 
 def run(args):
+    import torch
     from stable_baselines3 import PPO
+    # Small batch CPU inference should not spend the 50ms deadline coordinating
+    # a machine-wide thread pool. The simulation trainer uses the same setting.
+    torch.set_num_threads(1)
     config, _ = load_config(args.checkpoint)
     camera = json.loads(args.camera_config.read_text())
     alignment = json.loads(args.alignment.read_text())
