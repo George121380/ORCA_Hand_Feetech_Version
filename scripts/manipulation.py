@@ -216,7 +216,7 @@ def main():
     for cmd in (t, e):
         cmd.add_argument("--output", type=Path, required=True)
     x = sub.add_parser("export-objects")
-    x.add_argument("--output", type=Path, default=Path("assets/objects/v3"))
+    x.add_argument("--output", type=Path, default=Path("assets/objects/v4"))
     args = p.parse_args()
     if args.command == "export-objects":
         export_objects(args.output)

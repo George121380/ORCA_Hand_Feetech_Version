@@ -24,10 +24,10 @@ def test_split_pen_matches_assembled_outer_shape_and_plate_with_brim():
     (v, f), (pv, pf) = split_pen()
     half = manifold(v, f)
     assert half.status() == m.Error.NoError
-    assert np.allclose(np.ptp(v, axis=0), [24, 170, 12])
+    assert np.allclose(np.ptp(v, axis=0), [24, 210, 12])
     assert np.allclose(np.ptp(pv, axis=0), [4, 4, 6])
     assembled = half + half.rotate([0, 180, 0])
-    for y in (-74, 0, 74):
+    for y in (-94, 0, 94):
         assembled = assembled + manifold(pv, pf).translate([0, y, -3])
     outer_v, outer_f = geometry("pen")
     outer = manifold(outer_v*1000, outer_f)
@@ -40,6 +40,20 @@ def test_split_pen_matches_assembled_outer_shape_and_plate_with_brim():
     assert np.all(plate[:, :2].max(0)+3.1 < 180)
     assert plate[:, 2].min() == pytest.approx(0)
     assert plate[:, 2].max() == pytest.approx(12)
+
+
+def test_size_review_changes_only_shaft_length_and_tag_positions():
+    from orca_feetech.objects import mesh_volume, specification
+    short = specification("pen", pen_length_m=.170)
+    long = specification("pen", pen_length_m=.220)
+    # A length change extrudes only the cylindrical shaft; heads/shoulders stay fixed.
+    area = 64/2*.008**2*np.sin(2*np.pi/64)
+    difference = (mesh_volume(np.array(long["vertices_m"]), np.array(long["triangles"]))
+                  - mesh_volume(np.array(short["vertices_m"]), np.array(short["triangles"])))
+    assert difference == pytest.approx(.050*area)
+    for a, b in zip(short["tags"], long["tags"], strict=True):
+        assert a["id"] == b["id"] and a["black_size_m"] == b["black_size_m"]
+        assert abs(b["center_m"][1]-a["center_m"][1]) == pytest.approx(.025)
 
 
 def test_pdf_tags_decode_at_exact_scale_and_calibration_target_matches_cli(tmp_path):
@@ -81,7 +95,7 @@ def test_pdf_tags_decode_at_exact_scale_and_calibration_target_matches_cli(tmp_p
 
 @pytest.mark.parametrize("name", ["cube", "pen-split"])
 def test_delivered_native_projects_contain_correct_plate_geometry_and_process(name):
-    path = Path(__file__).parents[1]/"assets/objects/v3"/f"{name}-a1mini-pla.3mf"
+    path = Path(__file__).parents[1]/"assets/objects/v4"/f"{name}-a1mini-pla.3mf"
     ns = {"m": "http://schemas.microsoft.com/3dmanufacturing/core/2015/02"}
     with zipfile.ZipFile(path) as z:
         model = ET.fromstring(z.read("3D/Objects/object_1.model"))

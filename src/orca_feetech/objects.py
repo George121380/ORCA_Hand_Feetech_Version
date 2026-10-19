@@ -6,8 +6,21 @@ from pathlib import Path
 
 import numpy as np
 
-OBJECT_VERSION = "printables-v3"
+OBJECT_VERSION = "printables-v4"
 DICTIONARY = "DICT_APRILTAG_36h11"
+PEN_LENGTH_M = .210
+
+
+def pen_dimensions(length_m=None):
+    """Keep the grip diameter and heads fixed when comparing axial lengths."""
+    length = PEN_LENGTH_M if length_m is None else float(length_m)
+    if not .15 <= length <= .30:
+        raise ValueError("Pen review length must be 150..300 mm")
+    end = length/2
+    return dict(length_m=length, shaft_diameter_m=.016, shaft_length_m=length-.064,
+                head_width_m=.024, head_length_m=.022, shoulder_length_m=.010,
+                end_m=end, head_start_m=end-.022, shaft_end_m=end-.032,
+                tag_center_m=end-.011, tag_baseline_m=length-.022)
 
 
 def _box(half, center=(0, 0, 0)):
@@ -38,25 +51,28 @@ def _rings_mesh(rings):
     return vertices, np.array(faces)
 
 
-def _pen_rings():
+def _pen_rings(length_m=None):
+    d = pen_dimensions(length_m)
     theta = np.arange(64)*2*np.pi/64
     rays = np.stack([np.cos(theta), np.sin(theta)], axis=1)
     square = rays * (.012 / np.abs(rays).max(axis=1))[:, None]
     circle = rays * .008
     return [np.array([[x, y, z] for x, z in cross]) for y, cross in
-            ((-.085, square), (-.063, square), (-.053, circle),
-             (.053, circle), (.063, square), (.085, square))]
+            ((-d["end_m"], square), (-d["head_start_m"], square), (-d["shaft_end_m"], circle),
+             (d["shaft_end_m"], circle), (d["head_start_m"], square), (d["end_m"], square))]
 
 
-def geometry(kind):
+def geometry(kind, *, pen_length_m=None):
     if kind == "cube":
         return _box(np.array([.0275, .0275, .0275]))
     if kind == "pen":
+        d = pen_dimensions(pen_length_m)
+        internal_y = (-d["head_start_m"], -d["shaft_end_m"], d["shaft_end_m"], d["head_start_m"])
         vertices, faces, lookup = [], [], {}
-        for points, triangles in collision_parts("pen"):
+        for points, triangles in collision_parts("pen", pen_length_m=pen_length_m):
             for tri in triangles:
                 p = points[tri]
-                if any(np.all(np.abs(p[:, 1]-y) < 1e-10) for y in (-.063, -.053, .053, .063)):
+                if any(np.all(np.abs(p[:, 1]-y) < 1e-10) for y in internal_y):
                     continue  # Remove only the shared internal end caps.
                 face = []
                 for point in p:
@@ -70,12 +86,13 @@ def geometry(kind):
     raise ValueError("Object must be cube or pen")
 
 
-def collision_parts(kind):
+def collision_parts(kind, *, pen_length_m=None):
     """Convex decomposition, never the convex hull of the entire nonconvex pen."""
     if kind == "cube":
         return [geometry("cube")]
     from scipy.spatial import ConvexHull
-    rings = _pen_rings()
+    d = pen_dimensions(pen_length_m)
+    rings = _pen_rings(pen_length_m)
 
     def shoulder(a, b):
         points = np.concatenate([a, b])
@@ -92,10 +109,10 @@ def collision_parts(kind):
     # A square has only four true corners; remove collinear edge vertices before
     # joining its shoulder, so the exported union has no STL T-junctions.
     square_indices = [8, 24, 40, 56]
-    return [_box(np.array([.012, .011, .012]), np.array([0, -.074, 0])),
+    return [_box(np.array([.012, .011, .012]), np.array([0, -d["tag_center_m"], 0])),
             shoulder(rings[1][square_indices], rings[2]), _rings_mesh(rings[2:4]),
             shoulder(rings[3], rings[4][square_indices]),
-            _box(np.array([.012, .011, .012]), np.array([0, .074, 0]))]
+            _box(np.array([.012, .011, .012]), np.array([0, d["tag_center_m"], 0]))]
 
 
 def mesh_volume(vertices, triangles):
@@ -104,7 +121,7 @@ def mesh_volume(vertices, triangles):
 
 
 
-def marker_layout(kind):
+def marker_layout(kind, *, pen_length_m=None):
     """Corners are OpenCV decoded TL, TR, BR, BL; all coordinates in meters.
 
     u points to printed right, v to printed top, u cross v is outward.
@@ -119,17 +136,18 @@ def marker_layout(kind):
             n, u = np.array(normal), np.array(u)
             tags.append((ident, n * .0275, u, np.cross(n, u), .032, .040))
     elif kind == "pen":
+        d = pen_dimensions(pen_length_m)
         # Four side faces on each square end, plus the two outward end caps.
         frames = [([1, 0, 0], [0, 0, -1]), ([0, 0, 1], [1, 0, 0]),
                   ([-1, 0, 0], [0, 0, 1]), ([0, 0, -1], [-1, 0, 0])]
         for face, (normal, u) in enumerate(frames):
             n, u = np.array(normal), np.array(u)
-            for end, y in enumerate((-.074, .074)):
+            for end, y in enumerate((-d["tag_center_m"], d["tag_center_m"])):
                 tags.append((10+face*2+end, n*.012+[0, y, 0], u,
                              np.array([0, 1, 0]), .016, .020))
-        tags += [(18, np.array([0, -.085, 0]), np.array([1, 0, 0]),
+        tags += [(18, np.array([0, -d["end_m"], 0]), np.array([1, 0, 0]),
                   np.array([0, 0, 1]), .016, .020),
-                 (19, np.array([0, .085, 0]), np.array([-1, 0, 0]),
+                 (19, np.array([0, d["end_m"], 0]), np.array([-1, 0, 0]),
                   np.array([0, 0, 1]), .016, .020)]
 
     else:
@@ -144,14 +162,16 @@ def marker_layout(kind):
     return result
 
 
-def specification(kind):
-    vertices, triangles = geometry(kind)
+def specification(kind, *, pen_length_m=None):
+    vertices, triangles = geometry(kind, pen_length_m=pen_length_m)
     return dict(version=OBJECT_VERSION, kind=kind, units="m", dictionary=DICTIONARY,
-                nominal_mass_kg=.055 if kind == "cube" else .035,
+                nominal_mass_kg=.055 if kind == "cube" else .035+.13*(pen_dimensions(pen_length_m)["length_m"]-.170),
                 collision_parts=[dict(vertices_m=v.tolist(), triangles=t.tolist(), volume_m3=mesh_volume(v, t))
-                                 for v, t in collision_parts(kind)],
+                                 for v, t in collision_parts(kind, pen_length_m=pen_length_m)],
                 dimensions_m=(vertices.max(axis=0) - vertices.min(axis=0)).tolist(),
-                vertices_m=vertices.tolist(), triangles=triangles.tolist(), tags=marker_layout(kind),
+                vertices_m=vertices.tolist(), triangles=triangles.tolist(),
+                tags=marker_layout(kind, pen_length_m=pen_length_m),
+                pen_design=pen_dimensions(pen_length_m) if kind == "pen" else None,
                 notes="Solid watertight shell; slicer sets infill. Weigh the finished tagged print. "
                       "No tag recess: white flat adhesive zones; sticker thickness is not in CAD.")
 
@@ -171,14 +191,16 @@ def geometry_signature(kind):
              for key, value in tag.items()} for tag in marker_layout(kind)]
     return dict(version=OBJECT_VERSION, dictionary=DICTIONARY, kind=kind,
                 convex_parts=parts, tags=tags,
-                nominal_mass_kg=.055 if kind == "cube" else .035)
+                nominal_mass_kg=specification(kind)["nominal_mass_kg"])
 
 
 def print_coordinates(kind, vertices):
     """A1 mini plates use millimeters, bed center (90,90), first layer z=0."""
     points = np.asarray(vertices)*1000
     if kind == "pen":
-        points = np.stack([points[:, 0], -points[:, 2], points[:, 1]], axis=1)
+        # Whole assembly reference only. Printable half-shells live in printing.py.
+        c = np.sqrt(.5)
+        points = points @ np.array([[c, c, 0], [-c, c, 0], [0, 0, 1]])
     points[:, :2] += [90, 90]
     points[:, 2] -= points[:, 2].min()
     if np.any(points < -1e-8) or np.any(points > 180+1e-8):
@@ -238,9 +260,16 @@ def export_objects(output):
         spec = specification(kind)
         (output / f"{kind}.json").write_text(json.dumps(spec, indent=2) + "\n")
         vertices, triangles = geometry(kind)
-        print_vertices = print_coordinates(kind, vertices)
-        export_3mf(output / f"{kind}-a1mini.3mf", print_vertices, triangles, f"ORCA {kind} A1 mini 0.4mm")
-        for name, points in ((kind, vertices*1000), (f"{kind}-a1mini", print_vertices)):
+        print_vertices = print_coordinates(kind, vertices) if kind == "cube" else None
+        if kind == "cube":
+            export_3mf(output / "cube-a1mini.3mf", print_vertices, triangles, "ORCA cube A1 mini 0.4mm")
+        else:
+            export_3mf(output / "pen-assembly-reference.3mf", vertices*1000, triangles,
+                       "ORCA assembled pen reference / print the split half project twice")
+        meshes = [(kind, vertices*1000)]
+        if kind == "cube":
+            meshes.append(("cube-a1mini", print_vertices))
+        for name, points in meshes:
             lines = [f"solid {name}_millimeters"]
             for tri in triangles:
                 p = points[tri]

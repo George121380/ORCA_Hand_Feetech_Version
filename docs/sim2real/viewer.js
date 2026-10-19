@@ -4,9 +4,9 @@ let kind='cube',model=null,yaw=.65,pitch=-.5,drag=null,last=0,tagPixels={};
 async function select(k){
   kind=k;model=await(await fetch(k+'.json')).json();tagPixels=await(await fetch('tag-pixels.json')).json();
   el('cubeBtn').classList.toggle('active',k==='cube');el('penBtn').classList.toggle('active',k==='pen');el('objectName').textContent=k.toUpperCase();
-  el('description').textContent=k==='cube'?'放大后的 55 mm 方块。六面都有唯一标识，平整表面居中贴码；按掌部网格尺度核对，仍需真机抓持验证。':'圆柱中杆 + 方形端头。默认沿轴线分为两半，平面朝下打印后定位粘合；组装外形与仿真一致。';
-  const mm=x=>Math.round(x*1000),tag=model.tags[0];
-  const rows=k==='cube'?[['外形',model.dimensions_m.map(mm).join(' × ')+' mm'],['黑框 / 白纸',mm(tag.black_size_m)+' / '+mm(tag.paper_size_m)+' mm'],['标签 ID','0 — 5'],['名义质量（待测）',mm(model.nominal_mass_kg)+' g']]:[['总长 / 圆杆直径','170 / 16 mm'],['方头 / 黑框 / 白纸','24 / 16 / 20 mm'],['标签 ID / 两端基线','10 — 19 / 148 mm'],['默认分体打印高度','12 mm（组装长170）']];
+  el('description').textContent=k==='cube'?'放大后的 55 mm 方块。六面都有唯一标识，平整表面居中贴码；按掌部网格尺度核对，仍需真机抓持验证。':'圆柱中杆 + 方形端头。默认沿轴线分为两半，平面朝下打印后定位粘合；组装外形与仿真一致。210 mm 半壳沿热床对角线放置，同一工程打印两次。';
+  const mm=x=>Math.round(x*1000),tag=model.tags[0],d=model.pen_design;
+  const rows=k==='cube'?[['外形',model.dimensions_m.map(mm).join(' × ')+' mm'],['黑框 / 白纸',mm(tag.black_size_m)+' / '+mm(tag.paper_size_m)+' mm'],['标签 ID','0 — 5'],['名义质量（待测）',mm(model.nominal_mass_kg)+' g']]:[['总长 / 圆杆直径',mm(d.length_m)+' / '+mm(d.shaft_diameter_m)+' mm'],['圆杆长度 / 方头宽',mm(d.shaft_length_m)+' / '+mm(d.head_width_m)+' mm'],['标签 ID / 两端基线','10 — 19 / '+mm(d.tag_baseline_m)+' mm'],['默认分体打印','高12 mm · 同工程打两次']];
   el('facts').replaceChildren(...rows.map(([a,b])=>{let p=document.createElement('p'),s=document.createElement('span'),v=document.createElement('strong');s.textContent=a;v.textContent=b;p.append(s,v);return p}));
   const printName=k==='pen'?'pen-split':k;
   el('print3mf').href=printName+'-a1mini-pla.3mf';el('petg3mf').href=printName+'-a1mini-petg.3mf';el('stl').href=k==='pen'?'pen-half.stl':k+'-a1mini.stl';el('stl').textContent=k==='pen'?'半壳 STL（需2片+销）':'已定向 STL';el('cad').href=k+'.scad';el('readout').textContent='1 : 1 文件尺寸 · 视窗按显示区域缩放';

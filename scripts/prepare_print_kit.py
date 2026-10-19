@@ -18,10 +18,11 @@ from reportlab.pdfbase.cidfonts import UnicodeCIDFont
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 
-from orca_feetech.objects import DICTIONARY, OBJECT_VERSION, marker_layout, specification
+from orca_feetech.objects import DICTIONARY, OBJECT_VERSION, marker_layout, specification, pen_dimensions
 
 
 def generate(output):
+    d = pen_dimensions()
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     font_path = Path("/System/Library/Fonts/Supplemental/Arial Unicode.ttf")
@@ -95,7 +96,7 @@ def generate(output):
     ruler()
     c.showPage()
 
-    header(2, "02 / 训练笔两端标签", "总长 170 mm | 杆径 16 mm | 黑框 16 mm | 含白边纸片 20 mm")
+    header(2, "02 / 训练笔两端标签", "总长 210 mm | 杆径 16 mm | 黑框 16 mm | 含白边纸片 20 mm")
     by_id = {item["id"]: item for item in marker_layout("pen")}
     for row, ids in enumerate(((10, 12, 14, 16, 18), (11, 13, 15, 17, 19))):
         text(15, 243-row*65, "负端 Y-" if row == 0 else "正端 Y+", 12)
@@ -141,24 +142,25 @@ def generate(output):
     c.rect(27.5*mm, 184.5*mm, 40*mm, 40*mm)
     c.setDash()
     text(20, 168, "纸片居中，四边余量 7.5 mm", 9)
-    text(15, 150, "笔：170 / Ø16 / 方头宽24 mm", 12)
+    text(15, 150, "笔：210 / Ø16 / 方头宽24 mm", 12)
     # Axial drawing, scale 1:1, with heads and shoulders matching canonical CAD.
-    polygon = [(0, -85), (12, -85), (12, -63), (8, -53), (8, 53),
-               (12, 63), (12, 85), (-12, 85), (-12, 63), (-8, 53),
-               (-8, -53), (-12, -63), (-12, -85), (0, -85)]
+    end, head, shaft = [d[k]*1000 for k in ("end_m", "head_start_m", "shaft_end_m")]
+    polygon = [(0, -end), (12, -end), (12, -head), (8, -shaft), (8, shaft),
+               (12, head), (12, end), (-12, end), (-12, head), (-8, shaft),
+               (-8, -shaft), (-12, -head), (-12, -end), (0, -end)]
     path = c.beginPath()
     for i, (x, y) in enumerate(polygon):
         (path.moveTo if i == 0 else path.lineTo)((153+x)*mm, (146+y)*mm)
     c.drawPath(path, fill=0, stroke=1)
-    for y, content in ((235, "端头长22"), (209, "肩部10"), (148, "圆杆长106"), (57, "端头长22")):
+    for y, content in ((235, "端头长22"), (209, "肩部10"), (148, "圆杆长146"), (57, "端头长22")):
         text(170, y, content, 8)
-    for y, content in ((136, "默认：两半沿接缝平面朝下"), (124, "两半 + 3 根定位销，同一盘"),
+    for y, content in ((136, "默认：两半沿接缝平面朝下"), (124, "每盘1半壳+3销；同工程打两次"),
                        (112, "单件高12 mm；无需外部支撑"), (100, "4层壁 / 20% gyroid / 层高0.2"),
                        (88, "顶部5层 / 底部5层 / brim 3 mm"), (76, "先试装，再薄胶粘合并夹紧"),
                        (64, "不要用力压入定位销或留胶凸起")):
         text(15, y, content, 9)
     text(15, 43, "方块：平面朝下，3层壁，20% gyroid，顶/底各5层。不要擅自填满或加配重。", 9)
-    text(15, 33, "一体竖直笔是备用工程：170 mm高，8 mm brim。平放一体笔需支撑悬空圆杆。", 9)
+    text(15, 33, "每片210 x 24 x 12 mm，床面转45°。两片同形，第二盘的3根定位销作为备用。", 9)
     text(15, 23, "胶固化后测量直径、总长、方头与接缝台阶；称带纸成品，并输入 --mass-kg。", 9)
     c.showPage()
 
@@ -170,7 +172,7 @@ def generate(output):
     for i, (name, top) in enumerate(cube_rows):
         text(20, 235-i*9, f"ID {name}       纸片顶边：{top}", 10)
     text(15, 168, "笔：轴向从负端指向正端为 +Y，选一对平面为 +Z / -Z。", 11)
-    text(15, 156, "负端侧码中心 Y=-74 mm；正端侧码中心 Y=+74 mm，基线148 mm。", 10)
+    text(15, 156, "负端侧码中心 Y=-94 mm；正端侧码中心 Y=+94 mm，基线188 mm。", 10)
     rows = (("+X 面", "10", "11"), ("+Z 面", "12", "13"), ("-X 面", "14", "15"), ("-Z 面", "16", "17"))
     text(20, 142, "同一朝向平面       负端 ID       正端 ID       所有码顶边", 10)
     for i, (name, neg, pos) in enumerate(rows):
@@ -192,5 +194,5 @@ def generate(output):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path("assets/objects/v3"))
+    parser.add_argument("--output", type=Path, default=Path("assets/objects/v4"))
     generate(parser.parse_args().output)

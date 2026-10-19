@@ -1,5 +1,5 @@
 {
-  "version": "printables-v3",
+  "version": "printables-v4",
   "kind": "cube",
   "units": "m",
   "dictionary": "DICT_APRILTAG_36h11",
@@ -476,5 +476,6 @@
       ]
     }
   ],
+  "pen_design": null,
   "notes": "Solid watertight shell; slicer sets infill. Weigh the finished tagged print. No tag recess: white flat adhesive zones; sticker thickness is not in CAD."
 }

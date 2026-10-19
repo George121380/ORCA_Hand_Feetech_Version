@@ -15,7 +15,7 @@ from .model import JOINT_NAMES, ModelSpec
 from .objects import specification, geometry_signature
 from .paths import upstream
 
-TASK_ID = "orca-v1-printable-yaw-v3"
+TASK_ID = "orca-v1-printable-yaw-v4"
 DT = .05
 HISTORY = 4
 FRAME_SIZE = 55
@@ -123,7 +123,12 @@ class ObservationCodec:
         return np.concatenate(self.frames)
 
 
-def build_model(config):
+def build_model(config, *, object_spec=None):
+    """Build the canonical task; raw design reviews can supply a candidate solid.
+
+    ManipulationEnv always uses the canonical geometry, so checkpoint contracts
+    cannot silently train a review candidate.
+    """
     source = upstream("orca_sim") / "src/orca_sim/models/v1/right_cube_orientation.mjcf"
     root = ET.parse(source).getroot()
     root.set("model", TASK_ID)
@@ -134,7 +139,7 @@ def build_model(config):
     neutral = ModelSpec.load().neutral[-1]
     ET.SubElement(equality, "joint", joint1="right_wrist", polycoef=f"{neutral} 0 0 0 0")
     ET.SubElement(root, "option", timestep=".002", integrator="implicitfast")
-    spec = specification(config.object)
+    spec = object_spec if object_spec is not None else specification(config.object)
     world = root.find("worldbody")
     ET.SubElement(world, "light", pos="0 0 1")
     ET.SubElement(world, "geom", name="floor", type="plane", size="1 1 .01", rgba=".2 .25 .2 1")
@@ -180,13 +185,14 @@ class ManipulationEnv(gym.Env):
         return self.data.xpos[self.body].copy(), self.data.xmat[self.body].reshape(3, 3).copy()
 
     def contact(self):
+        supported, on_tower = False, False
         for c in self.data.contact:
             if any(g in (c.geom1, c.geom2) for g in self.geoms) and c.dist <= 0:
                 other = c.geom2 if c.geom1 in self.geoms else c.geom1
                 name = self.model.body(self.model.geom_bodyid[other]).name or ""
-                if name.startswith("right_"):
-                    return True
-        return False
+                supported |= name.startswith("right_") and name != "right_tower"
+                on_tower |= name == "right_tower"
+        return supported and not on_tower
 
     def _randomize(self):
         for k, value in self.nominal.items():
@@ -218,7 +224,8 @@ class ManipulationEnv(gym.Env):
             self.data.qpos[self.qadr] = self.hand_spec.neutral
             self.data.ctrl[self.actuators] = self.hand_spec.neutral
             height = .21 if self.config.object == "cube" else .192
-            self.data.qpos[self.oq:self.oq + 3] = [.135 + self.np_random.uniform(-.003, .003),
+            spawn_x = .135 if self.config.object == "cube" else .190
+            self.data.qpos[self.oq:self.oq + 3] = [spawn_x + self.np_random.uniform(-.003, .003),
                                                   .049 + self.np_random.uniform(-.003, .003), height]
             a = self.np_random.uniform(-.08, .08)
             self.data.qpos[self.oq + 3:self.oq + 7] = [np.cos(a / 2), 0, 0, np.sin(a / 2)]
@@ -226,7 +233,7 @@ class ManipulationEnv(gym.Env):
             mujoco.mj_step(self.model, self.data, nstep=200)
             mujoco.mj_forward(self.model, self.data)
             pos, rot = self.pose()
-            if self.contact() and pos[2] > .12 and np.linalg.norm(pos[:2] - [.135, .049]) < .07:
+            if self.contact() and pos[2] > .12 and np.linalg.norm(pos[:2] - [spawn_x, .049]) < .07:
                 break
         else:
             raise RuntimeError("30 unsupported resets: inspect object placement/fixture")

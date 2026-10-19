@@ -26,18 +26,19 @@
     "pen": {
       "dimensions_mm": [
         24.0,
-        169.99999999999997,
+        210.0,
         24.0
       ],
       "palm_world_axis_bounds_mm": [
-        85.93762737449629,
+        85.9378658064454,
         103.79691484180175,
-        39.96708047709127
+        39.96418654939754
       ],
       "initial_contact_bodies": [
-        "right_palm"
+        "right_palm",
+        "right_thumb_mp"
       ],
-      "projected_pen_axis_mm": 161.5692026543374
+      "projected_pen_axis_mm": 209.50976439278318
     }
   }
 }

@@ -3,7 +3,7 @@
   "platform": "macOS-15.7.3-arm64-arm-64bit",
   "mujoco": "3.13.0",
   "torch": "2.14.0",
-  "pytest": "50 passed in 7.94s",
+  "pytest": "51 passed in 8.57s",
   "checks": [
     "watertight printable solids",
     "exact convex decomposition volume",
@@ -33,7 +33,7 @@
     "support_enabled": false,
     "variant": "one-piece pen backup"
   },
-  "geometry_version": "printables-v3",
+  "geometry_version": "printables-v4",
   "printing_v3": {
     "physical_print_tested": false,
     "material": "Generic PLA",
@@ -58,5 +58,49 @@
     },
     "tolerance_and_adhesive_tested": false,
     "mass_inertia_note": "Nominal 55g cube/35g split pen. Actual glued and tagged mass must be weighed; uniform-solid inertia approximation remains."
+  },
+  "printing_v4": {
+    "printer": "A1 mini 0.4",
+    "material": "Generic PLA",
+    "pen": {
+      "length_mm": 210,
+      "shaft_length_mm": 146,
+      "shaft_diameter_mm": 16,
+      "tag_baseline_mm": 188,
+      "plate_half_count": 1,
+      "print_plate_twice": true,
+      "sliced": true,
+      "layers": 60,
+      "height_mm": 12,
+      "bed_edge_margin_mm_including_3mm_brim_and_01gap": 4.16850660117398,
+      "per_plate_estimated_filament_g_including_brim_and_pins": 21.18,
+      "per_plate_estimated_model_print_minutes": 78,
+      "per_plate_estimated_total_minutes": 86,
+      "support_enabled": false
+    },
+    "physical_print_tested": false,
+    "nominal_mass_g": 40.2,
+    "uniform_solid_inertia_approximation": true
+  },
+  "size_review": {
+    "candidate_lengths_mm": [
+      170,
+      190,
+      200,
+      210,
+      220,
+      230
+    ],
+    "static_snapshots_per_center_per_length": 444,
+    "centers_x_mm": [
+      135,
+      170,
+      190,
+      210
+    ],
+    "gravity_settle_trials_per_length": 40,
+    "policy_success_measured": false,
+    "physical_manipulability_measured": false,
+    "geometric_visibility_only": true
   }
 }

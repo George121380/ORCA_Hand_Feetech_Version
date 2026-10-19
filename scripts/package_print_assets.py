@@ -10,12 +10,15 @@ import numpy as np
 from orca_feetech.objects import OBJECT_VERSION, specification
 
 ROOT = Path(__file__).resolve().parents[1]
-assets = ROOT/"assets/objects/v3"
+assets = ROOT/"assets/objects/v4"
 for kind in ("cube", "pen"):
     spec = json.loads((assets/f"{kind}.json").read_text())
     assert spec["version"] == OBJECT_VERSION
     assert np.allclose(spec["dimensions_m"], specification(kind)["dimensions_m"])
     assert spec["tags"] == specification(kind)["tags"]
+manifest = json.loads((assets/"print-manifest.json").read_text())
+assert manifest["version"] == OBJECT_VERSION
+assert manifest["objects"]["pen"]["tags"] == specification("pen")["tags"]
 paths = sorted(p for p in assets.iterdir() if p.is_file() and p.name not in
                ("a1mini-print-pack.zip", "SHA256SUMS"))
 (assets/"SHA256SUMS").write_text("".join(

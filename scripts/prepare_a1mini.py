@@ -57,7 +57,7 @@ def build_project(seed, output, kind, material, profiles, split=False):
         points, triangles = geometry(kind)
         points *= 1000
     if kind == "pen" and not split:
-        points = np.stack([points[:, 0], -points[:, 2], points[:, 1]], axis=1)
+        raise ValueError("Long pen prints as two half-shells; use split=True")
     height = float(np.ptp(points[:, 2]))
     transform = f"1 0 0 0 1 0 0 0 1 90 90 {height/2:g}"
     root = ET.fromstring(files["3D/Objects/object_1.model"])
@@ -75,15 +75,15 @@ def build_project(seed, output, kind, material, profiles, split=False):
         if metadata.get("name") in ("DesignerUserId", "Designer", "DesignerCover", "ProfileCover"):
             metadata.text = ""
         if metadata.get("name") == "Title":
-            metadata.text = f"ORCA {kind} / A1 mini / {material}"
+            metadata.text = ("ORCA 210mm pen HALF / PRINT TWICE / " if split else f"ORCA {kind} / A1 mini / ")+material
     files["3D/3dmodel.model"] = ET.tostring(root, encoding="utf-8", xml_declaration=True)
     root = ET.fromstring(files["Metadata/model_settings.config"])
     for meta in root.findall(".//metadata"):
         key = meta.get("key")
         if key == "name":
-            meta.set("value", f"ORCA {kind} A1 mini {material}")
+            meta.set("value", ("ORCA 210mm pen HALF PRINT TWICE " if split else f"ORCA {kind} A1 mini ")+material)
         if key == "source_file":
-            meta.set("value", f"{kind}-a1mini.3mf")
+            meta.set("value", "pen-split-a1mini.3mf" if split else f"{kind}-a1mini.3mf")
         if key == "source_offset_z":
             meta.set("value", str(height/2))
         if meta.get("face_count"):
@@ -106,11 +106,11 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--studio", type=Path, default=Path("/Applications/BambuStudio.app"))
     p.add_argument("--seed", type=Path, default=Path("assets/printing/a1mini-seed.3mf"))
-    p.add_argument("--output", type=Path, default=Path("assets/objects/v3"))
+    p.add_argument("--output", type=Path, default=Path("assets/objects/v4"))
     args = p.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     profiles = args.studio/"Contents/Resources/profiles/BBL"
-    for kind in ("cube", "pen"):
+    for kind in ("cube",):
         for material in ("PLA", "PETG"):
             build_project(args.seed, args.output/f"{kind}-a1mini-{material.lower()}.3mf",
                           kind, material, profiles)

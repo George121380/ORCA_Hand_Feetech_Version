@@ -47,7 +47,8 @@ def run(args):
         obj, ref, timestamp = initial
         T = T_SW @ np.linalg.inv(ref.T_CO) @ obj.T_CO
         origin, initial_rotation = T[:3, 3].copy(), T[:3, :3].copy()
-        if np.linalg.norm(origin - [.135, .049, .185]) > .08:
+        expected_x = .135 if config.object == "cube" else .190
+        if np.linalg.norm(origin - [expected_x, .049, .185]) > .08:
             raise ValueError("Object is outside the trained palm workspace; check alignment/placement")
         lo, hi = limits(config)
         if args.execute:

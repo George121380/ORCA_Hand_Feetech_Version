@@ -14,7 +14,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 from orca_feetech.manipulation import ManipulationEnv, TaskConfig
-from orca_feetech.objects import specification
+from orca_feetech.objects import specification, pen_dimensions
 
 OUTPUT = Path(__file__).resolve().parents[1] / "docs/sim2real"
 WIDTH, HEIGHT = 960, 720
@@ -94,8 +94,9 @@ def render(kind):
             ends = np.array([[-half, -half, half], [half, -half, half]])
             dimension(draw, ends @ rotation.T + position, f"{2*half*1000:g} mm", 30)
         else:
-            ends = np.array([[0, -.085, 0], [0, .085, 0]])
-            dimension(draw, ends @ rotation.T + position, "170 mm (3D)", 65)
+            d = pen_dimensions()
+            ends = np.array([[0, -d["end_m"], 0], [0, d["end_m"], 0]])
+            dimension(draw, ends @ rotation.T + position, f"{d['length_m']*1000:g} mm (3D)", 65)
             label(draw, [720, 632], "Shaft diameter 16 mm", size=21)
         # At 720 px / 250 mm, this ruler is exactly 144 px = 50 mm.
         ruler = 50 * PX_PER_M / 1000
@@ -117,7 +118,7 @@ def render(kind):
         return dict(dimensions_mm=(np.array(specification(kind)["dimensions_m"])*1000).tolist(),
                     palm_world_axis_bounds_mm=(np.ptp(palm, axis=0)*1000).tolist(),
                     initial_contact_bodies=sorted(contacts),
-                    projected_pen_axis_mm=(170*np.linalg.norm(rotation[:2, 1])
+                    projected_pen_axis_mm=(pen_dimensions()["length_m"]*1000*np.linalg.norm(rotation[:2, 1])
                                            if kind == "pen" else None))
     finally:
         env.close()

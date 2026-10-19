@@ -7,13 +7,13 @@ from __future__ import annotations
 
 import numpy as np
 
-from .objects import geometry
+from .objects import geometry, pen_dimensions
 
 SOCKET_DIAMETER_MM = 4.3
 SOCKET_DEPTH_MM = 3.15
 PIN_DIAMETER_MM = 4.
 PIN_LENGTH_MM = 6.
-SOCKET_Y_MM = (-74., 0., 74.)
+SOCKET_Y_MM = (-1000*pen_dimensions()["tag_center_m"], 0., 1000*pen_dimensions()["tag_center_m"])
 
 
 def split_pen():
@@ -37,14 +37,12 @@ def split_pen():
 
 
 def split_pen_plate():
-    """Flat seam on bed: two 170x24x12 halves + three pins on one A1 mini plate.
-
-    Parallel placement uses less space than two diagonal parts. The 170 mm
-    length leaves room for a 3 mm brim: Y extent 2..178 on the 180 mm bed.
-    """
+    """One 210x24x12 half at 45 degrees + three pins; print this plate twice."""
     (half_v, half_f), (pin_v, pin_f) = split_pen()
-    parts = [(half_v + [62, 90, 0], half_f), (half_v + [118, 90, 0], half_f)]
-    parts += [(pin_v + [90, y, 0], pin_f) for y in (55, 70, 85)]
+    c = np.sqrt(.5)
+    rotation = np.array([[c, c, 0], [-c, c, 0], [0, 0, 1]])
+    parts = [(half_v@rotation + [90, 90, 0], half_f)]
+    parts += [(pin_v + [x, 30, 0], pin_f) for x in (30, 42, 54)]
     vertices, triangles, count = [], [], 0
     for v, f in parts:
         vertices.append(v)
@@ -60,7 +58,7 @@ def export_split_pen(output):
     output.mkdir(parents=True, exist_ok=True)
     vertices, faces = split_pen_plate()
     export_3mf(output / "pen-split-a1mini.3mf", vertices, faces,
-               "ORCA pen / two flat halves and three alignment pins / mm")
+               "ORCA 210mm pen / one diagonal half and three pins / PRINT TWICE / mm")
     for name, (v, f) in zip(("pen-half", "pen-alignment-pin"), split_pen(), strict=True):
         lines = [f"solid {name}_mm"]
         for face in f:

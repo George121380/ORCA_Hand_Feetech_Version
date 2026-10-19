@@ -40,11 +40,29 @@ def test_print_mesh_is_closed_and_labels_fit_inside_faces(kind):
     assert sum(mesh_volume(v, t) for v, t in collision_parts(kind)) == pytest.approx(volume)
 
 
-def test_pen_has_distinct_end_caps_and_148mm_side_baseline():
+def test_pen_has_distinct_end_caps_and_188mm_side_baseline():
     tags = {t["id"]: t for t in marker_layout("pen")}
     assert len(tags) == 10
-    assert np.linalg.norm(np.array(tags[10]["center_m"])-tags[11]["center_m"]) == pytest.approx(.148)
-    assert tags[18]["center_m"][1] == -.085 and tags[19]["center_m"][1] == .085
+    assert np.linalg.norm(np.array(tags[10]["center_m"])-tags[11]["center_m"]) == pytest.approx(.188)
+    assert tags[18]["center_m"][1] == -.105 and tags[19]["center_m"][1] == .105
+
+
+def test_contact_with_tower_cannot_count_as_retention():
+    env = ManipulationEnv(TaskConfig(object="pen", randomization=0))
+    try:
+        env.reset(seed=0)
+        env.data.qpos[env.oq:env.oq+3] = [.135, .049, .180]
+        env.data.qpos[env.oq+3:env.oq+7] = [np.sqrt(.5), 0, 0, np.sqrt(.5)]
+        mujoco.mj_forward(env.model, env.data)
+        other_bodies = set()
+        for c in env.data.contact:
+            if c.dist <= 0 and any(g in (c.geom1, c.geom2) for g in env.geoms):
+                other = c.geom2 if c.geom1 in env.geoms else c.geom1
+                other_bodies.add(env.model.body(env.model.geom_bodyid[other]).name)
+        assert "right_tower" in other_bodies
+        assert not env.contact()
+    finally:
+        env.close()
 
 
 @pytest.mark.parametrize("kind", ["cube", "pen"])
@@ -75,7 +93,7 @@ def test_supported_resets_no_free_success_and_deployable_observation(kind):
         env.close()
 
 
-@pytest.mark.parametrize("kind,dimensions", [("cube", [55, 55, 55]), ("pen", [24, 24, 170])])
+@pytest.mark.parametrize("kind,dimensions", [("cube", [55, 55, 55])])
 def test_a1mini_metric_export_matches_simulation_and_fits_bed(tmp_path, kind, dimensions):
     import zipfile
     import xml.etree.ElementTree as ET

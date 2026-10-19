@@ -3,3 +3,5 @@
 .scaleviews figure{margin:0}.scaleviews img{display:block;width:100%;height:auto}.scaleviews figcaption{padding-top:12px}.scaleviews{margin:26px 0}
 
 @media(max-width:800px){nav{align-items:flex-start;gap:12px}nav div{flex-wrap:wrap;justify-content:flex-end;gap:6px 12px}}
+
+.sizebuttons{flex-wrap:wrap}.sizebuttons button{padding:6px 12px}

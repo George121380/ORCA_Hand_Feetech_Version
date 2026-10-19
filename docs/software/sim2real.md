@@ -8,55 +8,57 @@
 
 ## 1. 几何、打印与两端标记
 
-当前打印包为 **printables-v3**，方块从42mm放大到55mm。笔保持170mm外形，默认改为沿Z=0分开的两片半壳，平面朝下打印后用3根定位销与薄胶装配。仿真、PnP、三维网页与PDF同步更新；v2 checkpoint 的几何签名不兼容，不能混用。
+当前默认几何为 **printables-v4**：55mm方块；**210mm总长、Ø16×146mm圆杆、24×24×22mm方头**的训练笔。170mm旧笔是按一体竖直打印约束选的紧凑版本，未证明适合操作；现按手部几何重新评估，将210mm作为首选候选，不宣称最优。v3实体、JSON和checkpoint不能混用；旧文件保留在assets/objects/v3，供追溯。纸质标记图案与黑框尺寸不变，已打印的贴纸可复用，但须按新位置粘贴。
 
-优先下载 [完整打印包](../../assets/objects/v3/a1mini-print-pack.zip)。Bambu Studio 打开 **pen-split-a1mini-pla.3mf** 或 **cube-a1mini-pla.3mf**，含 A1 mini 0.4mm、纹理PEI、PLA和工艺配置。备用PETG工程另列，当前用户耗材为PLA。两片同形半壳与3根定位销在同一盘；单件高12mm，无外部支撑。本机Bambu Studio 2.5切片通过：60层，模型2h14m，总计2h23m，估计36.25g（含销与brim），尚未真实打印。不要将切片用料当成带胶、纸成品质量。
+### 尺寸选择的证据与限制
 
-pen-a1mini-pla.3mf 是一体竖直**备用**工程，高170mm，8mm brim；旧切片估计27.74g，模型2h31m。无粘接但高件可能晃动。pen-split-a1mini.3mf 只含已摆放毫米网格，pen-half.stl需打印两片，pen-alignment-pin.stl需打印三根。不得使用切片器缩放来调整装配松紧。
+[可复现脚本](../../scripts/assess_pen_size.py)比较170/190/200/210/220/230mm，只增加圆杆长度，保持直径、方头与肩部不变。固定4种模型手型、3个高度、37个偏航角，对4个物体中心X位置分别做444张静态相交快照；完整数据见[JSON](../sim2real/pen-size-review.json)。这些相交快照不是动作轨迹、碰撞概率、力闭合或训练成功率。
 
-再生成（开发机安装 print、vision、sim extras；训练机不需要打印依赖）：
+在X=190mm区域，方头与手指相交快照为170版170/444、200版72/444、210版31/444、220版29/444。210相对170增加40mm操作圆杆；210到220在该区域收益较小，而均匀实体近似下偏航惯量从1.74倍170版升至1.96倍（再增约13%）。完整数据也保留其他位置，不能把这个局部结果泛化为全部工作空间。每个长度另从前移位置做40次独立重力落稳检查，均有手部支撑、无底座接触；仅证明初始化可行。
+
+另以示例针孔相机检查标签几何可见性：相机位置[.25,-.10,.48]m、目标[.185,.05,.19]m，1920×1080、焦距1400px，要求短边≥40px、正面、四角在画面且射线无遮挡。X=190mm快照中，170版两端均有完整可见标签为382/444，210版427/444，220版428/444。它没有模拟真实图像检测、模糊、曝光与定位噪声，不能当检测准确率或替代真实标定。
+
+初始化笔的投放X从135mm前移到190mm，实际重力落稳后可向掌面回落；不再把底座支撑计为有效手内接触。长笔在部分转向姿态仍可碰底座，策略须主动移位/抬升，最后仍用独立训练与实物抓持验证。200/220mm保留为后续比较候选；当前训练入口固定使用210mm并记录几何签名。
+
+### 直接打印
+
+下载[完整v4打印包](../../assets/objects/v4/a1mini-print-pack.zip)。Bambu Studio打开 **pen-split-a1mini-pla.3mf**：一片210×24×12mm半壳，沿床面45°，另有3根定位销。**同工程完整打印两次**，获得两片同形半壳、3根使用销和3根备用销。不自动重排、不缩放。平面包络165.46×165.46mm，计入3mm brim与0.1mm间隙后的最小床边余量约4.17mm。无需外部支撑，盲孔顶有4.3mm小桥接。
+
+本机Bambu Studio 2.5 / A1 mini 0.4 / Generic PLA已切片：每盘60层、高12mm、用料21.18g、模型1h18m、总计约1h26m；两盘约2h52m。用料含brim与备用销，不是成品称重。方块打开cube-a1mini-pla.3mf，55mm立方体平放；之前同几何工艺切片为275层、60.13g、模型3h54m，总计4h06m。都尚未实打。
+
+默认工艺：0.2mm层高，半壳4层壁、方块3层壁；20% gyroid，顶底各5层，外墙40、内墙60mm/s，默认加速度1000mm/s²。半壳brim3mm、象脚补偿0.15mm；方块brim8mm。填充比例不是成品密度比例，外壁、接缝底面和孔壁都会加料；不要临时填实或加配重后仍沿用原物理参数。[Bambu Studio官方参数定义](https://github.com/bambulab/BambuStudio/blob/master/src/libslic3r/PrintConfig.cpp)对应预设字段。
+
+一体210mm笔也能床面对角放下，但两头方块着床时，146mm中杆底部悬空4mm，支撑会影响滚动表面；空间倾斜仍增加悬垂，因此不作为默认工程。pen-assembly-reference.3mf、pen.stl、pen.scad是完整装配外形参考。pen-split-a1mini.3mf为已摆放的标准毫米几何；pen-half.stl需打印两片并自行转45°、保持接缝平面贴床，pen-alignment-pin.stl总共需三根。PETG备用工程仅在换用相应材料时选，当前确认材料为PLA。
+
+再生成（开发机安装sim、vision、print extras；训练机不需要打印依赖）：
 
     uv sync --extra sim --extra vision --extra print
-    python scripts/manipulation.py export-objects --output assets/objects/v3
-    python scripts/prepare_a1mini.py --output assets/objects/v3
-    python scripts/prepare_print_kit.py --output assets/objects/v3
+    python scripts/manipulation.py export-objects --output assets/objects/v4
+    python scripts/prepare_a1mini.py --output assets/objects/v4
+    python scripts/prepare_print_kit.py --output assets/objects/v4
+    python scripts/assess_pen_size.py
     python scripts/render_object_scale.py
+    python scripts/package_print_assets.py
 
-prepare_a1mini.py 需要本机安装Bambu Studio以读取官方机器/耗材预设。4090安装脚本之后不要直接uv sync，以免恢复CPU torch；详情见下文。
+prepare_a1mini.py需要本机Bambu Studio官方预设。4090安装脚本之后不要直接uv sync，以免恢复CPU torch；见下文。
 
-同一个 objects.py 生成毫米 STL、可编辑 OpenSCAD、米制仿真凸体与 AprilTag 角点。STL 本身没有单位，切片软件必须按 **mm / 100%** 导入。白色贴纸区是现有的平面，不是凹槽，也没有额外端头配重。碰撞形状与裸打印件相同；纸和胶厚度不含在模型中，应保持薄且一致，打印尺寸误差和皮肤接触差异仍需实测。
+### 实体、标签与装配
 
-- 方块：55 × 55 × 55 mm。六面黑框32mm、白纸40mm，ID 0–5；居中后四边各余7.5mm。
-- 默认训练笔改为圆柱中杆 + 方形端头：总长 170 mm，中间 Ø16 mm ×106 mm；两端各 10 mm 渐变肩部，再接 24×24×22 mm 方头。
-- 每个方头四个侧面贴码，ID 10–17，黑框 16 mm、白纸 20 mm；侧码中心 Y=±74 mm，两端基线 148 mm。
-- 外端面 ID 18 位于 Y=-85 mm、ID 19 位于 Y=+85 mm，标记尺寸也为 16/20 mm；中间圆杆完全不贴码。
-- 静态参考板：ID 40，黑框 50 mm，白纸 66 mm。牢固放在底座旁，与物体同时入镜。
+同一objects.py生成毫米STL、OpenSCAD、米制仿真凸体、AprilTag角点及设计尺寸。整笔为非凸形状，以两个方头、两个肩部和一个64边圆柱精确分解，避免整体凸包填粗中杆。分体半壳的外部并集经布尔比较与装配外形一致，只有内部定位孔间隙；纸厚、胶层与制造误差仍需实测。
 
-方块中心为 O 原点：ID 0/1 在 +X/-X，2/3 在 +Y/-Y，4/5 在 +Z/-Z。每枚标签的中心、右方向 u、上方向 v 与角点都在对应 JSON 中；角点顺序为解码后的左上、右上、右下、左下。标记外法向为 u×v。
+- 方块55×55×55mm：六面黑框32mm、白纸40mm、四边余7.5mm，ID0..5。ID0/1在±X，2/3在±Y，4/5在±Z。
+- 笔总长210mm，纯圆杆Ø16×146mm，两端各10mm渐变肩部与24×24×22mm方头。
+- 方头侧码中心Y=±94mm，基线188mm；四侧面+X/+Z/-X/-Z，负端ID10/12/14/16，正端ID11/13/15/17。黑框16mm、白纸20mm，纸片居中，宽向各余2mm、轴向各余1mm，顶边统一朝+Y。
+- 外端面ID18位于Y=-105mm、ID19位于+105mm，黑框/纸同为16/20mm，顶边朝+Z；圆杆和肩部不贴码。
+- 固定参考码ID40，黑框50mm、纸66mm，固定在独立刚性平板上，放在手旁。中心为原点，纸面右为+X、上为+Y、法线向外为+Z。
 
-笔的 ID 18/19 定义负/正 Y 端。方头侧面 f=0/1/2/3 对应 +X/+Z/-X/-Z，负端标签 ID=10+2f，正端 ID=11+2f。侧码顶边朝 +Y，端面码顶边朝 +Z。不要交换或旋转标签。
+[A4手册PDF](../../assets/objects/v4/print-kit-a4.pdf)六页含标签、校验尺、20mm棋盘格（9×6内角点）、尺寸与ID/方向。按实际大小100%，不适应/缩小页面；第4页横向。用尺复核100mm标尺与黑框边长，保留白边，裁掉说明文字与箭头。哑光不透底白纸/贴纸，不覆亮面胶。PnP边长是黑框边长，不含白边。[OpenCV官方说明](https://docs.opencv.org/4.x/d5/dae/tutorial_aruco_detection.html)介绍字典与角点检测。
 
-默认改型参考了 [WUJI 官方装配资料](https://github.com/wuji-technology/wuji-mjlab/blob/main/src/wuji_mjlab/tasks/pen_spin/docs/setup.md) 中的圆柱握持段与方形端头思路。它更接近最终转笔接触，且能容纳更大角点，但需要明确建模端头碰撞和惯量。原六棱方案适合较早的定向调试，滚动接触与圆柱不同；这次不是以它作为最终打印件。WUJI 的尺寸、定制标签字典与手的控制接口没有直接复用，本项目使用自己的标准 AprilTag 36h11。
+定位销Ø4×6mm，盲孔Ø4.3、单边深3.15mm，Y=-94/0/+94mm。先试装、去毛边，不能强压；接缝薄涂适用于PLA的胶，夹紧至固化，不在圆杆、方头外表面留下胶或台阶。公差与胶接强度尚未实打验证。
 
-特别注意：整支笔不是凸形状。仿真以两块方头、两块渐变肩部、一个 64 边圆柱组成五个不重叠凸体；打印外表面取相同实体的外部并集。没有用整个物体的凸包把细圆杆填成粗方杆。均匀密度的分块体积用于分配质量与惯量。
+称量粘好、去brim、贴码的成品，用--mass-kg输入；名义55g方块、40.2g笔只是初值。惯量仍按均匀实体近似，20%填充、壁厚与接缝底面造成的分布误差需辨识与随机化，不能称为已经完全匹配的数字孪生。
 
-
-优先使用 [A4打印手册PDF](../../assets/objects/v3/print-kit-a4.pdf)：第1页方块码、第2页笔两端码、第3页固定参考码、第4页20mm棋盘格（A4横向、9×6内角点）、第5页尺寸和装配、第6页ID/方向及验收记录。按“实际大小/100%”，关闭适应/缩小页面；打印后量第1-3页100mm尺和黑框边长。第4页总网格200×140mm，使用校准入口默认 --cols 9 --rows 6 --square-m 0.02。PDF经过实际光栅化解码与毫米尺寸检查；纸张、驱动仍可能缩放，所以实测尺不能省略。备用矢量图 [tags-a4.svg](../../assets/objects/v3/tags-a4.svg) 也按A4/100%打印。
-
-纸片保留完整白色静区，裁掉说明文字和方向箭头；使用哑光、不透底的白纸或贴纸，不覆亮面胶。**位姿求解尺寸是黑框外边长，不含白边**。方块六个侧面/顶底方向和笔两端方向必须按PDF执行，不能交换、镜像或随意旋转。[OpenCV官方说明](https://docs.opencv.org/4.x/d5/dae/tutorial_aruco_detection.html)介绍字典与角点检测。
-
-A1 mini为180×180×180mm。当前几何的四种摆放判断如下（包络由顶点旋转计算）：
-
-- 默认分体平放：两个170×24×12mm半壳，平行摆放，含3mm brim约86.2×176.2mm，另加中间定位销，能同盘容纳。接缝平面贴床、圆弧朝上；无外部支撑，盲孔顶只需跨4.3mm桥接。组装形状经布尔差验证，外形不变，仅内部定位孔留胶/装配间隙。
-- 一体件床面对角45°：约137.2×137.2×24mm，能放下。方头24mm而圆杆16mm，杆底悬空4mm，中间106mm需要支撑；去支撑会影响滚动面的圆度和摩擦。
-- 一体件轴仰30°、床面45°：约129.6×129.6×105.8mm。高度下降，但增加悬垂与支撑，不自动更稳定，也未交付未经切片的倾斜工程。
-- 一体竖直备用：24×24×170mm，8mm brim；肩部过渡适合无支撑，但高件/活动热床的振动与层间弯折需要实打验证。
-
-默认PLA工艺已写入原生工程：0.2mm层高，半壳4层壁、方块3层壁，20% gyroid，顶/底各5层。外墙40、内墙60mm/s，默认加速度1000mm/s²。半壳brim3mm、象脚补偿0.15mm，方块与竖直备用brim8mm。填充百分比不是成品密度百分比：外壁、顶底、接缝底面与孔壁都会加料，不能把实体惯量直接乘0.2。该工艺选择依据外壳接触强度、较均匀填充与质量折中，并非材料强度试验结论。[Bambu Studio官方参数定义](https://github.com/bambulab/BambuStudio/blob/master/src/libslic3r/PrintConfig.cpp)对应这些配置。
-
-定位销Ø4×6mm，盲孔Ø4.3、深3.15mm；公差尚未实打，先试装，去毛边、不能强压。接缝薄涂适用于PLA的胶，夹紧至固化；不要让胶流到圆杆、方头外表面和标签区域。核对总长、直径、方头、翘曲与接缝台阶。仿真55g方块、35g笔仅为名义初值，必须称量粘合并贴码的成品，用 --mass-kg 输入。默认惯量仍按均匀实体近似，壁厚和填充造成的质量分布误差需进一步辨识或随机化，不能仅凭一比一外形宣称数字孪生完全一致。不要另加未建模配重。
-
-[same-scale俯视图](../sim2real/#scale)按250mm纵向视场渲染，带50mm尺。仿真掌部结构横向包络约104mm；55mm方块约53%。当前图展示初始支撑，尚非训练后的多指抓持。页面不能代替真实手部尺寸、ROM和皮肤厚度测量。
+设计参考[WUJI官方圆杆加方头方案](https://github.com/wuji-technology/wuji-mjlab/blob/main/src/wuji_mjlab/tasks/pen_spin/docs/setup.md)，但尺寸、标准AprilTag字典和手部接口独立设计，未直接复用它的物体或策略。
 
 ## 2. 4090 安装与首次检查
 
@@ -97,7 +99,7 @@ A1 mini为180×180×180mm。当前几何的四种摆放判断如下（包络由�
 
 若你已完成硬件标定，把 configs/hardware.local.yaml 从 Mac 复制到训练机，并在**第一次训练以及每次续训**中加入 --device-config configs/hardware.local.yaml，保证训练动作域就是实测 ROM。端口只用于解析配置，此时不会打开串口。未提供时按模型全 ROM 训练；若它超出真机实测范围，部署会拒绝，需要按实测范围重新训练。这一步最好在昂贵训练前完成。
 
-成品质量用 --mass-kg 0.035（示例值），摩擦用 --friction；执行延迟范围可设 --delay-max-ms 0/50/100/150/200，目标偏差 --command-bias-deg，关节估计偏差 --encoder-bias-deg。默认范围只是起点。续训必须保持物体、质量、摩擦、动作速度和 ROM 合同一致；课程角度、回合长度、目标次数与随机化程度允许变化。
+成品质量称量后换算成kg，再用 --mass-kg 输入，摩擦用 --friction；执行延迟范围可设 --delay-max-ms 0/50/100/150/200，目标偏差 --command-bias-deg，关节估计偏差 --encoder-bias-deg。默认范围只是起点。续训必须保持物体、质量、摩擦、动作速度和 ROM 合同一致；课程角度、回合长度、目标次数与随机化程度允许变化。
 
     python scripts/manipulation.py train --object cube --angle 45 \
       --resume runs/cube-15/policy.zip --steps 3000000 --num-envs 16 \

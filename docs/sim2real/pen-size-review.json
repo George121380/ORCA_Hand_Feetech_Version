@@ -1,0 +1,1431 @@
+{
+  "method": "static intersection sweep + independent gravity-settle checks",
+  "warning": "Not policy success, force closure, camera occlusion probability or hardware validation. Controlled images position the pen without time evolution. Inertia is a uniform-solid approximation, not measured print inertia.",
+  "fixed_parameters": {
+    "shaft_diameter_mm": 16,
+    "head_width_mm": 24,
+    "head_length_mm": 22,
+    "shoulder_length_mm": 10,
+    "penetration_threshold_mm": 0.1,
+    "yaw_degrees": [
+      0,
+      180,
+      5
+    ],
+    "heights_mm": [
+      180,
+      200,
+      220
+    ],
+    "hand_poses": [
+      "open",
+      "half_close",
+      "pinch",
+      "fist"
+    ]
+  },
+  "selected_length_mm": 210,
+  "selection": "Engineering starting candidate, not an identified optimum.",
+  "visibility_camera": {
+    "position_m": [
+      0.25,
+      -0.1,
+      0.48
+    ],
+    "target_m": [
+      0.185,
+      0.05,
+      0.19
+    ],
+    "image_size": [
+      1920,
+      1080
+    ],
+    "focal_px": 1400,
+    "min_edge_px": 40,
+    "evaluated_center_x_m": 0.19,
+    "note": "Illustrative calibrated pinhole camera, not a measured real camera. All four corners must be in frame and ray-unoccluded. No AprilTag detector, blur, noise or illumination is simulated."
+  },
+  "candidates": [
+    {
+      "length_mm": 170,
+      "shaft_mm": 106,
+      "tag_baseline_mm": 148,
+      "nominal_mass_g": 35.0,
+      "uniform_solid_yaw_inertia_kg_m2": 0.00012128377291466799,
+      "half_plate_xy_mm": [
+        137.17871555019022,
+        137.17871555019022
+      ],
+      "edge_margin_with_3mm_brim_and_01gap_mm": 18.31064222490489,
+      "centers": [
+        {
+          "center_x_m": 0.135,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 22,
+              "grip_and_shoulders": 31,
+              "tower": 23,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 30,
+              "grip_and_shoulders": 38,
+              "tower": 23,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 23,
+              "grip_and_shoulders": 40,
+              "tower": 23,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 69,
+              "grip_and_shoulders": 82,
+              "tower": 23,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 144,
+          "grip_and_shoulders": 191,
+          "tower": 92,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        },
+        {
+          "center_x_m": 0.17,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 24,
+              "grip_and_shoulders": 24,
+              "tower": 11,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 68,
+              "grip_and_shoulders": 51,
+              "tower": 11,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 34,
+              "grip_and_shoulders": 53,
+              "tower": 11,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 32,
+              "grip_and_shoulders": 107,
+              "tower": 11,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 158,
+          "grip_and_shoulders": 235,
+          "tower": 44,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        },
+        {
+          "center_x_m": 0.19,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 27,
+              "grip_and_shoulders": 7,
+              "tower": 0,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 100
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 78,
+              "grip_and_shoulders": 78,
+              "tower": 0,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 79
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 40,
+              "grip_and_shoulders": 59,
+              "tower": 0,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 99
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 25,
+              "grip_and_shoulders": 100,
+              "tower": 0,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 104
+            }
+          ],
+          "snapshots": 444,
+          "heads": 170,
+          "grip_and_shoulders": 244,
+          "tower": 0,
+          "any_end_geometrically_visible": 444,
+          "both_ends_geometrically_visible": 382
+        },
+        {
+          "center_x_m": 0.21,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 15,
+              "grip_and_shoulders": 0,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 51,
+              "grip_and_shoulders": 77,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 47,
+              "grip_and_shoulders": 46,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 46,
+              "grip_and_shoulders": 93,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 159,
+          "grip_and_shoulders": 216,
+          "tower": 0,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        }
+      ],
+      "settle": {
+        "trials": 40,
+        "supported": 40,
+        "tower_contacts": 0,
+        "mean_position_m": [
+          0.18252389340491917,
+          0.044870398429573514,
+          0.1782064923624214
+        ]
+      },
+      "dimensions": {
+        "length_m": 0.17,
+        "shaft_diameter_m": 0.016,
+        "shaft_length_m": 0.10600000000000001,
+        "head_width_m": 0.024,
+        "head_length_m": 0.022,
+        "shoulder_length_m": 0.01,
+        "end_m": 0.085,
+        "head_start_m": 0.063,
+        "shaft_end_m": 0.053000000000000005,
+        "tag_center_m": 0.07400000000000001,
+        "tag_baseline_m": 0.14800000000000002
+      },
+      "yaw_inertia_relative_to_170": 1.0
+    },
+    {
+      "length_mm": 190,
+      "shaft_mm": 126,
+      "tag_baseline_mm": 168,
+      "nominal_mass_g": 37.6,
+      "uniform_solid_yaw_inertia_kg_m2": 0.00016224751112239286,
+      "half_plate_xy_mm": [
+        151.32085117392117,
+        151.32085117392117
+      ],
+      "edge_margin_with_3mm_brim_and_01gap_mm": 11.239574413039415,
+      "centers": [
+        {
+          "center_x_m": 0.135,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 5,
+              "grip_and_shoulders": 29,
+              "tower": 22,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 36,
+              "grip_and_shoulders": 38,
+              "tower": 22,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 11,
+              "grip_and_shoulders": 36,
+              "tower": 22,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 45,
+              "grip_and_shoulders": 89,
+              "tower": 22,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 97,
+          "grip_and_shoulders": 192,
+          "tower": 88,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        },
+        {
+          "center_x_m": 0.17,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 23,
+              "grip_and_shoulders": 22,
+              "tower": 12,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 49,
+              "grip_and_shoulders": 59,
+              "tower": 12,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 21,
+              "grip_and_shoulders": 54,
+              "tower": 12,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 5,
+              "grip_and_shoulders": 106,
+              "tower": 12,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 98,
+          "grip_and_shoulders": 241,
+          "tower": 48,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        },
+        {
+          "center_x_m": 0.19,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 27,
+              "grip_and_shoulders": 17,
+              "tower": 0,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 95
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 48,
+              "grip_and_shoulders": 69,
+              "tower": 0,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 95
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 28,
+              "grip_and_shoulders": 49,
+              "tower": 0,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 111
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 15,
+              "grip_and_shoulders": 99,
+              "tower": 0,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 111
+            }
+          ],
+          "snapshots": 444,
+          "heads": 118,
+          "grip_and_shoulders": 234,
+          "tower": 0,
+          "any_end_geometrically_visible": 444,
+          "both_ends_geometrically_visible": 412
+        },
+        {
+          "center_x_m": 0.21,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 25,
+              "grip_and_shoulders": 0,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 31,
+              "grip_and_shoulders": 68,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 31,
+              "grip_and_shoulders": 44,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 22,
+              "grip_and_shoulders": 93,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 109,
+          "grip_and_shoulders": 205,
+          "tower": 0,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        }
+      ],
+      "settle": {
+        "trials": 40,
+        "supported": 40,
+        "tower_contacts": 0,
+        "mean_position_m": [
+          0.1705466636233522,
+          0.04689137785892684,
+          0.17552442375168248
+        ]
+      },
+      "dimensions": {
+        "length_m": 0.19,
+        "shaft_diameter_m": 0.016,
+        "shaft_length_m": 0.126,
+        "head_width_m": 0.024,
+        "head_length_m": 0.022,
+        "shoulder_length_m": 0.01,
+        "end_m": 0.095,
+        "head_start_m": 0.07300000000000001,
+        "shaft_end_m": 0.063,
+        "tag_center_m": 0.084,
+        "tag_baseline_m": 0.168
+      },
+      "yaw_inertia_relative_to_170": 1.3377511865214307
+    },
+    {
+      "length_mm": 200,
+      "shaft_mm": 136,
+      "tag_baseline_mm": 178,
+      "nominal_mass_g": 38.900000000000006,
+      "uniform_solid_yaw_inertia_kg_m2": 0.0001855262314109768,
+      "half_plate_xy_mm": [
+        158.39191898578665,
+        158.39191898578665
+      ],
+      "edge_margin_with_3mm_brim_and_01gap_mm": 7.7040405071066775,
+      "centers": [
+        {
+          "center_x_m": 0.135,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 0,
+              "grip_and_shoulders": 29,
+              "tower": 22,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 37,
+              "grip_and_shoulders": 41,
+              "tower": 22,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 14,
+              "grip_and_shoulders": 35,
+              "tower": 22,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 37,
+              "grip_and_shoulders": 88,
+              "tower": 22,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 88,
+          "grip_and_shoulders": 193,
+          "tower": 88,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        },
+        {
+          "center_x_m": 0.17,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 17,
+              "grip_and_shoulders": 20,
+              "tower": 12,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 34,
+              "grip_and_shoulders": 62,
+              "tower": 12,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 17,
+              "grip_and_shoulders": 52,
+              "tower": 12,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 0,
+              "grip_and_shoulders": 106,
+              "tower": 12,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 68,
+          "grip_and_shoulders": 240,
+          "tower": 48,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        },
+        {
+          "center_x_m": 0.19,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 25,
+              "grip_and_shoulders": 20,
+              "tower": 6,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 94
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 28,
+              "grip_and_shoulders": 66,
+              "tower": 6,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 106
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 12,
+              "grip_and_shoulders": 48,
+              "tower": 6,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 111
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 7,
+              "grip_and_shoulders": 99,
+              "tower": 6,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 111
+            }
+          ],
+          "snapshots": 444,
+          "heads": 72,
+          "grip_and_shoulders": 233,
+          "tower": 24,
+          "any_end_geometrically_visible": 444,
+          "both_ends_geometrically_visible": 422
+        },
+        {
+          "center_x_m": 0.21,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 25,
+              "grip_and_shoulders": 6,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 21,
+              "grip_and_shoulders": 67,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 23,
+              "grip_and_shoulders": 46,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 15,
+              "grip_and_shoulders": 93,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 84,
+          "grip_and_shoulders": 212,
+          "tower": 0,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        }
+      ],
+      "settle": {
+        "trials": 40,
+        "supported": 40,
+        "tower_contacts": 0,
+        "mean_position_m": [
+          0.15997577408401337,
+          0.04665021611032215,
+          0.17465435857966222
+        ]
+      },
+      "dimensions": {
+        "length_m": 0.2,
+        "shaft_diameter_m": 0.016,
+        "shaft_length_m": 0.136,
+        "head_width_m": 0.024,
+        "head_length_m": 0.022,
+        "shoulder_length_m": 0.01,
+        "end_m": 0.1,
+        "head_start_m": 0.07800000000000001,
+        "shaft_end_m": 0.068,
+        "tag_center_m": 0.08900000000000001,
+        "tag_baseline_m": 0.17800000000000002
+      },
+      "yaw_inertia_relative_to_170": 1.529687170447015
+    },
+    {
+      "length_mm": 210,
+      "shaft_mm": 146,
+      "tag_baseline_mm": 188,
+      "nominal_mass_g": 40.2,
+      "uniform_solid_yaw_inertia_kg_m2": 0.00021075621789649153,
+      "half_plate_xy_mm": [
+        165.46298679765212,
+        165.46298679765212
+      ],
+      "edge_margin_with_3mm_brim_and_01gap_mm": 4.16850660117394,
+      "centers": [
+        {
+          "center_x_m": 0.135,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 0,
+              "grip_and_shoulders": 29,
+              "tower": 23,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 44,
+              "grip_and_shoulders": 55,
+              "tower": 23,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 14,
+              "grip_and_shoulders": 35,
+              "tower": 23,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 28,
+              "grip_and_shoulders": 88,
+              "tower": 23,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 86,
+          "grip_and_shoulders": 207,
+          "tower": 92,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        },
+        {
+          "center_x_m": 0.17,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 11,
+              "grip_and_shoulders": 19,
+              "tower": 12,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 22,
+              "grip_and_shoulders": 61,
+              "tower": 12,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 13,
+              "grip_and_shoulders": 52,
+              "tower": 12,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 0,
+              "grip_and_shoulders": 106,
+              "tower": 12,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 46,
+          "grip_and_shoulders": 238,
+          "tower": 48,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        },
+        {
+          "center_x_m": 0.19,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 25,
+              "grip_and_shoulders": 24,
+              "tower": 9,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 94
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 0,
+              "grip_and_shoulders": 66,
+              "tower": 9,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 111
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 6,
+              "grip_and_shoulders": 50,
+              "tower": 9,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 111
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 0,
+              "grip_and_shoulders": 99,
+              "tower": 9,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 111
+            }
+          ],
+          "snapshots": 444,
+          "heads": 31,
+          "grip_and_shoulders": 239,
+          "tower": 36,
+          "any_end_geometrically_visible": 444,
+          "both_ends_geometrically_visible": 427
+        },
+        {
+          "center_x_m": 0.21,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 25,
+              "grip_and_shoulders": 13,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 21,
+              "grip_and_shoulders": 68,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 21,
+              "grip_and_shoulders": 46,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 15,
+              "grip_and_shoulders": 93,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 82,
+          "grip_and_shoulders": 220,
+          "tower": 0,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        }
+      ],
+      "settle": {
+        "trials": 40,
+        "supported": 40,
+        "tower_contacts": 0,
+        "mean_position_m": [
+          0.15963878692220884,
+          0.04803348760796873,
+          0.17417740645091107
+        ]
+      },
+      "dimensions": {
+        "length_m": 0.21,
+        "shaft_diameter_m": 0.016,
+        "shaft_length_m": 0.146,
+        "head_width_m": 0.024,
+        "head_length_m": 0.022,
+        "shoulder_length_m": 0.01,
+        "end_m": 0.105,
+        "head_start_m": 0.08299999999999999,
+        "shaft_end_m": 0.073,
+        "tag_center_m": 0.094,
+        "tag_baseline_m": 0.188
+      },
+      "yaw_inertia_relative_to_170": 1.7377115901957796
+    },
+    {
+      "length_mm": 220,
+      "shaft_mm": 156,
+      "tag_baseline_mm": 198,
+      "nominal_mass_g": 41.5,
+      "uniform_solid_yaw_inertia_kg_m2": 0.000238002586919077,
+      "half_plate_xy_mm": [
+        172.5340546095176,
+        172.5340546095176
+      ],
+      "edge_margin_with_3mm_brim_and_01gap_mm": 0.6329726952412016,
+      "centers": [
+        {
+          "center_x_m": 0.135,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 4,
+              "grip_and_shoulders": 29,
+              "tower": 21,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 43,
+              "grip_and_shoulders": 53,
+              "tower": 21,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 18,
+              "grip_and_shoulders": 40,
+              "tower": 21,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 22,
+              "grip_and_shoulders": 87,
+              "tower": 21,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 87,
+          "grip_and_shoulders": 209,
+          "tower": 84,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        },
+        {
+          "center_x_m": 0.17,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 7,
+              "grip_and_shoulders": 20,
+              "tower": 16,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 10,
+              "grip_and_shoulders": 58,
+              "tower": 16,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 5,
+              "grip_and_shoulders": 51,
+              "tower": 16,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 0,
+              "grip_and_shoulders": 106,
+              "tower": 16,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 22,
+          "grip_and_shoulders": 235,
+          "tower": 64,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        },
+        {
+          "center_x_m": 0.19,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 23,
+              "grip_and_shoulders": 24,
+              "tower": 9,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 95
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 0,
+              "grip_and_shoulders": 65,
+              "tower": 9,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 111
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 6,
+              "grip_and_shoulders": 50,
+              "tower": 9,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 111
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 0,
+              "grip_and_shoulders": 99,
+              "tower": 9,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 111
+            }
+          ],
+          "snapshots": 444,
+          "heads": 29,
+          "grip_and_shoulders": 238,
+          "tower": 36,
+          "any_end_geometrically_visible": 444,
+          "both_ends_geometrically_visible": 428
+        },
+        {
+          "center_x_m": 0.21,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 24,
+              "grip_and_shoulders": 17,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 20,
+              "grip_and_shoulders": 67,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 18,
+              "grip_and_shoulders": 46,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 12,
+              "grip_and_shoulders": 93,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 74,
+          "grip_and_shoulders": 223,
+          "tower": 0,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        }
+      ],
+      "settle": {
+        "trials": 40,
+        "supported": 40,
+        "tower_contacts": 0,
+        "mean_position_m": [
+          0.1571917269568966,
+          0.04885428630478275,
+          0.17379027572986344
+        ]
+      },
+      "dimensions": {
+        "length_m": 0.22,
+        "shaft_diameter_m": 0.016,
+        "shaft_length_m": 0.156,
+        "head_width_m": 0.024,
+        "head_length_m": 0.022,
+        "shoulder_length_m": 0.01,
+        "end_m": 0.11,
+        "head_start_m": 0.088,
+        "shaft_end_m": 0.078,
+        "tag_center_m": 0.099,
+        "tag_baseline_m": 0.198
+      },
+      "yaw_inertia_relative_to_170": 1.9623613382025082
+    },
+    {
+      "length_mm": 230,
+      "shaft_mm": 166,
+      "tag_baseline_mm": 208,
+      "nominal_mass_g": 42.800000000000004,
+      "uniform_solid_yaw_inertia_kg_m2": 0.0002673303358251279,
+      "half_plate_xy_mm": [
+        179.60512242138307,
+        179.60512242138307
+      ],
+      "edge_margin_with_3mm_brim_and_01gap_mm": -2.902561210691536,
+      "centers": [
+        {
+          "center_x_m": 0.135,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 4,
+              "grip_and_shoulders": 29,
+              "tower": 21,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 37,
+              "grip_and_shoulders": 51,
+              "tower": 21,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 18,
+              "grip_and_shoulders": 42,
+              "tower": 21,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 10,
+              "grip_and_shoulders": 87,
+              "tower": 21,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 69,
+          "grip_and_shoulders": 209,
+          "tower": 84,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        },
+        {
+          "center_x_m": 0.17,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 5,
+              "grip_and_shoulders": 20,
+              "tower": 16,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 3,
+              "grip_and_shoulders": 57,
+              "tower": 16,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 5,
+              "grip_and_shoulders": 51,
+              "tower": 16,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 0,
+              "grip_and_shoulders": 106,
+              "tower": 16,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 13,
+          "grip_and_shoulders": 234,
+          "tower": 64,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        },
+        {
+          "center_x_m": 0.19,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 15,
+              "grip_and_shoulders": 21,
+              "tower": 9,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 95
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 0,
+              "grip_and_shoulders": 65,
+              "tower": 9,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 111
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 4,
+              "grip_and_shoulders": 49,
+              "tower": 9,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 111
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 0,
+              "grip_and_shoulders": 99,
+              "tower": 9,
+              "any_end_geometrically_visible": 111,
+              "both_ends_geometrically_visible": 111
+            }
+          ],
+          "snapshots": 444,
+          "heads": 19,
+          "grip_and_shoulders": 234,
+          "tower": 36,
+          "any_end_geometrically_visible": 444,
+          "both_ends_geometrically_visible": 428
+        },
+        {
+          "center_x_m": 0.21,
+          "center_y_m": 0.05,
+          "poses": [
+            {
+              "pose": "open",
+              "snapshots": 111,
+              "heads": 22,
+              "grip_and_shoulders": 22,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "half_close",
+              "snapshots": 111,
+              "heads": 16,
+              "grip_and_shoulders": 66,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "pinch",
+              "snapshots": 111,
+              "heads": 9,
+              "grip_and_shoulders": 43,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            },
+            {
+              "pose": "fist",
+              "snapshots": 111,
+              "heads": 9,
+              "grip_and_shoulders": 93,
+              "tower": 0,
+              "any_end_geometrically_visible": 0,
+              "both_ends_geometrically_visible": 0
+            }
+          ],
+          "snapshots": 444,
+          "heads": 56,
+          "grip_and_shoulders": 224,
+          "tower": 0,
+          "any_end_geometrically_visible": 0,
+          "both_ends_geometrically_visible": 0
+        }
+      ],
+      "settle": {
+        "trials": 40,
+        "supported": 40,
+        "tower_contacts": 0,
+        "mean_position_m": [
+          0.1621095647529729,
+          0.04852037945210024,
+          0.1742086174130456
+        ]
+      },
+      "dimensions": {
+        "length_m": 0.23,
+        "shaft_diameter_m": 0.016,
+        "shaft_length_m": 0.166,
+        "head_width_m": 0.024,
+        "head_length_m": 0.022,
+        "shoulder_length_m": 0.01,
+        "end_m": 0.115,
+        "head_start_m": 0.093,
+        "shaft_end_m": 0.083,
+        "tag_center_m": 0.10400000000000001,
+        "tag_baseline_m": 0.20800000000000002
+      },
+      "yaw_inertia_relative_to_170": 2.204172325783552
+    }
+  ]
+}
