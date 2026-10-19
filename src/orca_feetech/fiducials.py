@@ -191,4 +191,3 @@ class PoseWorker:
         # Daemon may still be in a driver read. The control loop has already stopped.
         if not self.thread.is_alive():
             self.capture.release()
-

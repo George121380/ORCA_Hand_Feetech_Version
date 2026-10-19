@@ -323,4 +323,3 @@ class ManipulationEnv(gym.Env):
     def close(self):
         if self.renderer:
             self.renderer.close()
-

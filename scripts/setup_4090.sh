@@ -28,4 +28,3 @@ PY
 mkdir -p local
 uv pip freeze --python .venv/bin/python > local/training-environment.txt
 echo "Ready. No model training was started. Read docs/software/sim2real.md for smoke and curriculum commands."
-

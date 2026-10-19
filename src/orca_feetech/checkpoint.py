@@ -15,4 +15,3 @@ def load_config(checkpoint):
             or meta["history"] != HISTORY or meta["frame_size"] != FRAME_SIZE):
         raise ValueError("Checkpoint geometry, observation, model or upstream lock mismatch")
     return cfg, meta
-

@@ -198,5 +198,3 @@ def test_checkpoint_roundtrip_and_reject_changed_geometry(tmp_path):
             load_config(tmp_path / "policy.zip")
     finally:
         env.close()
-
-
