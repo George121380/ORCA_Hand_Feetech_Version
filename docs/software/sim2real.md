@@ -110,6 +110,19 @@ prepare_a1mini.py需要本机Bambu Studio官方预设。4090安装脚本之后�
 
 它先等待首段结束，只有该段达标才依次续训15°/随机化1、45°/1、90°/1（各300万步），最后连续四次90°/1（1000万步、40秒回合）。含首段总预算2200万步。各段正式测试种子依次21000、22000、23000、24000，开发集依次31000..34000，避免把已经用于推进课程的测试回合重复当作最终未见测试。任一阶段未达门槛立即停止并保存`quality_gate_failed`，供检查失败视频和接触情况，不自动假定它已经学会。首段配置与模型文件必须保留，后续阶段沿用相同质量、摩擦和关节限位合同。`curriculum.json`记录阶段与最后选中checkpoint。
 
+### 常驻监控与故障恢复
+
+`scripts/watch_training.py`可以接管已存在的job，默认每30秒检查进程与进度，5分钟无变化才判为卡住。用`--course`接续同样的笔课程；不要同时运行旧课程控制器。推荐由Linux用户级systemd服务运行，`Restart=on-failure`、`RestartSec=15`，启用用户linger后可在重启机器后恢复；监控目录有独占锁，避免重复拉起训练。
+
+    .venv/bin/python scripts/watch_training.py \
+      --initial-job runs/pen-15-r03-seed0 --state-dir runs/pen-watchdog --course
+
+进程中断时调用`run_training_job.py --continue-existing --output 原job目录`。恢复前校验ZIP完整性、任务/几何合同和权重有限性，选实际步数最多的有效checkpoint；保持原有总步数目标，只补剩余预算。新模型与日志保存到`model-recovery-N`、`train-recovery-N.log`，保留原文件。有效训练已完成时直接续做评估；带checkpoint哈希的已完成评估可复用，避免重复选择模型。候选策略仍只在开发集选择，正式测试不参与选择。
+
+每阶段最多自动恢复3次，重试间隔30/60/120秒。内存不足时并行环境数减半，PPO批量随worker数量限制；磁盘不足不删除数据，GPU暂不可用则等待。识别进程时核对完整命令和输出目录，不杀其他Python/GPU任务。监控自身重启会读取持久状态继续执行。
+
+`watchdog.json`保存当前阶段、进度与恢复次数，`events.jsonl`记录故障与调整，`current-job`指向当前阶段，job内`current-training.log`指向最近的训练日志。`quality_gate_failed`表示实验完整运行但技能没达标，与`recovery_exhausted`或进程中断不同；此时保留结果供研究调整，不把同一失败实验无限重跑。故障记录保存在Jarvis，并不等同于已配置聊天、邮件或手机推送。
+
 建议先方块 15°，再 45°，再 90°，最后四次同向 90°；训练笔独立重新开始，不复用方块权重作为已学会的模型。
 
     python scripts/manipulation.py train --object cube --angle 15 \

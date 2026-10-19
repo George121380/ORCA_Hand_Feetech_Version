@@ -45,6 +45,45 @@ def test_training_failure_stops_job_and_preserves_command(monkeypatch, tmp_path)
     assert not state["acceptance_met"]
 
 
+def test_recovery_keeps_remaining_budget_and_reduces_workers(monkeypatch, tmp_path):
+    monkeypatch.setattr(job.platform, "system", lambda: "Linux")
+    output = tmp_path / "job"
+    (output / "model").mkdir(parents=True)
+    arguments = dict(output=str(output), object="pen", angle=15, turns=1, horizon=240,
+                     randomization=.3, steps=3000000, num_envs=16, device="cuda", seed=0,
+                     resume=None, device_config=None, mass_kg=None, friction=1.,
+                     selection_episodes=40, selection_seed=30000, test_episodes=100,
+                     test_seed=20000, video=False)
+    (output / "job.json").write_text(json.dumps(dict(status="failed", arguments=arguments,
+                                                    pid=99999999, commands=[], acceptance_met=False)))
+    source = output / "model/checkpoint_1500000_steps.zip"
+    monkeypatch.setattr(job, "latest_checkpoint", lambda *args: (source, 1500000))
+    calls = []
+
+    class FailedProcess:
+        pid = 99999998
+
+        def __init__(self, command, **kwargs):
+            calls.append(command)
+
+        def wait(self):
+            return 7
+
+    monkeypatch.setattr(job.subprocess, "Popen", FailedProcess)
+    monkeypatch.setattr(job.sys, "argv", ["job", "--output", str(output), "--continue-existing",
+                       "--recovery-num-envs", "8"])
+    with pytest.raises(RuntimeError, match="train-recovery-1 exited 7"):
+        job.main()
+    command = calls[0]
+    assert command[command.index("--steps") + 1] == "1500000"
+    assert command[command.index("--resume") + 1] == str(source)
+    assert command[command.index("--num-envs") + 1] == "8"
+    state = json.loads((output / "job.json").read_text())
+    assert state["target_total_steps"] == 3000000
+    assert state["arguments"]["steps"] == 3000000
+    assert (output / "current-training.log").readlink() == Path("train-recovery-1.log")
+
+
 @pytest.mark.parametrize("initial_passes", [False, True])
 def test_curriculum_stops_at_first_failed_gate(monkeypatch, tmp_path, initial_passes):
     monkeypatch.syspath_prepend(str(Path(__file__).parents[1] / "scripts"))

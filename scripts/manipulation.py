@@ -19,7 +19,9 @@ from orca_feetech.paths import provenance
 
 
 def write(path, value):
-    path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n")
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n")
+    temporary.replace(path)
 
 
 
@@ -80,7 +82,8 @@ def train(args):
         env.seed(args.seed)
         evaluation = DummyVecEnv([factory(0, True)])
         evaluation.seed(10000 + args.seed)
-        model = (PPO.load(args.resume, env=env, device=args.device) if args.resume else
+        model = (PPO.load(args.resume, env=env, device=args.device,
+                          batch_size=min(1024, 256 * args.num_envs)) if args.resume else
                  PPO("MlpPolicy", env, seed=args.seed, device=args.device, n_steps=256,
                      batch_size=min(1024, 256 * args.num_envs), n_epochs=5, learning_rate=3e-4,
                      ent_coef=.01, gamma=.99, gae_lambda=.95, target_kl=.03,
