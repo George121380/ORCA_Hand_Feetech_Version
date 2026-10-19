@@ -1,0 +1,6 @@
+assets/objects/** linguist-generated=true
+assets/printing/** linguist-generated=true
+docs/sim2real/*.json linguist-generated=true
+docs/sim2real/*.stl linguist-generated=true
+docs/sim2real/*.scad linguist-generated=true
+docs/sim2real/*.svg linguist-generated=true

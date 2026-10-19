@@ -1249,6 +1249,8 @@ sim = [
     { name = "matplotlib" },
     { name = "mujoco" },
     { name = "orca-sim" },
+    { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "scipy", version = "1.18.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
 ]
 teleop = [
     { name = "imageio", extra = ["ffmpeg"] },
@@ -1257,6 +1259,8 @@ teleop = [
     { name = "orca-sim" },
     { name = "orca-teleop", extra = ["adaptive", "mediapipe"] },
     { name = "pin" },
+    { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "scipy", version = "1.18.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "torch", version = "2.14.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'linux'" },
     { name = "torch", version = "2.14.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform == 'linux'" },
 ]
@@ -1265,10 +1269,15 @@ train = [
     { name = "matplotlib" },
     { name = "mujoco" },
     { name = "orca-sim" },
+    { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "scipy", version = "1.18.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "stable-baselines3" },
     { name = "tensorboard" },
     { name = "torch", version = "2.14.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'linux'" },
     { name = "torch", version = "2.14.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform == 'linux'" },
+]
+vision = [
+    { name = "opencv-contrib-python" },
 ]
 
 [package.dev-dependencies]
@@ -1284,6 +1293,7 @@ requires-dist = [
     { name = "matplotlib", marker = "extra == 'sim'", specifier = ">=3.10" },
     { name = "mujoco", marker = "extra == 'sim'", specifier = ">=3.3,<4" },
     { name = "numpy", specifier = ">=2.2.6,<3" },
+    { name = "opencv-contrib-python", marker = "extra == 'vision'", specifier = "==4.11.0.86" },
     { name = "orca-core", directory = ".upstream/orca_core" },
     { name = "orca-feetech", extras = ["sim"], marker = "extra == 'teleop'" },
     { name = "orca-feetech", extras = ["sim"], marker = "extra == 'train'" },
@@ -1291,6 +1301,7 @@ requires-dist = [
     { name = "orca-teleop", extras = ["adaptive", "mediapipe"], marker = "extra == 'teleop'", directory = ".upstream/orca_teleop" },
     { name = "pin", marker = "extra == 'teleop'", specifier = ">=3.8,<4" },
     { name = "pyyaml", specifier = ">=6,<7" },
+    { name = "scipy", marker = "extra == 'sim'", specifier = ">=1.15,<2" },
     { name = "stable-baselines3", marker = "extra == 'train'", specifier = "==2.9.0" },
     { name = "tensorboard", marker = "extra == 'train'", specifier = ">=2.19" },
     { name = "torch", marker = "sys_platform == 'linux' and extra == 'teleop'", specifier = ">=2.8,<3", index = "https://download.pytorch.org/whl/cpu" },
@@ -1298,7 +1309,7 @@ requires-dist = [
     { name = "torch", marker = "sys_platform != 'linux' and extra == 'teleop'", specifier = ">=2.8,<3" },
     { name = "torch", marker = "sys_platform != 'linux' and extra == 'train'", specifier = ">=2.8,<3" },
 ]
-provides-extras = ["hardware", "sim", "train", "teleop"]
+provides-extras = ["hardware", "vision", "sim", "train", "teleop"]
 
 [package.metadata.requires-dev]
 dev = [

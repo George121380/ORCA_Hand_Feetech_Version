@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-19",
+  "platform": "macOS-15.7.3-arm64-arm-64bit",
+  "mujoco": "3.13.0",
+  "torch": "2.14.0",
+  "pytest": "46 passed",
+  "checks": [
+    "watertight printable solids",
+    "exact convex decomposition volume",
+    "A1 mini metric exports within 180mm",
+    "same action and observation codecs",
+    "joint multi-tag pose estimation",
+    "projected printed AprilTag detection",
+    "untrained checkpoint save/load/inference and mismatch refusal"
+  ],
+  "formal_training_run": false,
+  "cuda_tested": false,
+  "real_hardware_tested": false,
+  "physical_print_tested": false,
+  "bambu_studio": {
+    "version": "2.5.0.66",
+    "material": "Generic PLA",
+    "printer": "A1 mini 0.4",
+    "sliced": true,
+    "layers": 850,
+    "height_mm": 170,
+    "estimated_model_mass_g": 27.74,
+    "estimated_model_print_minutes": 151,
+    "support_enabled": false
+  }
+}

@@ -8,7 +8,8 @@ dependencies = ["numpy>=2.2.6,<3", "pyyaml>=6,<7", "orca-core==0.4.1"]
 
 [project.optional-dependencies]
 hardware = ["ftservo-python-sdk==2.0.0"]
-sim = ["orca-sim==0.1.0", "mujoco>=3.3,<4", "imageio[ffmpeg]>=2.37", "matplotlib>=3.10"]
+vision = ["opencv-contrib-python==4.11.0.86"]
+sim = ["orca-sim==0.1.0", "mujoco>=3.3,<4", "imageio[ffmpeg]>=2.37", "matplotlib>=3.10", "scipy>=1.15,<2"]
 train = ["orca-feetech[sim]", "stable-baselines3==2.9.0", "tensorboard>=2.19", "torch>=2.8,<3"]
 teleop = ["orca-feetech[sim]", "orca-teleop[adaptive,mediapipe]==0.1.0", "pin>=3.8,<4", "torch>=2.8,<3"]
 
