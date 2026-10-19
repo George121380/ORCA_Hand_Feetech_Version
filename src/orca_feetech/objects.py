@@ -6,7 +6,7 @@ from pathlib import Path
 
 import numpy as np
 
-OBJECT_VERSION = "printables-v2"
+OBJECT_VERSION = "printables-v3"
 DICTIONARY = "DICT_APRILTAG_36h11"
 
 
@@ -50,7 +50,7 @@ def _pen_rings():
 
 def geometry(kind):
     if kind == "cube":
-        return _box(np.array([.021, .021, .021]))
+        return _box(np.array([.0275, .0275, .0275]))
     if kind == "pen":
         vertices, faces, lookup = [], [], {}
         for points, triangles in collision_parts("pen"):
@@ -117,7 +117,7 @@ def marker_layout(kind):
                   ([0, 0, 1], [1, 0, 0]), ([0, 0, -1], [-1, 0, 0])]
         for ident, (normal, u) in enumerate(frames):
             n, u = np.array(normal), np.array(u)
-            tags.append((ident, n * .021, u, np.cross(n, u), .024, .030))
+            tags.append((ident, n * .0275, u, np.cross(n, u), .032, .040))
     elif kind == "pen":
         # Four side faces on each square end, plus the two outward end caps.
         frames = [([1, 0, 0], [0, 0, -1]), ([0, 0, 1], [1, 0, 0]),
@@ -147,7 +147,7 @@ def marker_layout(kind):
 def specification(kind):
     vertices, triangles = geometry(kind)
     return dict(version=OBJECT_VERSION, kind=kind, units="m", dictionary=DICTIONARY,
-                nominal_mass_kg=.035 if kind == "cube" else .024,
+                nominal_mass_kg=.055 if kind == "cube" else .035,
                 collision_parts=[dict(vertices_m=v.tolist(), triangles=t.tolist(), volume_m3=mesh_volume(v, t))
                                  for v, t in collision_parts(kind)],
                 dimensions_m=(vertices.max(axis=0) - vertices.min(axis=0)).tolist(),
@@ -171,7 +171,7 @@ def geometry_signature(kind):
              for key, value in tag.items()} for tag in marker_layout(kind)]
     return dict(version=OBJECT_VERSION, dictionary=DICTIONARY, kind=kind,
                 convex_parts=parts, tags=tags,
-                nominal_mass_kg=.035 if kind == "cube" else .024)
+                nominal_mass_kg=.055 if kind == "cube" else .035)
 
 
 def print_coordinates(kind, vertices):
@@ -264,9 +264,14 @@ def export_objects(output):
            '<rect width="210" height="297" fill="white"/>',
            '<text x="10" y="10" font-size="4">AprilTag 36h11 / print 100% / no fit-to-page</text>']
     for index, (kind, tag) in enumerate(all_tags):
-        col, row = index % 4, index // 4
         # Last reference tag has its own larger region.
-        x, y = (115, 212) if kind == "world" else (12 + col * 48, 24 + row * 35)
+        if kind == "cube":
+            x, y = 12 + (index % 3) * 60, 24 + (index // 3) * 50
+        elif kind == "pen":
+            pen_index = index - 6
+            x, y = 12 + (pen_index % 5) * 37, 138 + (pen_index // 5) * 35
+        else:
+            x, y = 125, 210
         paper, size = tag["paper_size_m"] * 1000, tag["black_size_m"] * 1000
         image = cv2.aruco.generateImageMarker(dictionary, tag["id"], 8)
         svg.append(f'<text x="{x}" y="{y-3}" font-size="2.8">{kind} ID {tag["id"]} / top +v ↑</text>')

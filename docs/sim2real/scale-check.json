@@ -1,0 +1,43 @@
+{
+  "seed": 0,
+  "randomization": 0,
+  "camera": "orthographic overhead",
+  "vertical_field_mm": 250,
+  "pixels_per_mm": 2.88,
+  "note": "Mesh bounds are simulated structure dimensions, not physical measurements. Only initial palm support is checked; no learned grasp is shown.",
+  "objects": {
+    "cube": {
+      "dimensions_mm": [
+        55.0,
+        55.0,
+        55.0
+      ],
+      "palm_world_axis_bounds_mm": [
+        85.93768832341907,
+        103.79691484180178,
+        39.966341177695874
+      ],
+      "initial_contact_bodies": [
+        "right_palm",
+        "right_thumb_mp"
+      ],
+      "projected_pen_axis_mm": null
+    },
+    "pen": {
+      "dimensions_mm": [
+        24.0,
+        169.99999999999997,
+        24.0
+      ],
+      "palm_world_axis_bounds_mm": [
+        85.93762737449629,
+        103.79691484180175,
+        39.96708047709127
+      ],
+      "initial_contact_bodies": [
+        "right_palm"
+      ],
+      "projected_pen_axis_mm": 161.5692026543374
+    }
+  }
+}

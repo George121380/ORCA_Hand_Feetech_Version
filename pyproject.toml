@@ -12,6 +12,12 @@ vision = ["opencv-contrib-python==4.11.0.86"]
 sim = ["orca-sim==0.1.0", "mujoco>=3.3,<4", "imageio[ffmpeg]>=2.37", "matplotlib>=3.10", "scipy>=1.15,<2"]
 train = ["orca-feetech[sim]", "stable-baselines3==2.9.0", "tensorboard>=2.19", "torch>=2.8,<3"]
 teleop = ["orca-feetech[sim]", "orca-teleop[adaptive,mediapipe]==0.1.0", "pin>=3.8,<4", "torch>=2.8,<3"]
+print = [
+    "manifold3d>=3.2,<4",
+    "pypdf>=6,<7",
+    "pypdfium2>=4.30,<6",
+    "reportlab>=4.4,<5",
+]
 
 [dependency-groups]
 dev = ["pytest>=8,<9", "ruff>=0.11"]

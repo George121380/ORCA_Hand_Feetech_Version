@@ -16,7 +16,7 @@ jobs:
           python-version: '3.11'
       - run: python -m pip install uv==0.6.12
       - run: python scripts/bootstrap.py
-      - run: uv sync --frozen --extra hardware --extra train --extra vision
+      - run: uv sync --frozen --extra hardware --extra train --extra vision --extra print
       - run: .venv/bin/ruff check src scripts tests
       - run: .venv/bin/pytest -q
       - run: .venv/bin/orca-hand demo --backend mock --headless --fast --output runs/ci-mock

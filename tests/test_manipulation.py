@@ -75,7 +75,7 @@ def test_supported_resets_no_free_success_and_deployable_observation(kind):
         env.close()
 
 
-@pytest.mark.parametrize("kind,dimensions", [("cube", [42, 42, 42]), ("pen", [24, 24, 170])])
+@pytest.mark.parametrize("kind,dimensions", [("cube", [55, 55, 55]), ("pen", [24, 24, 170])])
 def test_a1mini_metric_export_matches_simulation_and_fits_bed(tmp_path, kind, dimensions):
     import zipfile
     import xml.etree.ElementTree as ET

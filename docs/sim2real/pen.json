@@ -1,9 +1,9 @@
 {
-  "version": "printables-v2",
+  "version": "printables-v3",
   "kind": "pen",
   "units": "m",
   "dictionary": "DICT_APRILTAG_36h11",
-  "nominal_mass_kg": 0.024,
+  "nominal_mass_kg": 0.035,
   "collision_parts": [
     {
       "vertices_m": [

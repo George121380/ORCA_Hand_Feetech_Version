@@ -4,10 +4,12 @@ let kind='cube',model=null,yaw=.65,pitch=-.5,drag=null,last=0,tagPixels={};
 async function select(k){
   kind=k;model=await(await fetch(k+'.json')).json();tagPixels=await(await fetch('tag-pixels.json')).json();
   el('cubeBtn').classList.toggle('active',k==='cube');el('penBtn').classList.toggle('active',k==='pen');el('objectName').textContent=k.toUpperCase();
-  el('description').textContent=k==='cube'?'六个面都有唯一标识，旋转后仍使用同一物体坐标系。平整表面直接粘贴标签，无需额外支架。':'圆柱中杆 + 方形端头。圆杆保留连续滚动接触，两端方头容纳大标记；已按 A1 mini 的空间一体设计。';
-  const rows=k==='cube'?[['外形','42 × 42 × 42 mm'],['黑框 / 白纸','24 / 30 mm'],['标签 ID','0 — 5'],['名义质量（待测）','35 g']]:[['总长 / 圆杆直径','170 / 16 mm'],['方头 / 黑框 / 白纸','24 / 16 / 20 mm'],['标签 ID / 两端基线','10 — 19 / 148 mm'],['A1 mini 打印高度','170 mm']];
+  el('description').textContent=k==='cube'?'放大后的 55 mm 方块。六面都有唯一标识，平整表面居中贴码；按掌部网格尺度核对，仍需真机抓持验证。':'圆柱中杆 + 方形端头。默认沿轴线分为两半，平面朝下打印后定位粘合；组装外形与仿真一致。';
+  const mm=x=>Math.round(x*1000),tag=model.tags[0];
+  const rows=k==='cube'?[['外形',model.dimensions_m.map(mm).join(' × ')+' mm'],['黑框 / 白纸',mm(tag.black_size_m)+' / '+mm(tag.paper_size_m)+' mm'],['标签 ID','0 — 5'],['名义质量（待测）',mm(model.nominal_mass_kg)+' g']]:[['总长 / 圆杆直径','170 / 16 mm'],['方头 / 黑框 / 白纸','24 / 16 / 20 mm'],['标签 ID / 两端基线','10 — 19 / 148 mm'],['默认分体打印高度','12 mm（组装长170）']];
   el('facts').replaceChildren(...rows.map(([a,b])=>{let p=document.createElement('p'),s=document.createElement('span'),v=document.createElement('strong');s.textContent=a;v.textContent=b;p.append(s,v);return p}));
-  el('print3mf').href=k+'-a1mini-pla.3mf';el('petg3mf').href=k+'-a1mini-petg.3mf';el('stl').href=k+'-a1mini.stl';el('cad').href=k+'.scad';el('readout').textContent='1 : 1 文件尺寸 · 视窗按显示区域缩放';
+  const printName=k==='pen'?'pen-split':k;
+  el('print3mf').href=printName+'-a1mini-pla.3mf';el('petg3mf').href=printName+'-a1mini-petg.3mf';el('stl').href=k==='pen'?'pen-half.stl':k+'-a1mini.stl';el('stl').textContent=k==='pen'?'半壳 STL（需2片+销）':'已定向 STL';el('cad').href=k+'.scad';el('readout').textContent='1 : 1 文件尺寸 · 视窗按显示区域缩放';
 }
 const add=(a,b)=>a.map((x,i)=>x+b[i]),mul=(a,s)=>a.map(x=>x*s);
 function camera(p){let [x,y,z]=p;[x,y]=[Math.cos(yaw)*x-Math.sin(yaw)*y,Math.sin(yaw)*x+Math.cos(yaw)*y];return [x,Math.cos(pitch)*y-Math.sin(pitch)*z,Math.sin(pitch)*y+Math.cos(pitch)*z]}

@@ -1,0 +1,86 @@
+solid cube-a1mini_millimeters
+facet normal -1.0 0.0 0.0
+outer loop
+vertex 62.5 62.5 0.0
+vertex 62.5 62.5 55.0
+vertex 62.5 117.5 55.0
+endloop
+endfacet
+facet normal -1.0 0.0 0.0
+outer loop
+vertex 62.5 62.5 0.0
+vertex 62.5 117.5 55.0
+vertex 62.5 117.5 0.0
+endloop
+endfacet
+facet normal 1.0 0.0 0.0
+outer loop
+vertex 117.5 62.5 0.0
+vertex 117.5 117.5 0.0
+vertex 117.5 117.5 55.0
+endloop
+endfacet
+facet normal 1.0 0.0 0.0
+outer loop
+vertex 117.5 62.5 0.0
+vertex 117.5 117.5 55.0
+vertex 117.5 62.5 55.0
+endloop
+endfacet
+facet normal 0.0 -1.0 0.0
+outer loop
+vertex 62.5 62.5 0.0
+vertex 117.5 62.5 0.0
+vertex 117.5 62.5 55.0
+endloop
+endfacet
+facet normal 0.0 -1.0 0.0
+outer loop
+vertex 62.5 62.5 0.0
+vertex 117.5 62.5 55.0
+vertex 62.5 62.5 55.0
+endloop
+endfacet
+facet normal 0.0 1.0 0.0
+outer loop
+vertex 62.5 117.5 0.0
+vertex 62.5 117.5 55.0
+vertex 117.5 117.5 55.0
+endloop
+endfacet
+facet normal 0.0 1.0 0.0
+outer loop
+vertex 62.5 117.5 0.0
+vertex 117.5 117.5 55.0
+vertex 117.5 117.5 0.0
+endloop
+endfacet
+facet normal 0.0 0.0 -1.0
+outer loop
+vertex 62.5 62.5 0.0
+vertex 62.5 117.5 0.0
+vertex 117.5 117.5 0.0
+endloop
+endfacet
+facet normal 0.0 0.0 -1.0
+outer loop
+vertex 62.5 62.5 0.0
+vertex 117.5 117.5 0.0
+vertex 117.5 62.5 0.0
+endloop
+endfacet
+facet normal 0.0 0.0 1.0
+outer loop
+vertex 62.5 62.5 55.0
+vertex 117.5 62.5 55.0
+vertex 117.5 117.5 55.0
+endloop
+endfacet
+facet normal 0.0 0.0 1.0
+outer loop
+vertex 62.5 62.5 55.0
+vertex 117.5 117.5 55.0
+vertex 62.5 117.5 55.0
+endloop
+endfacet
+endsolid cube-a1mini_millimeters

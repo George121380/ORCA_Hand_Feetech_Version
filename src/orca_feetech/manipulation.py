@@ -15,7 +15,7 @@ from .model import JOINT_NAMES, ModelSpec
 from .objects import specification, geometry_signature
 from .paths import upstream
 
-TASK_ID = "orca-v1-printable-yaw-v2"
+TASK_ID = "orca-v1-printable-yaw-v3"
 DT = .05
 HISTORY = 4
 FRAME_SIZE = 55

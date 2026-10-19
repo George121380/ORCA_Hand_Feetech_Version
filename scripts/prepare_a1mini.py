@@ -19,7 +19,7 @@ def flatten(path, folder):
     return result
 
 
-def build_project(seed, output, kind, material, profiles):
+def build_project(seed, output, kind, material, profiles, split=False):
     import xml.etree.ElementTree as ET
     import zipfile
     import numpy as np
@@ -42,14 +42,21 @@ def build_project(seed, output, kind, material, profiles):
                    brim_type="outer_only", brim_width="8", brim_object_gap="0.1",
                    enable_support="0", outer_wall_speed="40", inner_wall_speed="60",
                    default_acceleration="1000", travel_acceleration="1500")
+    if split:
+        changes.update(wall_loops="4", brim_width="3", elefant_foot_compensation="0.15")
     for key, value in changes.items():
         settings[key] = [value] if isinstance(settings.get(key), list) else value
     settings.update(filament_colour=["#EEEEEE"], filament_type=[material],
                     filament_settings_id=[f"Generic {material} @BBL A1M"])
     files["Metadata/project_settings.config"] = (json.dumps(settings, indent=2)+"\n").encode()
-    points, triangles = geometry(kind)
-    points *= 1000
-    if kind == "pen":
+    if split:
+        from orca_feetech.printing import split_pen_plate
+        points, triangles = split_pen_plate()
+        points -= [90, 90, 6]
+    else:
+        points, triangles = geometry(kind)
+        points *= 1000
+    if kind == "pen" and not split:
         points = np.stack([points[:, 0], -points[:, 2], points[:, 1]], axis=1)
     height = float(np.ptp(points[:, 2]))
     transform = f"1 0 0 0 1 0 0 0 1 90 90 {height/2:g}"
@@ -99,7 +106,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--studio", type=Path, default=Path("/Applications/BambuStudio.app"))
     p.add_argument("--seed", type=Path, default=Path("assets/printing/a1mini-seed.3mf"))
-    p.add_argument("--output", type=Path, default=Path("assets/objects/v2"))
+    p.add_argument("--output", type=Path, default=Path("assets/objects/v3"))
     args = p.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     profiles = args.studio/"Contents/Resources/profiles/BBL"
@@ -107,6 +114,11 @@ def main():
         for material in ("PLA", "PETG"):
             build_project(args.seed, args.output/f"{kind}-a1mini-{material.lower()}.3mf",
                           kind, material, profiles)
+    from orca_feetech.printing import export_split_pen
+    export_split_pen(args.output)
+    for material in ("PLA", "PETG"):
+        build_project(args.seed, args.output/f"pen-split-a1mini-{material.lower()}.3mf",
+                      "pen", material, profiles, split=True)
 
 
 if __name__ == "__main__":
