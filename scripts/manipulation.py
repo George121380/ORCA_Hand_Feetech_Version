@@ -161,9 +161,14 @@ def evaluate(args):
     try:
         for episode in range(args.episodes):
             obs, info = env.reset(seed=args.seed + episode)
+            initial = dict(direction=env.direction, initial_position=info["object_position"],
+                           initial_rotation=env.pose()[1].tolist(), goal_rotation=env.goal.tolist(),
+                           reset_attempts=info["reset_attempts"], settle_seconds=info["settle_seconds"],
+                           reset_linear_speed_mps=info["linear_speed_mps"],
+                           reset_angular_speed_rps=info["angular_speed_rps"])
             rng = np.random.default_rng(args.seed + episode)
             total = 0.
-            for _ in range(config.horizon):
+            for step in range(config.horizon):
                 action = (np.zeros(16) if args.baseline == "hold" else
                           rng.uniform(-1, 1, 16) if args.baseline == "random" else
                           policy.predict(obs, deterministic=True)[0])
@@ -178,7 +183,10 @@ def evaluate(args):
                     writer.append_data(frame)
                 if terminated or truncated:
                     break
-            records.append(dict(seed=args.seed+episode, reward=total, **info))
+            reason = ("success" if info["is_success"] else "dropped" if info["dropped"] else
+                      "vision_timeout" if info["vision_age"] > .25 else "horizon")
+            records.append(dict(seed=args.seed+episode, reward=total, steps=step+1,
+                                end_reason=reason, **initial, **info))
     finally:
         env.close()
         if writer:

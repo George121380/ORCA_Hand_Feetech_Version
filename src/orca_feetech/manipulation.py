@@ -15,10 +15,14 @@ from .model import JOINT_NAMES, ModelSpec
 from .objects import specification, geometry_signature
 from .paths import upstream
 
-TASK_ID = "orca-v1-printable-yaw-v5"
+TASK_ID = "orca-v1-printable-yaw-v6"
 DT = .05
 HISTORY = 4
 FRAME_SIZE = 58
+RESET_LINEAR_SPEED = .015
+RESET_ANGULAR_SPEED = .3
+RESET_STABLE_SAMPLES = 4
+RESET_MAX_SAMPLES = 100
 
 
 @dataclass
@@ -219,6 +223,30 @@ class ManipulationEnv(gym.Env):
         self.encoder_bias = rng.uniform(-bias, bias, 17) * strength
         self.dropout_left = 0
 
+    def _settle(self, spawn_x):
+        """Wait for physical rest before recording the target's reference pose.
+
+        A fixed 0.4 s wait left the pen rotating at roughly 10 rad/s. Do not
+        zero velocities or freeze the object: its contact equilibrium must be
+        reached by stepping the same dynamics used during the episode.
+        """
+        self.data.ctrl[self.actuators] = np.clip(self.hand_spec.neutral + self.bias,
+                                               self.lower, self.upper)
+        stable = 0
+        for sample in range(RESET_MAX_SAMPLES):
+            mujoco.mj_step(self.model, self.data, nstep=25)
+            mujoco.mj_forward(self.model, self.data)
+            pos, _ = self.pose()
+            vel = self.data.qvel[self.ov:self.ov + 6]
+            retained = (self.contact() and pos[2] > .12
+                        and np.linalg.norm(pos[:2] - [spawn_x, .049]) < .07)
+            resting = (retained and np.linalg.norm(vel[:3]) < RESET_LINEAR_SPEED
+                       and np.linalg.norm(vel[3:]) < RESET_ANGULAR_SPEED)
+            stable = stable + 1 if resting else 0
+            if stable >= RESET_STABLE_SAMPLES:
+                return sample + 1
+        return None
+
     def reset(self, *, seed=None, options=None):
         super().reset(seed=seed)
         options = options or {}
@@ -234,13 +262,12 @@ class ManipulationEnv(gym.Env):
             a = self.np_random.uniform(-.08, .08)
             self.data.qpos[self.oq + 3:self.oq + 7] = [np.cos(a / 2), 0, 0, np.sin(a / 2)]
             mujoco.mj_forward(self.model, self.data)
-            mujoco.mj_step(self.model, self.data, nstep=200)
-            mujoco.mj_forward(self.model, self.data)
+            settled_samples = self._settle(spawn_x)
             pos, rot = self.pose()
-            if self.contact() and pos[2] > .12 and np.linalg.norm(pos[:2] - [spawn_x, .049]) < .07:
+            if settled_samples is not None:
                 break
         else:
-            raise RuntimeError("30 unsupported resets: inspect object placement/fixture")
+            raise RuntimeError("30 resets without supported physical rest: inspect placement/fixture")
         self.origin = pos.copy()
         self.direction = options.get("direction", int(self.np_random.choice([-1, 1])))
         if self.direction not in (-1, 1):
@@ -257,7 +284,8 @@ class ManipulationEnv(gym.Env):
         self.last_error = rotation_error(rot, self.goal)
         self.previous_action = np.zeros(16)
         self.data.time = 0
-        return self._observation(), {**self.info(), "reset_attempts": attempt + 1}
+        return self._observation(), {**self.info(), "reset_attempts": attempt + 1,
+                                     "settle_seconds": settled_samples * DT}
 
     def _observation(self):
         return self.observer.push(self.data.qpos[self.qadr] + self.encoder_bias, self.codec.q,
@@ -269,13 +297,17 @@ class ManipulationEnv(gym.Env):
         error = rotation_error(rotation, self.goal)
         displacement = float(np.linalg.norm(pos - self.origin))
         vel = self.data.qvel[self.ov:self.ov + 6]
+        linear_speed, angular_speed = float(np.linalg.norm(vel[:3])), float(np.linalg.norm(vel[3:]))
+        shaft_error = float(np.rad2deg(np.arccos(np.clip(rotation[:, 1] @ self.goal[:, 1], -1, 1))))
         dropped = bool(pos[2] < .10 or displacement > .12)
         stable = (error < np.deg2rad(8) and displacement < .04 and self.contact()
-                  and np.linalg.norm(vel[:3]) < .08 and np.linalg.norm(vel[3:]) < 1.)
+                  and linear_speed < .08 and angular_speed < 1.)
         return dict(angle_error_deg=float(np.rad2deg(error)), displacement_m=displacement,
                     dropped=dropped, stable=bool(stable), completed_turns=self.completed,
                     is_success=self.completed >= self.config.turns, vision_age=self.age,
-                    object_position=pos.tolist())
+                    object_position=pos.tolist(), linear_speed_mps=linear_speed,
+                    angular_speed_rps=angular_speed,
+                    shaft_error_deg=shaft_error if self.config.object == "pen" else None)
 
     def step(self, action):
         # Observation validity drives the same hold rule used by deployment.

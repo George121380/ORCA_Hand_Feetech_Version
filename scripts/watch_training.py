@@ -59,6 +59,17 @@ def job_command(options, output, resume=None):
     return command
 
 
+def quality_retry_options(initial, index, attempt, steps):
+    """Bounded same-skill fine tuning; never advance a failed skill or reuse its test set."""
+    name, options = ("initial", initial.copy()) if index == 0 else stage_options(initial, index)
+    options.update(steps=steps, learning_rate=max(1e-5, initial.get("learning_rate", 3e-4) / 2),
+                   entropy_coef=min(.001, initial.get("entropy_coef", .01)))
+    # The development set remains fixed. Each retry has its own formal test
+    # block, disjoint from every course stage and every prior retry.
+    options["test_seed"] += 100000 * attempt
+    return f"{name}-quality-{attempt}", options
+
+
 def terminate_verified(state, output):
     """Signal only the identified job's process group or exact worker command."""
     targets = running_processes(state, output)
@@ -96,11 +107,16 @@ def main():
     parser.add_argument("--stall-seconds", type=float, default=300)
     parser.add_argument("--max-restarts", type=int, default=3)
     parser.add_argument("--retry-seconds", type=float, default=30)
+    parser.add_argument("--quality-retries", type=int, default=0,
+                        help="Bounded extra training pilots on an unfinished skill (no promotion)")
+    parser.add_argument("--quality-retry-steps", type=int, default=2000000)
     args = parser.parse_args()
     if platform.system() != "Linux":
         parser.error("The watchdog requires Linux /proc and systemd")
     if min(args.poll_seconds, args.stall_seconds, args.retry_seconds) <= 0 or args.max_restarts < 0:
         parser.error("Invalid watchdog timing/retry limits")
+    if not 0 <= args.quality_retries <= 3 or args.quality_retry_steps < 1:
+        parser.error("Invalid bounded quality-pilot budget")
     args.initial_job = args.initial_job.resolve()
     args.state_dir = args.state_dir.resolve()
     args.state_dir.mkdir(parents=True, exist_ok=True)
@@ -115,6 +131,9 @@ def main():
         state = json.loads(path.read_text())
         if state["initial_job"] != str(args.initial_job) or state["course"] != args.course:
             raise ValueError("State directory belongs to a different job or monitoring plan")
+        if (state.get("quality_retries", 0) != args.quality_retries
+                or state.get("quality_retry_steps", 2000000) != args.quality_retry_steps):
+            raise ValueError("Quality pilot budget differs from the persisted monitoring plan")
         if state["status"] in ("complete", "quality_gate_failed", "recovery_exhausted", "needs_review"):
             print(json.dumps(state, indent=2), flush=True)
             return
@@ -126,7 +145,9 @@ def main():
         state = dict(status="monitoring", initial_job=str(args.initial_job), course=args.course,
                      initial_arguments=initial, active_job=str(args.initial_job), stage_index=0,
                      stage_name="initial", restarts=0, stage_results=[], started_at=now(),
-                     last_progress_at=time.time(), sample=None, pending_restart=None)
+                     last_progress_at=time.time(), sample=None, pending_restart=None,
+                     quality_attempt=0, quality_retries=args.quality_retries,
+                     quality_retry_steps=args.quality_retry_steps)
 
     def persist():
         state.update(updated_at=now(), supervisor_pid=os.getpid(), poll_seconds=args.poll_seconds,
@@ -192,7 +213,26 @@ def main():
             state["stage_results"].append(result)
             event("stage_finished", **result)
             if not current["acceptance_met"]:
+                attempt = state.get("quality_attempt", 0) + 1
+                if attempt <= args.quality_retries:
+                    name, options = quality_retry_options(state["initial_arguments"],
+                                                           state["stage_index"], attempt,
+                                                           args.quality_retry_steps)
+                    options["num_envs"] = current.get("effective_num_envs", options["num_envs"])
+                    output = args.state_dir / name
+                    # A quality retry remains on the current course stage.
+                    # Keep the failed job, test and selected model intact.
+                    state.update(quality_attempt=attempt, active_job=str(output), restarts=0,
+                                 pending_restart=None, status="monitoring")
+                    event("quality_pilot_starting", job=str(output), attempt=attempt,
+                          steps=args.quality_retry_steps, test_seed=options["test_seed"],
+                          learning_rate=options["learning_rate"], entropy_coef=options["entropy_coef"])
+                    launch(job_command(options, output, job / "selected/policy.zip"))
+                    time.sleep(args.poll_seconds)
+                    continue
                 state.update(status="quality_gate_failed", error="Policy finished but did not meet acceptance")
+                event("quality_budget_exhausted", attempts=state.get("quality_attempt", 0),
+                      test=current.get("test"), job=str(job))
                 persist()
                 return
             if not args.course or state["stage_index"] == 4:
@@ -204,7 +244,7 @@ def main():
             options["num_envs"] = current.get("effective_num_envs", options["num_envs"])
             output = args.state_dir / name
             state.update(stage_index=index, stage_name=name, active_job=str(output), restarts=0,
-                         pending_restart=None, status="monitoring")
+                         pending_restart=None, quality_attempt=0, status="monitoring")
             event("stage_starting", job=str(output))
             launch(job_command(options, output, job / "selected/policy.zip"))
             time.sleep(args.poll_seconds)

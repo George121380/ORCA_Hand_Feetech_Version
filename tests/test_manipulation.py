@@ -146,6 +146,27 @@ def test_vision_observation_distinguishes_initial_contact_locations():
     assert np.allclose(second[32:35] * .2, shifted)
 
 
+@pytest.mark.parametrize("kind", ["cube", "pen"])
+def test_reset_waits_for_physical_rest_before_setting_goal(kind):
+    from orca_feetech.manipulation import RESET_LINEAR_SPEED, RESET_ANGULAR_SPEED
+    env = ManipulationEnv(TaskConfig(object=kind, randomization=.3))
+    try:
+        for seed in range(47000, 47020):
+            _, info = env.reset(seed=seed)
+            assert info["settle_seconds"] >= .2
+            assert info["linear_speed_mps"] < RESET_LINEAR_SPEED
+            assert info["angular_speed_rps"] < RESET_ANGULAR_SPEED
+            assert info["angle_error_deg"] == pytest.approx(15)
+            position = np.array(info["object_position"])
+            _, _, _, _, next_info = env.step(np.zeros(16))
+            # Regression for the old mid-flight reset: the first control tick
+            # must not start with a rapidly departing reference pose.
+            assert np.linalg.norm(np.array(next_info["object_position"]) - position) < .003
+            assert abs(next_info["angle_error_deg"] - 15) < 5
+    finally:
+        env.close()
+
+
 K = np.array([[1400., 0, 960], [0, 1400, 540], [0, 0, 1]])
 R = np.array([2.8, .1, .1])
 T = np.array([.015, .015, .28])
@@ -227,6 +248,11 @@ def test_checkpoint_roundtrip_and_reject_changed_geometry(tmp_path):
         assert loaded_config.object == "pen"
         loaded = PPO.load(tmp_path / "policy.zip", device="cpu")
         assert np.array_equal(action, loaded.predict(obs, deterministic=True)[0])
+        meta["task_id"] = "orca-v1-printable-yaw-v5"
+        (tmp_path / "config.json").write_text(json.dumps(meta))
+        with pytest.raises(ValueError, match="mismatch"):
+            load_config(tmp_path / "policy.zip")
+        meta["task_id"] = TASK_ID
         meta["task"]["object"] = "cube"
         (tmp_path / "config.json").write_text(json.dumps(meta))
         with pytest.raises(ValueError, match="mismatch"):

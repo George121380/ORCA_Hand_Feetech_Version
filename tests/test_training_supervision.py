@@ -3,6 +3,7 @@ import io
 import json
 from pathlib import Path
 import zipfile
+from types import SimpleNamespace
 
 import pytest
 
@@ -77,3 +78,45 @@ def test_watchdog_distinguishes_quality_from_process_failure(monkeypatch, tmp_pa
     state = json.loads((output / "watchdog.json").read_text())
     assert state["status"] == expected
     assert (initial / "job.json").is_file()
+
+
+def test_quality_pilot_stays_on_failed_skill_uses_new_test_and_stops_at_budget(monkeypatch, tmp_path):
+    monkeypatch.syspath_prepend(str(Path(__file__).parents[1] / "scripts"))
+    spec = importlib.util.spec_from_file_location("watch", Path(__file__).parents[1] / "scripts/watch_training.py")
+    watch = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(watch)
+    monkeypatch.setattr(watch.platform, "system", lambda: "Linux")
+    monkeypatch.setattr(watch.time, "sleep", lambda _: None)
+    initial = tmp_path / "initial"
+    initial.mkdir()
+    options = dict(device="cpu", steps=100, num_envs=2, object="pen", angle=45, turns=1,
+                   horizon=240, randomization=.3, selection_seed=50000, test_seed=60000,
+                   learning_rate=.0003, entropy_coef=.01)
+    original = dict(status="complete", acceptance_met=False, arguments=options)
+    (initial / "job.json").write_text(json.dumps(original))
+    launches = []
+
+    def launch(argv, **kwargs):
+        launches.append(argv)
+        output = Path(argv[argv.index("--output")+1])
+        output.mkdir()
+        (output / "job.json").write_text(json.dumps(original))
+        return SimpleNamespace(pid=99999999)
+
+    monkeypatch.setattr(watch.subprocess, "Popen", launch)
+    output = tmp_path / "watch"
+    monkeypatch.setattr(watch.sys, "argv", ["watch", "--initial-job", str(initial),
+                       "--state-dir", str(output), "--quality-retries", "1", "--quality-retry-steps", "200"])
+    watch.main()
+    state = json.loads((output / "watchdog.json").read_text())
+    assert state["status"] == "quality_gate_failed"
+    assert state["stage_index"] == 0 and state["quality_attempt"] == 1
+    assert len(launches) == 1 and len(state["stage_results"]) == 2
+    argv = launches[0]
+    assert argv[argv.index("--resume")+1] == str(initial / "selected/policy.zip")
+    assert argv[argv.index("--angle")+1] == "45"
+    assert argv[argv.index("--steps")+1] == "200"
+    assert argv[argv.index("--test-seed")+1] == "160000"
+    assert argv[argv.index("--selection-seed")+1] == "50000"
+    assert "--reset-log-std" not in argv
+    assert json.loads((initial / "job.json").read_text()) == original
