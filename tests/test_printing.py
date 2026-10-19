@@ -89,14 +89,24 @@ def test_delivered_native_projects_contain_correct_plate_geometry_and_process(na
         settings = json.loads(z.read("Metadata/project_settings.config"))
     points = np.array([[float(v.get(key)) for key in ("x", "y", "z")]
                        for v in model.findall(".//m:vertex", ns)])
+    triangles = np.array([[int(v.get(key)) for key in ("v1", "v2", "v3")]
+                          for v in model.findall(".//m:triangle", ns)])
     transform = np.array(list(map(float, build.find("m:build/m:item", ns).get("transform").split())))
     points = points@transform[:9].reshape(3, 3)+transform[9:]
     if name == "pen-split":
-        expected, _ = split_pen_plate()
+        expected, expected_faces = split_pen_plate()
+        # QHull/boolean triangulation and vertex order can vary across OSes.
+        # Compare the solids, including the socket cavities, not array order.
+        delivered, canonical = manifold(points, triangles), manifold(expected, expected_faces)
+        assert delivered.status() == canonical.status() == m.Error.NoError
+        assert (delivered-canonical).volume() < .01
+        assert (canonical-delivered).volume() < .01
     else:
         from orca_feetech.objects import print_coordinates
         expected = print_coordinates("cube", geometry("cube")[0])
-    assert np.allclose(points, expected)
+        assert np.allclose(points, expected)
+    assert np.allclose(points.min(0), expected.min(0))
+    assert np.allclose(points.max(0), expected.max(0))
     def value(key):
         v = settings[key]
         return v[0] if isinstance(v, list) else v
