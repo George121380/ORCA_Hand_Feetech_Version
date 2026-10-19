@@ -124,10 +124,26 @@ def test_action_acceleration_and_pose_loss_hold_match_deployment():
     observer = ObservationCodec(cfg)
     a = observer.push(q, q, np.zeros(3), np.eye(3), np.eye(3), np.zeros(3), True, 0)
     b = observer.push(q, q, np.zeros(3), np.eye(3), np.eye(3), np.zeros(3), False, .15)
-    assert a.shape == b.shape == (220,)
+    assert a.shape == b.shape == (232,)
     assert b[-2] == 0 and b[-1] == pytest.approx(.15)
     with pytest.raises(ValueError):
         codec.step(np.full(16, np.nan))
+
+
+def test_vision_observation_distinguishes_initial_contact_locations():
+    cfg = TaskConfig(object="pen")
+    q = ModelSpec.load().neutral
+    origin = np.array([.15, .05, .17])
+    shifted = origin + [.03, 0, 0]
+    first = ObservationCodec(cfg).push(q, q, origin, np.eye(3), np.eye(3), origin, True, 0)
+    second = ObservationCodec(cfg).push(q, q, shifted, np.eye(3), np.eye(3), shifted, True, 0)
+    # Same initial displacement and hand state, but different contacts are now
+    # distinguishable using camera-observable position in the registered S frame.
+    assert np.allclose(first[:32], second[:32])
+    assert np.allclose(first[35:38], second[35:38])
+    assert not np.allclose(first, second)
+    assert np.allclose(first[32:35] * .2, origin)
+    assert np.allclose(second[32:35] * .2, shifted)
 
 
 K = np.array([[1400., 0, 960], [0, 1400, 540], [0, 0, 1]])

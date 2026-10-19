@@ -15,10 +15,10 @@ from .model import JOINT_NAMES, ModelSpec
 from .objects import specification, geometry_signature
 from .paths import upstream
 
-TASK_ID = "orca-v1-printable-yaw-v4"
+TASK_ID = "orca-v1-printable-yaw-v5"
 DT = .05
 HISTORY = 4
-FRAME_SIZE = 55
+FRAME_SIZE = 58
 
 
 @dataclass
@@ -111,6 +111,10 @@ class ObservationCodec:
         def normalized(x):
             return 2 * (np.asarray(x)[:16] - self.lower[:16]) / (self.upper[:16] - self.lower[:16]) - 1
         frame = np.concatenate([normalized(q), normalized(command),
+                                # Absolute S-frame position locates the object relative to
+                                # the fixed hand; displacement alone hides initial contact
+                                # location. Both are observable through calibrated vision.
+                                np.asarray(position) / .2,
                                 (np.asarray(position) - origin) / .1,
                                 np.asarray(rotation).reshape(9), np.asarray(goal).reshape(9),
                                 [float(valid), min(age, 1.)]]).astype(np.float32)
