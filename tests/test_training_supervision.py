@@ -9,14 +9,16 @@ import pytest
 from orca_feetech import training_supervision as supervisor
 
 
-def checkpoint(path, steps, weight=1.):
+def checkpoint(path, steps, weight=1., optimizer_value=1.):
     import torch
     stream = io.BytesIO()
     torch.save({"weight": torch.tensor([weight])}, stream)
+    optimizer = io.BytesIO()
+    torch.save({"state": {0: {"exp_avg": torch.tensor([optimizer_value])}}, "param_groups": []}, optimizer)
     with zipfile.ZipFile(path, "w") as archive:
         archive.writestr("data", json.dumps(dict(num_timesteps=steps)))
         archive.writestr("policy.pth", stream.getvalue())
-        archive.writestr("policy.optimizer.pth", b"optimizer")
+        archive.writestr("policy.optimizer.pth", optimizer.getvalue())
 
 
 def test_recovery_uses_actual_steps_and_skips_corrupt_or_nan_weights(monkeypatch, tmp_path):
@@ -25,6 +27,7 @@ def test_recovery_uses_actual_steps_and_skips_corrupt_or_nan_weights(monkeypatch
     good = tmp_path / "checkpoint_100_steps.zip"
     checkpoint(good, 100)
     checkpoint(tmp_path / "checkpoint_200_steps.zip", 200, float("nan"))
+    checkpoint(tmp_path / "checkpoint_300_steps.zip", 300, optimizer_value=float("nan"))
     (tmp_path / "checkpoint_999_steps.zip").write_bytes(b"interrupted ZIP write")
     path, steps = supervisor.latest_checkpoint([tmp_path])
     assert path == good and steps == 100

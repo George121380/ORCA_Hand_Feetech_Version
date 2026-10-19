@@ -33,6 +33,18 @@ def checkpoint_steps(path, *, check_weights=False):
                 raise ValueError("Invalid policy state dictionary")
             if not all(torch.isfinite(value).all().item() for value in weights.values()):
                 raise ValueError("Non-finite policy weights")
+            optimizer = torch.load(io.BytesIO(archive.read("policy.optimizer.pth")),
+                                   map_location="cpu", weights_only=True)
+            def finite(value):
+                if isinstance(value, torch.Tensor):
+                    return torch.isfinite(value).all().item()
+                if isinstance(value, dict):
+                    return all(finite(v) for v in value.values())
+                if isinstance(value, (list, tuple)):
+                    return all(finite(v) for v in value)
+                return not isinstance(value, float) or math.isfinite(value)
+            if not isinstance(optimizer, dict) or not finite(optimizer):
+                raise ValueError("Non-finite optimizer state")
     return steps
 
 

@@ -75,6 +75,11 @@ def main():
     parser.add_argument("--video", action="store_true")
     parser.add_argument("--checkpoint-every", type=int, default=100000)
     parser.add_argument("--eval-every", type=int, default=250000)
+    parser.add_argument("--learning-rate", type=float, default=3e-4)
+    parser.add_argument("--entropy-coef", type=float, default=.01)
+    parser.add_argument("--target-kl", type=float, default=.03)
+    parser.add_argument("--initial-log-std", type=float, default=0.)
+    parser.add_argument("--reset-log-std", type=float)
     parser.add_argument("--continue-existing", action="store_true",
                         help="Recover an interrupted job without repeating completed evaluations")
     parser.add_argument("--recovery-num-envs", type=int,
@@ -204,8 +209,12 @@ def main():
             command = python + ["train", "--output", str(model), "--steps", str(remaining)]
             if source:
                 command += ["--resume", str(source)]
+            if (args.reset_log_std is not None
+                    and (source is None or not Path(source).resolve().is_relative_to(args.output))):
+                command += ["--reset-log-std", str(args.reset_log_std)]
             for key in ("object", "angle", "turns", "horizon", "randomization", "num_envs", "device",
-                        "seed", "device_config", "mass_kg", "friction", "checkpoint_every", "eval_every"):
+                        "seed", "device_config", "mass_kg", "friction", "checkpoint_every", "eval_every",
+                        "learning_rate", "entropy_coef", "target_kl", "initial_log_std"):
                 value = getattr(args, key)
                 if value is not None:
                     command += ["--" + key.replace("_", "-"), str(value)]

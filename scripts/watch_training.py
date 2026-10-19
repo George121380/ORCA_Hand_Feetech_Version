@@ -48,7 +48,8 @@ def job_command(options, output, resume=None):
     command = [sys.executable, str(ROOT / "scripts/run_training_job.py"), "--output", str(output)]
     for key in ("object", "angle", "turns", "horizon", "randomization", "steps", "num_envs", "device",
                 "seed", "device_config", "mass_kg", "friction", "selection_episodes", "selection_seed",
-                "test_episodes", "test_seed", "checkpoint_every", "eval_every"):
+                "test_episodes", "test_seed", "checkpoint_every", "eval_every", "learning_rate",
+                "entropy_coef", "target_kl", "initial_log_std"):
         if options.get(key) is not None:
             command += ["--" + key.replace("_", "-"), str(options[key])]
     if resume:

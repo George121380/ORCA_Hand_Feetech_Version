@@ -53,7 +53,8 @@ def test_recovery_keeps_remaining_budget_and_reduces_workers(monkeypatch, tmp_pa
                      randomization=.3, steps=3000000, num_envs=16, device="cuda", seed=0,
                      resume=None, device_config=None, mass_kg=None, friction=1.,
                      selection_episodes=40, selection_seed=30000, test_episodes=100,
-                     test_seed=20000, video=False)
+                     test_seed=20000, video=False, reset_log_std=-1., learning_rate=.0001,
+                     entropy_coef=.001, target_kl=.01)
     (output / "job.json").write_text(json.dumps(dict(status="failed", arguments=arguments,
                                                     pid=99999999, commands=[], acceptance_met=False)))
     source = output / "model/checkpoint_1500000_steps.zip"
@@ -78,6 +79,8 @@ def test_recovery_keeps_remaining_budget_and_reduces_workers(monkeypatch, tmp_pa
     assert command[command.index("--steps") + 1] == "1500000"
     assert command[command.index("--resume") + 1] == str(source)
     assert command[command.index("--num-envs") + 1] == "8"
+    assert command[command.index("--learning-rate") + 1] == "0.0001"
+    assert "--reset-log-std" not in command
     state = json.loads((output / "job.json").read_text())
     assert state["target_total_steps"] == 3000000
     assert state["arguments"]["steps"] == 3000000

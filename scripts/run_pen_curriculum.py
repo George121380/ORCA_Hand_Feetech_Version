@@ -62,7 +62,8 @@ def main():
                        "--seed", str(options["seed"]), "--resume", str(previous / "selected/policy.zip"),
                        "--selection-seed", str(30000 + index*1000),
                        "--test-seed", str(20000 + index*1000), "--video", "--output", str(output)]
-            for key in ("device_config", "mass_kg", "friction"):
+            for key in ("device_config", "mass_kg", "friction", "learning_rate", "entropy_coef",
+                        "target_kl", "initial_log_std"):
                 if options.get(key) is not None:
                     command += ["--" + key.replace("_", "-"), str(options[key])]
             entry = dict(name=name, output=str(output), argv=command, started_at=now())

@@ -65,6 +65,9 @@ def train(args):
                     resume=str(args.resume) if args.resume else None, git_revision=revision,
                     platform=platform.platform(), torch_version=torch.__version__,
                     cuda=torch.version.cuda, physics="native MuJoCo CPU; PPO on selected device",
+                    learning_rate=args.learning_rate, entropy_coef=args.entropy_coef,
+                    target_kl=args.target_kl, initial_log_std=args.initial_log_std,
+                    reset_log_std=args.reset_log_std,
                     trained=False)
     write(args.output / "config.json", metadata)
 
@@ -83,12 +86,17 @@ def train(args):
         evaluation = DummyVecEnv([factory(0, True)])
         evaluation.seed(10000 + args.seed)
         model = (PPO.load(args.resume, env=env, device=args.device,
-                          batch_size=min(1024, 256 * args.num_envs)) if args.resume else
+                          batch_size=min(1024, 256 * args.num_envs), learning_rate=args.learning_rate,
+                          ent_coef=args.entropy_coef, target_kl=args.target_kl) if args.resume else
                  PPO("MlpPolicy", env, seed=args.seed, device=args.device, n_steps=256,
-                     batch_size=min(1024, 256 * args.num_envs), n_epochs=5, learning_rate=3e-4,
-                     ent_coef=.01, gamma=.99, gae_lambda=.95, target_kl=.03,
-                     policy_kwargs={"net_arch": {"pi": [256, 256], "vf": [256, 256]}},
+                     batch_size=min(1024, 256 * args.num_envs), n_epochs=5, learning_rate=args.learning_rate,
+                     ent_coef=args.entropy_coef, gamma=.99, gae_lambda=.95, target_kl=args.target_kl,
+                     policy_kwargs={"net_arch": {"pi": [256, 256], "vf": [256, 256]},
+                                    "log_std_init": args.initial_log_std},
                      tensorboard_log=str(args.output / "tb"), verbose=1))
+        if args.reset_log_std is not None:
+            with torch.no_grad():
+                model.policy.log_std.fill_(args.reset_log_std)
         model.tensorboard_log = str(args.output / "tb")
         started = time.monotonic()
         initial_steps = model.num_timesteps
@@ -207,6 +215,11 @@ def main():
     t.add_argument("--num-envs", type=int, default=16)
     t.add_argument("--device", choices=["cpu", "cuda"], default="cuda")
     t.add_argument("--seed", type=int, default=0)
+    t.add_argument("--learning-rate", type=float, default=3e-4)
+    t.add_argument("--entropy-coef", type=float, default=.01)
+    t.add_argument("--target-kl", type=float, default=.03)
+    t.add_argument("--initial-log-std", type=float, default=0.)
+    t.add_argument("--reset-log-std", type=float, help="Explicit exploration reset for a new fine-tuning stage")
     t.add_argument("--resume", type=Path)
     t.add_argument("--checkpoint-every", type=int, default=100000)
     t.add_argument("--eval-every", type=int, default=250000)
@@ -226,6 +239,10 @@ def main():
     elif args.command == "train":
         if min(args.steps, args.num_envs, args.checkpoint_every, args.eval_every) < 1:
             p.error("Training budgets must be positive")
+        if (not 0 < args.learning_rate <= .01 or not 0 <= args.entropy_coef <= 1
+                or not 0 < args.target_kl <= 1 or not -5 <= args.initial_log_std <= 2
+                or args.reset_log_std is not None and not -5 <= args.reset_log_std <= 2):
+            p.error("Invalid PPO optimization/exploration parameters")
         train(args)
     else:
         if args.episodes < 1:
