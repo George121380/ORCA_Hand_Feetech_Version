@@ -85,6 +85,24 @@ prepare_a1mini.py需要本机Bambu Studio官方预设。4090安装脚本之后�
 
 ## 3. 分阶段训练、续训与验收
 
+### 后台执行一个完整实验
+
+`scripts/run_training_job.py`把一段训练、checkpoint选择、正式测试、基线和视频串在一起，限Linux执行。当前210mm笔可先用低随机化建立15°技能：
+
+    tmux new -s orca-pen
+    .venv/bin/python scripts/run_training_job.py --object pen --angle 15 \
+      --randomization .3 --steps 3000000 --num-envs 16 --device cuda \
+      --video --output runs/pen-15-r03-seed0
+
+用Ctrl+B、D离开tmux，SSH断开后任务继续；`tmux attach -t orca-pen`查看，Ctrl+C中断当前任务。不要重复使用已存在的输出目录。模型、TensorBoard和逐环境monitor位于`model/`，训练stdout在`train.log`，阶段状态、实际命令和子进程PID在`job.json`。可以另开SSH查看：
+
+    tail -f runs/pen-15-r03-seed0/train.log
+    cat runs/pen-15-r03-seed0/model/progress.json
+
+训练期间内部评估仍使用10000+seed。结束后，仅在开发集30000..30039上比较最终policy与内部best_model，按成功率优先、掉落率其次、最终误差再次选择，复制到`selected/`并保存对应config。随后只对选中模型运行20000..20099正式测试，静止和随机动作基线使用相同初始种子；这些正式测试不参与checkpoint选择。两个种子区间不能重叠，多种子实验应显式规划独立区间。`test-policy/metrics.json`给出100回合结果和区间；`video/evaluation.mp4`记录正式测试固定前五回合，不筛选成功片段。
+
+`job.json`的`status=complete`只表示命令执行完毕，`acceptance_met`才表示该阶段达到80%成功、至多10%掉落的初步门槛。即便低随机化15°达标，也不能当作完整90°转笔或sim-to-real完成；应提高随机化后重新训练、验证，再推进角度。成品质量和真机ROM未测量的实验必须标记为名义物理参数实验。若根据正式测试结果改任务或调参，应另留新的最终测试种子，不能反复把同一组种子称为未见测试集。
+
 建议先方块 15°，再 45°，再 90°，最后四次同向 90°；训练笔独立重新开始，不复用方块权重作为已学会的模型。
 
     python scripts/manipulation.py train --object cube --angle 15 \
