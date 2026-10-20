@@ -1,0 +1,2925 @@
+{
+  "timestamp": "2026-10-20T16:31:46.528198+00:00",
+  "status": "complete",
+  "purpose": "Offline keyframe geometry probe; not physical execution, training, deployment or acceptance",
+  "runtime": {
+    "system": "Darwin",
+    "python": "3.11.1",
+    "mujoco": "3.13.0",
+    "numpy": "2.3.5"
+  },
+  "script_sha256": "c990816e21166190873d1efd77422efc761104968575c1eafcaa607a1e1f0655",
+  "is_physics_rollout": false,
+  "acceptance_met": false,
+  "clip": "01_single_axis/clip_001",
+  "source_sha256": "ca0b9b5dfc5de0170538bb13e95c56d5c2f20853e22b8405fe4b6853180b8348",
+  "source_frame_dt_s": 0.02,
+  "source_frames": 369,
+  "sampled_frames": 32,
+  "maximum_optimizer_nfev_per_frame": 60,
+  "model_sha256": "fad505b767154916bebe9f048f13004328dcb49ae51981903d05a8640ee98a42",
+  "geometry_sha256": "4b2937c1c2e2035d375a9686d2db34f5a743759489226d77cc817f7be95ea0b9",
+  "source_from_orca_object_body": [
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      -1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "joint_names": [
+    "thumb_mcp",
+    "thumb_abd",
+    "thumb_pip",
+    "thumb_dip",
+    "index_abd",
+    "index_mcp",
+    "index_pip",
+    "middle_abd",
+    "middle_mcp",
+    "middle_pip",
+    "ring_abd",
+    "ring_mcp",
+    "ring_pip",
+    "pinky_abd",
+    "pinky_mcp",
+    "pinky_pip",
+    "wrist"
+  ],
+  "scale": 0.8767850937512804,
+  "fingertip_proxy_offsets_m": [
+    [
+      0.0045940197833073985,
+      -0.00035743977133818216,
+      0.029997418183124864
+    ],
+    [
+      -0.005842129099574999,
+      -0.00020146049840261964,
+      0.04352012162953995
+    ],
+    [
+      -0.005842129099574992,
+      -0.00020146049840262298,
+      0.04352012162953993
+    ],
+    [
+      -0.005842129099575001,
+      -0.00020146049840263826,
+      0.043520121629539936
+    ],
+    [
+      -0.00584212909957498,
+      -0.00020146049840262693,
+      0.04352012162953994
+    ]
+  ],
+  "alignment": "Per-frame source hand basis mapped to neutral ORCA hand basis; one bone-length scale",
+  "limitations": [
+    "No contact objective in IK; contacts are static mesh intersections, not support forces.",
+    "Source motions may need different grasp topology, object alignment and retiming.",
+    "Fingertips are distal mesh-cap proxies, not calibrated real contact points.",
+    "No policy or training reset asset may use these states without a separate physics check."
+  ],
+  "trials": [
+    {
+      "frame": 0,
+      "time_s": 0.0,
+      "qpos": [
+        0.41518589837498254,
+        -0.6688870406570657,
+        0.41833595288584013,
+        -0.8538399999999999,
+        0.21709005640404314,
+        0.9321191293153528,
+        0.4636302552134641,
+        0.1707582042683263,
+        1.2079763232933516,
+        0.6289721610599716,
+        0.5258778833800829,
+        1.4080795592595228,
+        -0.09432013992478352,
+        0.22754655998792736,
+        0.2815367969322203,
+        1.1306140879502884
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 14,
+      "tip_errors_m": [
+        0.0004264317078467098,
+        0.0007409354425523453,
+        0.00019506173388541645,
+        0.00026073800354942876,
+        0.0008204657999689426
+      ],
+      "tip_rms_m": 0.0005495501518382658,
+      "object_position_m": [
+        0.19254982083020683,
+        0.03721232619459398,
+        0.2089396625370208
+      ],
+      "object_quaternion_wxyz": [
+        0.9032694426648956,
+        0.16792706867575716,
+        -0.25816669563643213,
+        0.2987553695215909
+      ],
+      "contacts": [
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 4.791151866966021e-05
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 8.85532440814445e-05
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 6.297151146055021e-05
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 2.8214676821117826e-05
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0018877915992735485
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.001841318567940319
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005431041605936918
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005506256840068577
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.003780773696873148
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.0037218884191923245
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.0067535499206038815
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.006695617610853616
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.006674039222379933
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.006737586071116064
+        }
+      ],
+      "deepest_penetration_m": 0.0067535499206038815,
+      "tower_contact": false
+    },
+    {
+      "frame": 12,
+      "time_s": 0.24,
+      "qpos": [
+        0.3875198361080014,
+        -0.6665445128742494,
+        0.44763065082548525,
+        -0.8538399999999999,
+        0.20578333417586908,
+        0.918065401433991,
+        0.48908206003864396,
+        0.13395779037957994,
+        1.2065260910002222,
+        0.6369420715302386,
+        0.5076534054785533,
+        1.4177526917937837,
+        -0.09748929142457204,
+        0.2050611806881126,
+        0.32456924994862346,
+        1.0991563243282183
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 5,
+      "tip_errors_m": [
+        0.0004371787776370314,
+        0.0007429414209733731,
+        0.0002937951758532957,
+        0.00015552390118878795,
+        0.0008112756413784536
+      ],
+      "tip_rms_m": 0.0005498652005908019,
+      "object_position_m": [
+        0.1925821965965388,
+        0.03672399228921021,
+        0.20885746016005924
+      ],
+      "object_quaternion_wxyz": [
+        0.9020920465027289,
+        0.17320291554140083,
+        -0.26036065123255997,
+        0.2973937137436402
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0018419386706133199
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0018907775540433407
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0054828964207929605
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005479480421094109
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.004111245199453833
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.004173931459500837
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.007034660333667673
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.006983854205320694
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.006969127311204591
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.0070236494440779566
+        }
+      ],
+      "deepest_penetration_m": 0.007034660333667673,
+      "tower_contact": false
+    },
+    {
+      "frame": 24,
+      "time_s": 0.48,
+      "qpos": [
+        0.3956566924366175,
+        -0.6800630844762071,
+        0.45137364023506477,
+        -0.8538399999999999,
+        0.2212254393458071,
+        0.865138563238298,
+        0.5603040504534624,
+        0.12961477376840247,
+        1.236480088622354,
+        0.5726281279459702,
+        0.5023106022986059,
+        1.383513843852204,
+        -0.02794684385417506,
+        0.19515892302093066,
+        0.32497446153238035,
+        1.124154206234786
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 11,
+      "tip_errors_m": [
+        0.00043110519802469873,
+        0.0006669021766066014,
+        0.00012159412237204497,
+        0.0006554788274485611,
+        0.0007940909512722967
+      ],
+      "tip_rms_m": 0.0005840596318267248,
+      "object_position_m": [
+        0.19255388949051705,
+        0.03759252427269673,
+        0.2081215525820224
+      ],
+      "object_quaternion_wxyz": [
+        0.9053128034477812,
+        0.1671538812782175,
+        -0.2360765111501497,
+        0.31102441828628175
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0016336619824136721
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0015798655533982707
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00527211263952679
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005320220848620723
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.00486608641525364
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.004914189385192349
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.0070013633771983845
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.006943504341046482
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.0069365124174722344
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.006995378258659772
+        }
+      ],
+      "deepest_penetration_m": 0.0070013633771983845,
+      "tower_contact": false
+    },
+    {
+      "frame": 36,
+      "time_s": 0.72,
+      "qpos": [
+        0.5524976094419692,
+        -0.6851395628500231,
+        0.28423359402237813,
+        -0.8538399999999999,
+        0.24576999999999996,
+        0.3530487959400648,
+        1.2841589211115902,
+        0.3697868205796905,
+        1.4483735094954524,
+        0.12310651190548573,
+        0.6589154561852195,
+        1.4456102948604022,
+        -0.10513723776482942,
+        0.39573232367240707,
+        -0.18941869297693584,
+        1.1396970421637862
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 14,
+      "tip_errors_m": [
+        0.00036795079306693366,
+        0.0005765695924934487,
+        0.0009518604797198666,
+        0.0013408126038238273,
+        0.0009645250487816582
+      ],
+      "tip_rms_m": 0.0009057533507814667,
+      "object_position_m": [
+        0.19328209027465876,
+        0.043252642790417795,
+        0.2123353487143124
+      ],
+      "object_quaternion_wxyz": [
+        0.8174585101220242,
+        0.20141103961060353,
+        -0.3467947380158612,
+        0.4134351061975341
+      ],
+      "contacts": [
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.003365146415196848
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.003362221946601119
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.0033887832880451023
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.0033955647502600258
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.009530304333030981
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.009476031785141538
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.01121008443278883
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.01118093331991789
+        }
+      ],
+      "deepest_penetration_m": 0.01121008443278883,
+      "tower_contact": false
+    },
+    {
+      "frame": 47,
+      "time_s": 0.9400000000000001,
+      "qpos": [
+        0.5729832548273742,
+        -0.6688130784004964,
+        0.3248595120766573,
+        -0.853839999979853,
+        0.24576999999999996,
+        0.28235903821875996,
+        1.6752663472089964,
+        0.4037059848737378,
+        1.395828072399166,
+        0.145860844144475,
+        0.6861533447931977,
+        1.4574607975258569,
+        -0.11198724986773888,
+        0.37589813342941425,
+        -0.10411142932576109,
+        1.1120099119204538
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 16,
+      "tip_errors_m": [
+        0.00036902777088389547,
+        0.003105584131101078,
+        0.0006130007038141119,
+        0.0021654133303764967,
+        0.000996963241824318
+      ],
+      "tip_rms_m": 0.0017798626211496245,
+      "object_position_m": [
+        0.19465073716482395,
+        0.04423045764811843,
+        0.20863876851708332
+      ],
+      "object_quaternion_wxyz": [
+        0.7407929682352686,
+        0.29634863374185816,
+        -0.4214590745554775,
+        0.43101683722025835
+      ],
+      "contacts": [
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.0062872972876038295
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.006290461844623988
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.006290322608297964
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.006279095213249158
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.008422795959507472
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.008428066208251815
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.009192999060525632
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.009183511200512081
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.009147365399019114
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.00915760949224959
+        }
+      ],
+      "deepest_penetration_m": 0.009192999060525632,
+      "tower_contact": false
+    },
+    {
+      "frame": 59,
+      "time_s": 1.18,
+      "qpos": [
+        0.5233677906258384,
+        -0.6351819347413172,
+        0.486550183449062,
+        -0.8538399999989243,
+        0.20564236594495333,
+        0.7109020413494871,
+        1.3096475639241134,
+        0.23422059751599042,
+        1.2257676338379087,
+        0.4843944219152795,
+        0.33722632384432094,
+        1.4193673961089148,
+        -0.05225041471905522,
+        0.3660588825397101,
+        0.013939834284372024,
+        1.0890080927621375
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 17,
+      "tip_errors_m": [
+        0.0004380328486235593,
+        0.0010568948165441613,
+        0.000492472569242085,
+        0.004391715531695736,
+        0.0010085625284270182
+      ],
+      "tip_rms_m": 0.002090731563173606,
+      "object_position_m": [
+        0.19832453775230977,
+        0.04397689872337314,
+        0.20472566174602924
+      ],
+      "object_quaternion_wxyz": [
+        0.6683390499150397,
+        0.3742544978840502,
+        -0.5380305523614317,
+        0.3518232651458295
+      ],
+      "contacts": [
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 6.063719969729866e-05
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 6.072093290966011e-05
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.006392183000443773
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.006366081926905244
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.006478868103659035
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.006437933315231174
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.010438039975610484
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.01038566238952692
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.011093575786761265
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.011010846353540462
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.011044910129298913
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.011149456112168414
+        }
+      ],
+      "deepest_penetration_m": 0.011149456112168414,
+      "tower_contact": false
+    },
+    {
+      "frame": 71,
+      "time_s": 1.42,
+      "qpos": [
+        0.45582451000416807,
+        -0.5718166238974205,
+        0.5211566355908032,
+        -0.8538399999999992,
+        0.03260246736768443,
+        1.0869179573866115,
+        0.4535556407858648,
+        0.0919202912304897,
+        1.166902056280588,
+        0.5541686858009767,
+        0.1891500674321753,
+        1.3844528198346344,
+        -0.03859135192996384,
+        0.24435200930207443,
+        0.23469793395500227,
+        1.0038268127254848
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 17,
+      "tip_errors_m": [
+        0.00043114959663935264,
+        0.0008820722794687035,
+        0.00045908144810779736,
+        0.00363280286013577,
+        0.0009412075776314235
+      ],
+      "tip_rms_m": 0.0017468729536911142,
+      "object_position_m": [
+        0.19845886374499136,
+        0.03970025480768266,
+        0.20275006371101065
+      ],
+      "object_quaternion_wxyz": [
+        0.6833902042448513,
+        0.35133528898514826,
+        -0.5647248380626019,
+        0.30104351966297294
+      ],
+      "contacts": [
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.0047220168606871785
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.004848097803153147
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.00483837227134146
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.004717203753011777
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005857696447948557
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005876448737700992
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00808176961343805
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.008053672909661533
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.007936808515147846
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.008144504068316677
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.00810698888595552
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.007891771209360788
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.008686242011970081
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.008631810934487843
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.008648452313200689
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.008721401690166854
+        }
+      ],
+      "deepest_penetration_m": 0.008721401690166854,
+      "tower_contact": false
+    },
+    {
+      "frame": 83,
+      "time_s": 1.6600000000000001,
+      "qpos": [
+        -0.5155893095537781,
+        -3.673044572618467e-09,
+        0.9847007959601883,
+        -0.38809589332810873,
+        0.035473370248528646,
+        1.080219005720042,
+        0.3447758451482735,
+        0.0566879166901966,
+        1.3644099721039786,
+        0.18311704732154777,
+        0.1526278000085553,
+        1.3029063152849,
+        -0.06970814745499003,
+        0.24180560679324906,
+        0.5195993337530064,
+        0.6690385417329421
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 28,
+      "tip_errors_m": [
+        0.00047218181310323585,
+        0.0008064442622261668,
+        0.0005067027080610407,
+        0.005629292776048676,
+        0.0009291475511846132
+      ],
+      "tip_rms_m": 0.0025954694364374834,
+      "object_position_m": [
+        0.1956995632589673,
+        0.0312338560433583,
+        0.20745234355371683
+      ],
+      "object_quaternion_wxyz": [
+        0.4851965138902994,
+        0.6714420281089265,
+        -0.4078683576205196,
+        0.3839184140538352
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0002391594330691525
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00022677621338926504
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0022828216660829882
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.002310038360571156
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0022633902188384284
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0022316099473856568
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.008546462864841316
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.00855192397906324
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.011401992236736875
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.011430619002356122
+        }
+      ],
+      "deepest_penetration_m": 0.011430619002356122,
+      "tower_contact": false
+    },
+    {
+      "frame": 95,
+      "time_s": 1.9000000000000001,
+      "qpos": [
+        -0.3495716756219111,
+        -9.9611032124624e-19,
+        1.0483190549435153,
+        -0.8538399721038786,
+        0.08217976082552543,
+        1.2700611001572628,
+        -0.013613499679722061,
+        0.10554347700710114,
+        1.4900893253508696,
+        -0.07479930623995425,
+        0.18882916547287093,
+        1.3143892651564895,
+        -0.09095775442731743,
+        0.2790177905207355,
+        0.6672054678663074,
+        0.4173340398348986
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 20,
+      "tip_errors_m": [
+        0.011442599003493955,
+        0.0005041864372639981,
+        0.004967021756296701,
+        0.008807699420760382,
+        0.0009250135887950083
+      ],
+      "tip_rms_m": 0.006845287434019477,
+      "object_position_m": [
+        0.19784372557791569,
+        0.028547335707001454,
+        0.21279520961612086
+      ],
+      "object_quaternion_wxyz": [
+        0.4406144931675308,
+        0.7819787846504682,
+        -0.3095928512683111,
+        0.3138794596829391
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.003355244750161352
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0033177552634207235
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005665976378186823
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005405223841388473
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005337663059225385
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005613046480018722
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.0070013712081483425
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.006964778948667006
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.009312072917596803
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.009359796377632033
+        }
+      ],
+      "deepest_penetration_m": 0.009359796377632033,
+      "tower_contact": false
+    },
+    {
+      "frame": 107,
+      "time_s": 2.14,
+      "qpos": [
+        -0.4170589792175576,
+        -1.2386731246783348e-15,
+        1.2299999975676414,
+        -0.10301185197070808,
+        -0.009728093063634357,
+        0.9719458431364811,
+        0.5557034229121873,
+        -0.04265804699133439,
+        1.4860107697533744,
+        -0.07842020817682055,
+        0.15256563846575763,
+        1.3322299287598485,
+        -0.07032369447813694,
+        0.2112312789630015,
+        0.5073140280613402,
+        0.7699968661198953
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 15,
+      "tip_errors_m": [
+        0.014958690752083423,
+        0.0009115662234885307,
+        0.0014646223634974518,
+        0.004333330563930802,
+        0.0010323368955029119
+      ],
+      "tip_rms_m": 0.007022563262884025,
+      "object_position_m": [
+        0.19556313753626964,
+        0.025053459959658696,
+        0.20890612511208684
+      ],
+      "object_quaternion_wxyz": [
+        0.42667381755533296,
+        0.801681161555658,
+        -0.30280829145948474,
+        0.28907422445267733
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00023644923066859272
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00020907198579138506
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00029158629645119983
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00032635480753360915
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0030729770421207667
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.003099556101068306
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0031279559483928456
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0031106491732458804
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.009160099801785076
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.009196399723798291
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.009247407579745518
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.009218729327269465
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.012260206488986245
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.01225136210923311
+        }
+      ],
+      "deepest_penetration_m": 0.012260206488986245,
+      "tower_contact": false
+    },
+    {
+      "frame": 119,
+      "time_s": 2.38,
+      "qpos": [
+        0.32255009096401954,
+        -0.8299134124624661,
+        0.5954880336455641,
+        -0.8538399999999999,
+        -0.02644543762317473,
+        0.7807881063978128,
+        0.8908710054338013,
+        -0.1393577451414366,
+        1.2324895732595056,
+        0.5416418100655892,
+        -0.012887350543255202,
+        1.2358267385631472,
+        0.03364323167323116,
+        0.09944092498128673,
+        0.612369683793882,
+        0.8494691374463409
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 14,
+      "tip_errors_m": [
+        0.0005524504320762077,
+        0.0006303029638079684,
+        0.0007088203030559586,
+        0.0014664634442827697,
+        0.0007730346871038889
+      ],
+      "tip_rms_m": 0.0008891577125565667,
+      "object_position_m": [
+        0.19680151334391788,
+        0.024227543087163666,
+        0.20304823061709598
+      ],
+      "object_quaternion_wxyz": [
+        0.3832257492224622,
+        0.7890933031357946,
+        -0.33497253171860797,
+        0.34389415097257703
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0002146156279446599
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00021981635103236142
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0002501751744443637
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00024831505490523025
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0034974234890414934
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0035100419957334364
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.003576668507548531
+        },
+        {
+          "body": "right_middle_pp",
+          "penetration_m": 0.0029355447420579594
+        },
+        {
+          "body": "right_middle_pp",
+          "penetration_m": 0.0029729388996790652
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.01399013432570606
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.013937590785645342
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.013677266814668325
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.01369566926380012
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.013688034704106278
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.0136655971820792
+        }
+      ],
+      "deepest_penetration_m": 0.01399013432570606,
+      "tower_contact": false
+    },
+    {
+      "frame": 131,
+      "time_s": 2.62,
+      "qpos": [
+        0.08601829102901748,
+        -0.7492487926965797,
+        0.5487308213067289,
+        -0.8538399999999999,
+        0.08893421340984389,
+        0.9865607799969816,
+        0.8180119499230867,
+        0.08154352734822974,
+        1.3841434013993308,
+        0.6482323534316073,
+        0.06816897928434315,
+        1.2953573475882223,
+        0.0370064259705487,
+        0.18511638784658396,
+        0.6525571235284442,
+        0.8354663693136681
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 13,
+      "tip_errors_m": [
+        0.0005262427789280226,
+        0.0005869067068404599,
+        0.0007669728329020274,
+        0.0020391797527321573,
+        0.0008234752225676093
+      ],
+      "tip_rms_m": 0.0010996366470296922,
+      "object_position_m": [
+        0.18859058120966762,
+        0.027000324047650258,
+        0.20368443858252816
+      ],
+      "object_quaternion_wxyz": [
+        0.3368865282879302,
+        0.7395111890667945,
+        -0.3308029697347802,
+        0.4797916876288831
+      ],
+      "contacts": [
+        {
+          "body": "right_thumb_ip",
+          "penetration_m": 0.004444031330485694
+        },
+        {
+          "body": "right_thumb_ip",
+          "penetration_m": 0.004409714277353062
+        },
+        {
+          "body": "right_thumb_ip",
+          "penetration_m": 0.004347244606072985
+        },
+        {
+          "body": "right_thumb_ip",
+          "penetration_m": 0.004391768977299805
+        },
+        {
+          "body": "right_thumb_ip",
+          "penetration_m": 0.0027523248773864066
+        },
+        {
+          "body": "right_thumb_ip",
+          "penetration_m": 0.002773137327029917
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.0022594212025619305
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.0022534838861218254
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.002238494581743106
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.002245945115122159
+        },
+        {
+          "body": "right_thumb_dp",
+          "penetration_m": 0.003663201952850136
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0023129432817554692
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0022719067939629815
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.004786590290272769
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005047390488297443
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005121961168153945
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.004846143094179555
+        },
+        {
+          "body": "right_middle_pp",
+          "penetration_m": 2.214834650282071e-05
+        },
+        {
+          "body": "right_middle_pp",
+          "penetration_m": 2.214834650282071e-05
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.010021016039430421
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.010050317485258607
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.010034275897589432
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.010003192668659325
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.013097600958104938
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.013088216034467897
+        }
+      ],
+      "deepest_penetration_m": 0.013097600958104938,
+      "tower_contact": false
+    },
+    {
+      "frame": 142,
+      "time_s": 2.84,
+      "qpos": [
+        0.04900136531389814,
+        -0.6605743350952931,
+        0.5644020445321257,
+        -0.8538399807880797,
+        0.11212856225502847,
+        1.0263608941804712,
+        0.7274290737517001,
+        0.06872223700522548,
+        1.4354162169451077,
+        0.5420724919116675,
+        0.12627987464673113,
+        1.3095820193093928,
+        0.0023950596905109828,
+        0.20913623572581083,
+        0.6690076348867373,
+        0.8143439173517855
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 19,
+      "tip_errors_m": [
+        0.000527852099976738,
+        0.0006079674364282678,
+        0.0013152739426888485,
+        0.0027194376929351527,
+        0.000842016219950319
+      ],
+      "tip_rms_m": 0.0014479316605378288,
+      "object_position_m": [
+        0.18968884154270546,
+        0.025521078331800715,
+        0.20252106544161996
+      ],
+      "object_quaternion_wxyz": [
+        0.26811494830223453,
+        0.7375016467951148,
+        -0.29779985605779025,
+        0.5436183782796008
+      ],
+      "contacts": [
+        {
+          "body": "right_thumb_ip",
+          "penetration_m": 0.0011276718563284157
+        },
+        {
+          "body": "right_thumb_ip",
+          "penetration_m": 0.0011407148365314063
+        },
+        {
+          "body": "right_thumb_ip",
+          "penetration_m": 0.0011038828346727648
+        },
+        {
+          "body": "right_thumb_ip",
+          "penetration_m": 0.0006935999941936266
+        },
+        {
+          "body": "right_thumb_ip",
+          "penetration_m": 0.0007393268730620829
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.003170107564331163
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.003226076369879649
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.003221343682489268
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0031650228242272125
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0059855342309520655
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006037455368389764
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006069760198135727
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006026696953160035
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.010000804001595328
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.009947518913657636
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.012664427123281141
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.012650024140861927
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.012712810838231519
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.012724287072485473
+        }
+      ],
+      "deepest_penetration_m": 0.012724287072485473,
+      "tower_contact": false
+    },
+    {
+      "frame": 154,
+      "time_s": 3.08,
+      "qpos": [
+        0.04791600368376339,
+        -0.5036182663108486,
+        0.591613555411736,
+        -0.8538399999999999,
+        0.18632345401082778,
+        1.1832477972733844,
+        0.3988745054448196,
+        0.24867648191655553,
+        1.5882499999611461,
+        0.2926722534113969,
+        0.21781093747488534,
+        1.374244862605613,
+        -0.03615627792107304,
+        0.2803525334167043,
+        0.7080956869068329,
+        0.8359708085298596
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 20,
+      "tip_errors_m": [
+        0.0005179979207243697,
+        0.001174711617291903,
+        0.0023539665808331644,
+        0.003966982194001404,
+        0.0009298731487528978
+      ],
+      "tip_rms_m": 0.0021813316892967255,
+      "object_position_m": [
+        0.1912578160775823,
+        0.025557378676113462,
+        0.20353846598930078
+      ],
+      "object_quaternion_wxyz": [
+        0.06086928704250331,
+        0.5850980250415365,
+        -0.24991948481533724,
+        0.7690874346243521
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00396945653116446
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0039884454047738535
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006845285856362526
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006842931973207614
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006848079342541223
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006850171348954175
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.007062354745247126
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.007033153789037214
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.00944371082851786
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.009439054466514905
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.003592697067649592
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.0036010887199657594
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.0057869799490744825
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.005773288080409192
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.005728688061095228
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.005730142433029471
+        }
+      ],
+      "deepest_penetration_m": 0.00944371082851786,
+      "tower_contact": false
+    },
+    {
+      "frame": 166,
+      "time_s": 3.3200000000000003,
+      "qpos": [
+        0.038249790074899453,
+        -0.4851454414689912,
+        0.585231643521185,
+        -0.8538399999999999,
+        0.1966488226118983,
+        1.2248212770227427,
+        0.30888840828208225,
+        0.3005398534066435,
+        1.5882499999999997,
+        0.3232807725242816,
+        0.227245332317855,
+        1.3885425975429067,
+        -0.04104098435980086,
+        0.2906593001242583,
+        0.724478193804784,
+        0.8483132056001925
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 11,
+      "tip_errors_m": [
+        0.0005409321179031772,
+        0.0012508000177242388,
+        0.0036913688428633043,
+        0.0041347823978668844,
+        0.000945301353465264
+      ],
+      "tip_rms_m": 0.0025874053529029123,
+      "object_position_m": [
+        0.19085342334733996,
+        0.025494684879939732,
+        0.2040274117092592
+      ],
+      "object_quaternion_wxyz": [
+        0.027589919499540205,
+        0.5744017635343869,
+        -0.23848163357512828,
+        0.7825777410825927
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0034432188424996916
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0035052944163840843
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0063879437622940734
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006361501559558024
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006333086179722126
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006362676404508174
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.007251552322857408
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.007231506854592249
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.009479935066477062
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.009470199952118955
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.005424774512098251
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.005404777898454303
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.005411062981014763
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.005429990783605808
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.007416096930892561
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.007442373594248852
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.007431673720215169
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.007411967232397214
+        }
+      ],
+      "deepest_penetration_m": 0.009479935066477062,
+      "tower_contact": false
+    },
+    {
+      "frame": 178,
+      "time_s": 3.56,
+      "qpos": [
+        0.01533855403694038,
+        -0.5048527712058045,
+        0.618883265954952,
+        -0.8538399999999999,
+        0.24576999999999996,
+        1.5136747575462124,
+        -0.2294797774480718,
+        -0.3281521944593083,
+        1.4663566339129286,
+        1.381711731223719,
+        0.45873453057363195,
+        1.1477924671166368,
+        0.8666321213157864,
+        0.20612388084900235,
+        0.6005274047240017,
+        1.3364654878929663
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 9,
+      "tip_errors_m": [
+        0.0005444255123428933,
+        0.002284532086605374,
+        0.0014987122466077094,
+        0.000988634701315717,
+        0.0005576132709572963
+      ],
+      "tip_rms_m": 0.0013453590988241441,
+      "object_position_m": [
+        0.18818902034583998,
+        0.027552036176642147,
+        0.20518161375790556
+      ],
+      "object_quaternion_wxyz": [
+        -0.10770276738115046,
+        0.5091762522610735,
+        -0.1319273087875585,
+        0.8436437893020263
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005029457348108074
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.004971209435185359
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.004936288260659467
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.004996808564594132
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006693837866995488
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006704365596298734
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.0008625290837630446
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.0008258508970076162
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.000825791905905485
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.000862472490562045
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.002677911837523955
+        },
+        {
+          "body": "right_middle_ip",
+          "penetration_m": 0.0026766352803956955
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.007153994349993606
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.0071315040867636235
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.007137092972071791
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.007158995812239906
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.007805719368850318
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.007863539345404374
+        }
+      ],
+      "deepest_penetration_m": 0.007863539345404374,
+      "tower_contact": false
+    },
+    {
+      "frame": 190,
+      "time_s": 3.8000000000000003,
+      "qpos": [
+        -0.2049257621952438,
+        -0.4129225127161082,
+        0.7798244956981176,
+        -0.8538399999999999,
+        0.17534205210797843,
+        1.3379496728628884,
+        0.21675447733782424,
+        -0.3036439676183072,
+        1.3810928128167725,
+        1.699601726497296,
+        0.20615612731764885,
+        0.9770645034876265,
+        1.161201720232749,
+        0.0626986721002471,
+        0.4969387549298042,
+        1.499429175416543
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 14,
+      "tip_errors_m": [
+        0.0005693475121362787,
+        0.0014011226294610576,
+        0.0020468638283586533,
+        0.000531801697078846,
+        0.0005728196280631709
+      ],
+      "tip_rms_m": 0.001190620688172102,
+      "object_position_m": [
+        0.1872237973421932,
+        0.0229038115396413,
+        0.20390043945062133
+      ],
+      "object_quaternion_wxyz": [
+        -0.18199238789422229,
+        0.47615536794576196,
+        -0.14285266191406473,
+        0.8483796044867302
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.003287788629194077
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0033079342154656707
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0033695380341656686
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.003350150531997369
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005654223930593014
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0056569645406535024
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.0016605273963754828
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.0017003440176566495
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.0006439234046175188
+        },
+        {
+          "body": "right_ring_ip",
+          "penetration_m": 0.0006458376811963734
+        }
+      ],
+      "deepest_penetration_m": 0.0056569645406535024,
+      "tower_contact": false
+    },
+    {
+      "frame": 202,
+      "time_s": 4.04,
+      "qpos": [
+        -0.8430313161789457,
+        -2.337132771575642e-15,
+        0.9723674003622657,
+        -0.8538399999999999,
+        -0.5313754946943777,
+        0.8838879596926436,
+        0.9917952225262376,
+        -0.20917374287298646,
+        0.8819322794067279,
+        1.5081787592597653,
+        -0.07124927058337241,
+        0.6212576121411983,
+        0.9796064728632359,
+        -0.12243999999792181,
+        0.5490080461340738,
+        1.0138675003643474
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 12,
+      "tip_errors_m": [
+        0.007714120154630105,
+        0.0016123194096482692,
+        0.0032333285467338966,
+        0.0013337974471735272,
+        0.0014688955113106542
+      ],
+      "tip_rms_m": 0.003911478154947526,
+      "object_position_m": [
+        0.1856670192794766,
+        0.007765515234379218,
+        0.19414412345367285
+      ],
+      "object_quaternion_wxyz": [
+        -0.2598612551977048,
+        0.40177531848584813,
+        -0.26495454152600506,
+        0.8371665380480834
+      ],
+      "contacts": [
+        {
+          "body": "right_index_pp",
+          "penetration_m": 0.00409623556399111
+        },
+        {
+          "body": "right_index_pp",
+          "penetration_m": 0.004141020802364397
+        },
+        {
+          "body": "right_index_pp",
+          "penetration_m": 0.002100108802907416
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.002082530960763974
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0020160185001484444
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0011551001498687975
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.001147759338606556
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0011722384866996317
+        }
+      ],
+      "deepest_penetration_m": 0.004141020802364397,
+      "tower_contact": false
+    },
+    {
+      "frame": 214,
+      "time_s": 4.28,
+      "qpos": [
+        -0.05337330562643151,
+        -0.4009523958638449,
+        0.6644407237985762,
+        -0.8538399999999999,
+        0.08870933324981393,
+        1.4931391494045756,
+        -0.3490699999782022,
+        0.18454563440222227,
+        1.1757500384658655,
+        0.12926001760549166,
+        0.3022468236022522,
+        0.7767583751824727,
+        0.7622385859597492,
+        0.23207536561587666,
+        0.06634257628782333,
+        1.2834627819474056
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 15,
+      "tip_errors_m": [
+        0.0005644820113599634,
+        0.001008850385811926,
+        0.00044864288901728683,
+        0.0007780242041412008,
+        0.0007472674633501302
+      ],
+      "tip_rms_m": 0.0007350414693034573,
+      "object_position_m": [
+        0.19103847253374734,
+        0.02355934929326245,
+        0.20250573402755073
+      ],
+      "object_quaternion_wxyz": [
+        -0.056946478821360585,
+        0.37305978927813155,
+        -0.14870938820664245,
+        0.9140399389702896
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005133090945271295
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005056729304214144
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005073049753707025
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.005145869127209322
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00439874389029751
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.004570784459327095
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.004540143707178688
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00435118006367426
+        }
+      ],
+      "deepest_penetration_m": 0.005145869127209322,
+      "tower_contact": false
+    },
+    {
+      "frame": 226,
+      "time_s": 4.5200000000000005,
+      "qpos": [
+        -0.10866716708244617,
+        -0.40618549694513234,
+        0.7097674642843435,
+        -0.8538399999999999,
+        0.006464932025340877,
+        1.5506718374002482,
+        -0.34906999999999994,
+        0.1219034486892152,
+        1.524605355955352,
+        -0.18900616902844514,
+        0.29532330822811054,
+        1.433766911832713,
+        -0.18606145491812556,
+        0.19849119191564857,
+        0.2218404225392748,
+        1.0034659957453793
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 14,
+      "tip_errors_m": [
+        0.0005410675221236208,
+        0.0020746218320693687,
+        0.006877948910173466,
+        0.0009088710039922373,
+        0.001003819885069535
+      ],
+      "tip_rms_m": 0.0032783133432944173,
+      "object_position_m": [
+        0.18748421355709688,
+        0.019807832365717787,
+        0.20473157560850053
+      ],
+      "object_quaternion_wxyz": [
+        -0.21033681282374334,
+        0.32093335413471297,
+        -0.1337893763979252,
+        0.9137070702025057
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006235948748509773
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006227254414015842
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006110015346823886
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006069796502578873
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0060389640035876995
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006076331440664516
+        }
+      ],
+      "deepest_penetration_m": 0.006235948748509773,
+      "tower_contact": false
+    },
+    {
+      "frame": 237,
+      "time_s": 4.74,
+      "qpos": [
+        -0.10662324820027853,
+        -0.40344861247785907,
+        0.7007380281924276,
+        -0.8538399999978561,
+        0.015059816478657232,
+        1.5706155883650914,
+        -0.3490699913131259,
+        0.131370964438325,
+        1.5224831891517168,
+        -0.18849936303541284,
+        0.32467049662322134,
+        1.4309636569903776,
+        -0.18026648708597545,
+        0.21756983229776145,
+        0.23768615650100572,
+        0.9686806106036686
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 10,
+      "tip_errors_m": [
+        0.0005356810608322017,
+        0.002469284846125021,
+        0.006905497294985469,
+        0.0012579578055485073,
+        0.0010304324508533622
+      ],
+      "tip_rms_m": 0.0033679211278651016,
+      "object_position_m": [
+        0.18770473010156,
+        0.020157126821250267,
+        0.20407406256236615
+      ],
+      "object_quaternion_wxyz": [
+        -0.21170531632364817,
+        0.32867077821174023,
+        -0.13245823228990547,
+        0.9108299486120484
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.007652458293317621
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.007618200260934528
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.007467815295258043
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.007407580553058789
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.007407298568197343
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.007463449544984801
+        }
+      ],
+      "deepest_penetration_m": 0.007652458293317621,
+      "tower_contact": false
+    },
+    {
+      "frame": 249,
+      "time_s": 4.98,
+      "qpos": [
+        -0.09715041256104753,
+        -0.40759595267411475,
+        0.6883003673183165,
+        -0.853839999999526,
+        0.055080448004619975,
+        1.566691732260992,
+        -0.3490699999976786,
+        0.1644383557714613,
+        1.5329532852890746,
+        -0.18462792022303878,
+        0.35138830249405184,
+        1.4399019354667286,
+        -0.1697890484193104,
+        0.230738270430077,
+        0.20704922550507288,
+        0.9991785821215862
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 12,
+      "tip_errors_m": [
+        0.0005339593033154673,
+        0.001809675114306428,
+        0.007238861595006981,
+        0.001353802951074533,
+        0.0010130883567464255
+      ],
+      "tip_rms_m": 0.0034298770881043953,
+      "object_position_m": [
+        0.1871727734317213,
+        0.020477026899951664,
+        0.20481145418778332
+      ],
+      "object_quaternion_wxyz": [
+        -0.2260592836414725,
+        0.3200450240861367,
+        -0.11912180699676315,
+        0.9122929233174147
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0065044885788238934
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006490976651370013
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00656773453847946
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006514027614550923
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006491135121876951
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006540892734006245
+        }
+      ],
+      "deepest_penetration_m": 0.00656773453847946,
+      "tower_contact": false
+    },
+    {
+      "frame": 261,
+      "time_s": 5.22,
+      "qpos": [
+        -0.10119656744412682,
+        -0.4064613833985959,
+        0.6907198962611153,
+        -0.8538399999999999,
+        0.05504345341222736,
+        1.5746935301059033,
+        -0.3490699999999998,
+        0.15242448708388237,
+        1.527774636443316,
+        -0.1857130564451357,
+        0.34221735000385717,
+        1.4407293905922511,
+        -0.16768170558729142,
+        0.22437122998390224,
+        0.2160173853258738,
+        0.9904257678606322
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 16,
+      "tip_errors_m": [
+        0.000532931078867246,
+        0.001934104808721568,
+        0.007291397876580433,
+        0.0014111426086346592,
+        0.0010133065865221577
+      ],
+      "tip_rms_m": 0.003470082812865928,
+      "object_position_m": [
+        0.18689989425277584,
+        0.02035137037235983,
+        0.20469640144064227
+      ],
+      "object_quaternion_wxyz": [
+        -0.22584995097453106,
+        0.3207744289281445,
+        -0.11885536506420363,
+        0.9121233291535085
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006653986878754709
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006633511691260471
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006712955270855836
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006654917120858513
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0066401769835248104
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006693975942639209
+        }
+      ],
+      "deepest_penetration_m": 0.006712955270855836,
+      "tower_contact": false
+    },
+    {
+      "frame": 273,
+      "time_s": 5.46,
+      "qpos": [
+        -0.09849114580690578,
+        -0.40228093367274587,
+        0.6877128237456782,
+        -0.8538399989890385,
+        0.06275282044154981,
+        1.5714578326402848,
+        -0.34906999782189874,
+        0.15744442875737602,
+        1.5293373773128909,
+        -0.18525527353953886,
+        0.35230147668198075,
+        1.4423367474784081,
+        -0.16611168374068425,
+        0.2258056573246783,
+        0.21637150424538773,
+        0.994893810995613
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 10,
+      "tip_errors_m": [
+        0.0005332204093169187,
+        0.0019372847863058569,
+        0.0072765117326304305,
+        0.0013468297900676553,
+        0.0010120174561595874
+      ],
+      "tip_rms_m": 0.0034589926035844005,
+      "object_position_m": [
+        0.18692800066101725,
+        0.02010154055257133,
+        0.2049992372738951
+      ],
+      "object_quaternion_wxyz": [
+        -0.22965632378811585,
+        0.31788340605289156,
+        -0.11509213722649667,
+        0.9126674712341719
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0062190036837417705
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00620581363012305
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006402049385012676
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006350549350448137
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006326938070519161
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006374518745823895
+        }
+      ],
+      "deepest_penetration_m": 0.006402049385012676,
+      "tower_contact": false
+    },
+    {
+      "frame": 285,
+      "time_s": 5.7,
+      "qpos": [
+        -0.09849074105101817,
+        -0.40228087800545415,
+        0.6877123156354142,
+        -0.8538399943647347,
+        0.06275313904986396,
+        1.5714578117098637,
+        -0.34906999282922924,
+        0.15744497884898304,
+        1.529366449789818,
+        -0.1853150402313637,
+        0.35230216348185295,
+        1.4423764696046488,
+        -0.1661931728132423,
+        0.22580567249412628,
+        0.21637128484593166,
+        0.9948941902906695
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 3,
+      "tip_errors_m": [
+        0.0005332291093844977,
+        0.0019372845427817213,
+        0.007276566734376073,
+        0.001346868421178682,
+        0.0010120110750220723
+      ],
+      "tip_rms_m": 0.003459018620434418,
+      "object_position_m": [
+        0.18692800066101725,
+        0.02010154055257133,
+        0.2049992372738951
+      ],
+      "object_quaternion_wxyz": [
+        -0.22965632378811585,
+        0.31788340605289156,
+        -0.11509213722649667,
+        0.9126674712341719
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006218998300758788
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006205808315314948
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006402044511811025
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006350544205101131
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006326932934950033
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006374513860622089
+        }
+      ],
+      "deepest_penetration_m": 0.006402044511811025,
+      "tower_contact": false
+    },
+    {
+      "frame": 297,
+      "time_s": 5.94,
+      "qpos": [
+        -0.09849072036691235,
+        -0.40228087674248325,
+        0.6877122901679851,
+        -0.8538399935914207,
+        0.0627531640029877,
+        1.5714578109908126,
+        -0.34906999222076895,
+        0.15744478456610617,
+        1.5293529763669547,
+        -0.185284659880001,
+        0.35230231505720316,
+        1.4423908955335083,
+        -0.16622274357355857,
+        0.22580567153528391,
+        0.21637126992868436,
+        0.9948942150621463
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 3,
+      "tip_errors_m": [
+        0.0005332295447436998,
+        0.0019372845211429533,
+        0.007276541259852862,
+        0.0013468826619498291,
+        0.0010120106927573814
+      ],
+      "tip_rms_m": 0.0034590090001879173,
+      "object_position_m": [
+        0.18692800066101725,
+        0.02010154055257133,
+        0.2049992372738951
+      ],
+      "object_quaternion_wxyz": [
+        -0.22965632378811585,
+        0.31788340605289156,
+        -0.11509213722649667,
+        0.9126674712341719
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0062189979270894525
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006205807946183241
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00640204418521766
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006350543856785903
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006326932588349135
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006374513534002957
+        }
+      ],
+      "deepest_penetration_m": 0.00640204418521766,
+      "tower_contact": false
+    },
+    {
+      "frame": 309,
+      "time_s": 6.18,
+      "qpos": [
+        -0.09849071907906039,
+        -0.4022808769411273,
+        0.687712288681594,
+        -0.8538399936314139,
+        0.06275316679481144,
+        1.571457810777364,
+        -0.3490699922508596,
+        0.15744488986147637,
+        1.5293637533341944,
+        -0.1853082420485103,
+        0.35230236628600886,
+        1.4423993229333014,
+        -0.16624009386931757,
+        0.22580567254700507,
+        0.21637126883338878,
+        0.9948942159214451
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 3,
+      "tip_errors_m": [
+        0.0005332295674474383,
+        0.0019372845189382564,
+        0.0072765616135256435,
+        0.0013468910565916598,
+        0.0010120106366358745
+      ],
+      "tip_rms_m": 0.0034590182145037536,
+      "object_position_m": [
+        0.18692800066101725,
+        0.02010154055257133,
+        0.2049992372738951
+      ],
+      "object_quaternion_wxyz": [
+        -0.22965632378811585,
+        0.31788340605289156,
+        -0.11509213722649667,
+        0.9126674712341719
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0062189978772062265
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006205807896970623
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006402044139386382
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006350543808609283
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00632693254017158
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006374513487983093
+        }
+      ],
+      "deepest_penetration_m": 0.006402044139386382,
+      "tower_contact": false
+    },
+    {
+      "frame": 321,
+      "time_s": 6.42,
+      "qpos": [
+        -0.09849071912119829,
+        -0.4022808770652709,
+        0.6877122886759864,
+        -0.8538399932357386,
+        0.06275316253658214,
+        1.5714578105277903,
+        -0.34906999195932953,
+        0.1574448072311376,
+        1.529357098230037,
+        -0.18529372050754458,
+        0.35230239655247986,
+        1.4424035334813694,
+        -0.16624875044998774,
+        0.22580567206451174,
+        0.2163712665324804,
+        0.9948942200058795
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 3,
+      "tip_errors_m": [
+        0.0005332295698691682,
+        0.0019372845247913667,
+        0.0072765490357463835,
+        0.0013468952450063632,
+        0.001012010586347859
+      ],
+      "tip_rms_m": 0.00345901324662689,
+      "object_position_m": [
+        0.18692800066101725,
+        0.02010154055257133,
+        0.2049992372738951
+      ],
+      "object_quaternion_wxyz": [
+        -0.22965632378811585,
+        0.31788340605289156,
+        -0.11509213722649667,
+        0.9126674712341719
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006218997929913081
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0062058079488868595
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006402044182481969
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006350543855388093
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006326932586677076
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00637451353110159
+        }
+      ],
+      "deepest_penetration_m": 0.006402044182481969,
+      "tower_contact": false
+    },
+    {
+      "frame": 332,
+      "time_s": 6.640000000000001,
+      "qpos": [
+        -0.0984907194956581,
+        -0.4022808771041259,
+        0.6877122923147686,
+        -0.853839999999996,
+        0.06275316001090601,
+        1.5714578145835536,
+        -0.3490699999999893,
+        0.1574448723395883,
+        1.5293755368976039,
+        -0.1853326966975753,
+        0.35230241022287384,
+        1.4424170751426666,
+        -0.16627679172442705,
+        0.22580567217044478,
+        0.2163712659451026,
+        0.9948942200163413
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 2,
+      "tip_errors_m": [
+        0.0005332295121091046,
+        0.0019372844951676094,
+        0.007276583827606261,
+        0.0013469088758088956,
+        0.0010120105675708046
+      ],
+      "tip_rms_m": 0.003459028939936458,
+      "object_position_m": [
+        0.18692800066101725,
+        0.02010154055257133,
+        0.2049992372738951
+      ],
+      "object_quaternion_wxyz": [
+        -0.22965632378811585,
+        0.31788340605289156,
+        -0.11509213722649667,
+        0.9126674712341719
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006218998021463247
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006205808042793982
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006402044275948249
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006350543952767529
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006326932680551093
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0063745136213596175
+        }
+      ],
+      "deepest_penetration_m": 0.006402044275948249,
+      "tower_contact": false
+    },
+    {
+      "frame": 344,
+      "time_s": 6.88,
+      "qpos": [
+        -0.09849071993660859,
+        -0.40228087724717176,
+        0.6877122896427803,
+        -0.8538399929093349,
+        0.06275316625737656,
+        1.5714578108327053,
+        -0.34906999172877473,
+        0.15744473160711533,
+        1.5293516861494012,
+        -0.18528076268225874,
+        0.3523024591372749,
+        1.4424120195470436,
+        -0.1662660568653367,
+        0.22580567179734348,
+        0.21637126609892188,
+        0.9948942195136442
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 3,
+      "tip_errors_m": [
+        0.0005332295555582629,
+        0.0019372845205130845,
+        0.007276538808555573,
+        0.0013469036887707563,
+        0.0010120105814414343
+      ],
+      "tip_rms_m": 0.003459009600117627,
+      "object_position_m": [
+        0.18692800066101725,
+        0.02010154055257133,
+        0.2049992372738951
+      ],
+      "object_quaternion_wxyz": [
+        -0.22965632378811585,
+        0.31788340605289156,
+        -0.11509213722649667,
+        0.9126674712341719
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006218997896388597
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0062058079156499975
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006402044159294948
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006350543828762953
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006326932560767762
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006374513508354208
+        }
+      ],
+      "deepest_penetration_m": 0.006402044159294948,
+      "tower_contact": false
+    },
+    {
+      "frame": 356,
+      "time_s": 7.12,
+      "qpos": [
+        -0.09849072010120573,
+        -0.4022808771014588,
+        0.6877122898671448,
+        -0.8538399935110734,
+        0.06275316565939465,
+        1.5714578110060493,
+        -0.3490699921607474,
+        0.15744490619264684,
+        1.52936416914943,
+        -0.18530921003661155,
+        0.3523024422985937,
+        1.4424112770575332,
+        -0.16626471198731313,
+        0.22580567243737396,
+        0.21637126624374936,
+        0.9948942201209393
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 3,
+      "tip_errors_m": [
+        0.0005332295454058454,
+        0.0019372845195418662,
+        0.0072765624041448455,
+        0.0013469029699121177,
+        0.001012010568801419
+      ],
+      "tip_rms_m": 0.003459019470338042,
+      "object_position_m": [
+        0.18692800066101725,
+        0.02010154055257133,
+        0.2049992372738951
+      ],
+      "object_quaternion_wxyz": [
+        -0.22965632378811585,
+        0.31788340605289156,
+        -0.11509213722649667,
+        0.9126674712341719
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006218997905646046
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0062058079249828575
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006402044167401414
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006350543837498005
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006326932569243911
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00637451351625141
+        }
+      ],
+      "deepest_penetration_m": 0.006402044167401414,
+      "tower_contact": false
+    },
+    {
+      "frame": 368,
+      "time_s": 7.36,
+      "qpos": [
+        -0.09849072274272226,
+        -0.4022808772840978,
+        0.6877122929101459,
+        -0.8538399929813392,
+        0.06275316217954205,
+        1.5714578107641106,
+        -0.3490699917788927,
+        0.15744480415206183,
+        1.529357333512885,
+        -0.1852941219779368,
+        0.3523024394130514,
+        1.442410374898955,
+        -0.16626283231440017,
+        0.22580567119283093,
+        0.21637126606907273,
+        0.9948942196206418
+      ],
+      "optimizer_success": true,
+      "optimizer_nfev": 3,
+      "tip_errors_m": [
+        0.0005332294957392987,
+        0.0019372845247851635,
+        0.007276549477915409,
+        0.001346902065286935,
+        0.0010120105962986342
+      ],
+      "tip_rms_m": 0.0034590139621037785,
+      "object_position_m": [
+        0.18692800066101725,
+        0.02010154055257133,
+        0.2049992372738951
+      ],
+      "object_quaternion_wxyz": [
+        -0.22965632378811585,
+        0.31788340605289156,
+        -0.11509213722649667,
+        0.9126674712341719
+      ],
+      "contacts": [
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006218997949369371
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.00620580796798562
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006402044203390282
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.0063505438764541455
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006326932608064774
+        },
+        {
+          "body": "right_index_ip",
+          "penetration_m": 0.006374513552343876
+        }
+      ],
+      "deepest_penetration_m": 0.006402044203390282,
+      "tower_contact": false
+    }
+  ],
+  "summary": {
+    "mean_tip_rms_m": 0.0026479780034352083,
+    "worst_tip_error_m": 0.014958690752083423,
+    "frames_with_penetration_over_2mm": 32,
+    "frames_without_object_contact": 0,
+    "frames_with_tower_contact": 0
+  },
+  "ended_at": "2026-10-20T16:31:46.686705+00:00",
+  "source_url": "https://github.com/wuji-technology/wuji-mjlab/releases/tag/v2026.9.27",
+  "reference_attribution": "Copyright2026 Wuji Technology Co., Ltd.; see docs/sim2real/third-party/wuji/"
+}
