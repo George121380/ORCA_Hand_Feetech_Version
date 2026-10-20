@@ -100,7 +100,8 @@ def run(args):
                     raise RuntimeError("Object left trained retention region")
                 if backend:
                     q = backend.read().positions
-                obs = observer.push(q, codec.q, position, rotation, goal, origin, valid, age)
+                obs = observer.push(q, codec.q, position, rotation, goal, origin, valid, age,
+                                    controller_velocity=codec.velocity)
                 action = policy.predict(obs, deterministic=True)[0]
                 command = codec.step(action, valid=valid)
                 if backend:

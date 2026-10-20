@@ -15,10 +15,10 @@ from .model import JOINT_NAMES, ModelSpec
 from .objects import specification, geometry_signature
 from .paths import upstream
 
-TASK_ID = "orca-v1-printable-yaw-v6"
+TASK_ID = "orca-v1-printable-yaw-v7"
 DT = .05
 HISTORY = 4
-FRAME_SIZE = 58
+FRAME_SIZE = 74
 RESET_LINEAR_SPEED = .015
 RESET_ANGULAR_SPEED = .3
 RESET_STABLE_SAMPLES = 4
@@ -56,8 +56,8 @@ class TaskConfig:
             raise ValueError("Invalid measured actuator randomization envelope")
         limits(self)
 
-    def fingerprint(self):
-        payload = {"task": TASK_ID, "config": asdict(self), "geometry": geometry_signature(self.object),
+    def fingerprint(self, *, task_id=TASK_ID):
+        payload = {"task": task_id, "config": asdict(self), "geometry": geometry_signature(self.object),
                    "joints": JOINT_NAMES, "model_sha": ModelSpec.load().source_sha256}
         return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
 
@@ -109,11 +109,15 @@ class ActionCodec:
 class ObservationCodec:
     def __init__(self, config):
         self.lower, self.upper = limits(config)
+        self.max_velocity = config.max_velocity
         self.frames = deque(maxlen=HISTORY)
 
-    def push(self, q, command, position, rotation, goal, origin, valid, age):
+    def push(self, q, command, position, rotation, goal, origin, valid, age, *, controller_velocity):
         def normalized(x):
             return 2 * (np.asarray(x)[:16] - self.lower[:16]) / (self.upper[:16] - self.lower[:16]) - 1
+        velocity = np.asarray(controller_velocity, dtype=float)
+        if velocity.shape != (16,) or not np.isfinite(velocity).all():
+            raise ValueError("Expected 16 finite controller velocities")
         frame = np.concatenate([normalized(q), normalized(command),
                                 # Absolute S-frame position locates the object relative to
                                 # the fixed hand; displacement alone hides initial contact
@@ -121,7 +125,11 @@ class ObservationCodec:
                                 np.asarray(position) / .2,
                                 (np.asarray(position) - origin) / .1,
                                 np.asarray(rotation).reshape(9), np.asarray(goal).reshape(9),
-                                [float(valid), min(age, 1.)]]).astype(np.float32)
+                                [float(valid), min(age, 1.)],
+                                # Available in the shared controller, not measured or
+                                # simulator-truth joint velocity. At command limits its
+                                # acceleration-filter state cannot be inferred from q.
+                                velocity / self.max_velocity]).astype(np.float32)
         if frame.shape != (FRAME_SIZE,) or not np.isfinite(frame).all():
             raise ValueError("Non-finite or malformed observation")
         if not self.frames:
@@ -297,7 +305,7 @@ class ManipulationEnv(gym.Env):
     def _observation(self):
         return self.observer.push(self.data.qpos[self.qadr] + self.encoder_bias, self.codec.q,
                                   self.measured_pos, self.measured_rot, self.goal, self.origin,
-                                  self.valid, self.age)
+                                  self.valid, self.age, controller_velocity=self.codec.velocity)
 
     def info(self):
         pos, rotation = self.pose()

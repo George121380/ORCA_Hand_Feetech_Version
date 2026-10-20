@@ -122,10 +122,12 @@ def test_action_acceleration_and_pose_loss_hold_match_deployment():
     held = codec.step(-np.ones(16), valid=False)
     assert np.array_equal(held, q)
     observer = ObservationCodec(cfg)
-    a = observer.push(q, q, np.zeros(3), np.eye(3), np.eye(3), np.zeros(3), True, 0)
-    b = observer.push(q, q, np.zeros(3), np.eye(3), np.eye(3), np.zeros(3), False, .15)
-    assert a.shape == b.shape == (232,)
-    assert b[-2] == 0 and b[-1] == pytest.approx(.15)
+    a = observer.push(q, q, np.zeros(3), np.eye(3), np.eye(3), np.zeros(3), True, 0,
+                      controller_velocity=codec.velocity)
+    b = observer.push(q, q, np.zeros(3), np.eye(3), np.eye(3), np.zeros(3), False, .15,
+                      controller_velocity=codec.velocity)
+    assert a.shape == b.shape == (296,)
+    assert b[-18] == 0 and b[-17] == pytest.approx(.15)
     with pytest.raises(ValueError):
         codec.step(np.full(16, np.nan))
 
@@ -135,8 +137,10 @@ def test_vision_observation_distinguishes_initial_contact_locations():
     q = ModelSpec.load().neutral
     origin = np.array([.15, .05, .17])
     shifted = origin + [.03, 0, 0]
-    first = ObservationCodec(cfg).push(q, q, origin, np.eye(3), np.eye(3), origin, True, 0)
-    second = ObservationCodec(cfg).push(q, q, shifted, np.eye(3), np.eye(3), shifted, True, 0)
+    first = ObservationCodec(cfg).push(q, q, origin, np.eye(3), np.eye(3), origin, True, 0,
+                                     controller_velocity=np.zeros(16))
+    second = ObservationCodec(cfg).push(q, q, shifted, np.eye(3), np.eye(3), shifted, True, 0,
+                                      controller_velocity=np.zeros(16))
     # Same initial displacement and hand state, but different contacts are now
     # distinguishable using camera-observable position in the registered S frame.
     assert np.allclose(first[:32], second[:32])
@@ -144,6 +148,28 @@ def test_vision_observation_distinguishes_initial_contact_locations():
     assert not np.allclose(first, second)
     assert np.allclose(first[32:35] * .2, origin)
     assert np.allclose(second[32:35] * .2, shifted)
+
+
+def test_observation_exposes_controller_state_hidden_at_joint_limits():
+    cfg = TaskConfig(object="pen")
+    first = ActionCodec(cfg, ModelSpec.load().upper)
+    second = ActionCodec(cfg, ModelSpec.load().upper)
+    # More than the four-frame history at a fixed position target. A stopped
+    # and an outward-moving acceleration filter give identical v6 inputs.
+    for _ in range(12):
+        first.step(np.ones(16))
+        second.step(np.zeros(16))
+    assert np.array_equal(first.q, second.q)
+    inputs = (first.q, first.q, np.zeros(3), np.eye(3), np.eye(3), np.zeros(3), True, 0)
+    a = ObservationCodec(cfg).push(*inputs, controller_velocity=first.velocity).reshape(4, 74)
+    b = ObservationCodec(cfg).push(*inputs, controller_velocity=second.velocity).reshape(4, 74)
+    assert np.array_equal(a[:, :58], b[:, :58])
+    assert not np.array_equal(a[:, 58:], b[:, 58:])
+    assert not np.array_equal(first.step(-np.ones(16)), second.step(-np.ones(16)))
+    first.step(np.ones(16), valid=False)
+    assert np.array_equal(first.velocity, np.zeros(16))
+    with pytest.raises(ValueError, match="controller velocities"):
+        ObservationCodec(cfg).push(*inputs, controller_velocity=np.zeros(17))
 
 
 @pytest.mark.parametrize("kind", ["cube", "pen"])

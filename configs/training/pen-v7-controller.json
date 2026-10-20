@@ -1,0 +1,8 @@
+[
+  {"name": "30-r1", "angle": 30, "turns": 1, "horizon": 240, "steps": 2000000, "randomization": 1.0},
+  {"name": "45-r1", "angle": 45, "turns": 1, "horizon": 240, "steps": 3000000, "randomization": 1.0},
+  {"name": "60-r1", "angle": 60, "turns": 1, "horizon": 240, "steps": 3000000, "randomization": 1.0},
+  {"name": "75-r1", "angle": 75, "turns": 1, "horizon": 240, "steps": 3000000, "randomization": 1.0},
+  {"name": "90-r1", "angle": 90, "turns": 1, "horizon": 240, "steps": 3000000, "randomization": 1.0},
+  {"name": "90x4-r1", "angle": 90, "turns": 4, "horizon": 800, "steps": 10000000, "randomization": 1.0}
+]
