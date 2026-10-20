@@ -10,11 +10,13 @@ from stable_baselines3.common.policies import ActorCriticPolicy
 from orca_feetech.policy_regularization import ActionMeanPenaltyPolicy
 
 
-def test_penalty_backward_matches_explicit_loss_without_changing_forward():
+@pytest.mark.parametrize("coefficient", [.01, .1])
+def test_penalty_backward_matches_explicit_loss_without_changing_forward(coefficient):
     space = gym.spaces.Box(-np.inf, np.inf, (296,), np.float32)
     action = gym.spaces.Box(-1, 1, (16,), np.float32)
     kwargs = dict(net_arch={"pi": [16], "vf": [16]})
-    regularized = ActionMeanPenaltyPolicy(space, action, lambda _: .0003, **kwargs)
+    regularized = ActionMeanPenaltyPolicy(space, action, lambda _: .0003,
+                                         mean_penalty_coef=coefficient, **kwargs)
     reference = ActorCriticPolicy(space, action, lambda _: .0003, **kwargs)
     with torch.no_grad():
         regularized.action_net.bias[:8].fill_(3.)
@@ -29,7 +31,7 @@ def test_penalty_backward_matches_explicit_loss_without_changing_forward():
     def base(x):
         return -x[1].mean() + .5*x[0].square().mean() - .001*x[2].mean()
     mean = reference.get_distribution(obs).distribution.mean
-    explicit = base(b) + .01*torch.relu(mean.abs()-1).square().mean()
+    explicit = base(b) + coefficient*torch.relu(mean.abs()-1).square().mean()
     base(a).backward()
     explicit.backward()
     for (_, x), (_, y) in zip(regularized.named_parameters(), reference.named_parameters()):
@@ -60,11 +62,13 @@ class ZeroRewardEnv(gym.Env):
 
 
 @pytest.mark.skipif(sys.platform != "linux", reason="Policy optimizer smoke belongs on Linux")
-def test_real_ppo_update_applies_penalty_even_with_zero_advantage():
+@pytest.mark.parametrize("coefficient", [.01, .1])
+def test_real_ppo_update_applies_penalty_even_with_zero_advantage(coefficient):
     torch.set_num_threads(1)
     model = PPO(ActionMeanPenaltyPolicy, ZeroRewardEnv(), device="cpu", seed=3,
                 n_steps=16, batch_size=16, n_epochs=2, ent_coef=0, learning_rate=.001,
-                policy_kwargs={"net_arch": {"pi": [16], "vf": [16]}})
+                policy_kwargs={"net_arch": {"pi": [16], "vf": [16]},
+                               "mean_penalty_coef": coefficient})
     with torch.no_grad():
         model.policy.action_net.bias.fill_(3.)
     before = model.policy.log_std.detach().clone()
