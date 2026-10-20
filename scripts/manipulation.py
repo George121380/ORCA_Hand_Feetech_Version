@@ -107,6 +107,9 @@ def train(args):
                 model.policy.log_std.fill_(args.reset_log_std)
         metadata["policy_features"] = type(model.policy.features_extractor).__name__
         metadata["policy_class"] = type(model.policy).__name__
+        metadata["policy_distribution"] = type(model.policy.action_dist).__name__
+        metadata["use_sde"] = model.use_sde
+        metadata["sde_sample_freq"] = model.sde_sample_freq
         metadata["action_mean_penalty_coef"] = getattr(model.policy, "mean_penalty_coef", 0.)
         write(args.output / "config.json", metadata)
         model.tensorboard_log = str(args.output / "tb")
