@@ -1,0 +1,93 @@
+{
+  "version": "pen-grasp-preparation-v1",
+  "source_report_sha256": "54fa7b0dc852542f9272f08eeb8457c8103cce56c9d8d3702be0c15d7ca22228",
+  "source_fit_index": 1,
+  "selection": "Selected from the two previously frozen development candidates: second produced5/7 loaded holds, first0/7. Not selected on new formal seeds.",
+  "model_sha256": "fad505b767154916bebe9f048f13004328dcb49ae51981903d05a8640ee98a42",
+  "geometry_sha256": "4b2937c1c2e2035d375a9686d2db34f5a743759489226d77cc817f7be95ea0b9",
+  "target_qpos_rad": [
+    0.40691300349102927,
+    -0.4158719097953224,
+    0.49433584101873973,
+    -0.7382179421632014,
+    -0.3998061048734898,
+    -0.005564888097586975,
+    -0.001430788257433311,
+    -0.04160822041717635,
+    0.6782667623434046,
+    1.208569749518371,
+    0.1698854403680755,
+    -0.006810819040069702,
+    -0.001429785493550747,
+    0.5231300360280075,
+    -0.004719386366805425,
+    -0.0013997166264854628
+  ],
+  "object_position_m": [
+    0.2,
+    0.05029037147944759,
+    0.21
+  ],
+  "object_rotation": [
+    [
+      -0.3081242430433476,
+      -0.16086410392425687,
+      0.9376471569399717
+    ],
+    [
+      -0.07528343844916284,
+      0.9866325566010193,
+      0.14452889728427845
+    ],
+    [
+      -0.948362723194157,
+      -0.02605644495291482,
+      -0.3161158125310731
+    ]
+  ],
+  "finger": "middle",
+  "placement_offsets_m": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0.001,
+      0,
+      0
+    ],
+    [
+      -0.001,
+      0,
+      0
+    ],
+    [
+      0,
+      0.001,
+      0
+    ],
+    [
+      0,
+      -0.001,
+      0
+    ],
+    [
+      0,
+      0,
+      0.001
+    ],
+    [
+      0,
+      0,
+      -0.001
+    ]
+  ],
+  "empty_reach": {
+    "neutral_seconds": 0.5,
+    "approach_seconds": 5.0,
+    "hold_seconds": 1.0
+  },
+  "release": "Separate manually placed object episode; initialize object once at rest, preserve actually reached hand qpos/qvel",
+  "manual_insertion_simulated": false
+}

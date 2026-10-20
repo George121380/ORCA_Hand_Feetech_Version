@@ -55,6 +55,7 @@ def sha256(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument('--task-family',choices=['legacy-v7','v8','pen-grasp-v1'],default='legacy-v7')
     parser.add_argument("--object", choices=["pen", "cube"], default="pen")
     parser.add_argument("--angle", type=float, default=15)
     parser.add_argument("--turns", type=int, default=1)
@@ -111,6 +112,15 @@ def main():
         state = dict(status="running", started_at=now(), pid=os.getpid(), hostname=platform.node(),
                      arguments={k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()},
                      commands=[], acceptance_met=False)
+    from orca_feetech.task_families import task_family
+    family=task_family(args.task_family)
+    if args.task_family!='legacy-v7':
+        family.config_class(object=args.object,angle=args.angle,turns=args.turns,
+                            horizon=args.horizon,randomization=args.randomization)
+        if args.prefix_reset_checkpoint is not None:
+            parser.error('New task families reject legacy prefix teachers')
+    if args.task_family=='pen-grasp-v1' and (args.minimum_goal_angle is not None or args.negative_goal_probability!=.5):
+        parser.error('Grasp task has no directional or goal-angle curriculum')
     if min(args.steps, args.num_envs, args.selection_episodes, args.test_episodes,
            args.checkpoint_every, args.eval_every) < 1:
         parser.error("Budgets must be positive")
@@ -168,7 +178,7 @@ def main():
         if code:
             raise RuntimeError(f"{name} exited {code}; inspect {args.output / (name + '.log')}")
 
-    python = [sys.executable, str(ROOT / "scripts/manipulation.py")]
+    python = [sys.executable, str(ROOT / 'scripts' / family.cli_script)]
 
     def evaluate_phase(name, checkpoint, episodes, seed, baseline=None, video=False):
         output = args.output / name
@@ -192,13 +202,12 @@ def main():
         return json.loads((output / "metrics.json").read_text())
 
     def finished_model():
-        from orca_feetech.checkpoint import load_config
         for name in reversed(state["model_directories"]):
             checkpoint = args.output / name / "policy.zip"
             if not checkpoint.is_file():
                 continue
             try:
-                _, meta = load_config(checkpoint)
+                _, meta = family.load_config(checkpoint)
                 if meta["trained"] and checkpoint_steps(checkpoint, check_weights=True) >= state["target_total_steps"]:
                     return checkpoint.parent
             except (OSError, ValueError, KeyError, zipfile.BadZipFile, EOFError, RuntimeError, pickle.UnpicklingError):
@@ -208,7 +217,8 @@ def main():
     try:
         model = finished_model() if args.continue_existing else None
         if model is None:
-            source, steps = (latest_checkpoint([args.output / p for p in state["model_directories"]], args.resume)
+            checkpoint_kwargs={} if args.task_family=='legacy-v7' else dict(config_loader=family.load_config)
+            source, steps = (latest_checkpoint([args.output / p for p in state["model_directories"]], args.resume,**checkpoint_kwargs)
                              if args.continue_existing else (args.resume, checkpoint_steps(args.resume) if args.resume else 0))
             if args.resume and source is None:
                 raise RuntimeError("No valid checkpoint for this resumed stage; refusing to restart its entire history")

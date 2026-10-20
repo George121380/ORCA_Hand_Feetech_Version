@@ -20,6 +20,24 @@ def test_selection_and_test_seeds_cannot_overlap(monkeypatch, tmp_path):
     assert not output.exists()
 
 
+def test_new_grasp_job_forwards_explicit_cli_and_persists_family(monkeypatch,tmp_path):
+    monkeypatch.setattr(job.platform,'system',lambda:'Linux')
+    output=tmp_path/'grasp'
+    calls=[]
+    class Failed:
+        pid=99999998
+        def __init__(self,argv,**kwargs):calls.append(argv)
+        def wait(self):return 7
+    monkeypatch.setattr(job.subprocess,'Popen',Failed)
+    monkeypatch.setattr(job.sys,'argv',['job','--output',str(output),'--task-family','pen-grasp-v1',
+        '--object','pen','--angle','10','--horizon','140','--randomization','0'])
+    with pytest.raises(RuntimeError,match='train exited 7'):
+        job.main()
+    assert Path(calls[0][1]).name=='pen_grasp.py'
+    state=json.loads((output/'job.json').read_text())
+    assert state['arguments']['task_family']=='pen-grasp-v1' and not state['acceptance_met']
+
+
 def test_training_failure_stops_job_and_preserves_command(monkeypatch, tmp_path):
     monkeypatch.setattr(job.platform, "system", lambda: "Linux")
     output = tmp_path / "job"

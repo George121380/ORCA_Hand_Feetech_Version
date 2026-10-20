@@ -185,7 +185,7 @@ def wilson(successes, n):
     return [float(center-half), float(center+half)]
 
 
-def evaluate(args, *, env_class=ManipulationEnv, config_loader=load_config):
+def evaluate(args, *, env_class=ManipulationEnv, config_loader=load_config, reset_options=None):
     import torch
     from stable_baselines3 import PPO
     torch.set_num_threads(1)
@@ -203,7 +203,8 @@ def evaluate(args, *, env_class=ManipulationEnv, config_loader=load_config):
         writer = imageio.get_writer(args.output / "evaluation.mp4", fps=20, macro_block_size=1)
     try:
         for episode in range(args.episodes):
-            obs, info = env.reset(seed=args.seed + episode)
+            obs, info = env.reset(seed=args.seed + episode,
+                                 options=None if reset_options is None else reset_options(episode))
             initial = dict(direction=env.direction, initial_position=info["object_position"],
                            initial_rotation=env.pose()[1].tolist(), goal_rotation=env.goal.tolist(),
                            reset_attempts=info["reset_attempts"], settle_seconds=info["settle_seconds"],
@@ -226,8 +227,9 @@ def evaluate(args, *, env_class=ManipulationEnv, config_loader=load_config):
                     writer.append_data(frame)
                 if terminated or truncated:
                     break
-            reason = ("success" if info["is_success"] else "dropped" if info["dropped"] else
-                      "vision_timeout" if info["vision_age"] > .25 else "horizon")
+            reason = info.get('termination_reason') or (
+                "success" if info["is_success"] else "dropped" if info["dropped"] else
+                "vision_timeout" if info["vision_age"] > .25 else "horizon")
             records.append(dict(seed=args.seed+episode, reward=total, steps=step+1,
                                 end_reason=reason, **initial, **info))
     finally:
@@ -247,7 +249,7 @@ def evaluate(args, *, env_class=ManipulationEnv, config_loader=load_config):
     print(json.dumps({k: v for k, v in result.items() if k != "trials"}, indent=2))
 
 
-def main(*, train_fn=train, evaluate_fn=evaluate):
+def main(*, train_fn=train, evaluate_fn=evaluate, train_defaults=None):
     p = argparse.ArgumentParser(description=__doc__)
     sub = p.add_subparsers(dest="command", required=True)
     t = sub.add_parser("train")
@@ -281,6 +283,8 @@ def main(*, train_fn=train, evaluate_fn=evaluate):
     t.add_argument("--resume", type=Path)
     t.add_argument("--checkpoint-every", type=int, default=100000)
     t.add_argument("--eval-every", type=int, default=250000)
+    if train_defaults is not None:
+        t.set_defaults(**train_defaults)
     e = sub.add_parser("evaluate")
     e.add_argument("--checkpoint", type=Path, required=True)
     e.add_argument("--episodes", type=int, default=100)

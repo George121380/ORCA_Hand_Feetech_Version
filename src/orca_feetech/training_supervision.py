@@ -48,8 +48,10 @@ def checkpoint_steps(path, *, check_weights=False):
     return steps
 
 
-def latest_checkpoint(directories, fallback=None):
-    from .checkpoint import load_config
+def latest_checkpoint(directories, fallback=None, *, config_loader=None):
+    if config_loader is None:
+        from .checkpoint import load_config
+        config_loader=load_config
     candidates = []
     for directory in directories:
         for path in Path(directory).glob("*.zip"):
@@ -60,7 +62,7 @@ def latest_checkpoint(directories, fallback=None):
     valid = []
     for path in candidates:
         try:
-            load_config(path)
+            config_loader(path)
             valid.append((checkpoint_steps(path), path.stat().st_mtime_ns, path))
         except (OSError, ValueError, KeyError, zipfile.BadZipFile, EOFError):
             continue

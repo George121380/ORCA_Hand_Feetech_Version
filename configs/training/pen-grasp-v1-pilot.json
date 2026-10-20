@@ -1,0 +1,33 @@
+{
+  "purpose": "Bounded nominal grasp stabilization pilot; not pen rotation",
+  "arguments": {
+    "task_family": "pen-grasp-v1",
+    "object": "pen",
+    "angle": 10,
+    "turns": 1,
+    "horizon": 140,
+    "randomization": 0,
+    "steps": 200000,
+    "num_envs": 8,
+    "device": "cuda",
+    "seed": 0,
+    "learning_rate": 0.0001,
+    "entropy_coef": 0.001,
+    "target_kl": 0.02,
+    "initial_log_std": -2,
+    "checkpoint_every": 20000,
+    "eval_every": 50000,
+    "selection_episodes": 28,
+    "selection_seed": 2110000,
+    "test_episodes": 100,
+    "test_seed": 2210000
+  },
+  "watchdog": {
+    "max_restarts": 2,
+    "quality_retries": 0,
+    "poll_seconds": 30,
+    "stall_seconds": 300
+  },
+  "promotion": "100-episode grasp gate only; never auto-promote into rotation",
+  "training_reset": "All seven placement buckets plus frozen continuous position/yaw jitter; no retries or outcome filtering"
+}

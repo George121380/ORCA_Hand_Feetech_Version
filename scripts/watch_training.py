@@ -90,6 +90,8 @@ def stage_options(initial, index, plan=None):
 
 def job_command(options, output, resume=None):
     command = [sys.executable, str(ROOT / "scripts/run_training_job.py"), "--output", str(output)]
+    if options.get('task_family') is not None:
+        command += ['--task-family',options['task_family']]
     for key in ("object", "angle", "turns", "horizon", "randomization", "steps", "num_envs", "device",
                 "seed", "device_config", "mass_kg", "friction", "selection_episodes", "selection_seed",
                 "test_episodes", "test_seed", "checkpoint_every", "eval_every", "learning_rate",
@@ -193,6 +195,8 @@ def main():
             return
     else:
         initial = json.loads((args.initial_job / "job.json").read_text())["arguments"]
+        if initial.get('task_family')=='pen-grasp-v1' and (args.course or plan is not None):
+            parser.error('Grasp stabilization cannot enter a rotation curriculum')
         if args.course and (initial["object"] != "pen" or initial["angle"] != 15
                             or initial["turns"] != 1 or initial["randomization"] != .3):
             parser.error("Pen course must start with pen/15deg/r0.3")

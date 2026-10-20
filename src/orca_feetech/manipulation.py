@@ -342,13 +342,16 @@ class ManipulationEnv(gym.Env):
                     angular_speed_rps=angular_speed,
                     shaft_error_deg=shaft_error if self.config.object == "pen" else None)
 
-    def step(self, action):
+    def _physics_step(self):
+        mujoco.mj_step(self.model, self.data, nstep=25)
+        mujoco.mj_forward(self.model, self.data)
+
+    def _advance(self, action):
         # Observation validity drives the same hold rule used by deployment.
         command = self.codec.step(action, valid=self.valid)
         self.queue.append(command)
         self.data.ctrl[self.actuators] = np.clip(self.queue[0] + self.bias, self.lower, self.upper)
-        mujoco.mj_step(self.model, self.data, nstep=25)
-        mujoco.mj_forward(self.model, self.data)
+        self._physics_step()
         self.steps += 1
         strength = self.config.randomization
         # Bursts of 1..4 lost observations, plus sample-and-hold camera delay.
@@ -363,7 +366,10 @@ class ManipulationEnv(gym.Env):
             self.age = 0.
         else:
             self.age += DT
-        info = self.info()
+        return self.info()
+
+    def step(self, action):
+        info = self._advance(action)
         error = np.deg2rad(info["angle_error_deg"])
         self.stable = self.stable + 1 if info["stable"] and not info["dropped"] else 0
         subgoal = self.stable >= 10

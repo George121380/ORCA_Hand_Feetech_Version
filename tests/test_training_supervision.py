@@ -35,6 +35,20 @@ def test_recovery_uses_actual_steps_and_skips_corrupt_or_nan_weights(monkeypatch
     assert supervisor.training_target(dict(resume=str(good), steps=900)) == 1000
 
 
+def test_explicit_checkpoint_family_loader_is_used_during_recovery(tmp_path):
+    older=tmp_path/'checkpoint_100_steps.zip'
+    newer=tmp_path/'checkpoint_200_steps.zip'
+    checkpoint(older,100)
+    checkpoint(newer,200)
+    checked=[]
+    def own_contract(path):
+        checked.append(path)
+        if path==newer:
+            raise ValueError('Different task family')
+    path,steps=supervisor.latest_checkpoint([tmp_path],config_loader=own_contract)
+    assert path==older and steps==100 and set(checked)=={older,newer}
+
+
 def test_process_matching_never_adopts_an_unrelated_python_job(monkeypatch, tmp_path):
     state = dict(pid=123, commands=[])
     monkeypatch.setattr(supervisor, "process_argv", lambda pid: ["python", "other_training.py"])
