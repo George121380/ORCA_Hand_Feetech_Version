@@ -160,6 +160,17 @@ def test_grasp_zero_mean_provenance_is_forwarded_with_checkpoint_recovery(monkey
     assert argv[argv.index('--resume')+1]==str(tmp_path/'checkpoint.zip')
 
 
+def test_rotation_transfer_is_fresh_only_and_recovery_keeps_its_learned_weights(monkeypatch,tmp_path):
+    monkeypatch.syspath_prepend(str(Path(__file__).parents[1]/'scripts'))
+    import watch_training as watch
+    options=dict(task_family='pen-rotate-v1',initialize_policy='/frozen/grasp/policy.zip')
+    fresh=watch.job_command(options,tmp_path/'job')
+    assert fresh[fresh.index('--initialize-policy')+1]=='/frozen/grasp/policy.zip'
+    recovery=watch.job_command(options,tmp_path/'job',resume=tmp_path/'rotation.zip')
+    assert '--initialize-policy' not in recovery
+    assert recovery[recovery.index('--resume')+1]==str(tmp_path/'rotation.zip')
+
+
 def test_explicit_plan_advances_only_after_pass_and_is_immutable_on_restart(monkeypatch, tmp_path):
     monkeypatch.syspath_prepend(str(Path(__file__).parents[1] / "scripts"))
     spec = importlib.util.spec_from_file_location("watch", Path(__file__).parents[1] / "scripts/watch_training.py")

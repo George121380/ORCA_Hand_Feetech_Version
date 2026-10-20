@@ -108,6 +108,8 @@ def job_command(options, output, resume=None):
         command += ["--video"]
     if options.get('zero_initial_action_mean'):
         command += ['--zero-initial-action-mean']
+    if options.get('initialize_policy') and not resume:
+        command += ['--initialize-policy',str(options['initialize_policy'])]
     return command
 
 
@@ -197,8 +199,8 @@ def main():
             return
     else:
         initial = json.loads((args.initial_job / "job.json").read_text())["arguments"]
-        if initial.get('task_family')=='pen-grasp-v1' and (args.course or plan is not None):
-            parser.error('Grasp stabilization cannot enter a rotation curriculum')
+        if initial.get('task_family') in ('pen-grasp-v1','pen-rotate-v1') and (args.course or plan is not None):
+            parser.error('Grasp and single-target rotation pilots cannot enter an automatic curriculum')
         if args.course and (initial["object"] != "pen" or initial["angle"] != 15
                             or initial["turns"] != 1 or initial["randomization"] != .3):
             parser.error("Pen course must start with pen/15deg/r0.3")

@@ -1,0 +1,48 @@
+{
+  "purpose": "Bounded first goal-conditioned +/-15deg yaw pilot after accepted94/100 seven-second grasp and failed frozen-policy rotation readiness",
+  "arguments": {
+    "task_family": "pen-rotate-v1",
+    "object": "pen",
+    "angle": 15,
+    "turns": 1,
+    "horizon": 140,
+    "randomization": 0.3,
+    "steps": 200000,
+    "num_envs": 8,
+    "device": "cuda",
+    "seed": 0,
+    "learning_rate": 0.00001,
+    "entropy_coef": 0.001,
+    "target_kl": 0.02,
+    "initial_log_std": -4,
+    "checkpoint_every": 20000,
+    "eval_every": 50000,
+    "selection_episodes": 28,
+    "selection_seed": 2511000,
+    "test_episodes": 100,
+    "test_seed": 2611000
+  },
+  "initialize_policy": {
+    "runtime_argument": "--initialize-policy /absolute/frozen/grasp/policy.zip",
+    "runtime_environment": "ORCA_GRASP_CHECKPOINT points to the same immutable accepted artifact",
+    "sha256": "9ff037afb2ae122b50ec7128fe792314216d60c6536d1c8eba94e09a6928c374",
+    "source_steps": 200704,
+    "transfer": "All actor/critic/log_std tensors, fresh optimizer and zero rotation timesteps; resume retains learned rotation weights"
+  },
+  "watchdog": {
+    "max_restarts": 2,
+    "quality_retries": 0,
+    "poll_seconds": 30,
+    "stall_seconds": 300
+  },
+  "protocol": {
+    "prefix": "Actual6.5s empty reach, manual release once,140 deterministic frozen grasp actions; every failed prefix counts as failed rotation episode, no retries",
+    "handoff": "No object/hand pose or velocity injection; retain physics time, controller, delays, RNG, camera, history, release-origin geometry/force/displacement audits",
+    "goal": "One +/-15deg world-Z target from last measured prefix-end orientation; training balanced random direction, evaluation alternates every seven placement buckets",
+    "success": "Full7s continuation; final continuous1s fullSO3<8deg plus loaded opposing thumb/middle pinch, v<.015m/s,w<.3rad/s, orientation span<2deg, position span<2mm; original2ms hard limits retained",
+    "comparisons": "Same prefix/initial cases for policy, zero-action hold, random and frozen-grasp continuation; 100-case success>=80%,drops<=10%, policy at least matches hold and frozen-grasp success/drop rates",
+    "scope": "Single reorientation subgoal only; no revolution or continuous-rotation acceptance, no hardware deployment",
+    "budget": "One200k-step pilot, zero automatic quality extensions or curriculum promotions; inspect failures before another experiment",
+    "seeds": "Fresh development2511000..2511027 and formal2611000..2611099, disjoint from prior grasp development/formal blocks"
+  }
+}

@@ -59,6 +59,9 @@ def train(args, *, config_class=TaskConfig, env_class=None, task_id=TASK_ID,
                         delay_max_steps=args.delay_max_ms // 50,
                         command_bias_deg=args.command_bias_deg, encoder_bias_deg=args.encoder_bias_deg)
     zero_mean=getattr(args,'zero_initial_action_mean',False)
+    initialize_policy=getattr(args,'initialize_policy',None)
+    if initialize_policy is not None and (args.resume or task_id!='orca-v1-pen-rotate-v1'):
+        raise ValueError('Explicit grasp-to-rotation initialization is fresh-only and requires rotation v1')
     if zero_mean and task_id!='orca-v1-pen-grasp-v1':
         raise ValueError('This initialization experiment is restricted to the explicit grasp task')
     if args.device_config:
@@ -141,6 +144,18 @@ def train(args, *, config_class=TaskConfig, env_class=None, task_id=TASK_ID,
                           batch_size=min(1024, 256 * args.num_envs), learning_rate=args.learning_rate,
                           ent_coef=args.entropy_coef, target_kl=args.target_kl) if args.resume else
                  fresh_ppo(env,args))
+        if initialize_policy is not None:
+            from orca_feetech.pen_rotate import validate_grasp_prefix,PREFIX_SHA256
+            validate_grasp_prefix(initialize_policy)
+            source=PPO.load(initialize_policy,device='cpu')
+            if source.num_timesteps!=200704 or model.num_timesteps!=0 or model.policy.optimizer.state:
+                raise ValueError('Policy migration requires the accepted source and a fresh target optimizer/step counter')
+            model.policy.load_state_dict(source.policy.state_dict(),strict=True)
+            metadata['actor_initialization']=dict(source_task='orca-v1-pen-grasp-v1',source_sha256=PREFIX_SHA256,
+                source_steps=source.num_timesteps,copy='All actor/critic/log_std tensors; fresh optimizer and zero rotation steps')
+            del source
+        elif args.resume and previous_meta.get('actor_initialization'):
+            metadata['actor_initialization']=previous_meta['actor_initialization']
         if args.reset_log_std is not None:
             with torch.no_grad():
                 model.policy.log_std.fill_(args.reset_log_std)
@@ -212,6 +227,8 @@ def evaluate(args, *, env_class=ManipulationEnv, config_loader=load_config, rese
     from stable_baselines3 import PPO
     torch.set_num_threads(1)
     config, meta = config_loader(args.checkpoint)
+    if args.baseline=='grasp' and meta['task_id']!='orca-v1-pen-rotate-v1':
+        raise ValueError('Frozen-grasp continuation baseline requires rotation v1')
     if args.seed < 20000:
         raise ValueError("Use held-out evaluation seeds >=20000")
     args.output.mkdir(parents=True, exist_ok=False)
@@ -237,6 +254,7 @@ def evaluate(args, *, env_class=ManipulationEnv, config_loader=load_config, rese
             for step in range(config.horizon):
                 action = (np.zeros(16) if args.baseline == "hold" else
                           rng.uniform(-1, 1, 16) if args.baseline == "random" else
+                          env.prefix.predict(obs,deterministic=True)[0] if args.baseline=='grasp' else
                           policy.predict(obs, deterministic=True)[0])
                 obs, reward, terminated, truncated, info = env.step(action)
                 total += reward
@@ -246,7 +264,7 @@ def evaluate(args, *, env_class=ManipulationEnv, config_loader=load_config, rese
                     label=(f"GRASP seed {args.seed+episode} | hold {(step+1)/20:.1f}/7.0s | drop {info['dropped']}"
                            if meta['task_id']=='orca-v1-pen-grasp-v1' else
                            f"seed {args.seed+episode} | {info['angle_error_deg']:.1f} deg | "
-                           f"turns {info['completed_turns']} | drop {info['dropped']}")
+                           f"subgoals {info.get('completed_subgoals',info['completed_turns'])} | drop {info['dropped']}")
                     cv2.putText(frame,label,
                                 (8, 25), cv2.FONT_HERSHEY_SIMPLEX, .45, (255, 255, 255), 1)
                     writer.append_data(frame)
@@ -307,6 +325,7 @@ def main(*, train_fn=train, evaluate_fn=evaluate, train_defaults=None):
                    help="Training-only frozen30-degree skill; all evaluations remain unassisted")
     t.add_argument("--prefix-reset-probability",type=float,default=.75)
     t.add_argument("--resume", type=Path)
+    t.add_argument('--initialize-policy',type=Path,help='Explicit fresh grasp-to-rotation weight transfer; no optimizer or step-count transfer')
     t.add_argument("--checkpoint-every", type=int, default=100000)
     t.add_argument("--eval-every", type=int, default=250000)
     if train_defaults is not None:
@@ -315,7 +334,7 @@ def main(*, train_fn=train, evaluate_fn=evaluate, train_defaults=None):
     e.add_argument("--checkpoint", type=Path, required=True)
     e.add_argument("--episodes", type=int, default=100)
     e.add_argument("--seed", type=int, default=20000)
-    e.add_argument("--baseline", choices=["hold", "random"])
+    e.add_argument("--baseline", choices=["hold", "random", "grasp"])
     e.add_argument("--video", action="store_true")
     for cmd in (t, e):
         cmd.add_argument("--output", type=Path, required=True)

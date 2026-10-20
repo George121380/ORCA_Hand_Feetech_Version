@@ -20,4 +20,7 @@ def task_family(name):
     if name=='pen-grasp-v1':
         from .pen_grasp import GraspConfig,load_grasp_config
         return TaskFamily('pen_grasp.py',GraspConfig,load_grasp_config)
+    if name=='pen-rotate-v1':
+        from .pen_rotate import RotationConfig,load_rotation_config
+        return TaskFamily('pen_rotate.py',RotationConfig,load_rotation_config)
     raise ValueError('Unknown explicit task family')

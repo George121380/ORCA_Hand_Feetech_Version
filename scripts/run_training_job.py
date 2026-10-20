@@ -63,7 +63,7 @@ def sha256(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument('--task-family',choices=['legacy-v7','v8','pen-grasp-v1'],default='legacy-v7')
+    parser.add_argument('--task-family',choices=['legacy-v7','v8','pen-grasp-v1','pen-rotate-v1'],default='legacy-v7')
     parser.add_argument("--object", choices=["pen", "cube"], default="pen")
     parser.add_argument("--angle", type=float, default=15)
     parser.add_argument("--turns", type=int, default=1)
@@ -74,6 +74,7 @@ def main():
     parser.add_argument("--device", choices=["cpu", "cuda"], default="cuda")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--resume", type=Path)
+    parser.add_argument('--initialize-policy',type=Path)
     parser.add_argument("--device-config", type=Path)
     parser.add_argument("--mass-kg", type=float)
     parser.add_argument("--friction", type=float, default=1.)
@@ -113,7 +114,7 @@ def main():
         for key, value in state["arguments"].items():
             if key not in ("continue_existing", "recovery_num_envs"):
                 setattr(args, key, Path(value) if value is not None and key in
-                        ("output", "resume", "device_config", "prefix_reset_checkpoint") else value)
+                        ("output", "resume", "initialize_policy", "device_config", "prefix_reset_checkpoint") else value)
         args.num_envs = args.recovery_num_envs or state.get("effective_num_envs", args.num_envs)
         state.update(status="running", pid=os.getpid(), recovered_at=now(),
                      resumptions=state.get("resumptions", 0) + 1, effective_num_envs=args.num_envs)
@@ -123,6 +124,11 @@ def main():
                      commands=[], acceptance_met=False)
     from orca_feetech.task_families import task_family
     family=task_family(args.task_family)
+    if args.initialize_policy is not None:
+        if args.task_family!='pen-rotate-v1' or args.resume is not None:
+            parser.error('Fresh rotation initialization only; cannot combine with resume')
+        from orca_feetech.pen_rotate import validate_grasp_prefix
+        validate_grasp_prefix(args.initialize_policy)
     if args.task_family!='legacy-v7':
         family.config_class(object=args.object,angle=args.angle,turns=args.turns,
                             horizon=args.horizon,randomization=args.randomization)
@@ -244,6 +250,8 @@ def main():
             command = python + ["train", "--output", str(model), "--steps", str(remaining)]
             if source:
                 command += ["--resume", str(source)]
+            elif args.initialize_policy is not None:
+                command += ['--initialize-policy',str(args.initialize_policy)]
             if (args.reset_log_std is not None
                     and (source is None or not Path(source).resolve().is_relative_to(args.output))):
                 command += ["--reset-log-std", str(args.reset_log_std)]
@@ -292,7 +300,7 @@ def main():
             state.update(selected_from=str(chosen), selected_sha256=sha256(selected / "policy.zip"),
                          validation={k: v for k, v in metrics.items() if k != "trials"})
             save(state_path, state)
-        for baseline in (None, "hold", "random"):
+        for baseline in ((None,'hold','random','grasp') if args.task_family=='pen-rotate-v1' else (None,'hold','random')):
             name = "test-" + (baseline or "policy")
             evaluate_phase(name, selected / "policy.zip", args.test_episodes, args.test_seed, baseline=baseline)
         test = json.loads((args.output / "test-policy/metrics.json").read_text())
@@ -302,6 +310,16 @@ def main():
             accepted,comparison=grasp_acceptance(test,hold)
             scalar.update(policy_sample_threshold_met=test['acceptance_met'],baseline_comparison=comparison,
                           acceptance_met=accepted)
+        if args.task_family=='pen-rotate-v1':
+            comparisons={}
+            accepted=test['acceptance_met']
+            for baseline in ('hold','grasp'):
+                reference=json.loads((args.output/f'test-{baseline}/metrics.json').read_text())
+                passed,comparison=grasp_acceptance(test,reference)
+                comparisons[baseline]=comparison
+                accepted=accepted and passed
+            scalar.update(policy_sample_threshold_met=test['acceptance_met'],baseline_comparisons=comparisons,
+                          acceptance_met=bool(accepted),continuous_rotation_accepted=False)
         state.update(test=scalar,acceptance_met=scalar['acceptance_met'])
         if args.video:
             # Fixed first five TEST episodes, without selecting successful trials.
