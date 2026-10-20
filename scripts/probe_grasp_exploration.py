@@ -1,6 +1,6 @@
 """Paired development-only grasp exploration/early-policy diagnostic.
 
-Four conditions on exactly14 development resets, two per placement bucket.
+Four conditions, or mean versus hold, on exactly14 development resets.
 No training, source-policy selection or formal seeds; the active pilot is unchanged.
 """
 import argparse
@@ -48,7 +48,10 @@ def failure_flags(samples):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--checkpoint',type=Path,required=True,help='Frozen early checkpoint copy, never a live best_model path')
+    parser.add_argument('--checkpoint',type=Path,required=True,help='Frozen checkpoint copy, never a live best_model path')
+    parser.add_argument('--checkpoint-steps',type=int,choices=(40000,100000),default=40000,
+                        help='Freeze by this declared step count, never evaluation score')
+    parser.add_argument('--mean-vs-hold',action='store_true',help='Only zero action and frozen policy mean;28 episodes')
     parser.add_argument('--output',type=Path,required=True)
     args=parser.parse_args()
     import torch
@@ -58,8 +61,9 @@ def main():
     if config.fingerprint()!=GraspConfig(randomization=.3).fingerprint():
         raise ValueError('Expected the frozen0.3 randomized grasp contract')
     actual=checkpoint_steps(args.checkpoint,check_weights=True)
-    if actual!=40000:
-        raise ValueError('This diagnostic freezes the first40k checkpoint by step count, not evaluation score')
+    if actual!=args.checkpoint_steps:
+        raise ValueError(f'Expected the frozen{args.checkpoint_steps}-step checkpoint, got{actual}')
+    conditions=('zero','frozen_early_mean') if args.mean_vs_hold else CONDITIONS
     raw=args.checkpoint.read_bytes()
     policy=PPO.load(args.checkpoint,device='cpu')
     args.output.mkdir(parents=True,exist_ok=False)
@@ -68,9 +72,10 @@ def main():
         checkpoint_sha256=hashlib.sha256(raw).hexdigest(),checkpoint_steps=actual,checkpoint_metadata=meta,
         script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         runtime=dict(system=platform.system(),python=platform.python_version(),mujoco=mujoco.__version__,numpy=np.__version__),
-        protocol=dict(seeds=SEEDS,conditions=CONDITIONS,maximum_episodes=56,placement='episode%7;two per bucket',
-            noise='same140x16 standard-normal array per seed; scale0/exp(-4)/exp(-2)',
-            actor_noise_rng_seed='environment_seed+1000000; independent from environment RNG',
+        protocol=dict(seeds=SEEDS,conditions=conditions,maximum_episodes=len(SEEDS)*len(conditions),
+            placement='episode%7;two per bucket',declared_checkpoint_steps=args.checkpoint_steps,
+            noise='none' if args.mean_vs_hold else 'same140x16 standard-normal array per seed; scale0/exp(-4)/exp(-2)',
+            actor_noise_rng_seed=None if args.mean_vs_hold else 'environment_seed+1000000; independent from environment RNG',
             initial_state_model_control_rng_required_identical=True,active_training_changed=False,
             formal_seeds_used=False),cases=[])
     def save():
@@ -81,7 +86,7 @@ def main():
         for episode,seed in enumerate(SEEDS):
             noise=np.random.default_rng(seed+1000000).standard_normal((140,16))
             expected=None
-            for condition in CONDITIONS:
+            for condition in conditions:
                 obs,initial=env.reset(seed=seed,options={'placement_index':episode%7})
                 signature=reset_signature(env)
                 expected=signature if expected is None else expected
@@ -105,7 +110,7 @@ def main():
                     mean_absolute_action=float(np.mean(np.abs([s['action'] for s in row['samples']]))))
                 save()
         report['summary']=[]
-        for condition in CONDITIONS:
+        for condition in conditions:
             rows=[r for r in report['cases'] if r['condition']==condition]
             reasons=sorted({r['end']['termination_reason'] for r in rows})
             report['summary'].append(dict(condition=condition,episodes=len(rows),
