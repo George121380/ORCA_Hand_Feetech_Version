@@ -38,3 +38,17 @@ def test_heartbeat_keeps_reporting_unreadable_state(tmp_path):
     heartbeat.write_report(output, report)
     assert json.loads((output / "latest.json").read_text()) == report
     assert len((output / "heartbeats.jsonl").read_text().splitlines()) == 1
+
+
+def test_heartbeat_reports_checkpoint_selection_progress_without_training(tmp_path):
+    state = tmp_path/"selection"
+    job = state/"job"
+    (job/"model").mkdir(parents=True)
+    (state/"watchdog.json").write_text(json.dumps(dict(status="monitoring", active_job=str(job),
+        stage_name="35-checkpoint-selection", stage_results=[])))
+    (job/"job.json").write_text(json.dumps(dict(status="running", phase="screen")))
+    (job/"model/progress.json").write_text(json.dumps(dict(total_steps=0,
+        evaluations_completed=7, evaluations_total=49, candidates_total=42)))
+    report = heartbeat.snapshot(state)
+    assert not report["needs_attention"] and report["phase"] == "screen"
+    assert report["progress"]["evaluations_completed"] == 7

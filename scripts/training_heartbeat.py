@@ -31,6 +31,8 @@ def snapshot(state_dir, now=None):
         if progress.exists():
             data = json.loads(progress.read_text())
             report["progress"] = {k: data.get(k) for k in ("total_steps", "steps_per_second", "elapsed_s")}
+            report["progress"].update({k: data[k] for k in (
+                "evaluations_completed", "evaluations_total", "candidates_total") if k in data})
             report["progress_age_seconds"] = max(0, now-progress.stat().st_mtime)
         reasons = []
         if state["status"] in ("quality_gate_failed", "recovery_exhausted", "needs_review"):
