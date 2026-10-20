@@ -1,0 +1,2585 @@
+{
+  "status": "complete",
+  "timestamp": "2026-10-20T21:48:39.144134+00:00",
+  "acceptance_met": false,
+  "continuous_rotation_accepted": false,
+  "checkpoint_sha256": "a64f95f2b23029efcc02ad77237d019c3d72d0e228bdd913b858bd502bf090fb",
+  "checkpoint_steps": 100000,
+  "source_revision": "fb127704aef4954bf2b282ed2626fe4998438422",
+  "script_sha256": "73c066065bf30f7bdd6dcd5728ff8a2eeb96ae6d63849a43de8c79861fc6d04f",
+  "protocol": {
+    "seeds": [
+      2511000,
+      2511001,
+      2511002,
+      2511003,
+      2511004,
+      2511005,
+      2511006
+    ],
+    "directions": [
+      -1,
+      1
+    ],
+    "maximum_episodes": 14,
+    "formal_seeds_used": false,
+    "prefix": "Actual empty reach, manual release,140 frozen grasp actions; all failures count without retry",
+    "pairing": "Same seed/placement for both directions; exact physical/controller/camera/RNG/model signature required",
+    "action_audit": "Counterfactual copy changes only active G entries; real preparation history kept, alternate action never applied",
+    "credit": "Actor sensitivity is not physical controllability; world-Z progress and off-axis motion from actual dynamics, no acceptance"
+  },
+  "pairs": [
+    {
+      "seed": 2511000,
+      "prefix_signature": "49addc55bcd9e3290528b4ec60ade931c4601d3d1e312049ca785189082f73e9",
+      "same_prefix_success": true,
+      "only_active_goal_observation_changed": true,
+      "initial_goal_action_delta_norm": 0.003977510146796703,
+      "source_initial_goal_action_delta_norm": 0.0024266564287245274,
+      "signed_yaw_progress_deg": [
+        4.287943126247612,
+        -3.008915493035779
+      ],
+      "world_yaw_response_to_goal_flip_deg": 1.2790276332118329,
+      "response_gain_for30deg_goal_flip": 0.04263425444039443,
+      "world_yaw_bias_deg": -3.6484293096416955
+    },
+    {
+      "seed": 2511001,
+      "prefix_signature": "a5390ec4200c714b0eaf4281fdb4a1f47c9e1b1e984e876abc29e5aa0b236257",
+      "same_prefix_success": true,
+      "only_active_goal_observation_changed": true,
+      "initial_goal_action_delta_norm": 0.003862953744828701,
+      "source_initial_goal_action_delta_norm": 0.002383236540481448,
+      "signed_yaw_progress_deg": [
+        -3.810998562661714,
+        9.491803083561804
+      ],
+      "world_yaw_response_to_goal_flip_deg": 5.6808045209000895,
+      "response_gain_for30deg_goal_flip": 0.18936015069666964,
+      "world_yaw_bias_deg": 6.651400823111759
+    },
+    {
+      "seed": 2511002,
+      "prefix_signature": "5ef54da265b32cc1f580be25a02002640c8456a1384a532c14e44a608e4454be",
+      "same_prefix_success": true,
+      "only_active_goal_observation_changed": true,
+      "initial_goal_action_delta_norm": 0.00378325954079628,
+      "source_initial_goal_action_delta_norm": 0.0024168649688363075,
+      "signed_yaw_progress_deg": [
+        0.9838428023130696,
+        1.5522505271626343
+      ],
+      "world_yaw_response_to_goal_flip_deg": 2.5360933294757038,
+      "response_gain_for30deg_goal_flip": 0.08453644431585679,
+      "world_yaw_bias_deg": 0.28420386242478235
+    },
+    {
+      "seed": 2511003,
+      "prefix_signature": "fa19283174952eb876a5434598842007a9c55791cf0c4a17f49ca63e910cd0cc",
+      "same_prefix_success": true,
+      "only_active_goal_observation_changed": true,
+      "initial_goal_action_delta_norm": 0.003987797535955906,
+      "source_initial_goal_action_delta_norm": 0.002418800024315715,
+      "signed_yaw_progress_deg": [
+        4.475762971278948,
+        -1.1039498963665868
+      ],
+      "world_yaw_response_to_goal_flip_deg": 3.3718130749123616,
+      "response_gain_for30deg_goal_flip": 0.11239376916374538,
+      "world_yaw_bias_deg": -2.7898564338227674
+    },
+    {
+      "seed": 2511004,
+      "prefix_signature": "0de6728e684778067e3b1be5c7b907dd3b4a6c137a0ce4046833d035ab28144e",
+      "same_prefix_success": true,
+      "only_active_goal_observation_changed": true,
+      "initial_goal_action_delta_norm": 0.0038770814426243305,
+      "source_initial_goal_action_delta_norm": 0.002426507417112589,
+      "signed_yaw_progress_deg": [
+        4.978758968387925,
+        -2.603687639075301
+      ],
+      "world_yaw_response_to_goal_flip_deg": 2.3750713293126244,
+      "response_gain_for30deg_goal_flip": 0.07916904431042081,
+      "world_yaw_bias_deg": -3.791223303731613
+    },
+    {
+      "seed": 2511005,
+      "prefix_signature": "7bb5ef62cab24b9a2b29522f92faaed76f0b55a3f4a31789687cad6e51b9b88d",
+      "same_prefix_success": true,
+      "only_active_goal_observation_changed": true,
+      "initial_goal_action_delta_norm": 0.0038162339478731155,
+      "source_initial_goal_action_delta_norm": 0.002403390360996127,
+      "signed_yaw_progress_deg": [
+        1.5888135214075716,
+        0.6601064143862493
+      ],
+      "world_yaw_response_to_goal_flip_deg": 2.248919935793821,
+      "response_gain_for30deg_goal_flip": 0.07496399785979403,
+      "world_yaw_bias_deg": -0.46435355351066115
+    },
+    {
+      "seed": 2511006,
+      "prefix_signature": "7d9dd45bcfe5dd1cf214d8884a6a0403b6314f6ce59d1a510faaf554b4e98a93",
+      "same_prefix_success": true,
+      "only_active_goal_observation_changed": true,
+      "initial_goal_action_delta_norm": 0.003987868316471577,
+      "source_initial_goal_action_delta_norm": 0.002417974406853318,
+      "signed_yaw_progress_deg": [
+        -0.8055582143189111,
+        5.182325594931317
+      ],
+      "world_yaw_response_to_goal_flip_deg": 4.3767673806124066,
+      "response_gain_for30deg_goal_flip": 0.14589224602041356,
+      "world_yaw_bias_deg": 2.993941904625114
+    }
+  ],
+  "summary": {
+    "episodes": 14,
+    "prefix_successes": 14,
+    "successes": 0,
+    "drops": 0,
+    "valid_prefix_diagnostics": {
+      "cases": 14,
+      "mean_signed_goal_yaw_progress_deg": 1.5620355145870601,
+      "mean_off_axis_rotation_deg": 4.99966402068158,
+      "mean_final_error_deg": 14.837369135258589,
+      "mean_action_norm": 0.024745748427310425,
+      "mean_goal_action_delta_norm": 0.00935625977913982,
+      "mean_source_goal_action_delta_norm": 0.003029906428157713
+    },
+    "limits": "Goal-action sensitivity does not prove correct direction, local reachability or a causal learning failure mechanism"
+  },
+  "finished_at": "2026-10-20T21:49:16.143553+00:00",
+  "cases": [
+    {
+      "seed": 2511000,
+      "direction": -1,
+      "initial": {
+        "angle_error_deg": 14.558977759969643,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.0157021955130582,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.195750190595205,
+          0.058701336169455984,
+          0.19771168264432076
+        ],
+        "linear_speed_mps": 0.0010548079951005571,
+        "angular_speed_rps": 0.013017675291835597,
+        "shaft_error_deg": 13.231036634475856,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.3355488141514727,
+          "right_middle_ip": 0.3435145628640843,
+          "right_pinky_pp": 0.11266214663657197
+        },
+        "minimum_thumb_target_normal_dot": -0.8314700383165641,
+        "summed_normal_force_n": 0.7917255236521289,
+        "object_weight_n": 0.40565375033840967,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 0,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0013319066196858969,
+        "peak_normal_force_n": 1.0308865666945448,
+        "maximum_displacement_m": 0.0157021955130582,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 0,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 0.0,
+        "reset_attempts": 1,
+        "settle_seconds": 0.0
+      },
+      "prefix_physical_signature": "49addc55bcd9e3290528b4ec60ade931c4601d3d1e312049ca785189082f73e9",
+      "start_rotation": [
+        [
+          0.08019605720341993,
+          -0.267520431650176,
+          0.9602090454993278
+        ],
+        [
+          -0.41049589992390734,
+          0.8689676659291875,
+          0.2763843550478977
+        ],
+        [
+          -0.9083290750354126,
+          -0.41632681179487396,
+          -0.04012825969349165
+        ]
+      ],
+      "goal": [
+        [
+          -0.025568084444493242,
+          -0.04049219110744251,
+          0.9988526695750274
+        ],
+        [
+          -0.4174740285372876,
+          0.9083129241841905,
+          0.026135555414302312
+        ],
+        [
+          -0.9083290750354126,
+          -0.41632681179487396,
+          -0.04012825969349165
+        ]
+      ],
+      "end": {
+        "angle_error_deg": 13.193305759003144,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.021642929668278254,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19329030320963803,
+          0.06297633770632559,
+          0.19409004453994477
+        ],
+        "linear_speed_mps": 0.000868265908102102,
+        "angular_speed_rps": 0.012298591533923412,
+        "shaft_error_deg": 12.774426585893274,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.3813629864731052,
+          "right_middle_ip": 0.443985897661768,
+          "right_pinky_pp": 0.15903535646364694
+        },
+        "minimum_thumb_target_normal_dot": -0.9569404748485749,
+        "summed_normal_force_n": 0.9843842405985201,
+        "object_weight_n": 0.40565375033840967,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 0,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0013319066196858969,
+        "peak_normal_force_n": 1.0308865666945448,
+        "maximum_displacement_m": 0.021642929668278254,
+        "termination_reason": "horizon",
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 140,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 9.344873297835564,
+        "final_1s_orientation_span_deg": null,
+        "final_1s_position_span_m": null
+      },
+      "end_rotation": [
+        [
+          -0.08097658686619055,
+          -0.260378062624818,
+          0.962105013438373
+        ],
+        [
+          -0.4309608018767498,
+          0.8795264631228963,
+          0.20175724996212807
+        ],
+        [
+          -0.8987299814879074,
+          -0.3982919346035998,
+          -0.18343378970209037
+        ]
+      ],
+      "world_rotvec_deg": [
+        -1.2967207781347536,
+        8.201141135368896,
+        -4.287943126247612
+      ],
+      "signed_goal_yaw_progress_deg": 4.287943126247612,
+      "off_axis_rotation_deg": 8.303023587747191,
+      "total_rotation_deg": 9.344873297836648,
+      "ticks": 140,
+      "mean_action_goal_delta_norm": 0.008952002074303371,
+      "mean_source_goal_delta_norm": 0.0029685805518446223
+    },
+    {
+      "seed": 2511000,
+      "direction": 1,
+      "initial": {
+        "angle_error_deg": 15.441022240029692,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.0157021955130582,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.195750190595205,
+          0.058701336169455984,
+          0.19771168264432076
+        ],
+        "linear_speed_mps": 0.0010548079951005571,
+        "angular_speed_rps": 0.013017675291835597,
+        "shaft_error_deg": 14.031802454056683,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.3355488141514727,
+          "right_middle_ip": 0.3435145628640843,
+          "right_pinky_pp": 0.11266214663657197
+        },
+        "minimum_thumb_target_normal_dot": -0.8314700383165641,
+        "summed_normal_force_n": 0.7917255236521289,
+        "object_weight_n": 0.40565375033840967,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 0,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0013319066196858969,
+        "peak_normal_force_n": 1.0308865666945448,
+        "maximum_displacement_m": 0.0157021955130582,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 0,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 0.0,
+        "reset_attempts": 1,
+        "settle_seconds": 0.0
+      },
+      "prefix_physical_signature": "49addc55bcd9e3290528b4ec60ade931c4601d3d1e312049ca785189082f73e9",
+      "start_rotation": [
+        [
+          0.08019605720341993,
+          -0.267520431650176,
+          0.9602090454993278
+        ],
+        [
+          -0.41049589992390734,
+          0.8689676659291875,
+          0.2763843550478977
+        ],
+        [
+          -0.9083290750354126,
+          -0.41632681179487396,
+          -0.04012825969349165
+        ]
+      ],
+      "goal": [
+        [
+          0.18659440361360688,
+          -0.4892237282460348,
+          0.8519640087827264
+        ],
+        [
+          -0.37432715635576735,
+          0.7663759713755166,
+          0.5220603897183154
+        ],
+        [
+          -0.9083290750354126,
+          -0.41632681179487396,
+          -0.04012825969349165
+        ]
+      ],
+      "end": {
+        "angle_error_deg": 19.74247741335527,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.021799102830205953,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19321051207668286,
+          0.06363194450875206,
+          0.19445207474794382
+        ],
+        "linear_speed_mps": 0.0009831468244658381,
+        "angular_speed_rps": 0.024702513852128346,
+        "shaft_error_deg": 14.023405922587695,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.5799161535971038,
+          "right_middle_ip": 0.5967587409346965,
+          "right_pinky_pp": 0.15874313187026443
+        },
+        "minimum_thumb_target_normal_dot": -0.9238794577178917,
+        "summed_normal_force_n": 1.3354180264020648,
+        "object_weight_n": 0.40565375033840967,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 0,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0013319066196858969,
+        "peak_normal_force_n": 1.3385324883038845,
+        "maximum_displacement_m": 0.021799102830205953,
+        "termination_reason": "horizon",
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 140,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 7.662905691497808,
+        "final_1s_orientation_span_deg": null,
+        "final_1s_position_span_m": null
+      },
+      "end_rotation": [
+        [
+          -0.052020131163059896,
+          -0.2713339944902759,
+          0.9610784408089326
+        ],
+        [
+          -0.42854768617263944,
+          0.875329954320539,
+          0.22392934543127646
+        ],
+        [
+          -0.9020203914711988,
+          -0.4002191081184829,
+          -0.16181433455349717
+        ]
+      ],
+      "world_rotvec_deg": [
+        -1.0941086469722627,
+        6.9620024031296674,
+        -3.008915493035779
+      ],
+      "signed_goal_yaw_progress_deg": -3.008915493035779,
+      "off_axis_rotation_deg": 7.047449978010681,
+      "total_rotation_deg": 7.662905691498068,
+      "ticks": 140,
+      "mean_action_goal_delta_norm": 0.008962844944159899,
+      "mean_source_goal_delta_norm": 0.0029786606901325285
+    },
+    {
+      "seed": 2511001,
+      "direction": -1,
+      "initial": {
+        "angle_error_deg": 14.6311779362112,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.013560538616265756,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.1,
+        "object_position": [
+          0.19810037765466304,
+          0.058401108186442674,
+          0.1992605643597178
+        ],
+        "linear_speed_mps": 0.0019372678745071912,
+        "angular_speed_rps": 0.0307930778237449,
+        "shaft_error_deg": 13.576024423409828,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.3903406480449622,
+          "right_middle_ip": 0.3836995683354825,
+          "right_pinky_pp": 0.09651809596631658
+        },
+        "minimum_thumb_target_normal_dot": -0.7730106413512499,
+        "summed_normal_force_n": 0.8705583123467613,
+        "object_weight_n": 0.3938321671961513,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 1,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0012595428324948168,
+        "peak_normal_force_n": 0.9524811806079874,
+        "maximum_displacement_m": 0.013560538616265756,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 0,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 3.818191820832846e-06,
+        "reset_attempts": 1,
+        "settle_seconds": 0.0
+      },
+      "prefix_physical_signature": "a5390ec4200c714b0eaf4281fdb4a1f47c9e1b1e984e876abc29e5aa0b236257",
+      "start_rotation": [
+        [
+          0.039885771286781335,
+          -0.2056181230025404,
+          0.97781916157425
+        ],
+        [
+          -0.3856804776131279,
+          0.8995923236290904,
+          0.2049005135565114
+        ],
+        [
+          -0.9217698706493755,
+          -0.38529837627548436,
+          -0.04342196221392064
+        ]
+      ],
+      "goal": [
+        [
+          -0.055499629799433695,
+          0.029644144118076015,
+          0.9980185448235079
+        ],
+        [
+          -0.3825179793128246,
+          0.9226648795699934,
+          -0.048677669526412046
+        ],
+        [
+          -0.9222796683189752,
+          -0.38446162972082903,
+          -0.03986814113856913
+        ]
+      ],
+      "end": {
+        "angle_error_deg": 18.57669081152735,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.023457794267347395,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.1934838316258487,
+          0.06676944831768383,
+          0.19482817992074955
+        ],
+        "linear_speed_mps": 0.0024924399045271927,
+        "angular_speed_rps": 0.10647951240328478,
+        "shaft_error_deg": 17.268190570916428,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.1630473928443117,
+          "right_middle_ip": 0.2030570557155723,
+          "right_pinky_pp": 0.1410884774202013
+        },
+        "minimum_thumb_target_normal_dot": -0.4713972303592271,
+        "summed_normal_force_n": 0.5071929259800854,
+        "object_weight_n": 0.3938321671961513,
+        "loaded_opposition": false,
+        "pair_score": 0.9427944607184542,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 1,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0012595428324948168,
+        "peak_normal_force_n": 0.9524811806079874,
+        "maximum_displacement_m": 0.023457794267347395,
+        "termination_reason": "horizon",
+        "source_grasp_completed": true,
+        "source_grasp_stable": false,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 140,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 4.3903425936268725,
+        "final_1s_orientation_span_deg": null,
+        "final_1s_position_span_m": null
+      },
+      "end_rotation": [
+        [
+          0.06843936196185542,
+          -0.26363998428031826,
+          0.9621902163413039
+        ],
+        [
+          -0.4168196141291692,
+          0.8686860269694181,
+          0.26766769664136825
+        ],
+        [
+          -0.9064091035572526,
+          -0.41937876107017924,
+          -0.050437999085776404
+        ]
+      ],
+      "world_rotvec_deg": [
+        -2.1766813160599794,
+        -0.11600212541336659,
+        3.810998562661714
+      ],
+      "signed_goal_yaw_progress_deg": -3.810998562661714,
+      "off_axis_rotation_deg": 2.179770181644162,
+      "total_rotation_deg": 4.390342593624633,
+      "ticks": 140,
+      "mean_action_goal_delta_norm": 0.009185870650357433,
+      "mean_source_goal_delta_norm": 0.002904868505096861
+    },
+    {
+      "seed": 2511001,
+      "direction": 1,
+      "initial": {
+        "angle_error_deg": 15.37178088142551,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.013560538616265756,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.1,
+        "object_position": [
+          0.19810037765466304,
+          0.058401108186442674,
+          0.1992605643597178
+        ],
+        "linear_speed_mps": 0.0019372678745071912,
+        "angular_speed_rps": 0.0307930778237449,
+        "shaft_error_deg": 14.101373683892461,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.3903406480449622,
+          "right_middle_ip": 0.3836995683354825,
+          "right_pinky_pp": 0.09651809596631658
+        },
+        "minimum_thumb_target_normal_dot": -0.7730106413512499,
+        "summed_normal_force_n": 0.8705583123467613,
+        "object_weight_n": 0.3938321671961513,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 1,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0012595428324948168,
+        "peak_normal_force_n": 0.9524811806079874,
+        "maximum_displacement_m": 0.013560538616265756,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 0,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 3.818191820832846e-06,
+        "reset_attempts": 1,
+        "settle_seconds": 0.0
+      },
+      "prefix_physical_signature": "a5390ec4200c714b0eaf4281fdb4a1f47c9e1b1e984e876abc29e5aa0b236257",
+      "start_rotation": [
+        [
+          0.039885771286781335,
+          -0.2056181230025404,
+          0.97781916157425
+        ],
+        [
+          -0.3856804776131279,
+          0.8995923236290904,
+          0.2049005135565114
+        ],
+        [
+          -0.9217698706493755,
+          -0.38529837627548436,
+          -0.04342196221392064
+        ]
+      ],
+      "goal": [
+        [
+          0.14319490034947083,
+          -0.4356598579052958,
+          0.8886482480283424
+        ],
+        [
+          -0.3590201023889133,
+          0.813873296946362,
+          0.4568531740048575
+        ],
+        [
+          -0.9222796683189752,
+          -0.38446162972082903,
+          -0.03986814113856913
+        ]
+      ],
+      "end": {
+        "angle_error_deg": 10.998249693148837,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.024448124518283276,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19253669184769714,
+          0.06757044737792463,
+          0.1946571433794067
+        ],
+        "linear_speed_mps": 0.0019133863474406498,
+        "angular_speed_rps": 0.014732520854984204,
+        "shaft_error_deg": 9.373967847288968,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.14759386872672636,
+          "right_middle_ip": 0.2097092979406232,
+          "right_pinky_pp": 0.15517700790400757
+        },
+        "minimum_thumb_target_normal_dot": -0.4713967528237058,
+        "summed_normal_force_n": 0.5124801745713572,
+        "object_weight_n": 0.3938321671961513,
+        "loaded_opposition": false,
+        "pair_score": 0.9427935056474116,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 1,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0012595428324948168,
+        "peak_normal_force_n": 0.9524811806079874,
+        "maximum_displacement_m": 0.024448124518283276,
+        "termination_reason": "horizon",
+        "source_grasp_completed": true,
+        "source_grasp_stable": false,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 140,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 13.426604176889906,
+        "final_1s_orientation_span_deg": null,
+        "final_1s_position_span_m": null
+      },
+      "end_rotation": [
+        [
+          0.2535292949169227,
+          -0.284281996523032,
+          0.9246116174220428
+        ],
+        [
+          -0.3622097960523928,
+          0.8584042333294744,
+          0.36324404447385017
+        ],
+        [
+          -0.8969542687688216,
+          -0.42699639185233784,
+          0.11466089604774882
+        ]
+      ],
+      "world_rotvec_deg": [
+        -0.05928069154522682,
+        -9.496097079609166,
+        9.491803083561804
+      ],
+      "signed_goal_yaw_progress_deg": 9.491803083561804,
+      "off_axis_rotation_deg": 9.496282111739932,
+      "total_rotation_deg": 13.426604176889448,
+      "ticks": 140,
+      "mean_action_goal_delta_norm": 0.00919794843399099,
+      "mean_source_goal_delta_norm": 0.0029321942179064667
+    },
+    {
+      "seed": 2511002,
+      "direction": -1,
+      "initial": {
+        "angle_error_deg": 14.756933730747187,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.01711551391094817,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19873850636050172,
+          0.06278632986370897,
+          0.1982199531358955
+        ],
+        "linear_speed_mps": 0.0015774057954877402,
+        "angular_speed_rps": 0.05173025990251422,
+        "shaft_error_deg": 13.563408469955851,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.29030144132956437,
+          "right_middle_ip": 0.31617382226529955,
+          "right_pinky_pp": 0.09572656684876842,
+          "right_pinky_ip": 0.038056220520439756
+        },
+        "minimum_thumb_target_normal_dot": -0.6343940352401928,
+        "summed_normal_force_n": 0.7402580509640722,
+        "object_weight_n": 0.4327681780914372,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 2,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0019459350930833823,
+        "peak_normal_force_n": 1.1326506087663177,
+        "maximum_displacement_m": 0.01711551391094817,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 0,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 2.4148365394514667e-06,
+        "reset_attempts": 1,
+        "settle_seconds": 0.0
+      },
+      "prefix_physical_signature": "5ef54da265b32cc1f580be25a02002640c8456a1384a532c14e44a608e4454be",
+      "start_rotation": [
+        [
+          -0.506270314996277,
+          -0.14979245812886044,
+          0.8492659110321592
+        ],
+        [
+          -0.41184782690603183,
+          0.907232954123247,
+          -0.08549698489177979
+        ],
+        [
+          -0.7576752177723309,
+          -0.3930529053963595,
+          -0.5209968118262632
+        ]
+      ],
+      "goal": [
+        [
+          -0.5944765060591368,
+          0.08623787597464243,
+          0.7994752732205683
+        ],
+        [
+          -0.26930642049043546,
+          0.9154629661034149,
+          -0.29900101935573087
+        ],
+        [
+          -0.7576752177723309,
+          -0.3930529053963595,
+          -0.5209968118262632
+        ]
+      ],
+      "end": {
+        "angle_error_deg": 13.959050356971092,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.027660679575945615,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19715126679065315,
+          0.07326142325571275,
+          0.19454548063748137
+        ],
+        "linear_speed_mps": 0.0018182977645040703,
+        "angular_speed_rps": 0.009649980395713196,
+        "shaft_error_deg": 13.54930409407482,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.1782163012802659,
+          "right_middle_ip": 0.2019965514160921,
+          "right_pinky_pp": 0.058647388721273196,
+          "right_pinky_ip": 0.13952043520546648
+        },
+        "minimum_thumb_target_normal_dot": -0.2902841165292842,
+        "summed_normal_force_n": 0.5783806766230977,
+        "object_weight_n": 0.4327681780914372,
+        "loaded_opposition": false,
+        "pair_score": 0.5805682330585684,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 2,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0019459350930833823,
+        "peak_normal_force_n": 1.1326506087663177,
+        "maximum_displacement_m": 0.027660679575945615,
+        "termination_reason": "horizon",
+        "source_grasp_completed": true,
+        "source_grasp_stable": false,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 140,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 2.48066334142492,
+        "final_1s_orientation_span_deg": null,
+        "final_1s_position_span_m": null
+      },
+      "end_rotation": [
+        [
+          -0.5422546202930946,
+          -0.1495082680392963,
+          0.8268054212199379
+        ],
+        [
+          -0.4092954225655384,
+          0.9063939453031177,
+          -0.10453359739692977
+        ],
+        [
+          -0.7337827906388147,
+          -0.39509150042203645,
+          -0.5526893543904884
+        ]
+      ],
+      "world_rotvec_deg": [
+        -0.4955857987315667,
+        2.2226422721405195,
+        -0.9838428023130696
+      ],
+      "signed_goal_yaw_progress_deg": 0.9838428023130696,
+      "off_axis_rotation_deg": 2.2772228599349638,
+      "total_rotation_deg": 2.4806633414217276,
+      "ticks": 140,
+      "mean_action_goal_delta_norm": 0.009551916514257235,
+      "mean_source_goal_delta_norm": 0.0031285195877509457
+    },
+    {
+      "seed": 2511002,
+      "direction": 1,
+      "initial": {
+        "angle_error_deg": 15.243066269253234,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.01711551391094817,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19873850636050172,
+          0.06278632986370897,
+          0.1982199531358955
+        ],
+        "linear_speed_mps": 0.0015774057954877402,
+        "angular_speed_rps": 0.05173025990251422,
+        "shaft_error_deg": 14.009817720337502,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.29030144132956437,
+          "right_middle_ip": 0.31617382226529955,
+          "right_pinky_pp": 0.09572656684876842,
+          "right_pinky_ip": 0.038056220520439756
+        },
+        "minimum_thumb_target_normal_dot": -0.6343940352401928,
+        "summed_normal_force_n": 0.7402580509640722,
+        "object_weight_n": 0.4327681780914372,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 2,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0019459350930833823,
+        "peak_normal_force_n": 1.1326506087663177,
+        "maximum_displacement_m": 0.01711551391094817,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 0,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 2.4148365394514667e-06,
+        "reset_attempts": 1,
+        "settle_seconds": 0.0
+      },
+      "prefix_physical_signature": "5ef54da265b32cc1f580be25a02002640c8456a1384a532c14e44a608e4454be",
+      "start_rotation": [
+        [
+          -0.506270314996277,
+          -0.14979245812886044,
+          0.8492659110321592
+        ],
+        [
+          -0.41184782690603183,
+          0.907232954123247,
+          -0.08549698489177979
+        ],
+        [
+          -0.7576752177723309,
+          -0.3930529053963595,
+          -0.5209968118262632
+        ]
+      ],
+      "goal": [
+        [
+          -0.38017854595500855,
+          -0.3830472916892554,
+          0.8418664059843826
+        ],
+        [
+          -0.5304644545765396,
+          0.835933122856731,
+          0.14079515809077853
+        ],
+        [
+          -0.7576752177723309,
+          -0.3930529053963595,
+          -0.5209968118262632
+        ]
+      ],
+      "end": {
+        "angle_error_deg": 13.97118676543197,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.02766194473481976,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.196782515241538,
+          0.0735387713689649,
+          0.19500946358100307
+        ],
+        "linear_speed_mps": 0.0017066521869740733,
+        "angular_speed_rps": 0.025882989839118808,
+        "shaft_error_deg": 13.678660689731718,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.1586690432689366,
+          "right_middle_ip": 0.18354642246606245,
+          "right_pinky_pp": 0.07902563854952867,
+          "right_pinky_ip": 0.11922647798898305
+        },
+        "minimum_thumb_target_normal_dot": -4.660161145864095e-13,
+        "summed_normal_force_n": 0.5404675822735108,
+        "object_weight_n": 0.4327681780914372,
+        "loaded_opposition": false,
+        "pair_score": 9.32032229172819e-13,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 2,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0019459350930833823,
+        "peak_normal_force_n": 1.1326506087663177,
+        "maximum_displacement_m": 0.02766194473481976,
+        "termination_reason": "horizon",
+        "source_grasp_completed": true,
+        "source_grasp_stable": false,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 140,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 3.195489937163901,
+        "final_1s_orientation_span_deg": null,
+        "final_1s_position_span_m": null
+      },
+      "end_rotation": [
+        [
+          -0.4577882831168907,
+          -0.1553495996073437,
+          0.8753835672108109
+        ],
+        [
+          -0.4196713692653271,
+          0.9057742760724793,
+          -0.05872735839741566
+        ],
+        [
+          -0.7837766452630824,
+          -0.3942581168564714,
+          -0.47984862991669985
+        ]
+      ],
+      "world_rotvec_deg": [
+        0.38936081014095986,
+        -2.7658764251041954,
+        1.5522505271626343
+      ],
+      "signed_goal_yaw_progress_deg": 1.5522505271626343,
+      "off_axis_rotation_deg": 2.793147729609157,
+      "total_rotation_deg": 3.1954899371610397,
+      "ticks": 140,
+      "mean_action_goal_delta_norm": 0.009550170121448381,
+      "mean_source_goal_delta_norm": 0.0031469116952004177
+    },
+    {
+      "seed": 2511003,
+      "direction": -1,
+      "initial": {
+        "angle_error_deg": 15.046466131568629,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.015324955058985786,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19558471293243923,
+          0.059129584674193186,
+          0.1977379712711383
+        ],
+        "linear_speed_mps": 0.0011841373873909824,
+        "angular_speed_rps": 0.03308804368898623,
+        "shaft_error_deg": 13.693342001584524,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.3531148514993748,
+          "right_middle_ip": 0.35002169659687854,
+          "right_pinky_pp": 0.10510906147410637
+        },
+        "minimum_thumb_target_normal_dot": -0.8314700383165751,
+        "summed_normal_force_n": 0.8082456095703597,
+        "object_weight_n": 0.3666642654659903,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 3,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0014301957556892477,
+        "peak_normal_force_n": 0.9059882338573957,
+        "maximum_displacement_m": 0.015324955058985786,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 0,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 0.0,
+        "reset_attempts": 1,
+        "settle_seconds": 0.0
+      },
+      "prefix_physical_signature": "fa19283174952eb876a5434598842007a9c55791cf0c4a17f49ca63e910cd0cc",
+      "start_rotation": [
+        [
+          0.009707625394858848,
+          -0.26738026557414657,
+          0.9635421919099821
+        ],
+        [
+          -0.4266325432418921,
+          0.8703761391623331,
+          0.24582524163280428
+        ],
+        [
+          -0.9043729513072297,
+          -0.41346483521379473,
+          -0.10562383720297912
+        ]
+      ],
+      "goal": [
+        [
+          -0.10137998972527407,
+          -0.032261637152299794,
+          0.9943245367844231
+        ],
+        [
+          -0.4145258286610801,
+          0.9099483594193044,
+          -0.012740508740308404
+        ],
+        [
+          -0.9043729513072297,
+          -0.41346483521379473,
+          -0.10562383720297912
+        ]
+      ],
+      "end": {
+        "angle_error_deg": 14.329754260041174,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.021546722288979265,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.1930519044600102,
+          0.06396861155164099,
+          0.19417773520051004
+        ],
+        "linear_speed_mps": 0.000991337749080646,
+        "angular_speed_rps": 0.019830240252889732,
+        "shaft_error_deg": 13.607877643159341,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.458401615602926,
+          "right_middle_ip": 0.4765462169043131,
+          "right_pinky_pp": 0.14997122089629816
+        },
+        "minimum_thumb_target_normal_dot": -0.9238794577178854,
+        "summed_normal_force_n": 1.0849190534035373,
+        "object_weight_n": 0.3666642654659903,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 3,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0014301957556892477,
+        "peak_normal_force_n": 1.086134967715825,
+        "maximum_displacement_m": 0.021546722288979265,
+        "termination_reason": "horizon",
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 140,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 10.685306905558761,
+        "final_1s_orientation_span_deg": null,
+        "final_1s_position_span_m": null
+      },
+      "end_rotation": [
+        [
+          -0.172465144350147,
+          -0.2665031643226606,
+          0.9482783543824522
+        ],
+        [
+          -0.45196126410696663,
+          0.8767923640182524,
+          0.1642137818397609
+        ],
+        [
+          -0.875206712572016,
+          -0.40026393018268935,
+          -0.2716652286612909
+        ]
+      ],
+      "world_rotvec_deg": [
+        -2.0355956007682763,
+        9.486816117172587,
+        -4.475762971278948
+      ],
+      "signed_goal_yaw_progress_deg": 4.475762971278948,
+      "off_axis_rotation_deg": 9.70274855342097,
+      "total_rotation_deg": 10.685306905558889,
+      "ticks": 140,
+      "mean_action_goal_delta_norm": 0.009110547226321484,
+      "mean_source_goal_delta_norm": 0.0030017750088258514
+    },
+    {
+      "seed": 2511003,
+      "direction": 1,
+      "initial": {
+        "angle_error_deg": 14.95353386843088,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.015324955058985786,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19558471293243923,
+          0.059129584674193186,
+          0.1977379712711383
+        ],
+        "linear_speed_mps": 0.0011841373873909824,
+        "angular_speed_rps": 0.03308804368898623,
+        "shaft_error_deg": 13.608850392426296,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.3531148514993748,
+          "right_middle_ip": 0.35002169659687854,
+          "right_pinky_pp": 0.10510906147410637
+        },
+        "minimum_thumb_target_normal_dot": -0.8314700383165751,
+        "summed_normal_force_n": 0.8082456095703597,
+        "object_weight_n": 0.3666642654659903,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 3,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0014301957556892477,
+        "peak_normal_force_n": 0.9059882338573957,
+        "maximum_displacement_m": 0.015324955058985786,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 0,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 0.0,
+        "reset_attempts": 1,
+        "settle_seconds": 0.0
+      },
+      "prefix_physical_signature": "fa19283174952eb876a5434598842007a9c55791cf0c4a17f49ca63e910cd0cc",
+      "start_rotation": [
+        [
+          0.009707625394858848,
+          -0.26738026557414657,
+          0.9635421919099821
+        ],
+        [
+          -0.4266325432418921,
+          0.8703761391623331,
+          0.24582524163280428
+        ],
+        [
+          -0.9043729513072297,
+          -0.41346483521379473,
+          -0.10562383720297912
+        ]
+      ],
+      "goal": [
+        [
+          0.11946526779304732,
+          -0.4829135770512196,
+          0.8674805628316591
+        ],
+        [
+          -0.409679893007928,
+          0.7719075768129408,
+          0.48612866416596673
+        ],
+        [
+          -0.9043729513072297,
+          -0.41346483521379473,
+          -0.10562383720297912
+        ]
+      ],
+      "end": {
+        "angle_error_deg": 16.857988871907466,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.026846904017344183,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19124075181234731,
+          0.07037766303618403,
+          0.19344892872300337
+        ],
+        "linear_speed_mps": 0.0024352670804342943,
+        "angular_speed_rps": 0.009705326903663401,
+        "shaft_error_deg": 12.462506254887233,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.14071871627045887,
+          "right_middle_ip": 0.19603091274141404,
+          "right_pinky_pp": 0.15478948885963742
+        },
+        "minimum_thumb_target_normal_dot": -0.4713965021241666,
+        "summed_normal_force_n": 0.4915391178715103,
+        "object_weight_n": 0.3666642654659903,
+        "loaded_opposition": false,
+        "pair_score": 0.9427930042483332,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 3,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0014301957556892477,
+        "peak_normal_force_n": 0.9283273167493443,
+        "maximum_displacement_m": 0.026846904017344183,
+        "termination_reason": "horizon",
+        "source_grasp_completed": true,
+        "source_grasp_stable": false,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 140,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 5.264823895876961,
+        "final_1s_orientation_span_deg": null,
+        "final_1s_position_span_m": null
+      },
+      "end_rotation": [
+        [
+          -0.06996692751390732,
+          -0.2841711313359786,
+          0.9562172332527238
+        ],
+        [
+          -0.4635254037029538,
+          0.8580594881667174,
+          0.22108395439082665
+        ],
+        [
+          -0.8833169471804997,
+          -0.4277624140598393,
+          -0.1917563243844157
+        ]
+      ],
+      "world_rotvec_deg": [
+        -2.400393144572013,
+        4.553875056740711,
+        -1.1039498963665868
+      ],
+      "signed_goal_yaw_progress_deg": -1.1039498963665868,
+      "off_axis_rotation_deg": 5.147782559599184,
+      "total_rotation_deg": 5.264823895877367,
+      "ticks": 140,
+      "mean_action_goal_delta_norm": 0.009114795188153429,
+      "mean_source_goal_delta_norm": 0.003007136835783188
+    },
+    {
+      "seed": 2511004,
+      "direction": -1,
+      "initial": {
+        "angle_error_deg": 15.023721589048138,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.014765686783038849,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.1988735148390623,
+          0.05927957847310907,
+          0.19934149979716828
+        ],
+        "linear_speed_mps": 0.002148544156167209,
+        "angular_speed_rps": 0.030881787674189146,
+        "shaft_error_deg": 13.841471864263589,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.2698041674946751,
+          "right_middle_ip": 0.2766914985436972,
+          "right_pinky_pp": 0.10620265601483656
+        },
+        "minimum_thumb_target_normal_dot": -0.6343934212926344,
+        "summed_normal_force_n": 0.6526983220532089,
+        "object_weight_n": 0.37307968472136066,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 4,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0014349642822083263,
+        "peak_normal_force_n": 0.9130570340512068,
+        "maximum_displacement_m": 0.014765686783038849,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 0,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 0.0,
+        "reset_attempts": 1,
+        "settle_seconds": 0.0
+      },
+      "prefix_physical_signature": "0de6728e684778067e3b1be5c7b907dd3b4a6c137a0ce4046833d035ab28144e",
+      "start_rotation": [
+        [
+          -0.36918530550159495,
+          -0.17089421639811941,
+          0.9135082796578083
+        ],
+        [
+          -0.4238595402509714,
+          0.9057260234323107,
+          -0.0018602730257765432
+        ],
+        [
+          -0.8270703116059305,
+          -0.3878859848965518,
+          -0.4068158826556589
+        ]
+      ],
+      "goal": [
+        [
+          -0.4664384489722982,
+          0.06972852486247628,
+          0.881801058142267
+        ],
+        [
+          -0.3136716005321291,
+          0.9190660452553652,
+          -0.23859532995906982
+        ],
+        [
+          -0.8270703116059305,
+          -0.3878859848965518,
+          -0.4068158826556589
+        ]
+      ],
+      "end": {
+        "angle_error_deg": 12.776729864600453,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.025375036178477438,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19794009071637203,
+          0.06975176163166816,
+          0.19537670376555874
+        ],
+        "linear_speed_mps": 0.0016828650249034033,
+        "angular_speed_rps": 0.000753515533449686,
+        "shaft_error_deg": 12.343610348353096,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.17572631844506176,
+          "right_middle_ip": 0.1996558551147819,
+          "right_pinky_pp": 0.05640456554470637,
+          "right_pinky_ip": 0.10109032151763472
+        },
+        "minimum_thumb_target_normal_dot": -0.3826828257958619,
+        "summed_normal_force_n": 0.5328770606221848,
+        "object_weight_n": 0.37307968472136066,
+        "loaded_opposition": false,
+        "pair_score": 0.7653656515917238,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 4,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0014349642822083263,
+        "peak_normal_force_n": 0.9130570340512068,
+        "maximum_displacement_m": 0.025375036178477438,
+        "termination_reason": "horizon",
+        "source_grasp_completed": true,
+        "source_grasp_stable": false,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 140,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 9.35365615675163,
+        "final_1s_orientation_span_deg": null,
+        "final_1s_position_span_m": null
+      },
+      "end_rotation": [
+        [
+          -0.5118832575053677,
+          -0.14474097040941852,
+          0.8467736310080938
+        ],
+        [
+          -0.41170292008297554,
+          0.906464006112039,
+          -0.09393461139783615
+        ],
+        [
+          -0.7539736310248806,
+          -0.39670273141012186,
+          -0.5235940284331977
+        ]
+      ],
+      "world_rotvec_deg": [
+        -1.8953788155574096,
+        7.68832763212975,
+        -4.978758968387925
+      ],
+      "signed_goal_yaw_progress_deg": 4.978758968387925,
+      "off_axis_rotation_deg": 7.918512652855563,
+      "total_rotation_deg": 9.353656156751587,
+      "ticks": 140,
+      "mean_action_goal_delta_norm": 0.009624594140664808,
+      "mean_source_goal_delta_norm": 0.0030730861222504507
+    },
+    {
+      "seed": 2511004,
+      "direction": 1,
+      "initial": {
+        "angle_error_deg": 14.976278410950657,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.014765686783038849,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.1988735148390623,
+          0.05927957847310907,
+          0.19934149979716828
+        ],
+        "linear_speed_mps": 0.002148544156167209,
+        "angular_speed_rps": 0.030881787674189146,
+        "shaft_error_deg": 13.797800043320953,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.2698041674946751,
+          "right_middle_ip": 0.2766914985436972,
+          "right_pinky_pp": 0.10620265601483656
+        },
+        "minimum_thumb_target_normal_dot": -0.6343934212926344,
+        "summed_normal_force_n": 0.6526983220532089,
+        "object_weight_n": 0.37307968472136066,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 4,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0014349642822083263,
+        "peak_normal_force_n": 0.9130570340512068,
+        "maximum_displacement_m": 0.014765686783038849,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 0,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 0.0,
+        "reset_attempts": 1,
+        "settle_seconds": 0.0
+      },
+      "prefix_physical_signature": "0de6728e684778067e3b1be5c7b907dd3b4a6c137a0ce4046833d035ab28144e",
+      "start_rotation": [
+        [
+          -0.36918530550159495,
+          -0.17089421639811941,
+          0.9135082796578083
+        ],
+        [
+          -0.4238595402509714,
+          0.9057260234323107,
+          -0.0018602730257765432
+        ],
+        [
+          -0.8270703116059305,
+          -0.3878859848965518,
+          -0.4068158826556589
+        ]
+      ],
+      "goal": [
+        [
+          -0.2471117458457573,
+          -0.39914634872836324,
+          0.8829597824147369
+        ],
+        [
+          -0.5048667989926974,
+          0.8307988053780829,
+          0.23427091210224862
+        ],
+        [
+          -0.8270703116059305,
+          -0.3878859848965518,
+          -0.4068158826556589
+        ]
+      ],
+      "end": {
+        "angle_error_deg": 17.848195425906468,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.02581477803300536,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19759737374891947,
+          0.07044433185486586,
+          0.1956526752143043
+        ],
+        "linear_speed_mps": 0.0016661144985554424,
+        "angular_speed_rps": 0.0009991480482586983,
+        "shaft_error_deg": 14.980451308902719,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.16503188007490524,
+          "right_middle_ip": 0.1872122356859982,
+          "right_pinky_pp": 0.05764761647174572,
+          "right_pinky_ip": 0.09976392684195956
+        },
+        "minimum_thumb_target_normal_dot": -0.2902854200140693,
+        "summed_normal_force_n": 0.5096556590746086,
+        "object_weight_n": 0.37307968472136066,
+        "loaded_opposition": false,
+        "pair_score": 0.5805708400281386,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 4,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0014349642822083263,
+        "peak_normal_force_n": 0.9130570340512068,
+        "maximum_displacement_m": 0.02581477803300536,
+        "termination_reason": "horizon",
+        "source_grasp_completed": true,
+        "source_grasp_stable": false,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 140,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 4.041854533210669,
+        "final_1s_orientation_span_deg": null,
+        "final_1s_position_span_m": null
+      },
+      "end_rotation": [
+        [
+          -0.4294206058483861,
+          -0.14953178392733796,
+          0.8906392024093233
+        ],
+        [
+          -0.4212837903750957,
+          0.9054883229542554,
+          -0.05109662376992444
+        ],
+        [
+          -0.7988228284419518,
+          -0.3971538021837393,
+          -0.4518306609461136
+        ]
+      ],
+      "world_rotvec_deg": [
+        -1.0974174838967048,
+        2.890168440043407,
+        -2.603687639075301
+      ],
+      "signed_goal_yaw_progress_deg": -2.603687639075301,
+      "off_axis_rotation_deg": 3.0915042852606747,
+      "total_rotation_deg": 4.041854533213514,
+      "ticks": 140,
+      "mean_action_goal_delta_norm": 0.00962487637131874,
+      "mean_source_goal_delta_norm": 0.0030930270091630518
+    },
+    {
+      "seed": 2511005,
+      "direction": -1,
+      "initial": {
+        "angle_error_deg": 15.097836764969973,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.01779965549459425,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19873779877688166,
+          0.061894000781544396,
+          0.19749972566925525
+        ],
+        "linear_speed_mps": 0.0013134182928816957,
+        "angular_speed_rps": 0.04325176743171177,
+        "shaft_error_deg": 13.944801580432648,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.27933013687487823,
+          "right_middle_ip": 0.35454853183406954,
+          "right_pinky_pp": 0.10382959982577439,
+          "right_pinky_ip": 0.017013547488460328
+        },
+        "minimum_thumb_target_normal_dot": -0.8314692358082734,
+        "summed_normal_force_n": 0.7547218160231823,
+        "object_weight_n": 0.42534604825428884,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 5,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0015953674341958573,
+        "peak_normal_force_n": 1.055449818207317,
+        "maximum_displacement_m": 0.01779965549459425,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 0,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 2.091309789151873e-06,
+        "reset_attempts": 1,
+        "settle_seconds": 0.0
+      },
+      "prefix_physical_signature": "7bb5ef62cab24b9a2b29522f92faaed76f0b55a3f4a31789687cad6e51b9b88d",
+      "start_rotation": [
+        [
+          -0.45810904908322464,
+          -0.155229668592167,
+          0.8752370245463963
+        ],
+        [
+          -0.40927441197826875,
+          0.9108900914993608,
+          -0.05266589891122994
+        ],
+        [
+          -0.7890694233385966,
+          -0.38233884343217284,
+          -0.48081852497074445
+        ]
+      ],
+      "goal": [
+        [
+          -0.5488991649195348,
+          0.08738624862288909,
+          0.8313082161883493
+        ],
+        [
+          -0.2758244947475319,
+          0.9198807815986627,
+          -0.2788192886848069
+        ],
+        [
+          -0.7890694233385966,
+          -0.38233884343217284,
+          -0.48081852497074445
+        ]
+      ],
+      "end": {
+        "angle_error_deg": 13.837242299776978,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.025895229693375686,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.1978176909833468,
+          0.07039939752713512,
+          0.19473297571384895
+        ],
+        "linear_speed_mps": 0.0016949123964244707,
+        "angular_speed_rps": 0.006849454146058352,
+        "shaft_error_deg": 13.614993274804478,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.25458644755420845,
+          "right_middle_ip": 0.28512488189988644,
+          "right_pinky_pp": 0.07056038352648723,
+          "right_pinky_ip": 0.11622454085687738
+        },
+        "minimum_thumb_target_normal_dot": -0.5555701487056035,
+        "summed_normal_force_n": 0.7264962538374595,
+        "object_weight_n": 0.42534604825428884,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 5,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0015953674341958573,
+        "peak_normal_force_n": 1.0896664219312402,
+        "maximum_displacement_m": 0.025895229693375686,
+        "termination_reason": "horizon",
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 140,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 3.3988483375808385,
+        "final_1s_orientation_span_deg": null,
+        "final_1s_position_span_m": null
+      },
+      "end_rotation": [
+        [
+          -0.5084225998618653,
+          -0.14938679722498271,
+          0.8480507324238108
+        ],
+        [
+          -0.40717662443629776,
+          0.90948766343356,
+          -0.08390105228675171
+        ],
+        [
+          -0.7587579696203278,
+          -0.3879636257138342,
+          -0.5232308942146022
+        ]
+      ],
+      "world_rotvec_deg": [
+        -0.8368635363627335,
+        2.8857409858760854,
+        -1.5888135214075716
+      ],
+      "signed_goal_yaw_progress_deg": 1.5888135214075716,
+      "off_axis_rotation_deg": 3.0046366861999507,
+      "total_rotation_deg": 3.398848337579385,
+      "ticks": 140,
+      "mean_action_goal_delta_norm": 0.009577815756866975,
+      "mean_source_goal_delta_norm": 0.0030677346030383236
+    },
+    {
+      "seed": 2511005,
+      "direction": 1,
+      "initial": {
+        "angle_error_deg": 14.902163235030416,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.01779965549459425,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19873779877688166,
+          0.061894000781544396,
+          0.19749972566925525
+        ],
+        "linear_speed_mps": 0.0013134182928816957,
+        "angular_speed_rps": 0.04325176743171177,
+        "shaft_error_deg": 13.764223520567672,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.27933013687487823,
+          "right_middle_ip": 0.35454853183406954,
+          "right_pinky_pp": 0.10382959982577439,
+          "right_pinky_ip": 0.017013547488460328
+        },
+        "minimum_thumb_target_normal_dot": -0.8314692358082734,
+        "summed_normal_force_n": 0.7547218160231823,
+        "object_weight_n": 0.42534604825428884,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 5,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0015953674341958573,
+        "peak_normal_force_n": 1.055449818207317,
+        "maximum_displacement_m": 0.01779965549459425,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 0,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 2.091309789151873e-06,
+        "reset_attempts": 1,
+        "settle_seconds": 0.0
+      },
+      "prefix_physical_signature": "7bb5ef62cab24b9a2b29522f92faaed76f0b55a3f4a31789687cad6e51b9b88d",
+      "start_rotation": [
+        [
+          -0.45810904908322464,
+          -0.155229668592167,
+          0.8752370245463963
+        ],
+        [
+          -0.40927441197826875,
+          0.9108900914993608,
+          -0.05266589891122994
+        ],
+        [
+          -0.7890694233385966,
+          -0.38233884343217284,
+          -0.48081852497074445
+        ]
+      ],
+      "goal": [
+        [
+          -0.33744837356261537,
+          -0.3842616795504864,
+          0.8593436779362401
+        ],
+        [
+          -0.5133206018971375,
+          0.8403332496289714,
+          0.1741895210280248
+        ],
+        [
+          -0.7890694233385966,
+          -0.38233884343217284,
+          -0.48081852497074445
+        ]
+      ],
+      "end": {
+        "angle_error_deg": 14.333307120913467,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.026451797777349538,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19739845875295778,
+          0.07136832134442668,
+          0.19512074542927935
+        ],
+        "linear_speed_mps": 0.0015906222460365877,
+        "angular_speed_rps": 0.012029982092935893,
+        "shaft_error_deg": 13.73197241476616,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.20245621144930293,
+          "right_middle_ip": 0.24374223069573914,
+          "right_pinky_pp": 0.07329997895796558,
+          "right_pinky_ip": 0.11389055687980862
+        },
+        "minimum_thumb_target_normal_dot": -0.4713972303589929,
+        "summed_normal_force_n": 0.6333889779828162,
+        "object_weight_n": 0.42534604825428884,
+        "loaded_opposition": false,
+        "pair_score": 0.9427944607179858,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 5,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0015953674341958573,
+        "peak_normal_force_n": 1.0947226034301407,
+        "maximum_displacement_m": 0.026451797777349538,
+        "termination_reason": "horizon",
+        "source_grasp_completed": true,
+        "source_grasp_stable": false,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 140,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 1.748727465112115,
+        "final_1s_orientation_span_deg": null,
+        "final_1s_position_span_m": null
+      },
+      "end_rotation": [
+        [
+          -0.431168825739724,
+          -0.1549149079249812,
+          0.8888727777431495
+        ],
+        [
+          -0.4179195201127188,
+          0.9073896210098576,
+          -0.04457970830256941
+        ],
+        [
+          -0.7996478715153206,
+          -0.39069866519631463,
+          -0.4559800813575476
+        ]
+      ],
+      "world_rotvec_deg": [
+        -0.2540171793213879,
+        -1.5993068941053652,
+        0.6601064143862493
+      ],
+      "signed_goal_yaw_progress_deg": 0.6601064143862493,
+      "off_axis_rotation_deg": 1.6193539665321304,
+      "total_rotation_deg": 1.7487274651120495,
+      "ticks": 140,
+      "mean_action_goal_delta_norm": 0.0095774183049798,
+      "mean_source_goal_delta_norm": 0.0030880103868964528
+    },
+    {
+      "seed": 2511006,
+      "direction": -1,
+      "initial": {
+        "angle_error_deg": 15.324370896520536,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.014747542007654376,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19782847587849736,
+          0.06001914051518914,
+          0.19819253021735755
+        ],
+        "linear_speed_mps": 0.0008768330908881138,
+        "angular_speed_rps": 0.018637623340869075,
+        "shaft_error_deg": 14.117975200895081,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.2948672764978423,
+          "right_middle_ip": 0.3274097604191791,
+          "right_pinky_pp": 0.10616770565714487
+        },
+        "minimum_thumb_target_normal_dot": -0.8819210910959914,
+        "summed_normal_force_n": 0.7284447425741662,
+        "object_weight_n": 0.3938455432746614,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 6,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0013077747727483517,
+        "peak_normal_force_n": 0.9927665275960239,
+        "maximum_displacement_m": 0.014747542007654376,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 0,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 2.699869328381916e-06,
+        "reset_attempts": 1,
+        "settle_seconds": 0.0
+      },
+      "prefix_physical_signature": "7d9dd45bcfe5dd1cf214d8884a6a0403b6314f6ce59d1a510faaf554b4e98a93",
+      "start_rotation": [
+        [
+          -0.16414555050832244,
+          -0.20597143014202568,
+          0.9646927014410173
+        ],
+        [
+          -0.42252524391329394,
+          0.8983828299348007,
+          0.11991959445540956
+        ],
+        [
+          -0.8913633695100615,
+          -0.38792275112912245,
+          -0.23449367294680193
+        ]
+      ],
+      "goal": [
+        [
+          -0.26997573760222254,
+          0.03877944661895139,
+          0.9620858878634814
+        ],
+        [
+          -0.3641214695699838,
+          0.9208757210809395,
+          -0.13929630907477236
+        ],
+        [
+          -0.8913633695100615,
+          -0.38792275112912245,
+          -0.23449367294680193
+        ]
+      ],
+      "end": {
+        "angle_error_deg": 16.21668913952275,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.02178284268118332,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19536112924137708,
+          0.06676513234020427,
+          0.19554333139212143
+        ],
+        "linear_speed_mps": 0.0015878131520680211,
+        "angular_speed_rps": 0.052761470640387005,
+        "shaft_error_deg": 15.458994590245045,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.22983712380664595,
+          "right_middle_ip": 0.25807183408893253,
+          "right_pinky_pp": 0.14469045919578782
+        },
+        "minimum_thumb_target_normal_dot": -0.5555699123474032,
+        "summed_normal_force_n": 0.6325994170913662,
+        "object_weight_n": 0.3938455432746614,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 6,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0013077747727483517,
+        "peak_normal_force_n": 1.0173148499588898,
+        "maximum_displacement_m": 0.02178284268118332,
+        "termination_reason": "horizon",
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 140,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 1.8633765955048478,
+        "final_1s_orientation_span_deg": null,
+        "final_1s_position_span_m": null
+      },
+      "end_rotation": [
+        [
+          -0.17982688717924775,
+          -0.22816896459625702,
+          0.9568705315989714
+        ],
+        [
+          -0.4391670073405308,
+          0.8890291830056206,
+          0.1294582999576496
+        ],
+        [
+          -0.8802241932093142,
+          -0.3969458846737609,
+          -0.26007563194113575
+        ]
+      ],
+      "world_rotvec_deg": [
+        -0.9199362992757344,
+        1.4060460537654165,
+        0.8055582143189111
+      ],
+      "signed_goal_yaw_progress_deg": -0.8055582143189111,
+      "off_axis_rotation_deg": 1.6802524512805908,
+      "total_rotation_deg": 1.863376595509106,
+      "ticks": 140,
+      "mean_action_goal_delta_norm": 0.009476852107660047,
+      "mean_source_goal_delta_norm": 0.0030039572905349943
+    },
+    {
+      "seed": 2511006,
+      "direction": 1,
+      "initial": {
+        "angle_error_deg": 14.675629103479913,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.014747542007654376,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19782847587849736,
+          0.06001914051518914,
+          0.19819253021735755
+        ],
+        "linear_speed_mps": 0.0008768330908881138,
+        "angular_speed_rps": 0.018637623340869075,
+        "shaft_error_deg": 13.520813544562124,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.2948672764978423,
+          "right_middle_ip": 0.3274097604191791,
+          "right_pinky_pp": 0.10616770565714487
+        },
+        "minimum_thumb_target_normal_dot": -0.8819210910959914,
+        "summed_normal_force_n": 0.7284447425741662,
+        "object_weight_n": 0.3938455432746614,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 6,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0013077747727483517,
+        "peak_normal_force_n": 0.9927665275960239,
+        "maximum_displacement_m": 0.014747542007654376,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 0,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 2.699869328381916e-06,
+        "reset_attempts": 1,
+        "settle_seconds": 0.0
+      },
+      "prefix_physical_signature": "7d9dd45bcfe5dd1cf214d8884a6a0403b6314f6ce59d1a510faaf554b4e98a93",
+      "start_rotation": [
+        [
+          -0.16414555050832244,
+          -0.20597143014202568,
+          0.9646927014410173
+        ],
+        [
+          -0.42252524391329394,
+          0.8983828299348007,
+          0.11991959445540956
+        ],
+        [
+          -0.8913633695100615,
+          -0.38792275112912245,
+          -0.23449367294680193
+        ]
+      ],
+      "goal": [
+        [
+          -0.05174511238397455,
+          -0.42685387462375524,
+          0.9028389740496677
+        ],
+        [
+          -0.4503263115120397,
+          0.8168914914938824,
+          0.36040880161957894
+        ],
+        [
+          -0.8913633695100615,
+          -0.38792275112912245,
+          -0.23449367294680193
+        ]
+      ],
+      "end": {
+        "angle_error_deg": 11.082300111513845,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.02258543553359558,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19452450453463624,
+          0.06776622102265516,
+          0.19578926565615767
+        ],
+        "linear_speed_mps": 0.0017682894380322079,
+        "angular_speed_rps": 0.08202067486700418,
+        "shaft_error_deg": 10.994643723874976,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.17489610341870532,
+          "right_middle_ip": 0.21113218588827604,
+          "right_pinky_pp": 0.14380890761163234
+        },
+        "minimum_thumb_target_normal_dot": -0.38268327613728825,
+        "summed_normal_force_n": 0.5298371969186138,
+        "object_weight_n": 0.3938455432746614,
+        "loaded_opposition": false,
+        "pair_score": 0.7653665522745765,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 6,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0013077747727483517,
+        "peak_normal_force_n": 1.0692082612135891,
+        "maximum_displacement_m": 0.02258543553359558,
+        "termination_reason": "horizon",
+        "source_grasp_completed": true,
+        "source_grasp_stable": false,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 140,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 7.728568245975758,
+        "final_1s_orientation_span_deg": null,
+        "final_1s_position_span_m": null
+      },
+      "end_rotation": [
+        [
+          -0.0359229043886758,
+          -0.24688061414214657,
+          0.9683798362734931
+        ],
+        [
+          -0.42594954040375976,
+          0.880361466152633,
+          0.20864006792419038
+        ],
+        [
+          -0.904033480558163,
+          -0.4049859889852752,
+          -0.13678382490452085
+        ]
+      ],
+      "world_rotvec_deg": [
+        0.35926294084118365,
+        -5.722342064238445,
+        5.182325594931317
+      ],
+      "signed_goal_yaw_progress_deg": 5.182325594931317,
+      "off_axis_rotation_deg": 5.733608685706984,
+      "total_rotation_deg": 7.728568245975111,
+      "ticks": 140,
+      "mean_action_goal_delta_norm": 0.009479985073474901,
+      "mean_source_goal_delta_norm": 0.0030242274897838276
+    }
+  ],
+  "archive": {
+    "path": "/home/peiqi/projects/orca-hand-rl-grasp-diagnostics/runs/source/rotation100k-goalresponse-evidence.tar.gz",
+    "size_bytes": 5862776,
+    "sha256": "45576a3f2ad4a0c7720c2c851f3580e0dd72a509ea9afaa462e951ab7829ca03",
+    "frozen_checkpoint_sha256": "a64f95f2b23029efcc02ad77237d019c3d72d0e228bdd913b858bd502bf090fb",
+    "source_revision": "fb127704aef4954bf2b282ed2626fe4998438422",
+    "source_archive_sha256": "308ff9fee4936c289c2ce70cdc8f048d6febb2a2a1864d42074c9d4eb15c191a"
+  },
+  "tests": {
+    "mac": 2,
+    "jarvis": 2,
+    "full_ci": {
+      "run_id": 39503206478,
+      "conclusion": "success"
+    }
+  },
+  "interpretation": "Goal changes affect actions, but mean correct-axis progress is small and off-axis motion remains. This does not establish local reachability, reward/exploration causality or a deployable controller.",
+  "paired_physical_response": {
+    "pairs": 7,
+    "correct_direction_goal_response_pairs": 7,
+    "mean_response_gain": 0.10413570097247066,
+    "mean_abs_world_yaw_bias_deg": 2.946201312981199,
+    "interpretation": "Matched closed-loop goal changes affect yaw in the correct direction on all7 development pairs, but with about0.10 response gain; this does not establish global reachability or a safe gain multiplier."
+  }
+}

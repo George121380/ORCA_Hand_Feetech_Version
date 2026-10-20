@@ -1,0 +1,23 @@
+{
+  "purpose": "Next bounded physical local-response identification after formal0/100 and failed goal-residual gain grid; no PPO training or hardware",
+  "status": "planned_not_started",
+  "source_checkpoint_steps": 100000,
+  "source_checkpoint_sha256": "a64f95f2b23029efcc02ad77237d019c3d72d0e228bdd913b858bd502bf090fb",
+  "seed": 2511000,
+  "placement_index": 0,
+  "direction": 1,
+  "physical_preparation": "Each case independently performs the original real reach/manual release/frozen7s grasp; exact prefix physical/controller/camera/RNG/model signature required; failed prefix counts and is never resampled",
+  "base_action": "Frozen100k actor with only active goal matrices replaced by measured prefix-end orientation; unvalidated neutral-goal diagnostic reference",
+  "pulse_action_amplitude": 0.04,
+  "pulse_ticks": 10,
+  "pulse_seconds": 0.5,
+  "probes": "One reference plus +/- pulse on each of16 motor action channels:33 physically integrated cases",
+  "maximum_cases": 34,
+  "measurement": "World rotation vector and position relative to reference at the same physical time; record actual commands/joints, forces and contact bodies. Simulator truth is scoring/identification only, never an actor input",
+  "fit": "Central finite differences estimate local residual-action to6D object-motion response, including physical delays, motor coupling and contacts; do not assume a rigid sticking grasp or treat analytic motor Jacobians as passive-joint-aware",
+  "one_optional_validation": "If the bounded local fit supports it, solve one minimum-norm action residual within +/-0.04 per channel for2deg world-Z motion and zero off-axis/translation, then physically test that one candidate from the identical independently executed prefix",
+  "constraints": "Original action clipping,0.8rad/s velocity,2rad/s^2 acceleration, ROM, all2ms force/penetration/excluded-support and release-origin displacement audits; every abort retained",
+  "unchanged_physics": "No friction/contact-dimension/solver tuning, pose injection, velocity clearing or reset to a successful simulator snapshot",
+  "scope": "Local0.5s control-authority measurement only; not the7s rotation task or acceptance. No formal2611 reuse, no trained-policy relabeling",
+  "extensions": 0
+}
