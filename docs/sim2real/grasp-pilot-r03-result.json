@@ -32607,8 +32607,9 @@
     "prior_full_ci": "https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39487066703",
     "current_source_ci": {
       "url": "https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39488663367",
-      "status_at_recording": "in_progress",
-      "head_sha": "92d957c114fb124daa381fb33945376ead3deab3"
+      "status_at_recording": "completed",
+      "head_sha": "92d957c114fb124daa381fb33945376ead3deab3",
+      "conclusion": "success"
     }
   },
   "interpretation": [

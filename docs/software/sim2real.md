@@ -509,7 +509,7 @@ Linux四项成功数依次为7/14、12/14、2/14、0/14，Mac为9/14、12/14、2
 
 下一项[冻结方案](../../configs/training/pen-grasp-v1-r03-lowexplore.json)只将全新训练的初始log标准差由-2改为-4（标准差约0.1353→0.01832），其余训练参数、随机种子0、网络均值初始化方式、20万步预算和全部任务门槛不变。依据是先前开发配对噪声诊断，不能提前声称策略会改善；本轮不同时改成零均值网络，以便区分初始探索幅度的影响。开发2111000..2111027继续用于选择，正式改为未使用的2311000..2311099，因此不能将新旧正式分数作同初态配对改善。原job及三个正式评估全部结束后才启动独立目录；质量追加0，不自动进入旋转。
 
-已于2026-10-20T20:04:27Z在`orca-hand-rl-grasp-lowexplore`独立工作树启动，源码固定92d957c，job为`runs/pen-grasp-v1-r03-lowexplore-seed0`、监督目录`runs/pen-grasp-v1-r03-lowexplore-supervised`。Jarvis预检确认CUDA4090、原任务指纹及6项抓持/诊断检查通过；既有监督和心跳服务在确认新job与watchdog状态文件存在后切换，原v6路径的`latest.json`指向新目录。旧失败结果未修改，Mac仍沿用同一个launchd定时器。
+已于2026-10-20T20:04:27Z在`orca-hand-rl-grasp-lowexplore`独立工作树启动，源码固定92d957c，job为`runs/pen-grasp-v1-r03-lowexplore-seed0`、监督目录`runs/pen-grasp-v1-r03-lowexplore-supervised`。Jarvis预检确认CUDA4090、原任务指纹及6项抓持/诊断检查通过，[该版本完整CI也已通过](https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39488663367)；既有监督和心跳服务在确认新job与watchdog状态文件存在后切换，原v6路径的`latest.json`指向新目录。旧失败结果未修改，Mac仍沿用同一个launchd定时器。
 
 [原试验全部评估、配对结果和新启动方案](../sim2real/grasp-pilot-r03-result.json)保存原job及失败门槛。完整模型/checkpoint、日志、评估、监督状态、启动参数和源码归档在`orca-hand-rl-grasp-lowexplore/runs/source/grasp-r03-pilot-evidence.tar.gz`，SHA256为`1468297d2c6090e9653499af805235db55c9578fe76af14170eff65142d40372`；本机已下载并校验所选模型哈希。新试验尚待验收，不因更小噪声或旧开发诊断提前宣称成功。
 
