@@ -101,6 +101,8 @@ def train(args):
             with torch.no_grad():
                 model.policy.log_std.fill_(args.reset_log_std)
         metadata["policy_features"] = type(model.policy.features_extractor).__name__
+        metadata["policy_class"] = type(model.policy).__name__
+        metadata["action_mean_penalty_coef"] = getattr(model.policy, "mean_penalty_coef", 0.)
         write(args.output / "config.json", metadata)
         model.tensorboard_log = str(args.output / "tb")
         started = time.monotonic()
@@ -114,8 +116,13 @@ def train(args):
                                elapsed_s=time.monotonic() - started,
                                steps_per_second=(self.num_timesteps-initial_steps) /
                                max(.001, time.monotonic()-started),
+                               action_mean_regularization=getattr(self.model.policy, "last_action_mean_stats", None),
                                recent_episodes=list(self.model.ep_info_buffer)))
                 return True
+
+            def _on_rollout_end(self):
+                for key, value in getattr(self.model.policy, "last_action_mean_stats", {}).items():
+                    self.logger.record("train/"+key, value)
 
         model.learn(total_timesteps=args.steps, reset_num_timesteps=args.resume is None,
                     callback=[Progress(), CheckpointCallback(

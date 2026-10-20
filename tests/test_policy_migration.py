@@ -121,3 +121,34 @@ def test_internal_goal_features_preserve_external_contract_and_initial_outputs(t
     with pytest.raises(ValueError, match="raw flattened"):
         augment_goal_error_checkpoint(tmp_path / "derived/policy.zip", tmp_path / "twice")
     assert not (tmp_path / "twice").exists()
+
+
+def test_mean_regularization_clone_preserves_weights_optimizer_and_predictions(tmp_path):
+    import torch
+    from orca_feetech.policy_regularization import regularize_checkpoint, ActionMeanPenaltyPolicy
+    legacy_checkpoint(tmp_path / "v6")
+    migrate_v6_checkpoint(tmp_path / "v6/policy.zip", tmp_path / "raw")
+    source = PPO.load(tmp_path / "raw/policy.zip", device="cpu")
+    parameter = next(source.policy.parameters())
+    source.policy.optimizer.state[parameter] = dict(step=torch.tensor(7.),
+        exp_avg=torch.full_like(parameter, .001), exp_avg_sq=torch.full_like(parameter, .002))
+    source.save(tmp_path / "raw/policy.zip")
+    proof = regularize_checkpoint(tmp_path / "raw/policy.zip", tmp_path / "regularized", .01)
+    assert proof["optimizer"] == "preserved" and max(proof["max_absolute_errors"].values()) == 0
+    cfg, _ = load_config(tmp_path / "regularized/policy.zip")
+    model = PPO.load(tmp_path / "regularized/policy.zip", device="cpu")
+    assert isinstance(model.policy, ActionMeanPenaltyPolicy) and model.policy.mean_penalty_coef == .01
+    assert model.num_timesteps == source.num_timesteps
+    old_state = next(iter(source.policy.optimizer.state.values()))
+    new_state = next(iter(model.policy.optimizer.state.values()))
+    for key in old_state:
+        assert torch.equal(old_state[key], new_state[key])
+    env = ManipulationEnv(cfg)
+    try:
+        obs, _ = env.reset(seed=45)
+        assert np.array_equal(source.predict(obs, deterministic=True)[0],
+                              model.predict(obs, deterministic=True)[0])
+    finally:
+        env.close()
+    with pytest.raises(ValueError, match="unregularized"):
+        regularize_checkpoint(tmp_path / "regularized/policy.zip", tmp_path / "twice")
