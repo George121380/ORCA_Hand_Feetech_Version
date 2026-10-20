@@ -160,7 +160,7 @@ class PenRotateEnv(gym.Env):
             prefix_grasp_success=self.prefix_success,prefix_steps=self.prefix_steps,
             prefix_end_reason=self.prefix_reason,rotation_steps=self.steps,
             prefix_seconds=self.prefix_steps*.05,preparation_seconds=6.5+self.prefix_steps*.05,
-            goal_angle_deg=self.config.angle,direction=self.direction,
+            goal_angle_deg=self.config.angle,
             first_goal_tick=self.first_goal_tick,termination_reason=self.termination_reason,
             rotation_from_handoff_deg=float(np.rad2deg(rotation_error(self.pose()[1],self.start_rotation))))
         return result

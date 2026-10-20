@@ -2,6 +2,7 @@ from collections import deque
 from dataclasses import asdict
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -122,3 +123,18 @@ def test_failed_prefix_is_counted_without_retry_or_integration(zero_prefix,monke
         assert env.carrier.data.time==time and len(calls)==1
     finally:
         env.close()
+
+
+def test_rotation_evaluation_serializes_prefix_and_goal_results(zero_prefix,monkeypatch,tmp_path):
+    monkeypatch.syspath_prepend(str(Path(__file__).parents[1]/'scripts'))
+    import manipulation as cli
+    args=SimpleNamespace(checkpoint=tmp_path/'policy.zip',seed=2020000,episodes=1,
+                         output=tmp_path/'evaluation',baseline='hold',video=False)
+    cli.evaluate(args,env_class=lambda config:zero_prefix,
+        config_loader=lambda checkpoint:(zero_prefix.config,dict(task_id=TASK_ID_ROTATE)),
+        reset_options=lambda episode:dict(placement_index=5,direction=-1))
+    metrics=json.loads((args.output/'metrics.json').read_text())
+    trial=metrics['trials'][0]
+    assert trial['direction']==-1 and trial['prefix_steps']==140 and trial['prefix_grasp_success']
+    assert trial['steps']==140 and trial['rotation_steps']==140 and trial['completed_turns']==0
+    assert not metrics['acceptance_met']
