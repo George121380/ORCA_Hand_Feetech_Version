@@ -243,8 +243,11 @@ def evaluate(args, *, env_class=ManipulationEnv, config_loader=load_config, rese
                 if writer and episode < 5:
                     import cv2
                     frame = env.render()
-                    cv2.putText(frame, f"seed {args.seed+episode} | {info['angle_error_deg']:.1f} deg | "
-                                f"turns {info['completed_turns']} | drop {info['dropped']}",
+                    label=(f"GRASP seed {args.seed+episode} | hold {(step+1)/20:.1f}/7.0s | drop {info['dropped']}"
+                           if meta['task_id']=='orca-v1-pen-grasp-v1' else
+                           f"seed {args.seed+episode} | {info['angle_error_deg']:.1f} deg | "
+                           f"turns {info['completed_turns']} | drop {info['dropped']}")
+                    cv2.putText(frame,label,
                                 (8, 25), cv2.FONT_HERSHEY_SIMPLEX, .45, (255, 255, 255), 1)
                     writer.append_data(frame)
                 if terminated or truncated:
