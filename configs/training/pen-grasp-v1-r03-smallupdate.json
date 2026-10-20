@@ -1,0 +1,53 @@
+{
+  "purpose": "Bounded tenfold smaller-update grasp pilot after low-noise formal0/100 and untrained-reference development10/14",
+  "arguments": {
+    "task_family": "pen-grasp-v1",
+    "object": "pen",
+    "angle": 10,
+    "turns": 1,
+    "horizon": 140,
+    "randomization": 0.3,
+    "steps": 200000,
+    "num_envs": 8,
+    "device": "cuda",
+    "seed": 0,
+    "learning_rate": 1e-05,
+    "entropy_coef": 0.001,
+    "target_kl": 0.02,
+    "initial_log_std": -4,
+    "checkpoint_every": 20000,
+    "eval_every": 50000,
+    "selection_episodes": 28,
+    "selection_seed": 2111000,
+    "test_episodes": 100,
+    "test_seed": 2411000
+  },
+  "watchdog": {
+    "max_restarts": 2,
+    "quality_retries": 0,
+    "poll_seconds": 30,
+    "stall_seconds": 300
+  },
+  "promotion": "100-episode grasp success>=80%, drops<=10%, and policy success/drop counts at least as good as matched hold baseline; no auto-rotation",
+  "training_reset": "All seven placement buckets plus frozen continuous position/yaw jitter; no retries or outcome filtering",
+  "controlled_comparison": {
+    "parent_plan": "configs/training/pen-grasp-v1-r03-lowexplore.json",
+    "training_changes": {
+      "learning_rate": {
+        "before": 0.0001,
+        "after": 1e-05
+      }
+    },
+    "unchanged": "Fresh seed0 default actor/critic initialization, initial_log_std=-4, architecture, optimizer class, reward, physical/reset/observation/action contracts,200k budget,development selection",
+    "zero_initial_action_mean": false,
+    "development_seeds_reused": true,
+    "new_formal_seeds": [
+      2411000,
+      2411099
+    ],
+    "formal_comparison": "New formal cases; not a paired old/new policy comparison",
+    "launch_precondition": "Previous low-exploration job and all three formal evaluations complete with failed gate preserved; initialization and resume checks pass",
+    "no_automatic_rotation_or_quality_extension": true,
+    "rationale": "Shared-factory reconstructed default untrained actor10/14 versus hold7/14 on fixed development cases; trained100k actor0/14 with large commanded posture drift. This motivates testing smaller updates, not a claim that default initialization is the root cause or that a smaller learning rate will converge."
+  }
+}
