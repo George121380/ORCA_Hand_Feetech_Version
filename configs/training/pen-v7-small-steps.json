@@ -1,0 +1,5 @@
+[
+  {"name": "35-r1", "angle": 35, "turns": 1, "horizon": 240, "steps": 2000000, "randomization": 1.0},
+  {"name": "40-r1", "angle": 40, "turns": 1, "horizon": 240, "steps": 2000000, "randomization": 1.0},
+  {"name": "45-r1", "angle": 45, "turns": 1, "horizon": 240, "steps": 3000000, "randomization": 1.0}
+]
