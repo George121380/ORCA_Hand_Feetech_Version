@@ -100,6 +100,8 @@ def train(args):
         if args.reset_log_std is not None:
             with torch.no_grad():
                 model.policy.log_std.fill_(args.reset_log_std)
+        metadata["policy_features"] = type(model.policy.features_extractor).__name__
+        write(args.output / "config.json", metadata)
         model.tensorboard_log = str(args.output / "tb")
         started = time.monotonic()
         initial_steps = model.num_timesteps

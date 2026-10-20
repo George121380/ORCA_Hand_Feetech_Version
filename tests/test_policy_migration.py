@@ -10,7 +10,8 @@ from orca_feetech.checkpoint import load_config
 from orca_feetech.manipulation import ManipulationEnv, TaskConfig, TASK_ID
 from orca_feetech.model import JOINT_NAMES
 from orca_feetech.paths import provenance
-from orca_feetech.policy_migration import legacy_columns, migrate_v6_checkpoint
+from orca_feetech.policy_migration import (legacy_columns, migrate_v6_checkpoint,
+                                         augment_goal_error_checkpoint)
 
 
 class LegacyInputEnv(gym.Env):
@@ -89,3 +90,34 @@ def test_migration_rejects_nonfinite_source_weights(tmp_path):
     with pytest.raises(ValueError, match="Non-finite"):
         migrate_v6_checkpoint(tmp_path / "v6/policy.zip", tmp_path / "invalid")
     assert not (tmp_path / "invalid").exists()
+
+
+def test_internal_goal_features_preserve_external_contract_and_initial_outputs(tmp_path):
+    import torch
+    legacy_checkpoint(tmp_path / "v6")
+    migrate_v6_checkpoint(tmp_path / "v6/policy.zip", tmp_path / "raw")
+    proof = augment_goal_error_checkpoint(tmp_path / "raw/policy.zip", tmp_path / "derived")
+    assert max(proof["max_absolute_errors"].values()) < 1e-5
+    cfg, meta = load_config(tmp_path / "derived/policy.zip")
+    assert meta["frame_size"] == 74 and meta["policy_features"] == "GoalErrorFeatures"
+    raw = PPO.load(tmp_path / "raw/policy.zip", device="cpu")
+    new = PPO.load(tmp_path / "derived/policy.zip", device="cpu")
+    assert raw.observation_space.shape == new.observation_space.shape == (296,)
+    assert new.policy.features_extractor.features_dim == 332
+    assert new.num_timesteps == raw.num_timesteps and not new.policy.optimizer.state
+    env = ManipulationEnv(cfg)
+    try:
+        obs, _ = env.reset(seed=45)
+        assert np.allclose(raw.predict(obs, deterministic=True)[0],
+                           new.predict(obs, deterministic=True)[0], atol=1e-6)
+        tensor = torch.from_numpy(obs[None])
+        assert torch.allclose(raw.policy.predict_values(tensor), new.policy.predict_values(tensor), atol=1e-6)
+        new.policy.get_distribution(tensor).distribution.mean.sum().backward()
+        columns = np.concatenate([i*83+np.arange(74, 83) for i in range(4)])
+        grad = new.policy.mlp_extractor.policy_net[0].weight.grad[:, columns]
+        assert grad.abs().sum() > 0
+    finally:
+        env.close()
+    with pytest.raises(ValueError, match="raw flattened"):
+        augment_goal_error_checkpoint(tmp_path / "derived/policy.zip", tmp_path / "twice")
+    assert not (tmp_path / "twice").exists()
