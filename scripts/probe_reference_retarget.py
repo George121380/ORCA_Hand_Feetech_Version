@@ -98,11 +98,18 @@ class HandKinematics:
                        for b,v in zip(self.distal,self.offsets)])
         return tips,self.data.xpos[self.proximal].copy()
 
-    def fit(self,tips,proximal,previous):
+    def fit(self,tips,proximal,previous,object_pose=None):
         def residual(q):
             actual,anchors=self.points(q)
-            return np.concatenate([(actual-tips).ravel()/.01,
-                                   .25*(anchors-proximal).ravel()/.01,.02*(q-previous)])
+            terms=[(actual-tips).ravel()/.01,
+                   .25*(anchors-proximal).ravel()/.01,.02*(q-previous)]
+            if object_pose is not None:
+                # Fixed-length, per-geom residual: changing contact counts may
+                # not change the least-squares vector's shape. Allow 0.5 mm
+                # numerical overlap, then penalize each extra millimetre.
+                depth=self.contact_depths(*object_pose)
+                terms.append(np.maximum(depth-.0005,0.)/.001)
+            return np.concatenate(terms)
         result=least_squares(residual,np.clip(previous,self.spec.lower[:16]+1e-8,
                                                self.spec.upper[:16]-1e-8),
                              bounds=(self.spec.lower[:16],self.spec.upper[:16]),
@@ -110,11 +117,25 @@ class HandKinematics:
         actual,_=self.points(result.x)
         return result,actual
 
-    def contacts(self,position,quaternion):
+    def set_object_pose(self,position,quaternion):
         self.data.qpos[self.env.oq:self.env.oq+3]=position
         self.data.qpos[self.env.oq+3:self.env.oq+7]=quaternion
         self.data.qvel[:]=0
         mujoco.mj_forward(self.model,self.data)
+
+    def contact_depths(self,position,quaternion):
+        self.set_object_pose(position,quaternion)
+        depth=np.zeros(self.model.ngeom)
+        for c in self.data.contact:
+            if c.dist>=0 or not any(g in (c.geom1,c.geom2) for g in self.env.geoms):
+                continue
+            other=c.geom2 if c.geom1 in self.env.geoms else c.geom1
+            if other not in self.env.geoms:
+                depth[other]=max(depth[other],-c.dist)
+        return depth
+
+    def contacts(self,position,quaternion):
+        self.set_object_pose(position,quaternion)
         rows=[]
         for c in self.data.contact:
             if c.dist>0 or not any(g in (c.geom1,c.geom2) for g in self.env.geoms):
@@ -160,6 +181,8 @@ def main():
     p.add_argument('--archive',type=Path,required=True)
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--frames',type=int,default=32)
+    p.add_argument('--contact-aware',action='store_true',
+                   help='Refine each baseline keyframe with a fixed object pose and penetration penalty')
     args=p.parse_args()
     if not 2<=args.frames<=64:
         p.error('Use2..64 evenly sampled keyframes')
@@ -175,14 +198,20 @@ def main():
                      mujoco=mujoco.__version__,numpy=np.__version__),
         script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         is_physics_rollout=False,acceptance_met=False,clip='01_single_axis/clip_001',
+        source_url='https://github.com/wuji-technology/wuji-mjlab/releases/tag/v2026.9.27',
+        reference_attribution='Copyright2026 Wuji Technology Co., Ltd.; see docs/sim2real/third-party/wuji/',
         source_sha256=sha,source_frame_dt_s=dt,source_frames=len(points),
         sampled_frames=len(ids),maximum_optimizer_nfev_per_frame=60,
+        contact_refinement=dict(enabled=args.contact_aware,maximum_nfev_per_frame=60,
+                                penetration_allowance_m=.0005,residual_scale_m=.001,
+                                optimize_object_pose=False),
         model_sha256=hand.spec.source_sha256,
         geometry_sha256=hashlib.sha256(json.dumps(geometry_signature('pen'),sort_keys=True).encode()).hexdigest(),
         source_from_orca_object_body=SOURCE_FROM_ORCA_BODY.tolist(),
         joint_names=JOINT_NAMES,scale=scale,fingertip_proxy_offsets_m=hand.offsets.tolist(),
         alignment='Per-frame source hand basis mapped to neutral ORCA hand basis; one bone-length scale',
-        limitations=['No contact objective in IK; contacts are static mesh intersections, not support forces.',
+        limitations=['Contacts are static mesh intersections, not support forces or physical replay.',
+                     'Contact refinement only penalizes object overlap; it does not enforce grasp or self-contact feasibility.',
                      'Source motions may need different grasp topology, object alignment and retiming.',
                      'Fingertips are distal mesh-cap proxies, not calibrated real contact points.',
                      'No policy or training reset asset may use these states without a separate physics check.'],
@@ -199,15 +228,24 @@ def main():
             center,rotation=hand_frame(points[frame,BASE_IDS],points[frame,0])
             targets=hand.center+scale*((points[frame]-center)@rotation)@hand.rotation.T
             result,actual=hand.fit(targets[TIP_IDS],targets[PROXIMAL_IDS],previous)
+            # Baseline warm starts stay identical in both modes. Refinement
+            # never changes the next frame's baseline fit or the object pose.
             previous=result.x.copy()
             position=hand.center+scale*((objects[frame,:3]-center)@rotation)@hand.rotation.T
             quat=np.empty(4)
             mapped=object_rotation(objects[frame,3:],rotation,hand.rotation)
             mujoco.mju_mat2Quat(quat,mapped.ravel())
+            baseline_error=np.linalg.norm(actual-targets[TIP_IDS],axis=1)
+            baseline_contacts=hand.contacts(position,quat)
+            baseline=dict(qpos=result.x.tolist(),optimizer_nfev=result.nfev,
+                          tip_rms_m=float(np.sqrt(np.mean(baseline_error**2))),
+                          deepest_penetration_m=max([x['penetration_m'] for x in baseline_contacts],default=0.))
+            if args.contact_aware:
+                result,actual=hand.fit(targets[TIP_IDS],targets[PROXIMAL_IDS],previous,(position,quat))
             contacts=hand.contacts(position,quat)
             error=np.linalg.norm(actual-targets[TIP_IDS],axis=1)
             report['trials'].append(dict(frame=int(frame),time_s=float(frame*dt),qpos=result.x.tolist(),
-                optimizer_success=bool(result.success),optimizer_nfev=result.nfev,
+                optimizer_success=bool(result.success),optimizer_nfev=result.nfev,baseline=baseline,
                 tip_errors_m=error.tolist(),tip_rms_m=float(np.sqrt(np.mean(error**2))),
                 object_position_m=position.tolist(),object_quaternion_wxyz=quat.tolist(),
                 contacts=contacts,deepest_penetration_m=max([x['penetration_m'] for x in contacts],default=0.),
@@ -224,6 +262,10 @@ def main():
         frames_with_penetration_over_2mm=sum(x['deepest_penetration_m']>.002 for x in report['trials']),
         frames_without_object_contact=sum(not x['contacts'] for x in report['trials']),
         frames_with_tower_contact=sum(x['tower_contact'] for x in report['trials']))
+    report['summary']['deepest_penetration_m']=max(x['deepest_penetration_m'] for x in report['trials'])
+    report['summary']['optimizer_converged_frames']=sum(x['optimizer_success'] for x in report['trials'])
+    report['summary']['baseline_mean_tip_rms_m']=float(np.mean([x['baseline']['tip_rms_m'] for x in report['trials']]))
+    report['summary']['baseline_deepest_penetration_m']=max(x['baseline']['deepest_penetration_m'] for x in report['trials'])
     report.update(status='complete',ended_at=datetime.now(timezone.utc).isoformat())
     save()
     print(json.dumps(report['summary'],indent=2))

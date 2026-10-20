@@ -48,3 +48,29 @@ def test_actual_mjcf_ik_recovers_reachable_points_and_preserves_wrist(probe):
         assert hand.data.qpos[hand.env.qadr[-1]]==hand.spec.neutral[-1]
     finally:
         hand.close()
+
+
+def test_contact_refinement_reduces_real_mesh_overlap_without_moving_object(probe):
+    hand=probe.HandKinematics()
+    try:
+        q=hand.spec.neutral[:16].copy()
+        tips,proximal=hand.points(q)
+        # Deliberately put the pen's centre on an actual robot fingertip.
+        # The keypoint-only optimum is reachable, but physically intersects it.
+        position=tips[1].copy()
+        quaternion=np.array([1.,0,0,0])
+        before=hand.contact_depths(position,quaternion)
+        assert before.max()>.004
+        result,actual=hand.fit(tips,proximal,q,(position,quaternion))
+        after=hand.contact_depths(position,quaternion)
+        assert before.shape==after.shape==(hand.model.ngeom,)
+        assert after.max()<.001 and after.max()<before.max()/4
+        assert np.max(np.linalg.norm(actual-tips,axis=1))<.015
+        assert np.all(result.x>=hand.spec.lower[:16]) and np.all(result.x<=hand.spec.upper[:16])
+        np.testing.assert_allclose(hand.data.qpos[hand.env.oq:hand.env.oq+7],
+                                   np.r_[position,quaternion],atol=1e-12)
+        assert hand.data.qpos[hand.env.qadr[-1]]==hand.spec.neutral[-1]
+        assert after.max()==pytest.approx(max(x['penetration_m']
+                                             for x in hand.contacts(position,quaternion)))
+    finally:
+        hand.close()
