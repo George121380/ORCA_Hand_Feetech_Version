@@ -28,6 +28,6 @@
     "poll_seconds": 30,
     "stall_seconds": 300
   },
-  "promotion": "100-episode grasp gate only; never auto-promote into rotation",
+  "promotion": "100-episode grasp success>=80%, drops<=10%, and policy success/drop counts at least as good as matched hold baseline; no auto-rotation",
   "training_reset": "All seven placement buckets plus frozen continuous position/yaw jitter; no retries or outcome filtering"
 }

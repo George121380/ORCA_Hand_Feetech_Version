@@ -39,6 +39,14 @@ def selection_score(metrics):
     return (metrics["success_rate"], -metrics["drop_rate"], -metrics["mean_final_error_deg"])
 
 
+def grasp_acceptance(test,hold):
+    comparison=dict(matched_hold_success_rate=hold['success_rate'],matched_hold_drop_rate=hold['drop_rate'],
+        success_at_least_hold=test['success_rate']>=hold['success_rate'],
+        drops_no_more_than_hold=test['drop_rate']<=hold['drop_rate'])
+    accepted=bool(test['acceptance_met'] and comparison['success_at_least_hold'] and comparison['drops_no_more_than_hold'])
+    return accepted,comparison
+
+
 def archive_partial(path):
     if not path.exists():
         return
@@ -285,8 +293,13 @@ def main():
             name = "test-" + (baseline or "policy")
             evaluate_phase(name, selected / "policy.zip", args.test_episodes, args.test_seed, baseline=baseline)
         test = json.loads((args.output / "test-policy/metrics.json").read_text())
-        state.update(test={k: v for k, v in test.items() if k != "trials"},
-                     acceptance_met=test["acceptance_met"])
+        scalar={k:v for k,v in test.items() if k!='trials'}
+        if args.task_family=='pen-grasp-v1':
+            hold=json.loads((args.output/'test-hold/metrics.json').read_text())
+            accepted,comparison=grasp_acceptance(test,hold)
+            scalar.update(policy_sample_threshold_met=test['acceptance_met'],baseline_comparison=comparison,
+                          acceptance_met=accepted)
+        state.update(test=scalar,acceptance_met=scalar['acceptance_met'])
         if args.video:
             # Fixed first five TEST episodes, without selecting successful trials.
             try:

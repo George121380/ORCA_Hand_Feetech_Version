@@ -10,6 +10,14 @@ job = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(job)
 
 
+def test_grasp_stage_must_meet_original_threshold_and_match_hold_baseline():
+    policy=dict(success_rate=.8,drop_rate=0.,acceptance_met=True)
+    assert not job.grasp_acceptance(policy,dict(success_rate=.9,drop_rate=0.))[0]
+    assert job.grasp_acceptance(policy,dict(success_rate=.7,drop_rate=0.))[0]
+    assert not job.grasp_acceptance(dict(policy,drop_rate=.01),dict(success_rate=.7,drop_rate=0.))[0]
+    assert not job.grasp_acceptance(dict(policy,acceptance_met=False),dict(success_rate=.7,drop_rate=0.))[0]
+
+
 def test_selection_and_test_seeds_cannot_overlap(monkeypatch, tmp_path):
     monkeypatch.setattr(job.platform, "system", lambda: "Linux")
     output = tmp_path / "job"
