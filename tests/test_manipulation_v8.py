@@ -1,5 +1,7 @@
 from dataclasses import asdict
 import json
+from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -83,3 +85,17 @@ def test_legacy_wrist_and_controller_remain_unchanged():
         assert abs(env.data.qpos[env.qadr[-1]]+.15)>.1
     finally:
         env.close()
+
+
+def test_v8_resume_rejects_changed_actuator_envelope_before_creating_run(monkeypatch,tmp_path):
+    monkeypatch.syspath_prepend(str(Path(__file__).parents[1]/'scripts'))
+    import manipulation as cli
+    previous=TaskConfigV8(object='pen',randomization=.3)
+    args=SimpleNamespace(device='cpu',prefix_reset_checkpoint=None,object='pen',angle=15,turns=1,
+        horizon=240,randomization=.3,mass_kg=None,friction=1.,delay_max_ms=150,
+        command_bias_deg=2.,encoder_bias_deg=1.5,device_config=None,resume=tmp_path/'source.zip',
+        output=tmp_path/'must-not-exist')
+    with pytest.raises(ValueError,match='physical/action contract'):
+        cli.train(args,config_class=TaskConfigV8,env_class=ManipulationV8Env,task_id=TASK_ID_V8,
+                  config_loader=lambda _: (previous,{}),task_contract=task_contract())
+    assert not args.output.exists()

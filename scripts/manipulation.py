@@ -54,6 +54,8 @@ def train(args, *, config_class=TaskConfig, env_class=None, task_id=TASK_ID,
         # The curriculum may change angle, turns, horizon and randomization.
         # Physical/observation/action definitions must remain fixed.
         keys = ("object", "mass_kg", "friction", "max_velocity", "max_acceleration", "lower", "upper")
+        if task_contract is not None:
+            keys += ("delay_max_steps", "command_bias_deg", "encoder_bias_deg")
         if any(asdict(previous)[key] != asdict(config)[key] for key in keys):
             raise ValueError("Resume changes physical/action contract; use the same measured config")
     prefix_proof = None
