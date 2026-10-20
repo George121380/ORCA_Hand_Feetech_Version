@@ -53,6 +53,13 @@ def train(args):
         keys = ("object", "mass_kg", "friction", "max_velocity", "max_acceleration", "lower", "upper")
         if any(asdict(previous)[key] != asdict(config)[key] for key in keys):
             raise ValueError("Resume changes physical/action contract; use the same measured config")
+    prefix_proof = None
+    if args.prefix_reset_checkpoint is not None:
+        from orca_feetech.prefix_reset import validate_prefix_checkpoint
+        if args.minimum_goal_angle is not None:
+            raise ValueError("Prefix reset and goal-angle mixture cannot be combined")
+        prefix_proof = validate_prefix_checkpoint(args.prefix_reset_checkpoint,config)
+        prefix_proof["probability"] = args.prefix_reset_probability
     args.output.mkdir(parents=True, exist_ok=False)
     try:
         revision = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
@@ -72,17 +79,21 @@ def train(args):
                     training_goal_angle_mixture=(None if args.minimum_goal_angle is None else
                         dict(minimum_deg=args.minimum_goal_angle, maximum_deg=args.angle,
                              full_angle_probability=.5)),
-                    trained=False)
+                    training_prefix_reset=prefix_proof,trained=False)
     write(args.output / "config.json", metadata)
 
     def factory(index, evaluation=False):
         def make():
-            return Monitor(ManipulationEnv(config, negative_goal_probability=(
-                .5 if evaluation else args.negative_goal_probability),
-                minimum_goal_angle=None if evaluation else args.minimum_goal_angle),
-                           str(args.output / ("eval" if evaluation else f"env{index}")),
-                           info_keywords=("is_success", "dropped", "angle_error_deg", "completed_turns",
-                                          "goal_angle_deg"))
+            from orca_feetech.prefix_reset import (make_training_environment,PhysicalPrefixReset,PREFIX_INFO)
+            base = make_training_environment(config,evaluation=evaluation,
+                negative_goal_probability=args.negative_goal_probability,minimum_goal_angle=args.minimum_goal_angle,
+                prefix_checkpoint=args.prefix_reset_checkpoint,prefix_probability=args.prefix_reset_probability,
+                seed=args.seed+index)
+            keys = ("is_success", "dropped", "angle_error_deg", "completed_turns", "goal_angle_deg")
+            if isinstance(base,PhysicalPrefixReset):
+                keys += PREFIX_INFO
+            return Monitor(base,str(args.output / ("eval" if evaluation else f"env{index}")),
+                           info_keywords=keys)
         return make
 
     env = evaluation = None
@@ -252,6 +263,9 @@ def main():
                    help="Training-only negative-direction frequency; evaluations remain balanced")
     t.add_argument("--minimum-goal-angle", type=float,
                    help="Train half full-angle, half uniform minimum..angle; evaluations stay full-angle")
+    t.add_argument("--prefix-reset-checkpoint",type=Path,
+                   help="Training-only frozen30-degree skill; all evaluations remain unassisted")
+    t.add_argument("--prefix-reset-probability",type=float,default=.75)
     t.add_argument("--resume", type=Path)
     t.add_argument("--checkpoint-every", type=int, default=100000)
     t.add_argument("--eval-every", type=int, default=250000)
@@ -273,6 +287,8 @@ def main():
             p.error("Training budgets must be positive")
         if not 0 <= args.negative_goal_probability <= 1:
             p.error("Goal probability must be in [0,1]")
+        if not 0 <= args.prefix_reset_probability <= 1:
+            p.error("Prefix probability must be in [0,1]")
         if args.minimum_goal_angle is not None and not 10 <= args.minimum_goal_angle <= args.angle:
             p.error("Training minimum goal angle must be between 10 and task angle")
         if (not 0 < args.learning_rate <= .01 or not 0 <= args.entropy_coef <= 1

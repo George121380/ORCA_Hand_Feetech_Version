@@ -99,6 +99,9 @@ def job_command(options, output, resume=None):
             command += ["--" + key.replace("_", "-"), str(options[key])]
     if resume:
         command += ["--resume", str(resume)]
+    if options.get("prefix_reset_checkpoint") is not None:
+        command += ["--prefix-reset-checkpoint",str(options["prefix_reset_checkpoint"]),
+                    "--prefix-reset-probability",str(options.get("prefix_reset_probability",.75))]
     if options.get("video"):
         command += ["--video"]
     return command

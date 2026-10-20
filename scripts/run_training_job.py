@@ -82,6 +82,8 @@ def main():
     parser.add_argument("--reset-log-std", type=float)
     parser.add_argument("--negative-goal-probability", type=float, default=.5)
     parser.add_argument("--minimum-goal-angle", type=float)
+    parser.add_argument("--prefix-reset-checkpoint",type=Path)
+    parser.add_argument("--prefix-reset-probability",type=float,default=.75)
     parser.add_argument("--continue-existing", action="store_true",
                         help="Recover an interrupted job without repeating completed evaluations")
     parser.add_argument("--recovery-num-envs", type=int,
@@ -101,7 +103,7 @@ def main():
         for key, value in state["arguments"].items():
             if key not in ("continue_existing", "recovery_num_envs"):
                 setattr(args, key, Path(value) if value is not None and key in
-                        ("output", "resume", "device_config") else value)
+                        ("output", "resume", "device_config", "prefix_reset_checkpoint") else value)
         args.num_envs = args.recovery_num_envs or state.get("effective_num_envs", args.num_envs)
         state.update(status="running", pid=os.getpid(), recovered_at=now(),
                      resumptions=state.get("resumptions", 0) + 1, effective_num_envs=args.num_envs)
@@ -114,6 +116,16 @@ def main():
         parser.error("Budgets must be positive")
     if args.minimum_goal_angle is not None and not 10 <= args.minimum_goal_angle <= args.angle:
         parser.error("Training minimum goal angle must be between 10 and task angle")
+    if not 0 <= args.prefix_reset_probability <= 1:
+        parser.error("Prefix probability must be in[0,1]")
+    if args.prefix_reset_checkpoint is not None:
+        if args.minimum_goal_angle is not None:
+            parser.error("Prefix reset and goal-angle mixture cannot be combined")
+        for key,path in (("prefix_reset_source_sha256",args.prefix_reset_checkpoint),
+                         ("prefix_reset_config_sha256",args.prefix_reset_checkpoint.parent/"config.json")):
+            value = sha256(path)
+            if state.setdefault(key,value) != value:
+                parser.error("Frozen prefix teacher or its metadata changed")
     selection_seeds = set(range(args.selection_seed, args.selection_seed + args.selection_episodes))
     test_seeds = set(range(args.test_seed, args.test_seed + args.test_episodes))
     if min(args.selection_seed, args.test_seed) < 20000 or selection_seeds & test_seeds:
@@ -224,6 +236,9 @@ def main():
                 if value is not None:
                     command += ["--" + key.replace("_", "-"), str(value)]
             command += ["--negative-goal-probability", str(args.negative_goal_probability)]
+            if args.prefix_reset_checkpoint is not None:
+                command += ["--prefix-reset-checkpoint",str(args.prefix_reset_checkpoint),
+                            "--prefix-reset-probability",str(args.prefix_reset_probability)]
             run("train" if name == "model" else name.replace("model", "train", 1), command)
         state["current_model"] = str(model.relative_to(args.output))
         candidates = []

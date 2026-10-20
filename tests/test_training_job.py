@@ -45,6 +45,37 @@ def test_training_failure_stops_job_and_preserves_command(monkeypatch, tmp_path)
     assert not state["acceptance_met"]
 
 
+def test_prefix_teacher_is_forwarded_and_cannot_change_on_recovery(monkeypatch,tmp_path):
+    monkeypatch.setattr(job.platform,"system",lambda:"Linux")
+    teacher = tmp_path/"teacher.zip"
+    teacher.write_bytes(b"unloaded command fixture")
+    (tmp_path/"config.json").write_text("{}")
+    output = tmp_path/"job"
+    calls = []
+    class FailedProcess:
+        pid = 99999998
+        def __init__(self,command,**kwargs):
+            calls.append(command)
+        def wait(self):
+            return 7
+    monkeypatch.setattr(job.subprocess,"Popen",FailedProcess)
+    monkeypatch.setattr(job.sys,"argv",["job","--output",str(output),
+        "--angle","30","--turns","2","--horizon","480","--randomization","1",
+        "--prefix-reset-checkpoint",str(teacher),"--prefix-reset-probability","0.75"])
+    with pytest.raises(RuntimeError,match="train exited 7"):
+        job.main()
+    assert calls[0][calls[0].index("--prefix-reset-checkpoint")+1] == str(teacher)
+    assert calls[0][calls[0].index("--prefix-reset-probability")+1] == "0.75"
+    state = json.loads((output/"job.json").read_text())
+    assert state["prefix_reset_source_sha256"] == job.sha256(teacher)
+    teacher.write_bytes(b"changed teacher")
+    monkeypatch.setattr(job,"running_processes",lambda *a:[])
+    monkeypatch.setattr(job.sys,"argv",["job","--output",str(output),"--continue-existing"])
+    with pytest.raises(SystemExit):
+        job.main()
+    assert len(calls) == 1
+
+
 def test_recovery_keeps_remaining_budget_and_reduces_workers(monkeypatch, tmp_path):
     monkeypatch.setattr(job.platform, "system", lambda: "Linux")
     output = tmp_path / "job"

@@ -123,6 +123,20 @@ def test_quality_pilot_stays_on_failed_skill_uses_new_test_and_stops_at_budget(m
     assert json.loads((initial / "job.json").read_text()) == original
 
 
+def test_prefix_teacher_survives_plan_options_and_job_launch(monkeypatch,tmp_path):
+    monkeypatch.syspath_prepend(str(Path(__file__).parents[1]/"scripts"))
+    import watch_training as watch
+    teacher = "/frozen/teacher.zip"
+    initial = dict(object="pen",prefix_reset_checkpoint=teacher,prefix_reset_probability=.75,
+                   selection_seed=1340000,test_seed=1330000)
+    plan = [dict(name="30x2-prefix-r1",angle=30,turns=2,horizon=480,steps=1000000,randomization=1.)]
+    _,options = watch.stage_options(initial,0,plan)
+    argv = watch.job_command(options,tmp_path/"job")
+    assert argv[argv.index("--prefix-reset-checkpoint")+1] == teacher
+    assert argv[argv.index("--prefix-reset-probability")+1] == "0.75"
+    assert argv[argv.index("--turns")+1] == "2" and "--minimum-goal-angle" not in argv
+
+
 def test_explicit_plan_advances_only_after_pass_and_is_immutable_on_restart(monkeypatch, tmp_path):
     monkeypatch.syspath_prepend(str(Path(__file__).parents[1] / "scripts"))
     spec = importlib.util.spec_from_file_location("watch", Path(__file__).parents[1] / "scripts/watch_training.py")
