@@ -167,6 +167,30 @@ def test_reset_waits_for_physical_rest_before_setting_goal(kind):
         env.close()
 
 
+def test_training_goal_sampler_changes_direction_without_changing_physics_or_contract():
+    cfg = TaskConfig(object="pen", angle=30, randomization=1.)
+    negative = ManipulationEnv(cfg, negative_goal_probability=1.)
+    positive = ManipulationEnv(cfg, negative_goal_probability=0.)
+    evaluation = ManipulationEnv(cfg)
+    try:
+        for seed in range(12):
+            negative.reset(seed=seed)
+            positive.reset(seed=seed)
+            evaluation.reset(seed=seed)
+            assert negative.direction == -1 and positive.direction == 1
+            assert np.array_equal(negative.data.qpos, positive.data.qpos)
+            assert np.array_equal(negative.data.qpos, evaluation.data.qpos)
+            assert negative.info()["angle_error_deg"] == pytest.approx(30)
+            assert positive.info()["angle_error_deg"] == pytest.approx(30)
+            assert negative.config.fingerprint() == evaluation.config.fingerprint()
+        assert evaluation.negative_goal_probability == .5
+        negative.reset(seed=0, options={"direction": 1})
+        assert negative.direction == 1
+    finally:
+        for env in (negative, positive, evaluation):
+            env.close()
+
+
 K = np.array([[1400., 0, 960], [0, 1400, 540], [0, 0, 1]])
 R = np.array([2.8, .1, .1])
 T = np.array([.015, .015, .28])

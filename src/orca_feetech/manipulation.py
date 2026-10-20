@@ -168,7 +168,12 @@ def build_model(config, *, object_spec=None):
 class ManipulationEnv(gym.Env):
     metadata = {"render_modes": ["rgb_array"], "render_fps": 20}
 
-    def __init__(self, config=None, render_mode=None):
+    def __init__(self, config=None, render_mode=None, negative_goal_probability=.5):
+        if not 0 <= negative_goal_probability <= 1:
+            raise ValueError("Goal sampling probability must be in [0,1]")
+        # Training-only goal distribution. The canonical evaluation and real
+        # goal interface retain both directions and the same task contract.
+        self.negative_goal_probability = negative_goal_probability
         self.config = config or TaskConfig()
         self.model = build_model(self.config)
         self.data = mujoco.MjData(self.model)
@@ -269,7 +274,9 @@ class ManipulationEnv(gym.Env):
         else:
             raise RuntimeError("30 resets without supported physical rest: inspect placement/fixture")
         self.origin = pos.copy()
-        self.direction = options.get("direction", int(self.np_random.choice([-1, 1])))
+        direction = (int(self.np_random.choice([-1, 1])) if self.negative_goal_probability == .5 else
+                     -1 if self.np_random.random() < self.negative_goal_probability else 1)
+        self.direction = options.get("direction", direction)
         if self.direction not in (-1, 1):
             raise ValueError("Direction must be -1 or 1")
         self.increment = yaw_rotation(np.deg2rad(self.config.angle) * self.direction)

@@ -68,12 +68,15 @@ def train(args):
                     learning_rate=args.learning_rate, entropy_coef=args.entropy_coef,
                     target_kl=args.target_kl, initial_log_std=args.initial_log_std,
                     reset_log_std=args.reset_log_std,
+                    training_negative_goal_probability=args.negative_goal_probability,
                     trained=False)
     write(args.output / "config.json", metadata)
 
     def factory(index, evaluation=False):
         def make():
-            return Monitor(ManipulationEnv(config), str(args.output / ("eval" if evaluation else f"env{index}")),
+            return Monitor(ManipulationEnv(config, negative_goal_probability=(
+                .5 if evaluation else args.negative_goal_probability)),
+                           str(args.output / ("eval" if evaluation else f"env{index}")),
                            info_keywords=("is_success", "dropped", "angle_error_deg", "completed_turns"))
         return make
 
@@ -228,6 +231,8 @@ def main():
     t.add_argument("--target-kl", type=float, default=.03)
     t.add_argument("--initial-log-std", type=float, default=0.)
     t.add_argument("--reset-log-std", type=float, help="Explicit exploration reset for a new fine-tuning stage")
+    t.add_argument("--negative-goal-probability", type=float, default=.5,
+                   help="Training-only negative-direction frequency; evaluations remain balanced")
     t.add_argument("--resume", type=Path)
     t.add_argument("--checkpoint-every", type=int, default=100000)
     t.add_argument("--eval-every", type=int, default=250000)
@@ -247,6 +252,8 @@ def main():
     elif args.command == "train":
         if min(args.steps, args.num_envs, args.checkpoint_every, args.eval_every) < 1:
             p.error("Training budgets must be positive")
+        if not 0 <= args.negative_goal_probability <= 1:
+            p.error("Goal probability must be in [0,1]")
         if (not 0 < args.learning_rate <= .01 or not 0 <= args.entropy_coef <= 1
                 or not 0 < args.target_kl <= 1 or not -5 <= args.initial_log_std <= 2
                 or args.reset_log_std is not None and not -5 <= args.reset_log_std <= 2):

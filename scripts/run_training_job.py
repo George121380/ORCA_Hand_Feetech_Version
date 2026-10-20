@@ -80,6 +80,7 @@ def main():
     parser.add_argument("--target-kl", type=float, default=.03)
     parser.add_argument("--initial-log-std", type=float, default=0.)
     parser.add_argument("--reset-log-std", type=float)
+    parser.add_argument("--negative-goal-probability", type=float, default=.5)
     parser.add_argument("--continue-existing", action="store_true",
                         help="Recover an interrupted job without repeating completed evaluations")
     parser.add_argument("--recovery-num-envs", type=int,
@@ -218,6 +219,7 @@ def main():
                 value = getattr(args, key)
                 if value is not None:
                     command += ["--" + key.replace("_", "-"), str(value)]
+            command += ["--negative-goal-probability", str(args.negative_goal_probability)]
             run("train" if name == "model" else name.replace("model", "train", 1), command)
         state["current_model"] = str(model.relative_to(args.output))
         candidates = []
