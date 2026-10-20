@@ -243,6 +243,24 @@ gSDE首段实际增加1003520步（整rollout取整），开发集最终138/200�
 
 基于上述晚期学习信号，另建一次固定200万步的续训实验，`configs/training/pen-prefixrefine.json`仅一阶段、质量追加0，未通过则停止该计划。源固定为上轮最终actor（累计15218816步、SHA256 `45c3d1c77014315f5ffd1298d0b2eeb3a5a8bd66353f30cc3b2fe662e9befaa6`），而非按正式测试挑中间模型；上一轮开发选择和正式失败结果不改写。保持75%物理前缀、25%普通reset、原冻结30°老师、学习率3.75e-5、熵0.001、KL0.01、原标准差及其余训练/物理参数不变，仅增加有上限的学习预算。新开发200回合1540000..1540199、正式100回合1530000..1530099；最终/内部最佳只按开发集选择，正式从中立初态无老师独立完成双目标，仍须≥80%成功、掉落≤10%。新工作树`orca-hand-rl-prefixrefine`、job `runs/pen-prefixrefine30x2-seed0`、状态`runs/pen-prefixrefine-supervised`；前缀系列总预算至此最多约300万步，不自动继续追加。
 
+### 2026-10-20 转笔方法复核与后续方向
+
+复核了[WUJI官方转笔实现](https://github.com/wuji-technology/wuji-mjlab/tree/26b99c6338641e8edc17caf87922e6e1767121fa/src/wuji_mjlab/tasks/pen_spin)、PenSpin全文与附录，以及HORA、DemoStart等方法。[研究记录](../sim2real/pen-spinning-research.json)保存来源、适用边界、方法比较、实施次序与待验证假设；这些是后续方案，不表示新任务已经实现或通过验收。
+
+最关键的合同差异：当前v7要求每30°完整SO(3)对齐后停稳0.5秒；WUJI使用参考手指与笔的连续运动，残差PPO修正参考关节角，笔轴两点表示不要求控制轴向roll。当前中立落稳与单前缀也没有覆盖整圈所有换指接触阶段。下一研究优先级应为ORCA可达参考、参考残差控制、多相位训练初态及GPU并行物理；后续使用新的连续转笔Task ID和冻结的整圈标准。旧v7失败、门槛与checkpoint全部保留，不把轴向指标替换回旧表格。方块定向仍需要完整姿态。
+
+WUJI是20手指关节、50Hz的不同手型，原模型不能部署到ORCA的16手指通道。已读取其v2026.9.27发布包，逐一核对40个NPZ与索引SHA256；[可复现审计](../../scripts/audit_wuji_motion.py)只读取数据，不导入外部控制代码，也不发硬件命令：
+
+    .venv/bin/python scripts/audit_wuji_motion.py \
+      --archive local/research/wuji-assets.zip \
+      --output docs/sim2real/wuji-reference-audit.json
+
+[审计结果](../sim2real/wuji-reference-audit.json)记录逐段哈希、统计和署名来源。连续单轴组4段参考的原始关节采样差分绝对速度P99约2.055rad/s、加速度P99约20.264rad/s²；6.54%的关节采样差分速度超过本项目0.8rad/s限制。这些是WUJI参考数据的未平滑差分，含录制/重定向噪声，不是电机实测速度，也不能据此设定ORCA的安全放慢倍数。应先把关键点/接触几何重定向到ORCA，再平滑、限速并重新验证动力学可行性；直接删4维、复制关节角或只改控制频率都没有经过验证。
+
+训练规模方面，PenSpin附录为8192并行环境、500M agent steps；WUJI默认4096环境、每环境40步、10000次迭代的配置乘积为1.6384B步。当前4090主要做PPO网络更新，物理来自16个CPU环境。优先在独立环境测mjlab/MuJoCo Warp兼容性、接触、显存和有效吞吐，再决定并行规模与学习预算；不承诺4090必能跑4096个ORCA。原200万步续训仍按已有预算独立结束，作为对照。新路线尚未实现、尚无新正式成绩。
+
+打印方面，保留210mm候选做接触与标定检查。WUJI实物250mm、方头18×18×36mm，训练长度205–265mm；手型、握持位置、端头碰撞和杆面摩擦不同，不能只按长度照搬。现有两端AprilTag定位方案可继续使用，需实测成品质量、重心、摩擦与执行响应；WUJI自定义标签图案不能按相同ID替换本项目tag36h11。后续几何若改变，另存实体与签名，不混用现有模型。
+
 `scripts/training_heartbeat.py`作为独立于监督器的systemd用户服务，每300秒检查状态，原子更新`runs/pen-v6-heartbeat/latest.json`并追加`heartbeats.jsonl`；即使监督器因质量预算耗尽退出，心跳仍记录`needs_attention`。也会标记运行中监督器状态超过120秒未更新、训练进度超过300秒未更新、监督服务未运行等问题。进程恢复由30秒轮询的监督器及systemd负责。这个心跳只记录服务器状态，不会唤醒聊天代理，也没有聊天、邮件或手机推送。`--once`用于启动检查，不能把心跳日志等同于人工或代理已完成诊断。
 
 会话跟进改用Mac的launchd定时执行`scripts/queue_rl_heartbeat.py`，通过已安装Codex CLI的`queue --thread ... --message ...`给同一个任务派发检查，不创建另一个代理。旧的工具单元内JavaScript计时器在结束回复后未按预期持续执行，不能再用它声称自动复查。用户相关线程号、CLI路径、开关与序号放在被忽略的`local/orca-rl-agent-heartbeat.json`，不上传GitHub。每300秒最多派发一个未确认消息；代理完成SSH检查后用`--ack --note '检查证据'`记录实际检查时间，`queue`成功回执只证明排队成功。超过15分钟未确认会标记`needs_attention`。Mac必须保持唤醒、原生Codex服务可用；服务器的systemd监控独立运行。停止时先用`--disable`关闭派发，再卸载对应launchd任务；不要影响PPO训练，除非用户也要求停训。

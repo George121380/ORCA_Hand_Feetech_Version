@@ -1,0 +1,248 @@
+{
+  "date": "2026-10-20",
+  "title": "ORCA 转笔：研究结论与下一步",
+  "status": "研究与方案，尚未实现新任务或完成迁移。现有 v7 对照与训练结果保留。",
+  "conclusion": "优先采用经过 ORCA 重定向与物理核验的参考运动，再用残差 RL 学接触修正；GPU 并行物理、多相位初态与明确的连续旋转评估需要一起设计。",
+  "evidence_levels": [
+    "原文／源码事实",
+    "本项目实测",
+    "工程推断",
+    "尚待验证"
+  ],
+  "differences": [
+    [
+      "目标",
+      "v7：每30°停稳0.5秒，完整SO(3)误差<8°",
+      "WUJI：连续参考动作，以笔轴两端位置表达笔的运动",
+      "工程推断：当前奖励更容易得到抓紧停住，未直接教换指节奏。"
+    ],
+    [
+      "探索",
+      "v7：中立手落稳；前缀仅覆盖首个30°之后",
+      "WUJI：参考轨迹多相位重置；PenSpin：多种规范抓姿",
+      "工程推断：只覆盖第一段之后，仍可能缺少整圈接触模式。"
+    ],
+    [
+      "控制",
+      "ORCA：16手指通道，20Hz，速度0.8rad/s、加速度2rad/s²",
+      "WUJI：20关节，50Hz，参考关节角+滤波残差",
+      "不能复制checkpoint、删掉4维动作或只改控制频率。"
+    ],
+    [
+      "信息",
+      "v7：actor和critic均为296维可部署观测",
+      "WUJI：带噪相机actor与额外真值critic；PenSpin另训特权teacher",
+      "可先测试非对称critic；特权teacher必须另做可部署学生。"
+    ],
+    [
+      "规模",
+      "v7：16个CPU物理环境，GPU主要更新网络；每轮1–2M步",
+      "WUJI默认4096×40步×10000迭代；PenSpin附录8192环境、500M步",
+      "1.6384B是WUJI默认配置的步数乘积，不是本机实测。"
+    ],
+    [
+      "验证",
+      "本项目前缀轮：0/100完整成功，77回合仅第一段",
+      "论文/演示使用不同手型、物体与成功定义",
+      "外部成绩不能代替ORCA的独立整圈验收。"
+    ]
+  ],
+  "sources": [
+    {
+      "name": "WUJI 官方实现",
+      "url": "https://github.com/wuji-technology/wuji-mjlab",
+      "fact": "固定腕转笔，公开参考动作与真机部署。克隆源码固定为26b99c6。",
+      "scope": "20关节WuJi Hand2，非ORCA。"
+    },
+    {
+      "name": "WUJI 训练与数据",
+      "url": "https://github.com/wuji-technology/wuji-mjlab/blob/26b99c6338641e8edc17caf87922e6e1767121fa/src/wuji_mjlab/tasks/pen_spin/docs/train_zh.md",
+      "fact": "5组40段50Hz参考轨迹；默认4096环境、约10000次PPO迭代。",
+      "scope": "已核对发布包各NPZ的SHA256。"
+    },
+    {
+      "name": "WUJI 笔轴表示",
+      "url": "https://github.com/wuji-technology/wuji-mjlab/blob/26b99c6338641e8edc17caf87922e6e1767121fa/src/wuji_mjlab/tasks/pen_spin/mdp/observations.py",
+      "fact": "两个轴上点表示位置和轴向；不观察、不奖励圆杆轴向roll。",
+      "scope": "两端标签仍可估计完整位姿；任务只选择所需自由度。"
+    },
+    {
+      "name": "WUJI 残差动作",
+      "url": "https://github.com/wuji-technology/wuji-mjlab/blob/26b99c6338641e8edc17caf87922e6e1767121fa/src/wuji_mjlab/tasks/pen_spin/mdp/actions.py",
+      "fact": "参考关节角加滤波后的动作残差，并补偿编码器偏差。",
+      "scope": "参考动作提供换指骨架；残差不是任意初态常数偏置。"
+    },
+    {
+      "name": "WUJI 训练初态",
+      "url": "https://github.com/wuji-technology/wuji-mjlab/blob/26b99c6338641e8edc17caf87922e6e1767121fa/src/wuji_mjlab/tasks/pen_spin/mdp/events.py",
+      "fact": "训练可从参考帧的手、笔状态与速度开始。",
+      "scope": "参考重置仅作训练；整段评估不得中途重置。"
+    },
+    {
+      "name": "WUJI 机器人配置",
+      "url": "https://github.com/wuji-technology/wuji-mjlab/blob/26b99c6338641e8edc17caf87922e6e1767121fa/src/wuji_mjlab/tasks/pen_spin/config/wuji_hand2/env_cfgs.py",
+      "fact": "包含参考跟踪奖励、难相位采样、渐增扰动与执行缺失。",
+      "scope": "play模式会移除部分终止与噪声，因此视频不能替代噪声留出集。"
+    },
+    {
+      "name": "PenSpin · CoRL 2024",
+      "url": "https://arxiv.org/abs/2407.18902",
+      "fact": "多抓姿、特权教师、仿真预训练与真机少量轨迹微调。",
+      "scope": "正文和15页全文附录已读；论文180°成功定义不等于整圈。"
+    },
+    {
+      "name": "HORA",
+      "url": "https://arxiv.org/html/2210.04887",
+      "fact": "稳定指尖抓姿、转速奖励与本体历史适应；20Hz策略曾用于真机。",
+      "scope": "短圆柱等物体，不能据此保证长笔可转。"
+    },
+    {
+      "name": "DemoStart",
+      "url": "https://arxiv.org/html/2409.06613",
+      "fact": "把少量示范中的状态用作RL训练起点，评估仍从目标初态分布开始。",
+      "scope": "可借鉴重置课程；未直接证明本项目转笔有效。"
+    },
+    {
+      "name": "OmniReset · ICLR 2026",
+      "url": "https://arxiv.org/html/2603.15789",
+      "fact": "通过多样重置改善长时程探索，并验证装配等任务。",
+      "scope": "一般操作证据，非ORCA转笔结果。"
+    },
+    {
+      "name": "Eureka",
+      "url": "https://eureka-research.github.io/",
+      "fact": "奖励搜索结合课程实现模拟Shadow Hand转笔。",
+      "scope": "该转笔结果是仿真，不当作真机迁移证据。"
+    },
+    {
+      "name": "SWIFT",
+      "url": "https://arxiv.org/html/2411.12734v1",
+      "fact": "以抓持、推动、接回的低维动作参数学习单次动态转笔。",
+      "scope": "三指软手与真实试验；不是连续多指finger-pass策略。"
+    },
+    {
+      "name": "ORCA 官方论文",
+      "url": "https://www.orcahand.com/publications/ORCA_IROS_2025.pdf",
+      "fact": "官方RL例子为球体转向，使用4096并行环境。",
+      "scope": "原电机/腱绳硬件不同，不能外推STS3215带宽。"
+    },
+    {
+      "name": "mjlab / MuJoCo Warp",
+      "url": "https://github.com/mujocolab/mjlab",
+      "fact": "将并行物理放到NVIDIA GPU上。",
+      "scope": "先测试ORCA模型兼容性、接触与显存，再承诺环境数量。"
+    },
+    {
+      "name": "WUJI 物体与观测配置",
+      "url": "https://github.com/wuji-technology/wuji-mjlab/blob/26b99c6338641e8edc17caf87922e6e1767121fa/src/wuji_mjlab/tasks/pen_spin/pen_spin_env_cfg.py",
+      "fact": "相机噪声/延迟与真值critic分开；训练长度范围205–265mm。",
+      "scope": "源代码名义笔质量30g，并非本项目打印成品称重。"
+    },
+    {
+      "name": "WUJI PPO 配置",
+      "url": "https://github.com/wuji-technology/wuji-mjlab/blob/26b99c6338641e8edc17caf87922e6e1767121fa/src/wuji_mjlab/tasks/pen_spin/config/wuji_hand2/rsl_rl/ppo.py",
+      "fact": "每环境每迭代采样40步；10000迭代为默认预算。",
+      "scope": "4096×40×10000=1,638,400,000个采样步，非性能承诺。"
+    },
+    {
+      "name": "WUJI 打印与标签",
+      "url": "https://github.com/wuji-technology/wuji-mjlab/blob/26b99c6338641e8edc17caf87922e6e1767121fa/src/wuji_mjlab/tasks/pen_spin/docs/setup_zh.md",
+      "fact": "250mm实物、18mm方头、带纹握杆和自定义标签字典。",
+      "scope": "源3MF针对其打印机，不能直接作为A1mini已切片文件。"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "1 · 先冻结新任务",
+      "title": "把整圈运动与精确摆角分开",
+      "text": "保留v7与所有旧门槛。另建连续转笔Task ID：跟踪有向笔轴、净累计角度、方向一致性、掉落与底座支撑；圆杆自身roll只诊断。方块定向仍用完整姿态。先冻结标准再训练。"
+    },
+    {
+      "priority": "2 · 先做可达参考",
+      "title": "重定向、限速、物理验证",
+      "text": "利用公开轨迹中的关键点、物体与手腕坐标，重新求ORCA关节轨迹。处理缺失独立DIP、拇指几何、关节ROM与接触；降速和重采样后重新跑物理。参考关节角不能直接裁成16维。"
+    },
+    {
+      "priority": "3 · 再做并行",
+      "title": "让4090运行物理仿真",
+      "text": "独立环境验证mjlab/MuJoCo Warp加载、约束和接触。先32/128/512环境逐级测吞吐、显存、有效样本与保留率，再选训练规模。当前CUDA环境和已存结果不覆盖。"
+    },
+    {
+      "priority": "4 · 训练运动修正",
+      "title": "参考轨迹+残差PPO+多相位起点",
+      "text": "先测一个可完成的换指周期，再增加多个相位起点和逐步扰动。actor用真机可得的关节反馈、动作历史、带延迟的笔轴和参考相位；critic可用模拟真值。若actor仍难学，再加单独的特权teacher及学生。"
+    },
+    {
+      "priority": "5 · 严格闭环",
+      "title": "从整段起点检验圈数",
+      "text": "建议先验证20秒一圈，再验证连续两圈。评估全程不跳参考状态、不用老师接管，计有向净旋转并限制反向抖动、离手和支撑作弊。使用冻结的新开发/正式种子；候选门槛80/100成功、掉落≤10%，实施前写入新合同。"
+    },
+    {
+      "priority": "6 · 实测后迁移",
+      "title": "先校准再短时真机",
+      "text": "称量打印成品、定位重心、测摩擦与STS3215经腱绳后的响应/回差。验证两端联合PnP与固定参考码、实际曝光和延迟。先做相机/控制dry-run，再安排有记录的物理验证；本次没有硬件动作。"
+    }
+  ],
+  "geometry": [
+    "210mm总长落在WUJI训练配置205–265mm长度随机范围内，但手型不同，不能据此认定最优。WUJI实物为250mm。",
+    "本项目Ø16mm杆、24mm方头；WUJI使用约16.9mm带纹杆外径、18×18×36mm方头。端部碰撞与实际落稳位置需在ORCA上单独审计。",
+    "先保留已打印的210mm对象做标定和接触验证。若需调整，先在相同初态下比较接触路径、端帽干涉、质量/转动惯量和标签可见性，再决定重打。",
+    "两端标签方案合理。保留现有AprilTag36h11的尺寸与ID合同；WUJI的自定义标签字典不能按相同数字替换。"
+  ],
+  "minimal_experiment": {
+    "hypothesis": "参考换指与相位覆盖比继续细调单一摆角策略更有机会突破第二段瓶颈；尚未在ORCA验证。",
+    "setup": "同一ORCA几何和动作约束，先获得一条经物理验证的完整参考；以从头运行与相位初始化训练作配对对照。",
+    "measurements": "整段净圈数、从起点的成功率、掉落/支撑、各相位接触切换、动作饱和与闭环恢复；轨迹误差和BC损失只作诊断。",
+    "stop": "参考经限速后仍不可达时，先修改抓姿/接触路径；GPU物理不稳定时先修模型。训练先用小预算证明整段净圈数提升，不能以中途起点成功替代整圈。"
+  },
+  "penspin_deep_read": [
+    {
+      "title": "1 · 问题",
+      "text": "论文研究长条物体连续换指及迁移；本文将它与我们的精确摆角区分。"
+    },
+    {
+      "title": "2 · 前人不足",
+      "text": "HORA支持本体适应；Eureka展示仿真转笔。论文将动态接触迁移作为额外难点。"
+    },
+    {
+      "title": "3 · 思考路径（重建）",
+      "text": "先假设探索不到松指/接回状态，再假设观测与物理误差使仿真动作难复用；分别用抓姿覆盖和实物数据检验。此处是我们的解释。"
+    },
+    {
+      "title": "4 · 直觉",
+      "text": "先在仿真里发现有用的运动，再压缩成可观测策略，并用少量实物轨迹修正动力学偏差。"
+    },
+    {
+      "title": "5 · Pipeline",
+      "text": "特权PPO教师→仿真轨迹预训练学生→真机开环回放筛选成功轨迹→学生微调。作者使用45条成功实物轨迹。"
+    },
+    {
+      "title": "6 · 数学",
+      "text": "无新理论推导；核心是转动、水平性与能耗的组合奖励和实证设计。对ORCA应独立冻结新目标及系数，不能照抄奖励后宣布有效。"
+    },
+    {
+      "title": "7 · 证据",
+      "text": "作者消融抓姿分布、特权信息和水平性奖励。本文最关心单抓姿下换指难涌现的观察；它支持调查覆盖不足，但不能单独证明我们的失败原因。"
+    },
+    {
+      "title": "8 · Take-aways",
+      "text": "五句：覆盖接触相位。先得到运动。分开教师与学生。检验闭环而非训练误差。用实测修正迁移。三句：找动作；学反馈；校准实物。一句：让换指可探索、可执行、可恢复。"
+    },
+    {
+      "title": "9 · 脆弱假设",
+      "text": "对ORCA最脆弱的外推是：存在能在真实STS3215腱绳系统回放成功的参考。若回差、速度或接触路径不允许，追加BC数据无法解决。"
+    },
+    {
+      "title": "10 · 一周最小复现",
+      "text": "先在仿真比较单一初态与多相位可达初态，在相同小预算下测从起点的净圈数；不必先复现全部真机微调。仅中途片段改善则不支持整圈突破。"
+    },
+    {
+      "title": "11 · 最强反例",
+      "text": "对动作施加实测速度/延迟后，原参考不能完成换指；或者学生离线误差下降而整段闭环失败。前者挑战动作可迁移，后者挑战压缩方法。"
+    },
+    {
+      "title": "12 · 后续提议（未查新）",
+      "text": "用下一段可接续状态的覆盖度筛选参考与初态，而非只按成功片段或动作误差选数据。借鉴运动规划的可达集，先测相邻接触阶段能否双向恢复；这是工程研究假设，未声称新颖性。"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+NOTICE
+
+This file records provenance and attribution facts visible in the release bundle.
+It does not make a legal conclusion about release eligibility.
+
+Bundle-owned material
+
+The policy weights and the jig and cube designs in STEP, 3MF, and drawing form
+are provided under Apache-2.0; see LICENSE.
+
+Embedded BambuStudio configuration data
+
+The following print projects embed BambuStudio configuration data:
+
+- reorient/hardware/cube.3mf contains
+  Metadata/project_settings.config, which parses as a complete configuration
+  with 557 keys.
+- hardware/hand1/base.3mf contains
+  Metadata/project_settings.config, which parses as a complete configuration
+  with 559 keys.
+- hardware/hand2/base.3mf contains
+  Metadata/project_settings.config, which parses as a complete configuration
+  with 581 keys. Its recorded printer_model is `Bambu Lab H2C`,
+  printer_settings_id is `Bambu Lab H2C 0.4 nozzle`, and
+  default_filament_profile is `Bambu PLA Basic @BBL H2C`.
+
+The values originate from BambuStudio resources/profiles/BBL data. Bundle
+evidence includes change_filament_gcode text such as
+`;======== H2C filament_change ========` and default_filament_profile values
+`Bambu PLA Basic @BBL H2C` and `Bambu PLA Basic @BBL P1S 0.4 nozzle`.
+The upstream project is <https://github.com/bambulab/BambuStudio>; its
+repository license at
+<https://github.com/bambulab/BambuStudio/blob/master/LICENSE> is AGPL-3.0.
+
+Release eligibility and any attribution or source obligations for the embedded
+configuration data remain for the release reviewer to confirm. This notice
+records facts only. Retaining the configuration is intentional because the
+print and slicing settings are necessary downstream information for these
+print projects.
+
+Export-tool banners
+
+reorient/hardware/cube.obj and reorient/hardware/cube.mtl carry the
+exporter banners `# Created by Open3D` and
+`# https://github.com/mikedh/trimesh`. These are export-tool banners; the
+resulting geometry is bundle-owned material.
+
+Cube texture
+
+reorient/hardware/cube.png is a 1440×240 RGB image containing six
+240×240 texture tiles, one for each face, with binary fiducial patterns. The
+bundle does not record which generating marker dictionary was used, including
+whether it was an ArUco 4×4, 5×5, 6×6, or another dictionary. The owner must
+supply that provenance before reviewers can determine any attribution
+obligation.
+
+AprilTag specification reference
+
+AprilTag36h11 appears in the task manifests as the wrist-marker
+specification. The bundle contains no AprilTag image file and therefore does
+not redistribute an AprilTag image.
+
+ONNX producer metadata
+
+reorient/checkpoints/hand1/policy.onnx and
+reorient/checkpoints/hand2/policy.onnx both record `pytorch 2.7.1` as the
+ONNX producer. Both also embed a `wuji_policy_identity` metadata entry; the
+Hand 2 entry identifies policy schema 1 and robot generation 2 and matches
+the required `reorient/checkpoints/hand2/config.json` sidecar. `rsl_rl`
+appears as the training-framework name in the manifest; this bundle does
+not contain rsl_rl source code.
+
+Hand 2 checkpoint provenance
+
+The matched files in reorient/checkpoints/hand2/ come from run
+`RewardContactFix_Full_s42`, trained with code commit
+`a72f60c8dc3d81e02b53ed63f17353c74ed91737` for task
+`WujiHand2_Reorient_50Hz`. The run's `model_4999.pt` is distributed as
+`model.pt`; the exported `policy.onnx` carries generation identity and is
+paired with its matching `config.json`. Training scale and seed are recorded
+in reorient/manifest.json from the run's params/env.yaml and params/agent.yaml.
+This set replaces the previously bundled Hand 2 checkpoint.
+
+Purchased hardware specification
+
+Hand 1's `350x200x13 铝合金蜂窝板` appears in the assembly tree in
+hardware/hand1/assembly.step and in the bill of materials in
+hardware/hand1/assembly.pdf. Hand 2's assembly tree and bill
+of materials in the corresponding `hand2/assembly.step` and `hand2/assembly.pdf`
+identify `350x200x13 蜂窝铝板` and four `M6 螺母`. These are specifications of
+purchased standard components.
+
+Known PDF drawing content
+
+hardware/hand1/assembly.pdf contains visible `00B`/`01B`
+drawing identifiers, `YR` initials, and `2026/6/4` dates. The revised
+hardware/hand2/assembly.pdf no longer contains the
+`CONFIDENTIAL DOCUMENTS` footer present in the previous Hand 2 drawing.
+The revised page still displays `WJ-RL开源治具-00A` in the title block,
+`WJ-RL开源治具-01A` in the bill of materials, `YR` in the designer/drafter
+fields, and `2026/9/24` dates. Clearing PDF DocInfo and XMP metadata does
+not alter these page-content facts.
+
+PenSpin additions in the combined bundle
+
+Pen CAD was supplied by the project maintainer. The source STEP contains two alternative shafts named 250 and 240;
+both assemblies measure 250 mm overall. Exported filenames and part labels use
+ring/cross names. Geometry, colors, component placements and all end-block
+solids are retained. Source names and the original SHA-256 are recorded in
+pen_spin/manifest.json. Open CASCADE 7.8.1 was used for STEP import/export.
+
+The PenSpin PNG artwork and deployment layout JSON are copied unchanged from
+the integration repository revision recorded in the PenSpin manifest.
+The texture_faces.csv table records face dimensions and marker IDs derived
+from the deployment layout and existing texture slot arrangement.
+Print settings, datasets and policies are documented in the task manifest.
+
+
+PenSpin trajectory data
+
+The 40 NPZ clips, five group indexes and five recipes in pen_spin/data/
+were copied without modification from the user-designated integration
+working tree's src/wuji_mjlab/tasks/pen_spin/data/ directories. File digests
+are recorded in the group indexes and SHA256SUMS. They use the physical
+wrist frame recorded in pen_spin/manifest.json.
+
+PenSpin policy checkpoints
+
+Five matched policy sets are included in pen_spin/checkpoints/, one per
+motion group. Each set contains model.pt, policy.onnx and config.json.
+The model.pt files were copied
+byte-for-byte from the maintainer-selected regular five-group training
+runs and renamed for this release. The training source revision is
+37c71a478905369e2072d3e3bc39484ad38774b6. The corresponding ONNX exports are included; file digests are recorded
+in pen_spin/manifest.json and SHA256SUMS.
+
+
+PenSpin production source files
+
+The production resources include two maintainer-supplied 3MF projects and
+one STEP assembly, copied byte-for-byte under pen_spin/hardware/.
+The 3MF projects contain Bambu Lab X2D printer profiles and Bambu PLA Basic
+filament settings. The STEP assembly is a separate source from the split
+ring/cross exports. File digests are recorded in pen_spin/manifest.json
+and SHA256SUMS.
