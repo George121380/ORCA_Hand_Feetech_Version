@@ -1,0 +1,3039 @@
+{
+  "purpose": "Instantaneous contact/gravity diagnostic compared with already-frozen holds; not policy acceptance",
+  "is_physics_rollout": false,
+  "acceptance_met": false,
+  "model_sha256": "fad505b767154916bebe9f048f13004328dcb49ae51981903d05a8640ee98a42",
+  "geometry_sha256": "4b2937c1c2e2035d375a9686d2db34f5a743759489226d77cc817f7be95ea0b9",
+  "script_sha256": "80df707f732692a984d01989d9fd5c7fef460c314c9aa8a554bf613a15bd0624",
+  "support_module_sha256": "73da493e6dc5f9048e0d366b16fc5aa219db91582999f1ba332652cd475eaf26",
+  "protocol": {
+    "cone": "model pyramidal, including sliding/torsional/rolling components as present",
+    "torque_length_m": 0.1,
+    "gravity_relative_residual_threshold": 0.05,
+    "solver_wrench": "mj_forward at synthetic zero-velocity state with nominal position targets",
+    "physics_steps": 0,
+    "external_wrenches_applied": false,
+    "normal_force_upper_bound": null
+  },
+  "documentation": "https://mujoco.readthedocs.io/en/stable/computation/#contact",
+  "limitations": [
+    "Gravity-wrench feasibility is not force closure or disturbance robustness.",
+    "Cone fit ignores actuator limits, compliance, joint torque balance and dynamics.",
+    "Instantaneous solver forces at inserted states are not measured hardware forces.",
+    "A moving reference phase need not be statically supportable; no reference is approved here."
+  ],
+  "source_url": "https://github.com/wuji-technology/wuji-mjlab/releases/tag/v2026.9.27",
+  "reference_attribution": "Copyright2026 Wuji Technology Co., Ltd.; see docs/sim2real/third-party/wuji/",
+  "timestamp": "2026-10-20T18:24:20.489632+00:00",
+  "status": "complete",
+  "conditions": [
+    {
+      "reference_sha256": "d13d1b4bbffc9d2cc02e40cb526cd786085b453f18e253ba802511eab521d456",
+      "hold_report_sha256": "366d7328d4e25256630f2fdfd597172131b4b23dee11c175d5c4b0aaccd2f16a",
+      "runtime": {
+        "system": "Linux",
+        "python": "3.11.15",
+        "mujoco": "3.13.0",
+        "numpy": "2.3.5"
+      },
+      "summary": {
+        "baseline": {
+          "states": 32,
+          "gravity_cone_feasible": 10,
+          "cone_solver_failures": 0,
+          "solver_wrench_near_gravity_5pct": 0,
+          "median_gravity_cone_relative_residual": 0.28009350331733285,
+          "median_solver_gravity_relative_residual": 4.696657032478543,
+          "cone_feasible_and_frozen_shaft_held": 0,
+          "cone_feasible_but_frozen_shaft_not_held": 10
+        },
+        "refined": {
+          "states": 32,
+          "gravity_cone_feasible": 8,
+          "cone_solver_failures": 0,
+          "solver_wrench_near_gravity_5pct": 0,
+          "median_gravity_cone_relative_residual": 0.5433553183322345,
+          "median_solver_gravity_relative_residual": 2.5800789545012313,
+          "cone_feasible_and_frozen_shaft_held": 1,
+          "cone_feasible_but_frozen_shaft_not_held": 7
+        }
+      },
+      "name": "support-human32",
+      "full_report_sha256": "c009744b15a9fdac7d12cac30ad14db07e98f4ca528d00a6cd8396ddb2fc7936",
+      "full_report_location": "Jarvis:/home/peiqi/projects/orca-hand-rl-referenceprobe/runs/support-human32/probe.json",
+      "refined_trials": [
+        {
+          "frame": 0,
+          "contacts": 10,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.18815007332109843,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 1.1013292401693267,
+          "fitted_contact_force_world_n": [
+            -0.007740470169475544,
+            0.00012246517178793326,
+            0.380401407701318
+          ],
+          "fitted_contact_torque_world_nm": [
+            0.0002291944651303451,
+            0.0015023367701206413,
+            -0.007085015525198096
+          ],
+          "solver_contact_force_world_n": [
+            -0.7402780097616728,
+            0.020034034892727218,
+            1.210998284016638
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.018623324134160787,
+            -0.014185564915056584,
+            -0.02632868919076941
+          ],
+          "solver_gravity_wrench_relative_residual": 2.934712254724253,
+          "minimum_normal_dot_between_bodies": -0.9238795972230447,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005950016811183496,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 12,
+          "contacts": 5,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.6435597543787006,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.20830298273611847,
+          "fitted_contact_force_world_n": [
+            -0.13905816663617032,
+            -0.11861069664909257,
+            0.2310294227273474
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.0033744954612439037,
+            -0.003935382890686362,
+            -0.0040515603915634284
+          ],
+          "solver_contact_force_world_n": [
+            -0.8481152121064153,
+            -0.3792498988658194,
+            0.8032195247514373
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.012668840652973202,
+            -0.014039879074083017,
+            -0.01578795247982459
+          ],
+          "solver_gravity_wrench_relative_residual": 2.64858399519663,
+          "minimum_normal_dot_between_bodies": 0.8314700973794373,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005986412504848104,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 24,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.6102230584113361,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.2149215969773319,
+          "fitted_contact_force_world_n": [
+            -0.13097738501955367,
+            -0.11817377875421384,
+            0.2475125619498192
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.0037511558229112087,
+            -0.004566198673971084,
+            -0.0041651281220241075
+          ],
+          "solver_contact_force_world_n": [
+            -0.8443071675127891,
+            -0.3746236876188642,
+            0.8540579463444565
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.013992129232810216,
+            -0.01555596793970094,
+            -0.016480420947166764
+          ],
+          "solver_gravity_wrench_relative_residual": 2.7020284472554,
+          "minimum_normal_dot_between_bodies": 0.8314700973794218,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005996596959621792,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 36,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_middle_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.184518992845913,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.7192528276895638,
+          "fitted_contact_force_world_n": [
+            -0.007498993442125457,
+            -0.004043197347107397,
+            0.38093505495632024
+          ],
+          "fitted_contact_torque_world_nm": [
+            0.0015183277774217226,
+            0.0015843090523104855,
+            -0.006753277914749708
+          ],
+          "solver_contact_force_world_n": [
+            -0.5440754210038949,
+            -0.1522641103880153,
+            0.871787857780751
+          ],
+          "solver_contact_torque_world_nm": [
+            0.0033328958033577577,
+            0.0024960967885858535,
+            -0.014108166818395747
+          ],
+          "solver_gravity_wrench_relative_residual": 1.912385695610749,
+          "minimum_normal_dot_between_bodies": -0.7071064551383874,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0006397280104115709,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 47,
+          "contacts": 8,
+          "contact_bodies": [
+            "right_middle_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.22534085368973042,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.8359451862869378,
+          "fitted_contact_force_world_n": [
+            -0.011568586408490213,
+            -0.004583336702158276,
+            0.37433688904827933
+          ],
+          "fitted_contact_torque_world_nm": [
+            0.0006025922775004998,
+            0.0015926904818274908,
+            -0.008397214137627392
+          ],
+          "solver_contact_force_world_n": [
+            -0.463350740598775,
+            -0.13735920636550591,
+            0.8871861897392584
+          ],
+          "solver_contact_torque_world_nm": [
+            0.0013604503187751322,
+            0.002460220294199867,
+            -0.02129548430771341
+          ],
+          "solver_gravity_wrench_relative_residual": 1.8330748235448293,
+          "minimum_normal_dot_between_bodies": -0.6343931307753048,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0006073019196616875,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 59,
+          "contacts": 7,
+          "contact_bodies": [
+            "right_middle_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.18145900992985545,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.6044846863002096,
+          "fitted_contact_force_world_n": [
+            -0.004730846981554376,
+            -0.004322529820067478,
+            0.38137669561105203
+          ],
+          "fitted_contact_torque_world_nm": [
+            0.001102101761970287,
+            0.003705252937194613,
+            -0.0058454037841022795
+          ],
+          "solver_contact_force_world_n": [
+            -0.6534374113336202,
+            -0.05028041724688953,
+            1.2649844304356423
+          ],
+          "solver_contact_torque_world_nm": [
+            0.003495663838671596,
+            0.008746702099733775,
+            -0.023753886862389693
+          ],
+          "solver_gravity_wrench_relative_residual": 2.8382061113698467,
+          "minimum_normal_dot_between_bodies": -0.8314694473316788,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0006461199407828404,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 71,
+          "contacts": 7,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 4.574653472544508e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 0.9187820151428963,
+          "fitted_contact_force_world_n": [
+            -1.5959455978986625e-16,
+            8.326672684688674e-17,
+            0.394362
+          ],
+          "fitted_contact_torque_world_nm": [
+            -1.1926223897340549e-18,
+            0.0,
+            -8.131516293641283e-20
+          ],
+          "solver_contact_force_world_n": [
+            -0.5854694684761497,
+            0.038634022614544294,
+            1.4577724196331325
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.011635633735910549,
+            -0.02072123202709705,
+            0.009355583678183652
+          ],
+          "solver_gravity_wrench_relative_residual": 3.1471167018334403,
+          "minimum_normal_dot_between_bodies": -0.9238797837604462,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0006064258096809701,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 83,
+          "contacts": 6,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 3.3001680209844556e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 0.8252222921655027,
+          "fitted_contact_force_world_n": [
+            1.734723475976807e-18,
+            -5.551115123125783e-17,
+            0.3943619999999999
+          ],
+          "fitted_contact_torque_world_nm": [
+            -3.198396408832238e-18,
+            2.222614453595284e-18,
+            -3.2526065174565133e-19
+          ],
+          "solver_contact_force_world_n": [
+            -0.6851038152248616,
+            -0.12839309529010834,
+            1.7247549104769473
+          ],
+          "solver_contact_torque_world_nm": [
+            0.006286910547022434,
+            -0.02461140560584621,
+            0.003258357631122687
+          ],
+          "solver_gravity_wrench_relative_residual": 3.8634776250918095,
+          "minimum_normal_dot_between_bodies": -0.9951846805572351,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005664534050085928,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 95,
+          "contacts": 6,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 7.21458468204446e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.5914180996305363,
+          "fitted_contact_force_world_n": [
+            2.7755575615628914e-16,
+            0.0,
+            0.394362
+          ],
+          "fitted_contact_torque_world_nm": [
+            -3.469446951953614e-18,
+            0.0,
+            -5.204170427930421e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.6817553392563308,
+            -0.06001928010131963,
+            1.6754742779192457
+          ],
+          "solver_contact_torque_world_nm": [
+            0.0042616906185680425,
+            -0.01933534965634783,
+            -0.008775957207483422
+          ],
+          "solver_gravity_wrench_relative_residual": 3.723781467161403,
+          "minimum_normal_dot_between_bodies": -1.0000000000000004,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.000558477521400732,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 107,
+          "contacts": 6,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.10248648987281551,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 1.8831249507936865,
+          "fitted_contact_force_world_n": [
+            -0.0007627676368597291,
+            0.0022280665639665687,
+            0.390219826381079
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.0016301400047024905,
+            -0.0029643690610536375,
+            -0.0021594632176261588
+          ],
+          "solver_contact_force_world_n": [
+            -0.6222525395186242,
+            -0.10570228978358714,
+            1.6139984390535616
+          ],
+          "solver_contact_torque_world_nm": [
+            0.0044487896076151985,
+            -0.019980445804741533,
+            -0.01081156109834225
+          ],
+          "solver_gravity_wrench_relative_residual": 3.5314002641377886,
+          "minimum_normal_dot_between_bodies": -0.9569403643281061,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005866678465016946,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 119,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.22225808597694596,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.6513916389004051,
+          "fitted_contact_force_world_n": [
+            -0.012451977902809825,
+            0.0040295578575487035,
+            0.3748810469140835
+          ],
+          "fitted_contact_torque_world_nm": [
+            0.0009985993155309247,
+            -0.005767507071428371,
+            -0.006087378053248892
+          ],
+          "solver_contact_force_world_n": [
+            -0.5872961810159633,
+            -0.19948698911765583,
+            1.4715698572723048
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.0003530236519633976,
+            -0.024468368158831303,
+            -0.029029220722074346
+          ],
+          "solver_gravity_wrench_relative_residual": 3.295723099510164,
+          "minimum_normal_dot_between_bodies": -0.8314692358083311,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005580118074079536,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 131,
+          "contacts": 13,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_thumb_dp",
+            "right_thumb_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 3.4579427321668527e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 0.5077029472090255,
+          "fitted_contact_force_world_n": [
+            -4.5536491244391186e-17,
+            -3.209238430557093e-17,
+            0.3943619999999999
+          ],
+          "fitted_contact_torque_world_nm": [
+            -2.0091621508872004e-18,
+            -5.149960319306146e-19,
+            5.231275482242559e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.7018411166453785,
+            -0.47001411555881334,
+            1.5224292132871535
+          ],
+          "solver_contact_torque_world_nm": [
+            0.010916212427353116,
+            -0.03749248334988432,
+            -0.059593886710435945
+          ],
+          "solver_gravity_wrench_relative_residual": 4.00427028431679,
+          "minimum_normal_dot_between_bodies": -0.9807853174964585,
+          "contacts_with_normal_against_gravity": 2,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.000579973150719284,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": true,
+            "full_pose_preserved_last_200ms": true
+          }
+        },
+        {
+          "frame": 142,
+          "contacts": 12,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_thumb_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 7.057327270998597e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 0.5341314591607438,
+          "fitted_contact_force_world_n": [
+            4.163336342344337e-17,
+            -1.249000902703301e-16,
+            0.39436199999999977
+          ],
+          "fitted_contact_torque_world_nm": [
+            9.75781955236954e-19,
+            -1.8431436932253575e-18,
+            -1.0191500421363742e-17
+          ],
+          "solver_contact_force_world_n": [
+            -0.5837520921002248,
+            -0.41931148647962235,
+            1.5087521073427967
+          ],
+          "solver_contact_torque_world_nm": [
+            0.016749489419846872,
+            -0.025428914477462577,
+            -0.05093856813395187
+          ],
+          "solver_gravity_wrench_relative_residual": 3.683940089547007,
+          "minimum_normal_dot_between_bodies": -0.9807853174964566,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.000565149123972389,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 154,
+          "contacts": 10,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_ring_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 2.964060305502283e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.734547757047792,
+          "fitted_contact_force_world_n": [
+            0.0,
+            8.326672684688674e-17,
+            0.39436199999999993
+          ],
+          "fitted_contact_torque_world_nm": [
+            -4.7704895589362195e-18,
+            -1.3010426069826053e-18,
+            3.469446951953614e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.683996165076127,
+            -0.0910147083916174,
+            1.6296501345598553
+          ],
+          "solver_contact_torque_world_nm": [
+            0.013004853989808343,
+            -0.0063346325424814024,
+            0.0013971437914006698
+          ],
+          "solver_gravity_wrench_relative_residual": 3.606811670335595,
+          "minimum_normal_dot_between_bodies": -1.0000000000000004,
+          "contacts_with_normal_against_gravity": 6,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0014783702154969759,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 166,
+          "contacts": 9,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_ring_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 1.120697444180803e-15,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.9208311579569475,
+          "fitted_contact_force_world_n": [
+            3.3306690738754696e-16,
+            4.163336342344337e-17,
+            0.3943619999999997
+          ],
+          "fitted_contact_torque_world_nm": [
+            -4.174178364069192e-18,
+            5.756435909540225e-18,
+            -2.3852447794681098e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.7395521967632146,
+            -0.06600152609006338,
+            1.6437761452314241
+          ],
+          "solver_contact_torque_world_nm": [
+            0.013435178571315059,
+            -0.005816484927072305,
+            0.0034455399598036416
+          ],
+          "solver_gravity_wrench_relative_residual": 3.7050903467455196,
+          "minimum_normal_dot_between_bodies": -0.995184699344997,
+          "contacts_with_normal_against_gravity": 7,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0014283915752214028,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 178,
+          "contacts": 10,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_ring_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 4.86033777726943e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 0.44090715702675043,
+          "fitted_contact_force_world_n": [
+            -1.115644035487584e-16,
+            1.4143417340073405e-16,
+            0.394362
+          ],
+          "fitted_contact_torque_world_nm": [
+            6.2341624917916505e-18,
+            1.5805634795765244e-18,
+            -1.2332799712022613e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.06421852006368944,
+            0.29300749426374434,
+            1.80262242600922
+          ],
+          "solver_contact_torque_world_nm": [
+            0.07104226768867553,
+            0.02891331227009421,
+            -0.07541778292321694
+          ],
+          "solver_gravity_wrench_relative_residual": 4.557466689555948,
+          "minimum_normal_dot_between_bodies": -0.7730107011007171,
+          "contacts_with_normal_against_gravity": 8,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005904746727765989,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 190,
+          "contacts": 6,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_ring_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.3171445246806803,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.3039060573837763,
+          "fitted_contact_force_world_n": [
+            -0.023051687390045525,
+            -0.015578979768838076,
+            0.3546968138881038
+          ],
+          "fitted_contact_torque_world_nm": [
+            0.011482262020770932,
+            0.0008588297347647256,
+            -0.0006085825441664396
+          ],
+          "solver_contact_force_world_n": [
+            -0.6900223067111592,
+            -0.02650987288454626,
+            1.263015187661592
+          ],
+          "solver_contact_torque_world_nm": [
+            0.043869345170264654,
+            -0.002153809147729031,
+            0.02388932958297696
+          ],
+          "solver_gravity_wrench_relative_residual": 3.0862979432828657,
+          "minimum_normal_dot_between_bodies": 0.19508937825543515,
+          "contacts_with_normal_against_gravity": 2,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005816969079831856,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 202,
+          "contacts": 6,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_index_pp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.476487578253133,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.24014614548525032,
+          "fitted_contact_force_world_n": [
+            -0.12394858042090715,
+            -0.0840135061695801,
+            0.304825888952336
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.006277718793910072,
+            -0.001083645449169527,
+            -0.002851316826807153
+          ],
+          "solver_contact_force_world_n": [
+            -0.7653100959804129,
+            -0.02349058923058547,
+            1.1391821700441698
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.025628433948122403,
+            -0.001960548336694098,
+            -0.011689295165900422
+          ],
+          "solver_gravity_wrench_relative_residual": 2.8016652860875455,
+          "minimum_normal_dot_between_bodies": 0.29028440207295414,
+          "contacts_with_normal_against_gravity": 2,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005195077311157675,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 214,
+          "contacts": 2,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.8046532506668828,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.1653067421824179,
+          "fitted_contact_force_world_n": [
+            -0.18771906025396431,
+            0.009276512582479211,
+            0.13902567659826148
+          ],
+          "fitted_contact_torque_world_nm": [
+            0.00011226377804444668,
+            -0.0012918646407449157,
+            0.00023778377001048705
+          ],
+          "solver_contact_force_world_n": [
+            -0.8664371399174062,
+            0.04281672313667747,
+            0.6416876871422332
+          ],
+          "solver_contact_torque_world_nm": [
+            0.0005103564506403159,
+            -0.006205005005669943,
+            0.0011031375215771585
+          ],
+          "solver_gravity_wrench_relative_residual": 2.2930092000780125,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.000510649220053336,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 226,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.7859754237569412,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.17201616882379123,
+          "fitted_contact_force_world_n": [
+            -0.18498587096479321,
+            -0.04728859163056476,
+            0.15074196933377468
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.00061520717777337,
+            -0.0010575288196049996,
+            -0.0010867158284852644
+          ],
+          "solver_contact_force_world_n": [
+            -0.9301039676311982,
+            -0.16882774118126154,
+            0.6786927706703946
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.0033652775476369513,
+            -0.004609605002554097,
+            -0.005772277314304339
+          ],
+          "solver_gravity_wrench_relative_residual": 2.5115739138058326,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005126838714256707,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 237,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.8769862872966669,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.1337882094542912,
+          "fitted_contact_force_world_n": [
+            -0.16369006782983272,
+            -0.026700071886338463,
+            0.09105623445486707
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.00023298853121943796,
+            -0.0007920215000143064,
+            -0.0006510805088714235
+          ],
+          "solver_contact_force_world_n": [
+            -0.905405859420747,
+            -0.14768398506607563,
+            0.5036521109999814
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.0019011775393580324,
+            -0.004303169860492996,
+            -0.004679512913523351
+          ],
+          "solver_gravity_wrench_relative_residual": 2.348700998941774,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005255443712534894,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 249,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.7895606448666773,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.17079664031106795,
+          "fitted_contact_force_world_n": [
+            -0.18281861534795757,
+            -0.05351470766320425,
+            0.1485143583263045
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.0004272821056045027,
+            -0.001103854513545822,
+            -0.0009237327356811523
+          ],
+          "solver_contact_force_world_n": [
+            -0.9251048661837518,
+            -0.1979641643152808,
+            0.6658331869197187
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.002567131112893814,
+            -0.004876644097540782,
+            -0.005015156159744998
+          ],
+          "solver_gravity_wrench_relative_residual": 2.5028906913636155,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005202384265835429,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 261,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.8415640317867183,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.15038822703052473,
+          "fitted_contact_force_world_n": [
+            -0.17403548715359288,
+            -0.041296422474395696,
+            0.11506299301164184
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.00023382570768183057,
+            -0.0009469380925977939,
+            -0.0006935255583555348
+          ],
+          "solver_contact_force_world_n": [
+            -0.8881071890973017,
+            -0.21055215730782484,
+            0.5869666910063388
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.0019255670051565017,
+            -0.004847190898486134,
+            -0.00465183782415793
+          ],
+          "solver_gravity_wrench_relative_residual": 2.3720330440485964,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005210394449396941,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 273,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.7926718565544236,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.16971545645165204,
+          "fitted_contact_force_world_n": [
+            -0.18204502520647914,
+            -0.05461339268630884,
+            0.14657304818433908
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.00030200690321658877,
+            -0.0011158100662056268,
+            -0.000790848174705588
+          ],
+          "solver_contact_force_world_n": [
+            -0.922460901417895,
+            -0.20522787890661184,
+            0.6583241002636955
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.0020791519695067175,
+            -0.004976134842493524,
+            -0.0044592357512093775
+          ],
+          "solver_gravity_wrench_relative_residual": 2.494356947555336,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005189532116471362,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 285,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.7926718565265772,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.16971545647180553,
+          "fitted_contact_force_world_n": [
+            -0.18204502522809363,
+            -0.05461339269279308,
+            0.14657304820174877
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.00030200687483172167,
+            -0.0011158100678892117,
+            -0.0007908481400786005
+          ],
+          "solver_contact_force_world_n": [
+            -0.9224609381776194,
+            -0.20522788374223574,
+            0.6583241225528799
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.0020791518926797617,
+            -0.0049761350162885135,
+            -0.004459235699262473
+          ],
+          "solver_gravity_wrench_relative_residual": 2.4943570528142613,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005189532122560394,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 297,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.7926718565715695,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.16971545643923244,
+          "fitted_contact_force_world_n": [
+            -0.1820450251931521,
+            -0.05461339268231209,
+            0.1465730481736196
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.0003020069209187703,
+            -0.001115810064989771,
+            -0.0007908481962387766
+          ],
+          "solver_contact_force_world_n": [
+            -0.9224609161252424,
+            -0.20522788140836712,
+            0.6583241098506958
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.0020791520809703193,
+            -0.004976134899641253,
+            -0.0044592359282073085
+          ],
+          "solver_gravity_wrench_relative_residual": 2.4943569907118506,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005189532113375182,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 309,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.7926718463788378,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.16971546381786917,
+          "fitted_contact_force_world_n": [
+            -0.18204503310783302,
+            -0.05461339505671159,
+            0.14657305454610842
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.0003019965148640783,
+            -0.0011158106915675294,
+            -0.000790835505290621
+          ],
+          "solver_contact_force_world_n": [
+            -0.9224616081260133,
+            -0.20522771815321003,
+            0.6583242293464444
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.00207910021548893,
+            -0.0049761400879651295,
+            -0.0044591650788191285
+          ],
+          "solver_gravity_wrench_relative_residual": 2.494358528600336,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005189534173797186,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 321,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.7926718651693498,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.1697154502152035,
+          "fitted_contact_force_world_n": [
+            -0.18204501851696184,
+            -0.05461339067945905,
+            0.14657304279829306
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.0003020157263917957,
+            -0.0011158095110321458,
+            -0.000790858926308739
+          ],
+          "solver_contact_force_world_n": [
+            -0.9224604291907275,
+            -0.2052280249729178,
+            0.658324059622543
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.002079195798090817,
+            -0.004976130470499621,
+            -0.004459295806035105
+          ],
+          "solver_gravity_wrench_relative_residual": 2.4943559611691764,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005189532292653012,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 332,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.7926718565173354,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.16971545647849018,
+          "fitted_contact_force_world_n": [
+            -0.18204502523526,
+            -0.05461339269494429,
+            0.14657304820752665
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.0003020068646080867,
+            -0.0011158100691885718,
+            -0.0007908481278648668
+          ],
+          "solver_contact_force_world_n": [
+            -0.9224609221305967,
+            -0.20522788153136526,
+            0.65832411270486
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.0020791518277570704,
+            -0.004976134965271647,
+            -0.0044592355839745785
+          ],
+          "solver_gravity_wrench_relative_residual": 2.4943570065521166,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005189532088548473,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 344,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.7926718565544231,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.1697154564516472,
+          "fitted_contact_force_world_n": [
+            -0.18204502520647023,
+            -0.05461339268630793,
+            0.14657304818433942
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.0003020069029999688,
+            -0.0011158100664148186,
+            -0.0007908481745144624
+          ],
+          "solver_contact_force_world_n": [
+            -0.9224608492683423,
+            -0.20522787109986526,
+            0.6583240675258037
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.002079151875161724,
+            -0.004976134608077376,
+            -0.004459235542846711
+          ],
+          "solver_gravity_wrench_relative_residual": 2.494356796550123,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005189532105894202,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 356,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.7926718565759979,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.16971545643603375,
+          "fitted_contact_force_world_n": [
+            -0.1820450251897258,
+            -0.05461339268128371,
+            0.14657304817085087
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.0003020069251536479,
+            -0.0011158100649609095,
+            -0.0007908482014878287
+          ],
+          "solver_contact_force_world_n": [
+            -0.9224608861957937,
+            -0.20522787719247645,
+            0.6583240913740638
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.002079152054298476,
+            -0.004976134769899444,
+            -0.0044592358460944365
+          ],
+          "solver_gravity_wrench_relative_residual": 2.4943569044638787,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005189532106534557,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 368,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.7926718652396466,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.16971545016431144,
+          "fitted_contact_force_world_n": [
+            -0.1820450184623702,
+            -0.05461339066308185,
+            0.14657304275434363
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.00030201579208695363,
+            -0.0011158095122468271,
+            -0.0007908590083552754
+          ],
+          "solver_contact_force_world_n": [
+            -0.9224603913704152,
+            -0.20522802445155036,
+            0.6583240419464824
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.0020791961880475105,
+            -0.004976130435716052,
+            -0.004459296279631317
+          ],
+          "solver_gravity_wrench_relative_residual": 2.4943558596404856,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005189531988512627,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        }
+      ],
+      "mac_summary": {
+        "baseline": {
+          "states": 32,
+          "gravity_cone_feasible": 10,
+          "cone_solver_failures": 0,
+          "solver_wrench_near_gravity_5pct": 0,
+          "median_gravity_cone_relative_residual": 0.2800935033173334,
+          "median_solver_gravity_relative_residual": 4.696657032478545,
+          "cone_feasible_and_frozen_shaft_held": 0,
+          "cone_feasible_but_frozen_shaft_not_held": 10
+        },
+        "refined": {
+          "states": 32,
+          "gravity_cone_feasible": 8,
+          "cone_solver_failures": 0,
+          "solver_wrench_near_gravity_5pct": 0,
+          "median_gravity_cone_relative_residual": 0.5433553183322288,
+          "median_solver_gravity_relative_residual": 2.580078954501227,
+          "cone_feasible_and_frozen_shaft_held": 1,
+          "cone_feasible_but_frozen_shaft_not_held": 7
+        }
+      }
+    },
+    {
+      "reference_sha256": "a3352fd4a924f16ecbcd9b4c97f9353cbcd66568d5f66eed50e5397586515f36",
+      "hold_report_sha256": "9a90a257c3316cf9f5d55a2c952005dfe9899418726aced4b5faa5e8a18d6562",
+      "runtime": {
+        "system": "Linux",
+        "python": "3.11.15",
+        "mujoco": "3.13.0",
+        "numpy": "2.3.5"
+      },
+      "summary": {
+        "baseline": {
+          "states": 32,
+          "gravity_cone_feasible": 21,
+          "cone_solver_failures": 0,
+          "solver_wrench_near_gravity_5pct": 0,
+          "median_gravity_cone_relative_residual": 2.238413364210104e-15,
+          "median_solver_gravity_relative_residual": 4.2416380396651485,
+          "cone_feasible_and_frozen_shaft_held": 1,
+          "cone_feasible_but_frozen_shaft_not_held": 20
+        },
+        "refined": {
+          "states": 32,
+          "gravity_cone_feasible": 25,
+          "cone_solver_failures": 0,
+          "solver_wrench_near_gravity_5pct": 0,
+          "median_gravity_cone_relative_residual": 9.189531704529392e-16,
+          "median_solver_gravity_relative_residual": 2.6792621292889707,
+          "cone_feasible_and_frozen_shaft_held": 2,
+          "cone_feasible_but_frozen_shaft_not_held": 23
+        }
+      },
+      "name": "support-robot32",
+      "full_report_sha256": "8f1e6157d788f1e44352deee78106c2a856e27b4a03cf8a8138e62e9a1805898",
+      "full_report_location": "Jarvis:/home/peiqi/projects/orca-hand-rl-referenceprobe/runs/support-robot32/probe.json",
+      "refined_trials": [
+        {
+          "frame": 0,
+          "contacts": 12,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 9.32778507342174e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 2.9423221211247492,
+          "fitted_contact_force_world_n": [
+            1.1102230246251565e-16,
+            0.0,
+            0.3943620000000003
+          ],
+          "fitted_contact_torque_world_nm": [
+            8.673617379884035e-19,
+            6.071532165918825e-18,
+            -9.107298248878237e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.8143206747199944,
+            0.04950608361995966,
+            1.3341366835235784
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.01611040377474628,
+            -0.012524836541995587,
+            -0.01799731446335143
+          ],
+          "solver_gravity_wrench_relative_residual": 3.230237270926307,
+          "minimum_normal_dot_between_bodies": -0.9569404190902435,
+          "contacts_with_normal_against_gravity": 4,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005759925588312303,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 12,
+          "contacts": 10,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 2.0066424543493126e-15,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 3.0281883232662077,
+          "fitted_contact_force_world_n": [
+            1.1102230246251565e-16,
+            7.494005416219807e-16,
+            0.3943620000000001
+          ],
+          "fitted_contact_torque_world_nm": [
+            3.686287386450715e-18,
+            7.37257477290143e-18,
+            -1.8214596497756474e-17
+          ],
+          "solver_contact_force_world_n": [
+            -0.8256877066939519,
+            0.03429584974902436,
+            1.3437675669167723
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.016426813333310395,
+            -0.012653864764739514,
+            -0.016935244822397954
+          ],
+          "solver_gravity_wrench_relative_residual": 3.2631193500936693,
+          "minimum_normal_dot_between_bodies": -0.9807853174964555,
+          "contacts_with_normal_against_gravity": 2,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005789371310454968,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 24,
+          "contacts": 10,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 1.2790858837523555e-15,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 4.569832642020964,
+          "fitted_contact_force_world_n": [
+            4.440892098500626e-16,
+            -1.1102230246251565e-16,
+            0.3943620000000001
+          ],
+          "fitted_contact_torque_world_nm": [
+            -8.673617379884035e-18,
+            -2.6020852139652106e-18,
+            -1.5612511283791264e-17
+          ],
+          "solver_contact_force_world_n": [
+            -0.8217349468606436,
+            0.026667685960613474,
+            1.3558032128606157
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.014598752480560544,
+            -0.011613790443309588,
+            -0.018747284579746833
+          ],
+          "solver_gravity_wrench_relative_residual": 3.277169823245062,
+          "minimum_normal_dot_between_bodies": -0.9807853226538661,
+          "contacts_with_normal_against_gravity": 2,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005782605448428216,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 36,
+          "contacts": 8,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 1.1441578561785533e-15,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.4641791092592888,
+          "fitted_contact_force_world_n": [
+            -2.7755575615628914e-16,
+            -5.551115123125783e-17,
+            0.39436200000000027
+          ],
+          "fitted_contact_torque_world_nm": [
+            3.469446951953614e-18,
+            -2.1250362580715887e-17,
+            -8.673617379884035e-19
+          ],
+          "solver_contact_force_world_n": [
+            -0.8631915232366012,
+            -0.011025837387849291,
+            1.5823010928277113
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.033731262882232896,
+            -0.03807562203403718,
+            -0.00912331278159922
+          ],
+          "solver_gravity_wrench_relative_residual": 3.947538432855884,
+          "minimum_normal_dot_between_bodies": -0.7730109323650034,
+          "contacts_with_normal_against_gravity": 2,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.000545831257567116,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 47,
+          "contacts": 8,
+          "contact_bodies": [
+            "right_middle_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.1831352175950137,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 1.02821088005045,
+          "fitted_contact_force_world_n": [
+            -0.007662753739519967,
+            -0.0019724512808755312,
+            0.3811356869382436
+          ],
+          "fitted_contact_torque_world_nm": [
+            0.0003323324143917044,
+            0.00029550103561870383,
+            -0.007041757583127953
+          ],
+          "solver_contact_force_world_n": [
+            -0.4743916277584995,
+            -0.19888280872502,
+            0.9034129825402828
+          ],
+          "solver_contact_torque_world_nm": [
+            0.0012420150263072263,
+            -0.00018265471487812998,
+            -0.014671042848565373
+          ],
+          "solver_gravity_wrench_relative_residual": 1.8727032791635139,
+          "minimum_normal_dot_between_bodies": -0.5555695070500604,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005359795205034929,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 59,
+          "contacts": 8,
+          "contact_bodies": [
+            "right_middle_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.11976591070464045,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.9536995145200208,
+          "fitted_contact_force_world_n": [
+            -0.002084088412453333,
+            -0.0010880928586439187,
+            0.388705321411278
+          ],
+          "fitted_contact_torque_world_nm": [
+            0.0006281895448742585,
+            0.0005399724832327872,
+            -0.004609375727444856
+          ],
+          "solver_contact_force_world_n": [
+            -0.5653084166581543,
+            -0.11624926440594213,
+            1.1992966843163346
+          ],
+          "solver_contact_torque_world_nm": [
+            0.0007919253315670299,
+            0.001645888162081229,
+            -0.015001896272043477
+          ],
+          "solver_gravity_wrench_relative_residual": 2.5406136365850704,
+          "minimum_normal_dot_between_bodies": -0.6343932769160575,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.000535951350325077,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 71,
+          "contacts": 11,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 1.2969185872237729e-15,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 0.7725577897305675,
+          "fitted_contact_force_world_n": [
+            1.3660947373317356e-16,
+            2.0469737016526324e-16,
+            0.3943620000000001
+          ],
+          "fitted_contact_torque_world_nm": [
+            -4.058304256884804e-17,
+            -6.884683795282953e-18,
+            -1.3877787807814457e-17
+          ],
+          "solver_contact_force_world_n": [
+            -0.6823431882852551,
+            0.035325483498610644,
+            1.6326862803746804
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.017899420670202306,
+            -0.022574969664043352,
+            0.010073186064951483
+          ],
+          "solver_gravity_wrench_relative_residual": 3.6688906944022084,
+          "minimum_normal_dot_between_bodies": -0.9951847335912279,
+          "contacts_with_normal_against_gravity": 4,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005483861533436389,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 83,
+          "contacts": 12,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 8.860025665043204e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 0.47451976677048385,
+          "fitted_contact_force_world_n": [
+            1.5559148208114243e-16,
+            1.4181364416110398e-16,
+            0.39436200000000027
+          ],
+          "fitted_contact_torque_world_nm": [
+            -1.508565679059909e-18,
+            1.1180834903756764e-19,
+            2.2327788489623357e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.9204650338337851,
+            -0.07601792154809828,
+            1.6529912493886763
+          ],
+          "solver_contact_torque_world_nm": [
+            0.002351042934736951,
+            -0.038071469865901764,
+            0.0015208623854956697
+          ],
+          "solver_gravity_wrench_relative_residual": 4.075299856504166,
+          "minimum_normal_dot_between_bodies": -0.995184660541177,
+          "contacts_with_normal_against_gravity": 4,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005220455264884239,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": true,
+            "full_pose_preserved_last_200ms": true
+          }
+        },
+        {
+          "frame": 95,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 6.643873823291906e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 0.8586175630197244,
+          "fitted_contact_force_world_n": [
+            6.938893903907228e-18,
+            1.6653345369377348e-16,
+            0.3943619999999999
+          ],
+          "fitted_contact_torque_world_nm": [
+            -8.782037597132586e-18,
+            1.441988889405721e-17,
+            -5.963111948670274e-19
+          ],
+          "solver_contact_force_world_n": [
+            -0.7822940195260266,
+            -0.06998714735516265,
+            1.5662454580224074
+          ],
+          "solver_contact_torque_world_nm": [
+            0.00367502251398399,
+            -0.017155925733043163,
+            -0.0018067287920206475
+          ],
+          "solver_gravity_wrench_relative_residual": 3.605127280776759,
+          "minimum_normal_dot_between_bodies": -1.0000000000000002,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.000532527681948424,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 107,
+          "contacts": 6,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.13954533740980954,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.6459247795215056,
+          "fitted_contact_force_world_n": [
+            -0.004596764947496043,
+            0.004161107574387923,
+            0.3866826277397981
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.001377613614834159,
+            -0.004300532590970205,
+            -0.0029862933495581165
+          ],
+          "solver_contact_force_world_n": [
+            -0.712819509700132,
+            -0.004538409613208061,
+            1.5926685757666936
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.0019627719266349557,
+            -0.020943301814744957,
+            -0.016976030600755764
+          ],
+          "solver_gravity_wrench_relative_residual": 3.6014104995951435,
+          "minimum_normal_dot_between_bodies": -0.9951847335912282,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005297307090419284,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": true,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 119,
+          "contacts": 8,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 5.906304742543221e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.2789528730597082,
+          "fitted_contact_force_world_n": [
+            1.3877787807814457e-16,
+            -1.5265566588595902e-16,
+            0.39436200000000005
+          ],
+          "fitted_contact_torque_world_nm": [
+            6.342582709040201e-18,
+            -6.5865281978494394e-18,
+            -1.5720931501039814e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.755855210266524,
+            -0.14501925361605672,
+            1.593216587547428
+          ],
+          "solver_contact_torque_world_nm": [
+            0.004823756345408779,
+            -0.020049631246545248,
+            -0.005805287505298357
+          ],
+          "solver_gravity_wrench_relative_residual": 3.6531362170717228,
+          "minimum_normal_dot_between_bodies": -1.0000000000000004,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005343600028253897,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 131,
+          "contacts": 12,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_thumb_dp",
+            "right_thumb_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 1.3070865110116506e-15,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 0.4265246320831229,
+          "fitted_contact_force_world_n": [
+            -2.5326962749261384e-16,
+            -6.245004513516506e-17,
+            0.39436199999999955
+          ],
+          "fitted_contact_torque_world_nm": [
+            2.168404344971009e-19,
+            4.336808689942018e-19,
+            -2.049819732355407e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.5058315354996851,
+            -0.2575801257386746,
+            1.5486381292930562
+          ],
+          "solver_contact_torque_world_nm": [
+            0.019932413253895623,
+            -0.022858901329880995,
+            0.018181428122298466
+          ],
+          "solver_gravity_wrench_relative_residual": 3.3827263090512245,
+          "minimum_normal_dot_between_bodies": -0.995184733591228,
+          "contacts_with_normal_against_gravity": 8,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.001042155412358531,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 142,
+          "contacts": 10,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_thumb_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 8.433208533112841e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 0.43559229675683864,
+          "fitted_contact_force_world_n": [
+            6.591949208711867e-17,
+            -3.191891195797325e-16,
+            0.39436199999999993
+          ],
+          "fitted_contact_torque_world_nm": [
+            -9.893344823930228e-19,
+            1.971892701208011e-18,
+            2.846030702774449e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.47884873481096807,
+            -0.22386506244476045,
+            1.5462637774336792
+          ],
+          "solver_contact_torque_world_nm": [
+            0.009646025559931782,
+            -0.008210402076264707,
+            0.013461410800763735
+          ],
+          "solver_gravity_wrench_relative_residual": 3.247784699637204,
+          "minimum_normal_dot_between_bodies": -0.9238794985558427,
+          "contacts_with_normal_against_gravity": 3,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0010956150443148904,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": true,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 154,
+          "contacts": 13,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_ring_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 7.391364197669822e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 0.7151601501136747,
+          "fitted_contact_force_world_n": [
+            9.71445146547012e-17,
+            -1.5265566588595902e-16,
+            0.39436199999999977
+          ],
+          "fitted_contact_torque_world_nm": [
+            3.1577388273640317e-18,
+            6.505213034913027e-19,
+            -4.336808689942018e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.8631194185349018,
+            -0.10443124913324967,
+            1.5252110336354827
+          ],
+          "solver_contact_torque_world_nm": [
+            0.02487667335848025,
+            -0.011324515205018745,
+            -0.0027332332712083165
+          ],
+          "solver_gravity_wrench_relative_residual": 3.6835139596479767,
+          "minimum_normal_dot_between_bodies": -0.9807850943869205,
+          "contacts_with_normal_against_gravity": 6,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0012218620025122966,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 166,
+          "contacts": 11,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_middle_ip",
+            "right_ring_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 8.031565084964335e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 0.7178409334459703,
+          "fitted_contact_force_world_n": [
+            1.942890293094024e-16,
+            1.3877787807814457e-16,
+            0.3943620000000001
+          ],
+          "fitted_contact_torque_world_nm": [
+            1.1275702593849246e-17,
+            -1.4094628242311558e-18,
+            1.3444106938820255e-17
+          ],
+          "solver_contact_force_world_n": [
+            -0.8642889509876426,
+            -0.08494043642173188,
+            1.5148735603938484
+          ],
+          "solver_contact_torque_world_nm": [
+            0.027206445069727178,
+            -0.010888557806880732,
+            -0.0005385971046837214
+          ],
+          "solver_gravity_wrench_relative_residual": 3.6708396201458493,
+          "minimum_normal_dot_between_bodies": -0.9569404748485723,
+          "contacts_with_normal_against_gravity": 6,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0012044228758004635,
+          "frozen_hold": {
+            "retained_at_end": true,
+            "resting_last_200ms": true,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 178,
+          "contacts": 8,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_ring_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.20817926874446252,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.4149399443246291,
+          "fitted_contact_force_world_n": [
+            -0.01267150067276427,
+            -0.002247964552903138,
+            0.3772708998975457
+          ],
+          "fitted_contact_torque_world_nm": [
+            0.006832252582268885,
+            0.00039233576917995427,
+            -0.003998742516830993
+          ],
+          "solver_contact_force_world_n": [
+            -1.0937008667266181,
+            -0.059031728240623034,
+            1.3463627561041178
+          ],
+          "solver_contact_torque_world_nm": [
+            0.021078912054429952,
+            -0.0014284828336871374,
+            0.0060776885397632995
+          ],
+          "solver_gravity_wrench_relative_residual": 3.7218443150412086,
+          "minimum_normal_dot_between_bodies": -0.38268327613724484,
+          "contacts_with_normal_against_gravity": 4,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005815935226522993,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 190,
+          "contacts": 6,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_ring_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.3665586942440978,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.2755726381571073,
+          "fitted_contact_force_world_n": [
+            -0.04154294059514292,
+            -0.04881809670476757,
+            0.3413734408975504
+          ],
+          "fitted_contact_torque_world_nm": [
+            0.011720125069845799,
+            0.0004596364979510247,
+            0.0014919937450644178
+          ],
+          "solver_contact_force_world_n": [
+            -1.1798048700624153,
+            0.0022767159213098603,
+            1.0774004624641966
+          ],
+          "solver_contact_torque_world_nm": [
+            0.020597728282964117,
+            -0.007670692871732808,
+            0.02211575905416218
+          ],
+          "solver_gravity_wrench_relative_residual": 3.546148296969305,
+          "minimum_normal_dot_between_bodies": 0.5555704799159222,
+          "contacts_with_normal_against_gravity": 2,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005883511582258354,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 202,
+          "contacts": 3,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.753820439966852,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.18287108777297542,
+          "fitted_contact_force_world_n": [
+            -0.18915238784569793,
+            -0.04597788703033851,
+            0.1702676644669759
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.00047326499996215056,
+            -0.0012841376119391765,
+            -0.0008725152796619061
+          ],
+          "solver_contact_force_world_n": [
+            -1.0037090797661157,
+            -0.0662896188366313,
+            0.6965538489951897
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.001962472577318167,
+            -0.0048683135844692456,
+            -0.0033029292411737134
+          ],
+          "solver_gravity_wrench_relative_residual": 2.667947202676028,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0006051632866782918,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 214,
+          "contacts": 4,
+          "contact_bodies": [
+            "right_index_ip"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 0.7247352908264783,
+          "gravity_wrench_feasible_5pct": false,
+          "required_normal_force_sum_n": 0.1915138486745139,
+          "fitted_contact_force_world_n": [
+            -0.19562236929848237,
+            0.005754775180362805,
+            0.18722681341335945
+          ],
+          "fitted_contact_torque_world_nm": [
+            -0.001377750950311735,
+            -0.0009558207386775732,
+            -0.0014101525680325483
+          ],
+          "solver_contact_force_world_n": [
+            -0.891252438737016,
+            0.08648505106722718,
+            0.795863237484749
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.006258518008501522,
+            -0.00374135751915701,
+            -0.006570945425037172
+          ],
+          "solver_gravity_wrench_relative_residual": 2.500822338180868,
+          "minimum_normal_dot_between_bodies": null,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005340077924091692,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 226,
+          "contacts": 6,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 1.834361691288371e-15,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.644611995154511,
+          "fitted_contact_force_world_n": [
+            -2.7755575615628914e-17,
+            2.7755575615628914e-17,
+            0.39436199999999927
+          ],
+          "fitted_contact_torque_world_nm": [
+            2.0057740190981832e-18,
+            -1.2468324983583301e-18,
+            2.100641709190665e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.7168417532018281,
+            0.0520666733807105,
+            1.1676347742776658
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.007693760603243893,
+            -0.0043449194717628,
+            -0.0059330745638036895
+          ],
+          "solver_gravity_wrench_relative_residual": 2.6905770559019135,
+          "minimum_normal_dot_between_bodies": -0.7730103408238987,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005628843454435639,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 237,
+          "contacts": 7,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 6.528222053148621e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.4460322794261655,
+          "fitted_contact_force_world_n": [
+            5.551115123125783e-17,
+            2.42861286636753e-16,
+            0.39436200000000005
+          ],
+          "fitted_contact_torque_world_nm": [
+            -3.0357660829594124e-18,
+            -1.1655173354219173e-18,
+            8.809142651444724e-19
+          ],
+          "solver_contact_force_world_n": [
+            -0.7273614192592215,
+            0.04458401175548031,
+            1.1327051939132697
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.0072748448972518795,
+            -0.004588429019162465,
+            -0.005270347581123749
+          ],
+          "solver_gravity_wrench_relative_residual": 2.6429777200010283,
+          "minimum_normal_dot_between_bodies": -0.7071061786732775,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005756997926383607,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 249,
+          "contacts": 7,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 8.025605786979266e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.224729355548583,
+          "fitted_contact_force_world_n": [
+            3.0531133177191805e-16,
+            -8.326672684688674e-17,
+            0.394362
+          ],
+          "fitted_contact_torque_world_nm": [
+            0.0,
+            -2.168404344971009e-19,
+            4.336808689942018e-19
+          ],
+          "solver_contact_force_world_n": [
+            -0.7273061571940114,
+            0.010563880827604524,
+            1.1154953844250082
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.006339380967135324,
+            -0.004898305894997113,
+            -0.004172318514953255
+          ],
+          "solver_gravity_wrench_relative_residual": 2.6073513981127774,
+          "minimum_normal_dot_between_bodies": -0.7071061786733026,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005711715220309649,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 261,
+          "contacts": 7,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 9.976332648649103e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.1424585125144309,
+          "fitted_contact_force_world_n": [
+            -1.6653345369377348e-16,
+            -9.71445146547012e-17,
+            0.39436199999999966
+          ],
+          "fitted_contact_torque_world_nm": [
+            5.204170427930421e-18,
+            -1.9109063290057016e-18,
+            -6.007157661927498e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.7312665387128344,
+            0.009758652219601135,
+            1.11895545724455
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.006117035267999754,
+            -0.004937748341026454,
+            -0.0037615846410765496
+          ],
+          "solver_gravity_wrench_relative_residual": 2.619896370671419,
+          "minimum_normal_dot_between_bodies": -0.7071061786733052,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005722325439711225,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 273,
+          "contacts": 7,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 6.900668158931843e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.152355495356327,
+          "fitted_contact_force_world_n": [
+            8.326672684688674e-17,
+            2.7755575615628914e-17,
+            0.39436199999999977
+          ],
+          "fitted_contact_torque_world_nm": [
+            3.0357660829594124e-18,
+            8.985325504473618e-18,
+            -8.975161109106566e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.7290330928935029,
+            0.002124931187367965,
+            1.1098240188272896
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.005801888272765303,
+            -0.0049989543084975815,
+            -0.0035759481630401554
+          ],
+          "solver_gravity_wrench_relative_residual": 2.5990093161885763,
+          "minimum_normal_dot_between_bodies": -0.707106178673278,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005745792788060666,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 285,
+          "contacts": 7,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 2.9164527705551507e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.1523295025467144,
+          "fitted_contact_force_world_n": [
+            2.7755575615628914e-17,
+            0.0,
+            0.3943619999999999
+          ],
+          "fitted_contact_torque_world_nm": [
+            1.0842021724855044e-18,
+            -3.5914196963582334e-19,
+            1.1858461261560205e-19
+          ],
+          "solver_contact_force_world_n": [
+            -0.7290340831632629,
+            0.002124950796852723,
+            1.1098248656095493
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.0058018188121037855,
+            -0.00499895469831608,
+            -0.0035758529060232235
+          ],
+          "solver_gravity_wrench_relative_residual": 2.599012417744321,
+          "minimum_normal_dot_between_bodies": -0.7071061786733044,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005745803503765305,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 297,
+          "contacts": 7,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 1.3240717906123763e-15,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.1523260740965338,
+          "fitted_contact_force_world_n": [
+            4.996003610813204e-16,
+            9.71445146547012e-17,
+            0.3943619999999999
+          ],
+          "fitted_contact_torque_world_nm": [
+            2.168404344971009e-19,
+            3.0831999280056532e-18,
+            -1.832979297858306e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.7290342298236309,
+            0.002124954898711215,
+            1.109824993403559
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.0058018094040596805,
+            -0.0049989548507883615,
+            -0.003575839989463996
+          ],
+          "solver_gravity_wrench_relative_residual": 2.5990128837491167,
+          "minimum_normal_dot_between_bodies": -0.7071061786732857,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005745804842660956,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 309,
+          "contacts": 7,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 3.267986414718535e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.1523241507046493,
+          "fitted_contact_force_world_n": [
+            5.551115123125783e-17,
+            0.0,
+            0.3943619999999999
+          ],
+          "fitted_contact_torque_world_nm": [
+            2.168404344971009e-18,
+            1.8295911660692887e-18,
+            1.9922214919421144e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.7290343304539921,
+            0.0021249538149816227,
+            1.1098250862524135
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.00580180472419021,
+            -0.004998955006470018,
+            -0.0035758334504432786
+          ],
+          "solver_gravity_wrench_relative_residual": 2.5990132172827787,
+          "minimum_normal_dot_between_bodies": -0.7071061786732907,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005745805682789241,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 321,
+          "contacts": 7,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 5.360854690789469e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.1523217068482734,
+          "fitted_contact_force_world_n": [
+            -8.326672684688674e-17,
+            -1.3877787807814457e-16,
+            0.3943619999999999
+          ],
+          "fitted_contact_torque_world_nm": [
+            3.686287386450715e-18,
+            -8.538092108323347e-19,
+            6.88807192707197e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.7290344379621442,
+            0.0021249569220436054,
+            1.109825181404291
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.005801798018515512,
+            -0.004998955148807238,
+            -0.003575824184414208
+          ],
+          "solver_gravity_wrench_relative_residual": 2.5990135619832646,
+          "minimum_normal_dot_between_bodies": -0.7071061786732722,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005745806669332999,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 332,
+          "contacts": 7,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 8.571553589011962e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.1523210366846324,
+          "fitted_contact_force_world_n": [
+            2.7755575615628914e-16,
+            1.8041124150158794e-16,
+            0.39436200000000005
+          ],
+          "fitted_contact_torque_world_nm": [
+            -2.8189256484623115e-18,
+            -3.3881317890172014e-20,
+            -2.8324781756183803e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.7290345008054686,
+            0.002124955999720221,
+            1.1098252417551766
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.0058017965616870585,
+            -0.004998955335726139,
+            -0.0035758221143609064
+          ],
+          "solver_gravity_wrench_relative_residual": 2.5990137784586547,
+          "minimum_normal_dot_between_bodies": -0.7071061786732991,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005745806917166957,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 344,
+          "contacts": 7,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 9.051278335637044e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.1523201536048622,
+          "fitted_contact_force_world_n": [
+            -5.551115123125783e-17,
+            6.938893903907228e-17,
+            0.39436199999999966
+          ],
+          "fitted_contact_torque_world_nm": [
+            4.9873299934333204e-18,
+            7.487771253728015e-18,
+            -2.2090619264392153e-18
+          ],
+          "solver_contact_force_world_n": [
+            -0.7290345380155261,
+            0.002124957532576313,
+            1.1098252741975556
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.005801794085965922,
+            -0.0049989553905807685,
+            -0.0035758186838768455
+          ],
+          "solver_gravity_wrench_relative_residual": 2.5990138964846796,
+          "minimum_normal_dot_between_bodies": -0.7071061786732848,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005745807245592164,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 356,
+          "contacts": 7,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 5.166257042368736e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.152318754109871,
+          "fitted_contact_force_world_n": [
+            -8.326672684688674e-17,
+            1.3877787807814457e-16,
+            0.3943620000000001
+          ],
+          "fitted_contact_torque_world_nm": [
+            -1.3010426069826053e-18,
+            -5.305814381600937e-18,
+            -2.439454888092385e-19
+          ],
+          "solver_contact_force_world_n": [
+            -0.7290346058442572,
+            0.002124959900275933,
+            1.1098253346685232
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.005801790192275613,
+            -0.004998955505958483,
+            -0.00357581331418069
+          ],
+          "solver_gravity_wrench_relative_residual": 2.5990141156764595,
+          "minimum_normal_dot_between_bodies": -0.7071061786732933,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005745807806177695,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        },
+        {
+          "frame": 368,
+          "contacts": 7,
+          "contact_bodies": [
+            "right_index_ip",
+            "right_thumb_dp"
+          ],
+          "gravity_magnitude_n": 0.394362,
+          "torque_length_m": 0.1,
+          "cone_fit_converged": true,
+          "gravity_wrench_relative_residual": 2.9038305283704673e-16,
+          "gravity_wrench_feasible_5pct": true,
+          "required_normal_force_sum_n": 1.1523190254068165,
+          "fitted_contact_force_world_n": [
+            -8.326672684688674e-17,
+            -4.163336342344337e-17,
+            0.39436200000000005
+          ],
+          "fitted_contact_torque_world_nm": [
+            -3.686287386450715e-18,
+            2.303929616531697e-19,
+            1.2536087619363645e-19
+          ],
+          "solver_contact_force_world_n": [
+            -0.729034602267514,
+            0.0021249586262354625,
+            1.1098253328817862
+          ],
+          "solver_contact_torque_world_nm": [
+            -0.005801791115258633,
+            -0.004998955516437101,
+            -0.0035758145819691552
+          ],
+          "solver_gravity_wrench_relative_residual": 2.5990141085153162,
+          "minimum_normal_dot_between_bodies": -0.7071061786732764,
+          "contacts_with_normal_against_gravity": 0,
+          "excluded_contact_bodies": [],
+          "initial_penetration_m": 0.0005745807721584699,
+          "frozen_hold": {
+            "retained_at_end": false,
+            "resting_last_200ms": false,
+            "shaft_preserved_last_200ms": false,
+            "full_pose_preserved_last_200ms": false
+          }
+        }
+      ],
+      "mac_summary": {
+        "baseline": {
+          "states": 32,
+          "gravity_cone_feasible": 21,
+          "cone_solver_failures": 0,
+          "solver_wrench_near_gravity_5pct": 0,
+          "median_gravity_cone_relative_residual": 2.218337683178716e-15,
+          "median_solver_gravity_relative_residual": 4.241678867857938,
+          "cone_feasible_and_frozen_shaft_held": 1,
+          "cone_feasible_but_frozen_shaft_not_held": 20
+        },
+        "refined": {
+          "states": 32,
+          "gravity_cone_feasible": 25,
+          "cone_solver_failures": 0,
+          "solver_wrench_near_gravity_5pct": 0,
+          "median_gravity_cone_relative_residual": 1.025132143820527e-15,
+          "median_solver_gravity_relative_residual": 2.67926212928898,
+          "cone_feasible_and_frozen_shaft_held": 2,
+          "cone_feasible_but_frozen_shaft_not_held": 23
+        }
+      }
+    }
+  ],
+  "omitted_fields": [
+    "Baseline per-frame detail and contact geometry are retained in the complete reports."
+  ],
+  "bundle_sha256": "f3bff93ee6a43d39ca3498e2d6e4e0cac49be66f98dfd0c77aace7d322aa36bb",
+  "bundle_location": "Jarvis:/home/peiqi/projects/orca-hand-rl-referenceprobe/runs/source/reference-support-evidence.tar.gz"
+}
