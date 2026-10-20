@@ -49149,9 +49149,14 @@
   },
   "validation": {
     "jarvis_checks": "34 passed in11.08s; includes real grasp short train/resume, fresh head/critic/exploration preservation and supervised forwarding",
-    "ci_pending_url": "https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39492257341",
     "initial_diagnostic_source_ci": "https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39491878904",
-    "code_ci_success": "https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39492046276"
+    "code_ci_success": "https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39492046276",
+    "current_source_ci": {
+      "url": "https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39492257341",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "c6b971382c1e9f8bc28c11937ffd811ea2d4ea5c"
+    }
   },
   "next_experiment": {
     "plan": "configs/training/pen-grasp-v1-r03-smallupdate.json",
@@ -49284,6 +49289,13 @@
       "new_learning_rate": 1e-05,
       "new_source_revision": "c6b971382c1e9f8bc28c11937ffd811ea2d4ea5c",
       "note": "All actor,critic and Gaussian log_std tensors match the reconstructed default reference despite new optimizer learning rate; no claim to possess the previous pilot original initial snapshot"
+    },
+    "inspection": {
+      "utc": "2026-10-20T20:31:59.182105+00:00",
+      "steps": 43008,
+      "phase": "train",
+      "recoveries": 0,
+      "checkpoint_verified_steps": 20000
     }
   },
   "interpretation": [
