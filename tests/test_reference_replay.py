@@ -43,16 +43,18 @@ def test_trajectory_interpolates_joint_positions_and_proper_object_rotation(repl
         replay_probe.Trajectory(source,'refined')
 
 
-def test_replay_obeys_shared_velocity_acceleration_limits_without_teleporting_object(replay_probe):
+@pytest.mark.parametrize('controller',['legacy','braking'])
+def test_replay_obeys_limits_away_from_rom_without_teleporting_object(replay_probe,controller):
     env=ManipulationEnv(TaskConfig(object='pen',randomization=0))
     try:
         q0=env.hand_spec.neutral[:16].copy()
         q1=q0+.3*(env.upper[:16]-q0)
         trajectory=replay_probe.Trajectory(reference(q0,q1),'refined')
-        result=replay_probe.replay(env,trajectory,1.)
+        result=replay_probe.replay(env,trajectory,1.,controller)
         assert result['termination']=='dropped_or_left_initial_workspace'
         assert not result['command_schedule_completed'] and not result['acceptance_met']
         assert result['numerical_failure'] is None and not result['warnings']
+        assert result['controller_command_limits_met']
         assert 0<result['control_ticks']<=10
         assert result['end']['object_position_m'][2]<.7
         assert result['end']['reference_position_m'][2]==.8

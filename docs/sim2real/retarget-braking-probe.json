@@ -1,0 +1,877 @@
+{
+  "timestamp": "2026-10-20T17:14:00.370062+00:00",
+  "status": "complete",
+  "purpose": "Sparse reference replay in nominal physics through an explicit controller contract; no policy acceptance",
+  "is_physics_rollout": true,
+  "acceptance_met": false,
+  "randomization_applied": false,
+  "maximum_replays": 6,
+  "maximum_control_ticks_per_replay": 600,
+  "reference_sha256": "c99297a2780445caaa93123e5a5dc85489134090da92dcdb6791f1d671ea0ead",
+  "source_sha256": "ca0b9b5dfc5de0170538bb13e95c56d5c2f20853e22b8405fe4b6853180b8348",
+  "source_url": "https://github.com/wuji-technology/wuji-mjlab/releases/tag/v2026.9.27",
+  "reference_attribution": "Copyright2026 Wuji Technology Co., Ltd.; see docs/sim2real/third-party/wuji/",
+  "model_sha256": "fad505b767154916bebe9f048f13004328dcb49ae51981903d05a8640ee98a42",
+  "geometry_sha256": "4b2937c1c2e2035d375a9686d2db34f5a743759489226d77cc817f7be95ea0b9",
+  "script_sha256": "71aeb7b0ccbd839d0d9763493b163662e2affa44525fb27972a191fa600310a6",
+  "helper_sha256": "14e20de595964aac939bdd39294932f40b485dc206fda4cec7aa7500e9415ad8",
+  "controller": "braking",
+  "controller_contract": "orca-discrete-braking-v1",
+  "candidate_controller_sha256": "6e33dc7a6a7e53dbfb3b71a22860a6e99b3ec10a7285c0e62b231ca31e0a0ee3",
+  "runtime": {
+    "system": "Linux",
+    "python": "3.11.15",
+    "mujoco": "3.13.0",
+    "numpy": "2.3.5"
+  },
+  "conditions": {
+    "source_keyframes": 32,
+    "source_duration_s": 7.36,
+    "joint_interpolation": "Piecewise linear position; bounded velocity requests through ActionCodec",
+    "object_reference_interpolation": "Linear position and shortest-arc quaternion SLERP; diagnostic only",
+    "max_controller_velocity_rad_s": 0.8,
+    "max_controller_acceleration_rad_s2": 2.0,
+    "initial_velocities": "Zero only at synthetic initialization",
+    "state_injection_during_playback": false,
+    "control_dt_s": 0.05,
+    "physics_dt_s": 0.002
+  },
+  "limitations": [
+    "Sparse keyframes are not a validated continuous retargeted motion.",
+    "Open-loop playback has no object feedback, residual RL, teacher, randomization or vision.",
+    "Synthetic initial placement is not reachable approach from ordinary reset.",
+    "Legacy ROM clipping can violate effective command acceleration; the braking candidate has a separate contract.",
+    "The braking candidate is not integrated into existing RL tasks or hardware deployment.",
+    "This controller is one bounded diagnostic; failure does not establish task impossibility.",
+    "Completing commands or accumulating angular travel does not establish continuous rotation success."
+  ],
+  "trials": [
+    {
+      "mode": "baseline",
+      "slowdown": 1.0,
+      "controller": "braking",
+      "initial": {
+        "time_s": 0.0,
+        "object_position_m": [
+          0.19254982083020683,
+          0.03721232619459398,
+          0.20893966253702081
+        ],
+        "displacement_m": 0.0,
+        "rotation_change_deg": 0.0,
+        "shaft_change_deg": 0.0,
+        "linear_speed_mps": 0.0,
+        "angular_speed_rps": 0.0,
+        "hand_contact": true,
+        "hand_normal_force_sum_n": 4.355184701180715,
+        "tower_contact": false,
+        "deepest_penetration_m": 0.006753549924372454,
+        "retained": true,
+        "resting": true,
+        "command_error_rms_rad": 0.0
+      },
+      "simulated_s": 7.399999999999407,
+      "planned_s": 7.4,
+      "maximum_control_ticks": 600,
+      "control_ticks": 148,
+      "termination": "schedule_complete",
+      "warnings": {},
+      "numerical_failure": null,
+      "command_schedule_completed": true,
+      "acceptance_met": false,
+      "peak_controller_velocity_rad_s": 0.8000000000000007,
+      "peak_controller_acceleration_rad_s2": 2.000000000000046,
+      "effective_command_kinematics": {
+        "peak_velocity_rad_s": 0.8000000000000007,
+        "peak_acceleration_rad_s2": 2.000000000000046,
+        "acceleration_exceeded_samples": 0
+      },
+      "controller_command_limits_met": true,
+      "mean_reference_shaft_error_deg": 120.20201403199408,
+      "maximum_reference_shaft_error_deg": 161.0230403714141,
+      "mean_reference_position_error_m": 0.04273272575940437,
+      "mean_joint_reference_error_rms_rad": 0.2259168898183135,
+      "end": {
+        "time_s": 7.399999999999407,
+        "object_position_m": [
+          0.16472408204382286,
+          0.03209064472526243,
+          0.17165166243805255
+        ],
+        "displacement_m": 0.04680703271370687,
+        "rotation_change_deg": 93.05117203766156,
+        "shaft_change_deg": 30.352666988105742,
+        "linear_speed_mps": 0.00028941617758915293,
+        "angular_speed_rps": 0.03240980919982411,
+        "hand_contact": true,
+        "hand_normal_force_sum_n": 0.4548971449070025,
+        "tower_contact": false,
+        "deepest_penetration_m": 0.00013673031450280992,
+        "retained": false,
+        "resting": false,
+        "command_error_rms_rad": 0.004180240182171426,
+        "source_time_s": 7.36,
+        "reference_position_m": [
+          0.18692800066101725,
+          0.02010154055257133,
+          0.2049992372738951
+        ],
+        "reference_position_error_m": 0.04181881595950261,
+        "reference_shaft_error_deg": 156.83180127265493,
+        "reference_rotation_error_deg": 157.53861995585947,
+        "command": [
+          -0.09849072021210661,
+          -0.40798426650411623,
+          0.6877122897648745,
+          -0.8538399929824453,
+          0.06275316972903647,
+          1.5714578108400588,
+          -0.3490699917796657,
+          0.15744480452507306,
+          1.5293573700690455,
+          -0.14749528145541074,
+          0.35230243529328154,
+          1.4424103589618793,
+          -0.16092390479046598,
+          0.225805671999696,
+          0.21637126581154537,
+          0.9948942207327205,
+          -0.15
+        ],
+        "controller_velocity_rad_s": [
+          8.067543855183601e-10,
+          -0.16744821035760582,
+          -1.1095191432275442e-09,
+          4.382805229852238e-10,
+          5.941753478122536e-09,
+          -3.416866789507367e-10,
+          3.1589952875776817e-10,
+          -8.364310466468794e-08,
+          -5.586949969327293e-06,
+          -0.20000000000000018,
+          -3.831407413557031e-09,
+          -7.580588645694775e-07,
+          -0.06440157786770873,
+          -4.381883744741799e-10,
+          2.578341984360577e-09,
+          -4.26604307435241e-09
+        ],
+        "joint_reference_error_rms_rad": 0.011278052375686774
+      },
+      "recorded_samples": 148,
+      "frozen_legacy_comparison": {
+        "mean_reference_shaft_error_deg": 120.18974680764957,
+        "mean_reference_position_error_m": 0.04278349264796436,
+        "effective_command_kinematics": {
+          "peak_velocity_rad_s": 0.8000000000000007,
+          "peak_acceleration_rad_s2": 13.56338666575625,
+          "acceleration_exceeded_samples": 12
+        }
+      }
+    },
+    {
+      "mode": "refined",
+      "slowdown": 1.0,
+      "controller": "braking",
+      "initial": {
+        "time_s": 0.0,
+        "object_position_m": [
+          0.19254982083020683,
+          0.03721232619459398,
+          0.20893966253702081
+        ],
+        "displacement_m": 0.0,
+        "rotation_change_deg": 0.0,
+        "shaft_change_deg": 0.0,
+        "linear_speed_mps": 0.0,
+        "angular_speed_rps": 0.0,
+        "hand_contact": true,
+        "hand_normal_force_sum_n": 2.113436235950848,
+        "tower_contact": false,
+        "deepest_penetration_m": 0.0005950016811183496,
+        "retained": true,
+        "resting": true,
+        "command_error_rms_rad": 0.0
+      },
+      "simulated_s": 7.399999999999407,
+      "planned_s": 7.4,
+      "maximum_control_ticks": 600,
+      "control_ticks": 148,
+      "termination": "schedule_complete",
+      "warnings": {},
+      "numerical_failure": null,
+      "command_schedule_completed": true,
+      "acceptance_met": false,
+      "peak_controller_velocity_rad_s": 0.8000000000000007,
+      "peak_controller_acceleration_rad_s2": 2.0000000000000906,
+      "effective_command_kinematics": {
+        "peak_velocity_rad_s": 0.8000000000000007,
+        "peak_acceleration_rad_s2": 2.0000000000000906,
+        "acceleration_exceeded_samples": 0
+      },
+      "controller_command_limits_met": true,
+      "mean_reference_shaft_error_deg": 118.27365053911748,
+      "maximum_reference_shaft_error_deg": 159.7273393198185,
+      "mean_reference_position_error_m": 0.04132704747004802,
+      "mean_joint_reference_error_rms_rad": 0.23854623238577707,
+      "end": {
+        "time_s": 7.399999999999407,
+        "object_position_m": [
+          0.17031081078688604,
+          0.026076581216908694,
+          0.17064990844001912
+        ],
+        "displacement_m": 0.04565833607046827,
+        "rotation_change_deg": 165.21661087393088,
+        "shaft_change_deg": 25.887258631514044,
+        "linear_speed_mps": 5.721419972414757e-05,
+        "angular_speed_rps": 0.0011327757297863346,
+        "hand_contact": true,
+        "hand_normal_force_sum_n": 0.4518781019988603,
+        "tower_contact": false,
+        "deepest_penetration_m": 0.00011567718499591942,
+        "retained": false,
+        "resting": false,
+        "command_error_rms_rad": 0.004208889465779041,
+        "source_time_s": 7.36,
+        "reference_position_m": [
+          0.18692800066101725,
+          0.02010154055257133,
+          0.2049992372738951
+        ],
+        "reference_position_error_m": 0.038622642343464256,
+        "reference_shaft_error_deg": 159.18527393644644,
+        "reference_rotation_error_deg": 159.78403618494778,
+        "command": [
+          -0.09849072045994771,
+          -0.4022808770049188,
+          0.6877122935157772,
+          -0.8538399999999999,
+          0.08280617539146432,
+          1.234445906897885,
+          0.2583921100267072,
+          0.15744519208198127,
+          1.5293794044961055,
+          -0.12760293234610215,
+          0.35230243651005866,
+          1.4424106135730868,
+          -0.20461598980411894,
+          0.22580567153213907,
+          0.2163712662985791,
+          0.9948942192416249,
+          -0.15
+        ],
+        "controller_velocity_rad_s": [
+          -2.6667085206710794e-09,
+          -0.31888720864291176,
+          3.1759617158400033e-09,
+          0.0,
+          -1.9704764359085303e-06,
+          -2.995325352195266e-06,
+          5.8294663440872085e-06,
+          4.895286187522885e-07,
+          3.074311062167823e-05,
+          0.10000000000000009,
+          -3.9342196167524435e-09,
+          0.14323911586220373,
+          -0.15568449445988786,
+          -2.0683454948766666e-12,
+          -2.366834506162263e-09,
+          3.2502311952953278e-09
+        ],
+        "joint_reference_error_rms_rad": 0.01630706252523152
+      },
+      "recorded_samples": 148,
+      "frozen_legacy_comparison": {
+        "mean_reference_shaft_error_deg": 118.26527714987256,
+        "mean_reference_position_error_m": 0.04135016499748247,
+        "effective_command_kinematics": {
+          "peak_velocity_rad_s": 0.8000000000000007,
+          "peak_acceleration_rad_s2": 12.342102282547023,
+          "acceleration_exceeded_samples": 17
+        }
+      }
+    },
+    {
+      "mode": "baseline",
+      "slowdown": 2.0,
+      "controller": "braking",
+      "initial": {
+        "time_s": 0.0,
+        "object_position_m": [
+          0.19254982083020683,
+          0.03721232619459398,
+          0.20893966253702081
+        ],
+        "displacement_m": 0.0,
+        "rotation_change_deg": 0.0,
+        "shaft_change_deg": 0.0,
+        "linear_speed_mps": 0.0,
+        "angular_speed_rps": 0.0,
+        "hand_contact": true,
+        "hand_normal_force_sum_n": 4.355184701180715,
+        "tower_contact": false,
+        "deepest_penetration_m": 0.006753549924372454,
+        "retained": true,
+        "resting": true,
+        "command_error_rms_rad": 0.0
+      },
+      "simulated_s": 14.750000000001595,
+      "planned_s": 14.75,
+      "maximum_control_ticks": 600,
+      "control_ticks": 295,
+      "termination": "schedule_complete",
+      "warnings": {},
+      "numerical_failure": null,
+      "command_schedule_completed": true,
+      "acceptance_met": false,
+      "peak_controller_velocity_rad_s": 0.8000000000000007,
+      "peak_controller_acceleration_rad_s2": 2.0000000000000906,
+      "effective_command_kinematics": {
+        "peak_velocity_rad_s": 0.8000000000000007,
+        "peak_acceleration_rad_s2": 2.0000000000000906,
+        "acceleration_exceeded_samples": 0
+      },
+      "controller_command_limits_met": true,
+      "mean_reference_shaft_error_deg": 120.22854753336479,
+      "maximum_reference_shaft_error_deg": 161.17544950284528,
+      "mean_reference_position_error_m": 0.04279448428505829,
+      "mean_joint_reference_error_rms_rad": 0.14883754746984632,
+      "end": {
+        "time_s": 14.750000000001595,
+        "object_position_m": [
+          0.1642251410476365,
+          0.03224016567353091,
+          0.17160362408320345
+        ],
+        "displacement_m": 0.0471273766770154,
+        "rotation_change_deg": 92.41419679425564,
+        "shaft_change_deg": 29.48047978622842,
+        "linear_speed_mps": 1.6300905084295207e-05,
+        "angular_speed_rps": 0.0043779282100886874,
+        "hand_contact": true,
+        "hand_normal_force_sum_n": 0.4486628211955084,
+        "tower_contact": false,
+        "deepest_penetration_m": 8.461889222041632e-05,
+        "retained": false,
+        "resting": false,
+        "command_error_rms_rad": 0.00356718476220743,
+        "source_time_s": 7.36,
+        "reference_position_m": [
+          0.18692800066101725,
+          0.02010154055257133,
+          0.2049992372738951
+        ],
+        "reference_position_error_m": 0.04216672900325995,
+        "reference_shaft_error_deg": 156.9158328568721,
+        "reference_rotation_error_deg": 157.96083354917064,
+        "command": [
+          -0.09849072021210661,
+          -0.40228087699304726,
+          0.6877122897648745,
+          -0.8538399929824453,
+          0.06275316972903647,
+          1.5714578108400588,
+          -0.3490699917796657,
+          0.15744480452507306,
+          1.5293573700690455,
+          -0.185294209255972,
+          0.35230243529328154,
+          1.4424103589618793,
+          -0.1662627996314959,
+          0.225805671999696,
+          0.21637126581154537,
+          0.9948942207327205,
+          -0.15
+        ],
+        "controller_velocity_rad_s": [
+          8.067543855183601e-10,
+          5.6836757522660264e-11,
+          -1.1095191432275442e-09,
+          4.382805229852238e-10,
+          5.941753478122536e-09,
+          -3.416866789507367e-10,
+          3.1589952875776817e-10,
+          -8.364310466468794e-08,
+          -5.586949969327293e-06,
+          1.2336671483814676e-05,
+          -3.831407413557031e-09,
+          -7.580588645694775e-07,
+          1.579052388844815e-06,
+          -4.381883744741799e-10,
+          2.578341984360577e-09,
+          -4.26604307435241e-09
+        ],
+        "joint_reference_error_rms_rad": 0.00356718476220743
+      },
+      "recorded_samples": 295,
+      "frozen_legacy_comparison": {
+        "mean_reference_shaft_error_deg": 120.22381777511505,
+        "mean_reference_position_error_m": 0.04280125786217277,
+        "effective_command_kinematics": {
+          "peak_velocity_rad_s": 0.8000000000000007,
+          "peak_acceleration_rad_s2": 12.997498658906114,
+          "acceleration_exceeded_samples": 15
+        }
+      }
+    },
+    {
+      "mode": "refined",
+      "slowdown": 2.0,
+      "controller": "braking",
+      "initial": {
+        "time_s": 0.0,
+        "object_position_m": [
+          0.19254982083020683,
+          0.03721232619459398,
+          0.20893966253702081
+        ],
+        "displacement_m": 0.0,
+        "rotation_change_deg": 0.0,
+        "shaft_change_deg": 0.0,
+        "linear_speed_mps": 0.0,
+        "angular_speed_rps": 0.0,
+        "hand_contact": true,
+        "hand_normal_force_sum_n": 2.113436235950848,
+        "tower_contact": false,
+        "deepest_penetration_m": 0.0005950016811183496,
+        "retained": true,
+        "resting": true,
+        "command_error_rms_rad": 0.0
+      },
+      "simulated_s": 14.750000000001595,
+      "planned_s": 14.75,
+      "maximum_control_ticks": 600,
+      "control_ticks": 295,
+      "termination": "schedule_complete",
+      "warnings": {},
+      "numerical_failure": null,
+      "command_schedule_completed": true,
+      "acceptance_met": false,
+      "peak_controller_velocity_rad_s": 0.8000000000000007,
+      "peak_controller_acceleration_rad_s2": 2.0000000000000906,
+      "effective_command_kinematics": {
+        "peak_velocity_rad_s": 0.8000000000000007,
+        "peak_acceleration_rad_s2": 2.0000000000000906,
+        "acceleration_exceeded_samples": 0
+      },
+      "controller_command_limits_met": true,
+      "mean_reference_shaft_error_deg": 119.22350556648108,
+      "maximum_reference_shaft_error_deg": 160.36603414646967,
+      "mean_reference_position_error_m": 0.04105100738385119,
+      "mean_joint_reference_error_rms_rad": 0.14865396124076105,
+      "end": {
+        "time_s": 14.750000000001595,
+        "object_position_m": [
+          0.17051606537458625,
+          0.025308565052046716,
+          0.17062925383498875
+        ],
+        "displacement_m": 0.045769786144722616,
+        "rotation_change_deg": 176.81780382851088,
+        "shaft_change_deg": 25.941595245092223,
+        "linear_speed_mps": 6.350472548697064e-05,
+        "angular_speed_rps": 0.0061425841085467415,
+        "hand_contact": true,
+        "hand_normal_force_sum_n": 0.44904648874054764,
+        "tower_contact": false,
+        "deepest_penetration_m": 0.00012355513257175915,
+        "retained": false,
+        "resting": false,
+        "command_error_rms_rad": 0.0026969393146624035,
+        "source_time_s": 7.36,
+        "reference_position_m": [
+          0.18692800066101725,
+          0.02010154055257133,
+          0.2049992372738951
+        ],
+        "reference_position_error_m": 0.03844165040128783,
+        "reference_shaft_error_deg": 159.18856949859264,
+        "reference_rotation_error_deg": 160.43794648350294,
+        "command": [
+          -0.09849072045994771,
+          -0.4022808770049188,
+          0.6877122935157772,
+          -0.8538399999999999,
+          0.08280617539146432,
+          1.234445906897885,
+          0.2583921100267072,
+          0.15744519208198127,
+          1.5293794044961055,
+          -0.18534336793592807,
+          0.35230243651005866,
+          1.4424106135730868,
+          -0.16626333253968623,
+          0.22580567153213907,
+          0.2163712662985791,
+          0.9948942192416249,
+          -0.15
+        ],
+        "controller_velocity_rad_s": [
+          -2.6667085206710794e-09,
+          4.207523218724418e-11,
+          3.1759617158400033e-09,
+          0.0,
+          -1.9704764359085303e-06,
+          -2.995325352195266e-06,
+          5.8294663440872085e-06,
+          4.895286187522885e-07,
+          3.074311062167823e-05,
+          -6.291148237302924e-05,
+          -3.9342196167524435e-09,
+          1.4836940565032819e-08,
+          -3.0735546330262764e-08,
+          -2.0683454948766666e-12,
+          -2.366834506162263e-09,
+          3.2502311952953278e-09
+        ],
+        "joint_reference_error_rms_rad": 0.0026969393146624035
+      },
+      "recorded_samples": 295,
+      "frozen_legacy_comparison": {
+        "mean_reference_shaft_error_deg": 119.22126154528259,
+        "mean_reference_position_error_m": 0.04101995042468248,
+        "effective_command_kinematics": {
+          "peak_velocity_rad_s": 0.8000000000000007,
+          "peak_acceleration_rad_s2": 13.681832174754938,
+          "acceleration_exceeded_samples": 21
+        }
+      }
+    },
+    {
+      "mode": "baseline",
+      "slowdown": 4.0,
+      "controller": "braking",
+      "initial": {
+        "time_s": 0.0,
+        "object_position_m": [
+          0.19254982083020683,
+          0.03721232619459398,
+          0.20893966253702081
+        ],
+        "displacement_m": 0.0,
+        "rotation_change_deg": 0.0,
+        "shaft_change_deg": 0.0,
+        "linear_speed_mps": 0.0,
+        "angular_speed_rps": 0.0,
+        "hand_contact": true,
+        "hand_normal_force_sum_n": 4.355184701180715,
+        "tower_contact": false,
+        "deepest_penetration_m": 0.006753549924372454,
+        "retained": true,
+        "resting": true,
+        "command_error_rms_rad": 0.0
+      },
+      "simulated_s": 29.449999999994557,
+      "planned_s": 29.450000000000003,
+      "maximum_control_ticks": 600,
+      "control_ticks": 589,
+      "termination": "schedule_complete",
+      "warnings": {},
+      "numerical_failure": null,
+      "command_schedule_completed": true,
+      "acceptance_met": false,
+      "peak_controller_velocity_rad_s": 0.8000000000000007,
+      "peak_controller_acceleration_rad_s2": 2.0000000000000906,
+      "effective_command_kinematics": {
+        "peak_velocity_rad_s": 0.8000000000000007,
+        "peak_acceleration_rad_s2": 2.0000000000000906,
+        "acceleration_exceeded_samples": 0
+      },
+      "controller_command_limits_met": true,
+      "mean_reference_shaft_error_deg": 119.93058048299983,
+      "maximum_reference_shaft_error_deg": 161.16541777248568,
+      "mean_reference_position_error_m": 0.04234224951776112,
+      "mean_joint_reference_error_rms_rad": 0.045356736192979086,
+      "end": {
+        "time_s": 29.449999999994557,
+        "object_position_m": [
+          0.16467554287331476,
+          0.03003042605196528,
+          0.17157697291898422
+        ],
+        "displacement_m": 0.047164877152076935,
+        "rotation_change_deg": 87.85321427905862,
+        "shaft_change_deg": 29.478357849055925,
+        "linear_speed_mps": 1.4551741322654898e-05,
+        "angular_speed_rps": 0.006545337318156473,
+        "hand_contact": true,
+        "hand_normal_force_sum_n": 0.49597552426147645,
+        "tower_contact": false,
+        "deepest_penetration_m": 0.00010087890747667323,
+        "retained": false,
+        "resting": false,
+        "command_error_rms_rad": 0.0035716829224942295,
+        "source_time_s": 7.36,
+        "reference_position_m": [
+          0.18692800066101725,
+          0.02010154055257133,
+          0.2049992372738951
+        ],
+        "reference_position_error_m": 0.04136184714762028,
+        "reference_shaft_error_deg": 156.94421760186202,
+        "reference_rotation_error_deg": 158.2933928520828,
+        "command": [
+          -0.09849072021210661,
+          -0.40228087699304726,
+          0.6877122897648745,
+          -0.8538399929824453,
+          0.06275316972903647,
+          1.5714578108400588,
+          -0.3490699917796657,
+          0.15744480452507306,
+          1.5293573700690455,
+          -0.185294209255972,
+          0.35230243529328154,
+          1.4424103589618793,
+          -0.1662627996314959,
+          0.225805671999696,
+          0.21637126581154537,
+          0.9948942207327205,
+          -0.15
+        ],
+        "controller_velocity_rad_s": [
+          8.067543855183601e-10,
+          5.6836757522660264e-11,
+          -1.1095191432275442e-09,
+          4.382805229852238e-10,
+          5.941753478122536e-09,
+          -3.416866789507367e-10,
+          3.1589952875776817e-10,
+          -8.364310466468794e-08,
+          -5.586949969327293e-06,
+          1.2336671483814676e-05,
+          -3.831407413557031e-09,
+          -7.580588645694775e-07,
+          1.579052388844815e-06,
+          -4.381883744741799e-10,
+          2.578341984360577e-09,
+          -4.26604307435241e-09
+        ],
+        "joint_reference_error_rms_rad": 0.0035716829224942295
+      },
+      "recorded_samples": 589,
+      "frozen_legacy_comparison": {
+        "mean_reference_shaft_error_deg": 119.92897069592715,
+        "mean_reference_position_error_m": 0.04233873568925113,
+        "effective_command_kinematics": {
+          "peak_velocity_rad_s": 0.8000000000000007,
+          "peak_acceleration_rad_s2": 13.000838277650395,
+          "acceleration_exceeded_samples": 13
+        }
+      }
+    },
+    {
+      "mode": "refined",
+      "slowdown": 4.0,
+      "controller": "braking",
+      "initial": {
+        "time_s": 0.0,
+        "object_position_m": [
+          0.19254982083020683,
+          0.03721232619459398,
+          0.20893966253702081
+        ],
+        "displacement_m": 0.0,
+        "rotation_change_deg": 0.0,
+        "shaft_change_deg": 0.0,
+        "linear_speed_mps": 0.0,
+        "angular_speed_rps": 0.0,
+        "hand_contact": true,
+        "hand_normal_force_sum_n": 2.113436235950848,
+        "tower_contact": false,
+        "deepest_penetration_m": 0.0005950016811183496,
+        "retained": true,
+        "resting": true,
+        "command_error_rms_rad": 0.0
+      },
+      "simulated_s": 29.449999999994557,
+      "planned_s": 29.450000000000003,
+      "maximum_control_ticks": 600,
+      "control_ticks": 589,
+      "termination": "schedule_complete",
+      "warnings": {},
+      "numerical_failure": null,
+      "command_schedule_completed": true,
+      "acceptance_met": false,
+      "peak_controller_velocity_rad_s": 0.8000000000000007,
+      "peak_controller_acceleration_rad_s2": 2.000000000000046,
+      "effective_command_kinematics": {
+        "peak_velocity_rad_s": 0.8000000000000007,
+        "peak_acceleration_rad_s2": 2.000000000000046,
+        "acceleration_exceeded_samples": 0
+      },
+      "controller_command_limits_met": true,
+      "mean_reference_shaft_error_deg": 120.28022287512324,
+      "maximum_reference_shaft_error_deg": 161.53218405537876,
+      "mean_reference_position_error_m": 0.04069200226574364,
+      "mean_joint_reference_error_rms_rad": 0.054525148832704644,
+      "end": {
+        "time_s": 29.449999999994557,
+        "object_position_m": [
+          0.1716275957346824,
+          0.023179093224776914,
+          0.1705427373143506
+        ],
+        "displacement_m": 0.045923795543141695,
+        "rotation_change_deg": 160.2785034417094,
+        "shaft_change_deg": 27.988383935480275,
+        "linear_speed_mps": 0.0001419990321168591,
+        "angular_speed_rps": 0.0007132791404564926,
+        "hand_contact": true,
+        "hand_normal_force_sum_n": 0.46440390183408803,
+        "tower_contact": false,
+        "deepest_penetration_m": 0.00014439074616333716,
+        "retained": false,
+        "resting": false,
+        "command_error_rms_rad": 0.0027000886547429983,
+        "source_time_s": 7.36,
+        "reference_position_m": [
+          0.18692800066101725,
+          0.02010154055257133,
+          0.2049992372738951
+        ],
+        "reference_position_error_m": 0.037826235747455784,
+        "reference_shaft_error_deg": 159.12007542944812,
+        "reference_rotation_error_deg": 163.76921390696623,
+        "command": [
+          -0.09849072045994771,
+          -0.4022808770049188,
+          0.6877122935157772,
+          -0.8538399999999999,
+          0.08280617539146432,
+          1.234445906897885,
+          0.2583921100267072,
+          0.15744519208198127,
+          1.5293794044961055,
+          -0.18534336793592807,
+          0.35230243651005866,
+          1.4424106135730868,
+          -0.16626333253968623,
+          0.22580567153213907,
+          0.2163712662985791,
+          0.9948942192416249,
+          -0.15
+        ],
+        "controller_velocity_rad_s": [
+          -2.6667085206710794e-09,
+          4.207523218724418e-11,
+          3.1759617158400033e-09,
+          0.0,
+          -1.9704764359085303e-06,
+          -2.995325352195266e-06,
+          5.8294663440872085e-06,
+          4.895286187522885e-07,
+          3.074311062167823e-05,
+          -6.291148237302924e-05,
+          -3.9342196167524435e-09,
+          1.4836940565032819e-08,
+          -3.0735546330262764e-08,
+          -2.0683454948766666e-12,
+          -2.366834506162263e-09,
+          3.2502311952953278e-09
+        ],
+        "joint_reference_error_rms_rad": 0.0027000886547429983
+      },
+      "recorded_samples": 589,
+      "frozen_legacy_comparison": {
+        "mean_reference_shaft_error_deg": 120.28255003905663,
+        "mean_reference_position_error_m": 0.0406934756905774,
+        "effective_command_kinematics": {
+          "peak_velocity_rad_s": 0.8000000000000007,
+          "peak_acceleration_rad_s2": 10.28105248607707,
+          "acceleration_exceeded_samples": 10
+        }
+      }
+    }
+  ],
+  "ended_at": "2026-10-20T17:14:03.549346+00:00",
+  "artifact_kind": "All six candidate-controller replays summarized with effective command audit and frozen legacy comparisons",
+  "full_report_sha256": "50fbaf751243db6af935c0a7cf08352bfcf6afb5cfdf3709fff8be8698d93f05",
+  "full_report_location": "Jarvis:/home/peiqi/projects/orca-hand-rl-referenceprobe/runs/reference-replay6-braking/probe.json",
+  "omitted_fields": [
+    "trials.*.samples"
+  ],
+  "replication": {
+    "runtime": {
+      "system": "Darwin",
+      "python": "3.11.1",
+      "mujoco": "3.13.0",
+      "numpy": "2.3.5"
+    },
+    "trials": [
+      {
+        "mode": "baseline",
+        "slowdown": 1.0,
+        "termination": "schedule_complete",
+        "mean_reference_shaft_error_deg": 120.24864816281725,
+        "effective_command_kinematics": {
+          "peak_velocity_rad_s": 0.8000000000000007,
+          "peak_acceleration_rad_s2": 2.000000000000046,
+          "acceleration_exceeded_samples": 0
+        },
+        "controller_command_limits_met": true
+      },
+      {
+        "mode": "refined",
+        "slowdown": 1.0,
+        "termination": "schedule_complete",
+        "mean_reference_shaft_error_deg": 119.21416078524094,
+        "effective_command_kinematics": {
+          "peak_velocity_rad_s": 0.8000000000000007,
+          "peak_acceleration_rad_s2": 2.0000000000000906,
+          "acceleration_exceeded_samples": 0
+        },
+        "controller_command_limits_met": true
+      },
+      {
+        "mode": "baseline",
+        "slowdown": 2.0,
+        "termination": "schedule_complete",
+        "mean_reference_shaft_error_deg": 120.19735419393484,
+        "effective_command_kinematics": {
+          "peak_velocity_rad_s": 0.8000000000000007,
+          "peak_acceleration_rad_s2": 2.0000000000000906,
+          "acceleration_exceeded_samples": 0
+        },
+        "controller_command_limits_met": true
+      },
+      {
+        "mode": "refined",
+        "slowdown": 2.0,
+        "termination": "schedule_complete",
+        "mean_reference_shaft_error_deg": 119.29138264061406,
+        "effective_command_kinematics": {
+          "peak_velocity_rad_s": 0.8000000000000007,
+          "peak_acceleration_rad_s2": 2.0000000000000906,
+          "acceleration_exceeded_samples": 0
+        },
+        "controller_command_limits_met": true
+      },
+      {
+        "mode": "baseline",
+        "slowdown": 4.0,
+        "termination": "schedule_complete",
+        "mean_reference_shaft_error_deg": 119.94771976444402,
+        "effective_command_kinematics": {
+          "peak_velocity_rad_s": 0.8000000000000007,
+          "peak_acceleration_rad_s2": 2.0000000000000906,
+          "acceleration_exceeded_samples": 0
+        },
+        "controller_command_limits_met": true
+      },
+      {
+        "mode": "refined",
+        "slowdown": 4.0,
+        "termination": "schedule_complete",
+        "mean_reference_shaft_error_deg": 120.35563685352722,
+        "effective_command_kinematics": {
+          "peak_velocity_rad_s": 0.8000000000000007,
+          "peak_acceleration_rad_s2": 2.000000000000046,
+          "acceleration_exceeded_samples": 0
+        },
+        "controller_command_limits_met": true
+      }
+    ]
+  }
+}

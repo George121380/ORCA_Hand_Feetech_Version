@@ -16,6 +16,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation, Slerp
 
 from orca_feetech.manipulation import ActionCodec, DT, ManipulationEnv, TaskConfig, rotation_error
+from orca_feetech import reference_control
 import probe_reference_hold as hold_helpers
 from probe_reference_hold import geometry_hash, snapshot, validate_reference
 
@@ -57,7 +58,9 @@ def command_kinematics(initial,samples,config):
                 acceleration_exceeded_samples=int(np.sum(np.abs(acceleration)>config.max_acceleration+1e-8)))
 
 
-def replay(env,trajectory,slowdown):
+def replay(env,trajectory,slowdown,controller='legacy'):
+    if controller not in ('legacy','braking'):
+        raise ValueError('Use legacy or braking controller')
     if not 1<=slowdown<=4:
         raise ValueError('Use slowdown between 1 and 4')
     ticks=int(np.ceil(trajectory.duration*slowdown/DT))
@@ -73,7 +76,8 @@ def replay(env,trajectory,slowdown):
     env.data.ctrl[env.actuators]=command
     mujoco.mj_forward(env.model,env.data)
     origin,initial_rotation=env.pose()
-    codec=ActionCodec(env.config,command)
+    codec_type=ActionCodec if controller=='legacy' else reference_control.BrakingActionCodec
+    codec=codec_type(env.config,command)
     initial_command=command.copy()
     initial=snapshot(env,origin,initial_rotation,command)
     samples=[]
@@ -121,13 +125,16 @@ def replay(env,trajectory,slowdown):
     if warnings:
         numerical_failure=numerical_failure or 'MuJoCo solver warning'
         termination='numerical_failure'
-    return dict(slowdown=slowdown,initial=initial,samples=samples,
+    effective=command_kinematics(initial_command,samples,env.config)
+    command_gate=bool(samples and effective['peak_velocity_rad_s']<=env.config.max_velocity+1e-8
+                      and effective['peak_acceleration_rad_s2']<=env.config.max_acceleration+1e-8)
+    return dict(slowdown=slowdown,controller=controller,initial=initial,samples=samples,
         simulated_s=float(env.data.time),planned_s=ticks*DT,maximum_control_ticks=600,
         control_ticks=len(samples),termination=termination,warnings=warnings,numerical_failure=numerical_failure,
         command_schedule_completed=bool(termination=='schedule_complete' and len(samples)==ticks),
         acceptance_met=False,peak_controller_velocity_rad_s=peak_velocity,
         peak_controller_acceleration_rad_s2=peak_acceleration,
-        effective_command_kinematics=command_kinematics(initial_command,samples,env.config),
+        effective_command_kinematics=effective,controller_command_limits_met=command_gate,
         mean_reference_shaft_error_deg=float(np.mean([x['reference_shaft_error_deg'] for x in samples])) if samples else None,
         maximum_reference_shaft_error_deg=max((x['reference_shaft_error_deg'] for x in samples),default=None),
         mean_reference_position_error_m=float(np.mean([x['reference_position_error_m'] for x in samples])) if samples else None,
@@ -140,6 +147,7 @@ def main():
     p.add_argument('--reference',type=Path,required=True)
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--slowdown',type=float,nargs='+',default=[1.,2.,4.])
+    p.add_argument('--controller',choices=['legacy','braking'],default='legacy')
     args=p.parse_args()
     if (not 1<=len(args.slowdown)<=3 or len(set(args.slowdown))!=len(args.slowdown)
             or any(not 1<=s<=4 for s in args.slowdown)):
@@ -152,7 +160,7 @@ def main():
         trajectories={mode:Trajectory(reference,mode) for mode in ('baseline','refined')}
         args.output.mkdir(parents=True,exist_ok=False)
         report=dict(timestamp=datetime.now(timezone.utc).isoformat(),status='running',
-            purpose='Sparse reference replay in nominal physics through the existing shared ActionCodec; no policy acceptance',
+            purpose='Sparse reference replay in nominal physics through an explicit controller contract; no policy acceptance',
             is_physics_rollout=True,acceptance_met=False,randomization_applied=False,
             maximum_replays=6,maximum_control_ticks_per_replay=600,
             reference_sha256=hashlib.sha256(raw).hexdigest(),source_sha256=reference['source_sha256'],
@@ -160,6 +168,9 @@ def main():
             model_sha256=env.hand_spec.source_sha256,geometry_sha256=geometry_hash(),
             script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
             helper_sha256=hashlib.sha256(Path(hold_helpers.__file__).read_bytes()).hexdigest(),
+            controller=args.controller,
+            controller_contract=('orca-v7-actioncodec' if args.controller=='legacy' else reference_control.CONTROLLER_ID),
+            candidate_controller_sha256=hashlib.sha256(Path(reference_control.__file__).read_bytes()).hexdigest(),
             runtime=dict(system=platform.system(),python=platform.python_version(),
                          mujoco=mujoco.__version__,numpy=np.__version__),
             conditions=dict(source_keyframes=len(reference['trials']),source_duration_s=trajectories['refined'].duration,
@@ -172,7 +183,8 @@ def main():
             limitations=['Sparse keyframes are not a validated continuous retargeted motion.',
                 'Open-loop playback has no object feedback, residual RL, teacher, randomization or vision.',
                 'Synthetic initial placement is not reachable approach from ordinary reset.',
-                'Hard ROM clipping can violate effective position-command acceleration limits despite bounded internal state.',
+                'Legacy ROM clipping can violate effective command acceleration; the braking candidate has a separate contract.',
+                'The braking candidate is not integrated into existing RL tasks or hardware deployment.',
                 'This controller is one bounded diagnostic; failure does not establish task impossibility.',
                 'Completing commands or accumulating angular travel does not establish continuous rotation success.'],trials=[])
         def save():
@@ -183,7 +195,7 @@ def main():
         try:
             for slowdown in args.slowdown:
                 for mode,trajectory in trajectories.items():
-                    report['trials'].append(dict(mode=mode,**replay(env,trajectory,slowdown)))
+                    report['trials'].append(dict(mode=mode,**replay(env,trajectory,slowdown,args.controller)))
                     save()
         except BaseException as error:
             report.update(status='failed',error=repr(error))
@@ -194,7 +206,7 @@ def main():
         print(json.dumps([{k:r[k] for k in ('mode','slowdown','termination','simulated_s',
             'mean_reference_shaft_error_deg','mean_reference_position_error_m',
             'peak_controller_velocity_rad_s','peak_controller_acceleration_rad_s2',
-            'effective_command_kinematics')} for r in report['trials']],indent=2))
+            'effective_command_kinematics','controller_command_limits_met')} for r in report['trials']],indent=2))
     finally:
         env.close()
 
