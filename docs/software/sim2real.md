@@ -362,6 +362,27 @@ Mac独立复核：结束承载接触同为25/32、24/32，最后0.2秒静止分�
 
 新增测试验证预紧目标不会把实际关节传送到命令位置、自由物体确实受重力运动、越ROM/非有限目标被拒绝、固定几何求解不受上次warmstart/速度污染、不推进物理时间，以及冻结报告的哈希与帧集合合同。原保持函数默认行为不变。
 
+### 2026-10-20 补查手指之间的碰撞并修正参考
+
+继续检查联合优化的起点时发现，原离线接触修正只罚手与笔的穿透，漏查了手指之间的碰撞。[新增审计](../../scripts/audit_reference_collisions.py)只读取模型原本启用的碰撞对，不开启/关闭任何碰撞过滤：原人手点修正组13/32帧手内穿透>2mm，最大15.537mm；机器人点组12/32帧，最大7.682mm。机器人第0帧是无名指/小指近节互穿5.663mm，第131帧是食指/中指近节互穿7.682mm。它们不能仅凭手与笔穿透小就被视为合理初态。合成中立姿态及1969000..1969003四个普通名义物理reset的对照均未发现手内穿透；重复审计使用相同四个种子，不能作为更多独立样本。此漏项属于尚未用于训练的离线参考，不能据此重写旧策略成绩或断言旧策略失败由它造成。
+
+`probe_reference_retarget.py`增加显式`--self-contact-aware`，要求同时开启`--contact-aware`；旧默认拟合行为保留。新项对每个碰撞几何体记录涉及它的最大手内穿透，形成固定长度残差，与物体项分别罚超过0.5mm的部分，每1mm归一化。仍为软约束，每帧仅一个基线起点、最多60次优化器评估；没有加入支撑力、预紧、物理漂移目标或扩大训练预算。
+
+    .venv/bin/python scripts/probe_reference_retarget.py \
+      --archive runs/source/wuji-keyframe-probe.zip \
+      --wuji-model runs/source/wuji-hand2-fk-model/mjcf/right_mjlab.xml \
+      --contact-aware --self-contact-aware --frames 32 \
+      --output runs/reference-selfcontact32/reference
+    .venv/bin/python scripts/probe_reference_hold.py \
+      --reference runs/reference-selfcontact32/reference/probe.json \
+      --output runs/reference-selfcontact32/hold
+
+[逐帧几何、物理结局与原始证据哈希](../sim2real/retarget-self-contact-probe.json)：同32帧机器人参考，物体位置/旋转与基线关节拟合和上次逐位相同。32/32优化收敛，手内穿透最大0.572mm，手与笔最大1.226mm，两类均无>2mm帧，无底座接触，指尖RMS均值4.439mm。这里的2mm仍只是诊断筛选阈值，并非可达抓持或reset资产验收。
+
+同一1秒物理保持中，原物体修正组与新增手内修正组分别为：末端承载9/32→9/32，最后0.2秒静止9/32→6/32，同时保轴3/32→1/32，同时保完整SO(3)1/32→0/32。新组平均位移34.492mm、轴偏差17.966°，全部轨迹无数值故障。Mac对冻结的Linux关节解复核得到相同的新组9/6/1/0计数和几何结论；这不是独立IK求解复现，基线保轴边界计数也有平台差异，均保留在证据中。
+
+新增真实MJCF测试重现冻结第0帧的无名指/小指互穿，在不移动物体、不改变ROM或手腕条件下验证新项把它降至2mm以内。新几何解决了漏查，但物理保持没有改善，因此仍不生成训练reset资产、不启动新PPO。这一结果支持把下一有界实验转向从ORCA自身真实落稳初态出发的受限物理轨迹优化；物体状态不中途重置，实际命令差分必须满足速度/加速度限制，并单独记录整段保持与运动。不能继续把稀疏WUJI点位拟合当作已可执行的转笔示范。原验收门槛和7/100正式结果保持原样。
+
 `scripts/training_heartbeat.py`作为独立于监督器的systemd用户服务，每300秒检查状态，原子更新`runs/pen-v6-heartbeat/latest.json`并追加`heartbeats.jsonl`；即使监督器因质量预算耗尽退出，心跳仍记录`needs_attention`。也会标记运行中监督器状态超过120秒未更新、训练进度超过300秒未更新、监督服务未运行等问题。进程恢复由30秒轮询的监督器及systemd负责。这个心跳只记录服务器状态，不会唤醒聊天代理，也没有聊天、邮件或手机推送。`--once`用于启动检查，不能把心跳日志等同于人工或代理已完成诊断。
 
 会话跟进改用Mac的launchd定时执行`scripts/queue_rl_heartbeat.py`，通过已安装Codex CLI的`queue --thread ... --message ...`给同一个任务派发检查，不创建另一个代理。旧的工具单元内JavaScript计时器在结束回复后未按预期持续执行，不能再用它声称自动复查。用户相关线程号、CLI路径、开关与序号放在被忽略的`local/orca-rl-agent-heartbeat.json`，不上传GitHub。每300秒最多派发一个未确认消息；代理完成SSH检查后用`--ack --note '检查证据'`记录实际检查时间，`queue`成功回执只证明排队成功。超过15分钟未确认会标记`needs_attention`。Mac必须保持唤醒、原生Codex服务可用；服务器的systemd监控独立运行。停止时先用`--disable`关闭派发，再卸载对应launchd任务；不要影响PPO训练，除非用户也要求停训。

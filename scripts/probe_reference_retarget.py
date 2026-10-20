@@ -31,6 +31,17 @@ PROXIMAL_IDS = np.array([3,6,10,14,18])
 SOURCE_FROM_ORCA_BODY = np.array([[0.,1,0],[-1,0,0],[0,0,1]])
 
 
+def hand_self_contacts(model,data):
+    """Penetrating, model-enabled hand pairs, including finger/base contact."""
+    rows=[]
+    for c in data.contact:
+        bodies=[model.body(model.geom_bodyid[g]).name or '' for g in (c.geom1,c.geom2)]
+        if c.dist<0 and all(b.startswith('right_') for b in bodies):
+            rows.append(dict(bodies=bodies,geoms=[int(c.geom1),int(c.geom2)],
+                             penetration_m=float(-c.dist)))
+    return rows
+
+
 def object_rotation(source_quaternion,source_hand_rotation,target_hand_rotation):
     source_axes=np.array([rotate(source_quaternion,v) for v in np.eye(3)]).T
     return target_hand_rotation@source_hand_rotation.T@source_axes@SOURCE_FROM_ORCA_BODY
@@ -98,7 +109,9 @@ class HandKinematics:
                        for b,v in zip(self.distal,self.offsets)])
         return tips,self.data.xpos[self.proximal].copy()
 
-    def fit(self,tips,proximal,previous,object_pose=None):
+    def fit(self,tips,proximal,previous,object_pose=None,*,self_contact_aware=False):
+        if self_contact_aware and object_pose is None:
+            raise ValueError('Self-contact refinement requires an object pose')
         def residual(q):
             actual,anchors=self.points(q)
             terms=[(actual-tips).ravel()/.01,
@@ -109,6 +122,8 @@ class HandKinematics:
                 # numerical overlap, then penalize each extra millimetre.
                 depth=self.contact_depths(*object_pose)
                 terms.append(np.maximum(depth-.0005,0.)/.001)
+                if self_contact_aware:
+                    terms.append(np.maximum(self.self_contact_depths()-.0005,0.)/.001)
             return np.concatenate(terms)
         result=least_squares(residual,np.clip(previous,self.spec.lower[:16]+1e-8,
                                                self.spec.upper[:16]-1e-8),
@@ -144,6 +159,21 @@ class HandKinematics:
             body=self.model.body(self.model.geom_bodyid[other]).name
             rows.append(dict(body=body,penetration_m=float(-c.dist)))
         return rows
+
+    def self_contacts(self):
+        """Actual model-enabled hand/hand pairs, including finger/base contact.
+
+        Does not enable previously filtered pairs or infer mesh distances.
+        Call after mj_forward at the desired joint/object state.
+        """
+        return hand_self_contacts(self.model,self.data)
+
+    def self_contact_depths(self):
+        depths=np.zeros(self.model.ngeom)
+        for contact in self.self_contacts():
+            for geom in contact['geoms']:
+                depths[geom]=max(depths[geom],contact['penetration_m'])
+        return depths
 
     def close(self):
         self.env.close()
@@ -243,6 +273,8 @@ def main():
     p.add_argument('--frames',type=int,default=32)
     p.add_argument('--contact-aware',action='store_true',
                    help='Refine each baseline keyframe with a fixed object pose and penetration penalty')
+    p.add_argument('--self-contact-aware',action='store_true',
+                   help='Also penalize model-enabled hand/hand overlap; requires --contact-aware')
     p.add_argument('--object-z-offset-mm',type=int,choices=[0,-10,-20],default=0,
                    help='Bounded reference-placement diagnostic; moves only the object reference in world Z')
     p.add_argument('--wuji-model',type=Path,
@@ -252,6 +284,8 @@ def main():
         p.error('Use2..64 evenly sampled keyframes')
     if args.object_z_offset_mm and not args.contact_aware:
         p.error('Placement candidates require --contact-aware to refit the hand')
+    if args.self_contact_aware and not args.contact_aware:
+        p.error('Self-contact refinement requires --contact-aware')
     points,objects,dt,sha=source_clip(args.archive)
     source_fk=None
     if args.wuji_model:
@@ -273,7 +307,7 @@ def main():
         sampled_frames=len(ids),maximum_optimizer_nfev_per_frame=60,
         contact_refinement=dict(enabled=args.contact_aware,maximum_nfev_per_frame=60,
                                 penetration_allowance_m=.0005,residual_scale_m=.001,
-                                optimize_object_pose=False),
+                                optimize_object_pose=False,self_contact_aware=args.self_contact_aware),
         model_sha256=hand.spec.source_sha256,
         geometry_sha256=hashlib.sha256(json.dumps(geometry_signature('pen'),sort_keys=True).encode()).hexdigest(),
         source_from_orca_object_body=SOURCE_FROM_ORCA_BODY.tolist(),
@@ -283,7 +317,8 @@ def main():
         joint_names=JOINT_NAMES,scale=scale,fingertip_proxy_offsets_m=hand.offsets.tolist(),
         alignment='Per-frame source hand basis mapped to neutral ORCA hand basis; one bone-length scale',
         limitations=['Contacts are static mesh intersections, not support forces or physical replay.',
-                     'Contact refinement only penalizes object overlap; it does not enforce grasp or self-contact feasibility.',
+                     'Overlap penalties are soft; neither contact forces nor joint/actuator balance are enforced.',
+                     'Hand/hand overlap is penalized only with the explicit --self-contact-aware option.',
                      'Source motions may need different grasp topology, object alignment and retiming.',
                      'Fingertips are distal mesh-cap proxies, not calibrated real contact points.',
                      'No policy or training reset asset may use these states without a separate physics check.'],
@@ -310,18 +345,25 @@ def main():
             mujoco.mju_mat2Quat(quat,mapped.ravel())
             baseline_error=np.linalg.norm(actual-targets[TIP_IDS],axis=1)
             baseline_contacts=hand.contacts(position,quat)
+            baseline_self=hand.self_contacts()
             baseline=dict(qpos=result.x.tolist(),optimizer_nfev=result.nfev,
                           tip_rms_m=float(np.sqrt(np.mean(baseline_error**2))),
-                          deepest_penetration_m=max([x['penetration_m'] for x in baseline_contacts],default=0.))
+                          deepest_penetration_m=max([x['penetration_m'] for x in baseline_contacts],default=0.),
+                          self_contacts=baseline_self,
+                          deepest_self_penetration_m=max([x['penetration_m'] for x in baseline_self],default=0.))
             if args.contact_aware:
-                result,actual=hand.fit(targets[TIP_IDS],targets[PROXIMAL_IDS],previous,(position,quat))
+                result,actual=hand.fit(targets[TIP_IDS],targets[PROXIMAL_IDS],previous,(position,quat),
+                                       self_contact_aware=args.self_contact_aware)
             contacts=hand.contacts(position,quat)
+            self_contacts=hand.self_contacts()
             error=np.linalg.norm(actual-targets[TIP_IDS],axis=1)
             report['trials'].append(dict(frame=int(frame),time_s=float(frame*dt),qpos=result.x.tolist(),
                 optimizer_success=bool(result.success),optimizer_nfev=result.nfev,baseline=baseline,
                 tip_errors_m=error.tolist(),tip_rms_m=float(np.sqrt(np.mean(error**2))),
                 object_position_m=position.tolist(),object_quaternion_wxyz=quat.tolist(),
                 contacts=contacts,deepest_penetration_m=max([x['penetration_m'] for x in contacts],default=0.),
+                self_contacts=self_contacts,
+                deepest_self_penetration_m=max([x['penetration_m'] for x in self_contacts],default=0.),
                 tower_contact=any(x['body']=='right_tower' for x in contacts)))
             save()
     except BaseException as error:
@@ -339,6 +381,8 @@ def main():
     report['summary']['optimizer_converged_frames']=sum(x['optimizer_success'] for x in report['trials'])
     report['summary']['baseline_mean_tip_rms_m']=float(np.mean([x['baseline']['tip_rms_m'] for x in report['trials']]))
     report['summary']['baseline_deepest_penetration_m']=max(x['baseline']['deepest_penetration_m'] for x in report['trials'])
+    report['summary']['deepest_self_penetration_m']=max(x['deepest_self_penetration_m'] for x in report['trials'])
+    report['summary']['frames_with_self_penetration_over_2mm']=sum(x['deepest_self_penetration_m']>.002 for x in report['trials'])
     report.update(status='complete',ended_at=datetime.now(timezone.utc).isoformat())
     save()
     print(json.dumps(report['summary'],indent=2))

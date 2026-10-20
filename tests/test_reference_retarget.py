@@ -1,6 +1,7 @@
 from pathlib import Path
 import hashlib
 from io import BytesIO
+import json
 import xml.etree.ElementTree as ET
 from zipfile import ZipFile
 
@@ -76,6 +77,33 @@ def test_contact_refinement_reduces_real_mesh_overlap_without_moving_object(prob
         assert hand.data.qpos[hand.env.qadr[-1]]==hand.spec.neutral[-1]
         assert after.max()==pytest.approx(max(x['penetration_m']
                                              for x in hand.contacts(position,quaternion)))
+    finally:
+        hand.close()
+
+
+def test_self_contact_refinement_fixes_frozen_interfinger_overlap_without_moving_object(probe):
+    # Frozen robot-reference frame 0: ring/pinky overlap was missed by the
+    # object-only penalty. Read the tracked evidence, not local research data.
+    report=json.loads((Path(__file__).parents[1]/'docs/sim2real/retarget-preload-probe.json').read_text())
+    q=np.asarray(report['trials'][0]['actual_qpos_rad'])
+    hand=probe.HandKinematics()
+    pose=(np.array([.6,0,.8]),np.array([1.,0,0,0]))
+    try:
+        tips,proximal=hand.points(q)
+        hand.set_object_pose(*pose)
+        initial=hand.self_contact_depths()
+        assert initial.shape==(hand.model.ngeom,) and initial.max()>.005
+        assert any(set(c['bodies'])=={'right_ring_pp','right_pinky_pp'} for c in hand.self_contacts())
+        result,_=hand.fit(tips,proximal,q,pose,self_contact_aware=True)
+        hand.set_object_pose(*pose)
+        after=hand.self_contact_depths()
+        assert after.max()<.002 and after.max()<initial.max()/3
+        assert np.all(result.x>=hand.spec.lower[:16]) and np.all(result.x<=hand.spec.upper[:16])
+        np.testing.assert_allclose(hand.data.qpos[hand.env.oq:hand.env.oq+7],np.r_[*pose],atol=1e-12)
+        assert hand.data.qpos[hand.env.qadr[-1]]==hand.spec.neutral[-1]
+        assert hand.contact_depths(*pose).max()==0  # No object support was fabricated.
+        with pytest.raises(ValueError,match='requires an object pose'):
+            hand.fit(tips,proximal,q,self_contact_aware=True)
     finally:
         hand.close()
 
