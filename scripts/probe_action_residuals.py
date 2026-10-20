@@ -112,9 +112,9 @@ def main():
     parser.add_argument("--search-seed", type=int, default=0)
     parser.add_argument("--workers", type=int, default=4)
     args = parser.parse_args()
-    if (not 0 <= args.seed < args.seed+args.episodes <= 20000 or not 1 <= args.episodes <= 32
+    if (not 0 <= args.seed < args.seed+args.episodes <= 20000 or not 1 <= args.episodes <= 128
             or not 1 <= args.workers <= 4 or args.search_seed < 0):
-        parser.error("Use 1..32 training seeds below20000, 1..4 workers and nonnegative search seed")
+        parser.error("Use 1..128 training seeds below20000, 1..4 workers and nonnegative search seed")
     config, metadata = load_config(args.checkpoint)
     if (config.object != "pen" or config.angle != 35 or config.turns != 1
             or config.randomization != 1 or config.horizon != 240):
