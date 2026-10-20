@@ -11,6 +11,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import re
 import shutil
 import signal
 import subprocess
@@ -20,6 +21,7 @@ import time
 from orca_feetech.training_supervision import (failure_kind, process_argv, progress_sample,
                                               running_processes, wrapper_alive)
 from run_training_job import ROOT, archive_partial, now, save
+from orca_feetech.manipulation import TaskConfig
 
 
 def tail(path, limit=16000):
@@ -31,8 +33,50 @@ def tail(path, limit=16000):
         return ""
 
 
-def stage_options(initial, index):
+def load_plan(path):
+    if path is None:
+        return None
+    plan = json.loads(path.read_text())
+    keys = {"name", "angle", "turns", "horizon", "steps", "randomization"}
+    if not isinstance(plan, list) or not 1 <= len(plan) <= 10:
+        raise ValueError("Plan requires 1..10 stages")
+    names = set()
+    for stage in plan:
+        if not isinstance(stage, dict) or set(stage) != keys:
+            raise ValueError("Plan stage must contain name, angle, turns, horizon, steps, randomization")
+        name = stage["name"]
+        if (not isinstance(name, str) or not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,39}", name)
+                or "-quality-" in name or name in names):
+            raise ValueError("Plan stage names must be unique safe directory names")
+        names.add(name)
+        if any(type(stage[k]) is not int for k in ("steps", "turns", "horizon")) or stage["steps"] < 1:
+            raise ValueError("Plan budgets, turns and horizons must be positive integers")
+        TaskConfig(object="pen", **{k: stage[k] for k in ("angle", "turns", "horizon", "randomization")})
+    return plan
+
+
+def validate_plan_seeds(initial, plan, quality_retries):
+    blocks = []
+    for index in range(len(plan)):
+        blocks.append((initial["selection_seed"] + 1000*index, initial["selection_episodes"],
+                       f"development stage {index}"))
+        for attempt in range(quality_retries + 1):
+            blocks.append((initial["test_seed"] + 1000*index + 100000*attempt,
+                           initial["test_episodes"], f"test stage {index} attempt {attempt}"))
+    for i, (start, count, label) in enumerate(blocks):
+        for other, size, other_label in blocks[:i]:
+            if max(start, other) < min(start+count, other+size):
+                raise ValueError(f"Plan seed blocks overlap: {label} / {other_label}")
+
+
+def stage_options(initial, index, plan=None):
     options = initial.copy()
+    if plan is not None:
+        stage = plan[index]
+        options.update({k: v for k, v in stage.items() if k != "name"})
+        options.update(selection_seed=initial["selection_seed"] + 1000*index,
+                       test_seed=initial["test_seed"] + 1000*index)
+        return stage["name"], options
     name, angle, turns, horizon, steps = [
         ("initial", 15, 1, 240, initial["steps"]),
         ("15-r1", 15, 1, 240, 3000000), ("45-r1", 45, 1, 240, 3000000),
@@ -59,9 +103,10 @@ def job_command(options, output, resume=None):
     return command
 
 
-def quality_retry_options(initial, index, attempt, steps):
+def quality_retry_options(initial, index, attempt, steps, plan=None):
     """Bounded same-skill fine tuning; never advance a failed skill or reuse its test set."""
-    name, options = ("initial", initial.copy()) if index == 0 else stage_options(initial, index)
+    name, options = (("initial", initial.copy()) if index == 0 and plan is None
+                     else stage_options(initial, index, plan))
     options.update(steps=steps, learning_rate=max(1e-5, initial.get("learning_rate", 3e-4) / 2),
                    entropy_coef=min(.001, initial.get("entropy_coef", .01)))
     # The development set remains fixed. Each retry has its own formal test
@@ -102,7 +147,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--initial-job", type=Path, required=True)
     parser.add_argument("--state-dir", type=Path, required=True)
-    parser.add_argument("--course", action="store_true")
+    curriculum = parser.add_mutually_exclusive_group()
+    curriculum.add_argument("--course", action="store_true")
+    curriculum.add_argument("--plan", type=Path, help="Explicit ordered pen curriculum JSON")
     parser.add_argument("--poll-seconds", type=float, default=30)
     parser.add_argument("--stall-seconds", type=float, default=300)
     parser.add_argument("--max-restarts", type=int, default=3)
@@ -117,6 +164,7 @@ def main():
         parser.error("Invalid watchdog timing/retry limits")
     if not 0 <= args.quality_retries <= 3 or args.quality_retry_steps < 1:
         parser.error("Invalid bounded quality-pilot budget")
+    plan = load_plan(args.plan)
     args.initial_job = args.initial_job.resolve()
     args.state_dir = args.state_dir.resolve()
     args.state_dir.mkdir(parents=True, exist_ok=True)
@@ -131,6 +179,8 @@ def main():
         state = json.loads(path.read_text())
         if state["initial_job"] != str(args.initial_job) or state["course"] != args.course:
             raise ValueError("State directory belongs to a different job or monitoring plan")
+        if state.get("plan") != plan:
+            raise ValueError("Curriculum differs from the persisted monitoring plan")
         if (state.get("quality_retries", 0) != args.quality_retries
                 or state.get("quality_retry_steps", 2000000) != args.quality_retry_steps):
             raise ValueError("Quality pilot budget differs from the persisted monitoring plan")
@@ -142,9 +192,15 @@ def main():
         if args.course and (initial["object"] != "pen" or initial["angle"] != 15
                             or initial["turns"] != 1 or initial["randomization"] != .3):
             parser.error("Pen course must start with pen/15deg/r0.3")
+        if plan is not None:
+            if initial["object"] != "pen" or any(initial[k] != v for k, v in plan[0].items() if k != "name"):
+                parser.error("Initial job does not match the first explicit plan stage")
+            validate_plan_seeds(initial, plan, args.quality_retries)
         state = dict(status="monitoring", initial_job=str(args.initial_job), course=args.course,
+                     plan=plan,
                      initial_arguments=initial, active_job=str(args.initial_job), stage_index=0,
-                     stage_name="initial", restarts=0, stage_results=[], started_at=now(),
+                     stage_name=plan[0]["name"] if plan else "initial",
+                     restarts=0, stage_results=[], started_at=now(),
                      last_progress_at=time.time(), sample=None, pending_restart=None,
                      quality_attempt=0, quality_retries=args.quality_retries,
                      quality_retry_steps=args.quality_retry_steps)
@@ -217,7 +273,7 @@ def main():
                 if attempt <= args.quality_retries:
                     name, options = quality_retry_options(state["initial_arguments"],
                                                            state["stage_index"], attempt,
-                                                           args.quality_retry_steps)
+                                                           args.quality_retry_steps, plan)
                     options["num_envs"] = current.get("effective_num_envs", options["num_envs"])
                     output = args.state_dir / name
                     # A quality retry remains on the current course stage.
@@ -235,12 +291,13 @@ def main():
                       test=current.get("test"), job=str(job))
                 persist()
                 return
-            if not args.course or state["stage_index"] == 4:
+            last_stage = len(plan)-1 if plan is not None else 4 if args.course else 0
+            if state["stage_index"] == last_stage:
                 state.update(status="complete", selected_checkpoint=str(job / "selected/policy.zip"))
                 persist()
                 return
             index = state["stage_index"] + 1
-            name, options = stage_options(state["initial_arguments"], index)
+            name, options = stage_options(state["initial_arguments"], index, plan)
             options["num_envs"] = current.get("effective_num_envs", options["num_envs"])
             output = args.state_dir / name
             state.update(stage_index=index, stage_name=name, active_job=str(output), restarts=0,

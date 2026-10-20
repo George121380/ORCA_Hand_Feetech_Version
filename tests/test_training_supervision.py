@@ -120,3 +120,59 @@ def test_quality_pilot_stays_on_failed_skill_uses_new_test_and_stops_at_budget(m
     assert argv[argv.index("--selection-seed")+1] == "50000"
     assert "--reset-log-std" not in argv
     assert json.loads((initial / "job.json").read_text()) == original
+
+
+def test_explicit_plan_advances_only_after_pass_and_is_immutable_on_restart(monkeypatch, tmp_path):
+    monkeypatch.syspath_prepend(str(Path(__file__).parents[1] / "scripts"))
+    spec = importlib.util.spec_from_file_location("watch", Path(__file__).parents[1] / "scripts/watch_training.py")
+    watch = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(watch)
+    monkeypatch.setattr(watch.platform, "system", lambda: "Linux")
+    monkeypatch.setattr(watch.time, "sleep", lambda _: None)
+    plan = [dict(name="30-r1", angle=30, turns=1, horizon=240, steps=100, randomization=1.),
+            dict(name="45-r1", angle=45, turns=1, horizon=240, steps=200, randomization=1.)]
+    plan_file = tmp_path / "plan.json"
+    plan_file.write_text(json.dumps(plan))
+    initial = tmp_path / "initial"
+    initial.mkdir()
+    options = dict(device="cpu", num_envs=2, object="pen", selection_seed=70000,
+                   selection_episodes=40, test_seed=80000, test_episodes=100,
+                   **{k: v for k, v in plan[0].items() if k != "name"})
+    (initial / "job.json").write_text(json.dumps(dict(status="complete", acceptance_met=True,
+                                                     arguments=options)))
+    launches = []
+
+    def launch(argv, **kwargs):
+        launches.append(argv)
+        output = Path(argv[argv.index("--output")+1])
+        output.mkdir()
+        (output / "job.json").write_text(json.dumps(dict(status="complete", acceptance_met=False,
+                                                        arguments=options)))
+        return SimpleNamespace(pid=99999999)
+
+    monkeypatch.setattr(watch.subprocess, "Popen", launch)
+    output = tmp_path / "watch"
+    monkeypatch.setattr(watch.sys, "argv", ["watch", "--initial-job", str(initial),
+                       "--state-dir", str(output), "--plan", str(plan_file)])
+    watch.main()
+    state = json.loads((output / "watchdog.json").read_text())
+    assert state["status"] == "quality_gate_failed" and state["stage_name"] == "45-r1"
+    assert state["plan"] == plan and len(launches) == 1
+    argv = launches[0]
+    assert argv[argv.index("--angle")+1] == "45"
+    assert argv[argv.index("--test-seed")+1] == "81000"
+    assert argv[argv.index("--resume")+1] == str(initial / "selected/policy.zip")
+    plan[1]["angle"] = 90
+    plan_file.write_text(json.dumps(plan))
+    with pytest.raises(ValueError, match="Curriculum differs"):
+        watch.main()
+
+
+def test_plan_rejects_cross_stage_test_development_overlap(monkeypatch):
+    monkeypatch.syspath_prepend(str(Path(__file__).parents[1] / "scripts"))
+    spec = importlib.util.spec_from_file_location("watch", Path(__file__).parents[1] / "scripts/watch_training.py")
+    watch = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(watch)
+    options = dict(selection_seed=80000, selection_episodes=40, test_seed=79000, test_episodes=100)
+    with pytest.raises(ValueError, match="seed blocks overlap"):
+        watch.validate_plan_seeds(options, [{}, {}], 2)
