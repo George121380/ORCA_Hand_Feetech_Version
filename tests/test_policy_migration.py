@@ -78,3 +78,14 @@ def test_migration_rejects_tampered_legacy_contract_before_writing(tmp_path):
     with pytest.raises(ValueError, match="mismatch"):
         migrate_v6_checkpoint(tmp_path / "v6/policy.zip", tmp_path / "invalid")
     assert not (tmp_path / "invalid").exists()
+
+
+def test_migration_rejects_nonfinite_source_weights(tmp_path):
+    import torch
+    model, _ = legacy_checkpoint(tmp_path / "v6")
+    with torch.no_grad():
+        next(model.policy.parameters()).fill_(float("nan"))
+    model.save(tmp_path / "v6/policy.zip")
+    with pytest.raises(ValueError, match="Non-finite"):
+        migrate_v6_checkpoint(tmp_path / "v6/policy.zip", tmp_path / "invalid")
+    assert not (tmp_path / "invalid").exists()

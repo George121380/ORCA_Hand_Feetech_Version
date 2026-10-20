@@ -10,6 +10,7 @@ import numpy as np
 
 from .checkpoint import load_v6_config_for_migration
 from .manipulation import ManipulationEnv, TASK_ID, FRAME_SIZE, HISTORY
+from .training_supervision import checkpoint_steps
 
 LEGACY_FRAME_SIZE = 58
 
@@ -28,6 +29,7 @@ def migrate_v6_checkpoint(source, destination):
         raise FileExistsError(destination)
     config, metadata = load_v6_config_for_migration(source)
     torch.set_num_threads(1)
+    checkpoint_steps(source, check_weights=True)
     old = PPO.load(source, device="cpu")
     if (old.observation_space.shape != (LEGACY_FRAME_SIZE * HISTORY,)
             or old.action_space.shape != (16,) or old.use_sde
@@ -81,7 +83,7 @@ def migrate_v6_checkpoint(source, destination):
                           action_std=float((a.stddev-b.stddev).abs().max()),
                           value=float((old.policy.predict_values(old_tensor)
                                        - new.policy.predict_values(new_tensor)).abs().max()))
-        if max(errors.values()) > 1e-5:
+        if not all(np.isfinite(error) and error <= 1e-5 for error in errors.values()):
             raise ValueError(f"Expanded policy changes initial behavior: {errors}")
         new_metadata = dict(metadata)
         new_metadata.update(task_id=TASK_ID, fingerprint=config.fingerprint(), frame_size=FRAME_SIZE,
