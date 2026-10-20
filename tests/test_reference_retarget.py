@@ -1,4 +1,8 @@
 from pathlib import Path
+import hashlib
+from io import BytesIO
+import xml.etree.ElementTree as ET
+from zipfile import ZipFile
 
 import numpy as np
 import pytest
@@ -74,3 +78,59 @@ def test_contact_refinement_reduces_real_mesh_overlap_without_moving_object(prob
                                              for x in hand.contacts(position,quaternion)))
     finally:
         hand.close()
+
+
+def test_source_robot_fk_checks_all_published_links_and_derives_actual_tip_sites(probe,tmp_path):
+    import mujoco
+    names=['thumb','index_finger','middle_finger','ring_finger','pinky']
+    root=ET.Element('mujoco')
+    wrist=ET.SubElement(ET.SubElement(root,'worldbody'),'body',name='r_wrist')
+    body_names=['r_wrist']
+    for finger,name in enumerate(names):
+        parent=wrist
+        joints=(['cmc_flex','cmc_abd','mcp','ip'] if finger==0 else ['mcp_flex','mcp_abd','pip','dip'])
+        for index,part in enumerate(['proximal','proximal_abd','middle','distal']):
+            body_name=f'r_{name}_{part}'
+            pos=f'{finger*.02} .03 0' if index==0 else '0 .02 0'
+            parent=ET.SubElement(parent,'body',name=body_name,pos=pos)
+            ET.SubElement(parent,'joint',name=f'r_{name}_{joints[index]}',axis='0 0 1')
+            ET.SubElement(parent,'geom',type='sphere',size='.003',mass='.01')
+            body_names.append(body_name)
+        ET.SubElement(parent,'site',name=f'r_{name}_tip',pos='0 .01 0')
+    model_path=tmp_path/'source.xml'
+    model_path.write_bytes(ET.tostring(root))
+    model=mujoco.MjModel.from_xml_path(str(model_path))
+    data=mujoco.MjData(model)
+    q=np.arange(60).reshape(3,20)/100
+    wrist_poses=np.array([[0,0,0,1,0,0,0],[.1,-.2,.3,np.cos(.2),0,0,np.sin(.2)],
+                          [-.1,.1,.2,np.cos(.1),np.sin(.1),0,0]])
+    links=[]
+    tips=[]
+    for joint_pose,pose in zip(q,wrist_poses):
+        model.body_pos[model.body('r_wrist').id]=pose[:3]
+        model.body_quat[model.body('r_wrist').id]=pose[3:]
+        data.qpos[:]=joint_pose
+        mujoco.mj_kinematics(model,data)
+        links.append(data.xpos[[model.body(n).id for n in body_names]].copy())
+        tips.append(data.site_xpos.copy())
+    links=np.array(links)
+    def archive(published_links):
+        buf=BytesIO()
+        np.savez(buf,reference_qpos=q,wrist_pose_w=wrist_poses,link_pos_w=published_links)
+        raw=buf.getvalue()
+        path=tmp_path/'source.zip'
+        with ZipFile(path,'w') as z:
+            z.writestr('fixture/01_single_axis/clip_001.npz',raw)
+        return path,hashlib.sha256(raw).hexdigest()
+    path,sha=archive(links)
+    points,info=probe.source_robot_points(path,model_path,sha)
+    assert points.shape==(3,21,3) and info['checked_frames']==3
+    np.testing.assert_allclose(points[:,probe.TIP_IDS],tips,atol=1e-12)
+    np.testing.assert_allclose(points[:,0],wrist_poses[:,:3],atol=1e-12)
+    assert not info['source_physics_stepped'] and not info['source_joint_angles_copied_to_orca']
+    with pytest.raises(ValueError,match='hash mismatch'):
+        probe.source_robot_points(path,model_path,'wrong')
+    links[-1,-1,0]+=.001  # The last frame must be checked, not only the first.
+    path,sha=archive(links)
+    with pytest.raises(ValueError,match='does not reproduce published links'):
+        probe.source_robot_points(path,model_path,sha)

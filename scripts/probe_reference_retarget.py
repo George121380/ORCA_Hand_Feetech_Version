@@ -176,6 +176,66 @@ def source_clip(archive):
         return landmarks,obj,index['frame_dt'],entry['sha256']
 
 
+def source_robot_points(archive,model_path,expected_sha):
+    """Derive source robot landmarks by FK only; never run external Python code.
+
+    Source links are checked against all published link_pos_w frames before
+    using the model's fingertip sites. No source joint angles reach ORCA.
+    """
+    with ZipFile(archive) as z:
+        names=[n for n in z.namelist() if n.endswith('/01_single_axis/clip_001.npz')]
+        if len(names)!=1 or z.getinfo(names[0]).file_size>64*1024*1024:
+            raise ValueError('Expected bounded fixed source clip')
+        raw=z.read(names[0])
+    if hashlib.sha256(raw).hexdigest()!=expected_sha:
+        raise ValueError('Source robot clip hash mismatch')
+    with np.load(BytesIO(raw),allow_pickle=False) as source:
+        q=source['reference_qpos'].astype(float)
+        wrist=source['wrist_pose_w'].astype(float)
+        links=source['link_pos_w'].astype(float)
+    if (q.ndim!=2 or q.shape[1]!=20 or wrist.shape!=(len(q),7)
+            or links.shape!=(len(q),21,3) or not np.isfinite(q).all()
+            or not np.isfinite(wrist).all() or not np.isfinite(links).all()
+            or np.any(np.linalg.norm(wrist[:,3:],axis=1)<1e-6)):
+        raise ValueError('Invalid source robot arrays')
+    model=mujoco.MjModel.from_xml_path(str(model_path.resolve()))
+    data=mujoco.MjData(model)
+    names=['thumb','index_finger','middle_finger','ring_finger','pinky']
+    expected_joints=['r_thumb_cmc_flex','r_thumb_cmc_abd','r_thumb_mcp','r_thumb_ip']
+    expected_joints += [f'r_{f}_{j}' for f in names[1:] for j in ('mcp_flex','mcp_abd','pip','dip')]
+    if model.nq!=20 or [model.joint(i).name for i in range(model.njnt)]!=expected_joints:
+        raise ValueError('Unexpected source model joint contract')
+    wrist_id=model.body('r_wrist').id
+    bodies=np.array([model.body('r_wrist').id]+[model.body(f'r_{f}_{part}').id
+        for f in names for part in ('proximal','proximal_abd','middle','distal')])
+    sites=np.array([model.site(f'r_{f}_tip').id for f in names])
+    points=np.empty((len(q),21,3))
+    errors=[]
+    for frame in range(len(q)):
+        model.body_pos[wrist_id]=wrist[frame,:3]
+        model.body_quat[wrist_id]=wrist[frame,3:]/np.linalg.norm(wrist[frame,3:])
+        data.qpos[:]=q[frame]
+        mujoco.mj_kinematics(model,data)
+        actual=data.xpos[bodies]
+        errors.append(np.linalg.norm(actual-links[frame],axis=1))
+        points[frame,0]=actual[0]
+        for finger in range(5):
+            # Four human-layout slots per digit: base, next flexion joint,
+            # distal flexion joint, actual model tip site. Abduction links
+            # are intentionally not mistaken for fingertips.
+            start=1+4*finger
+            points[frame,start:start+3]=actual[[start,start+2,start+3]]
+            points[frame,start+3]=data.site_xpos[sites[finger]]
+    maximum=float(np.max(errors))
+    if maximum>1e-4:
+        raise ValueError(f'Source FK does not reproduce published links: {maximum}m')
+    return points,dict(model_xml_sha256=hashlib.sha256(model_path.read_bytes()).hexdigest(),
+        checked_frames=len(q),maximum_link_position_error_m=maximum,
+        mean_link_position_error_m=float(np.mean(errors)),source_joint_order=expected_joints,
+        point_mapping='wrist; per digit: proximal origin, middle origin, distal origin, model tip site',
+        source_physics_stepped=False,source_joint_angles_copied_to_orca=False)
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--archive',type=Path,required=True)
@@ -183,10 +243,19 @@ def main():
     p.add_argument('--frames',type=int,default=32)
     p.add_argument('--contact-aware',action='store_true',
                    help='Refine each baseline keyframe with a fixed object pose and penetration penalty')
+    p.add_argument('--object-z-offset-mm',type=int,choices=[0,-10,-20],default=0,
+                   help='Bounded reference-placement diagnostic; moves only the object reference in world Z')
+    p.add_argument('--wuji-model',type=Path,
+                   help='Optional raw WUJI Hand2 XML: derive source robot tip sites instead of human landmarks')
     args=p.parse_args()
     if not 2<=args.frames<=64:
         p.error('Use2..64 evenly sampled keyframes')
+    if args.object_z_offset_mm and not args.contact_aware:
+        p.error('Placement candidates require --contact-aware to refit the hand')
     points,objects,dt,sha=source_clip(args.archive)
+    source_fk=None
+    if args.wuji_model:
+        points,source_fk=source_robot_points(args.archive,args.wuji_model,sha)
     hand=HandKinematics()
     source_lengths=np.array([sum(np.linalg.norm(np.diff(f,axis=0),axis=1))
                              for f in points[0].reshape(21,3)[5:].reshape(4,4,3)])
@@ -208,6 +277,9 @@ def main():
         model_sha256=hand.spec.source_sha256,
         geometry_sha256=hashlib.sha256(json.dumps(geometry_signature('pen'),sort_keys=True).encode()).hexdigest(),
         source_from_orca_object_body=SOURCE_FROM_ORCA_BODY.tolist(),
+        reference_object_translation_m=[0.,0.,args.object_z_offset_mm/1000],
+        reference_point_source='wuji_robot_sites' if source_fk else 'human_mediapipe',
+        source_robot_fk=source_fk,
         joint_names=JOINT_NAMES,scale=scale,fingertip_proxy_offsets_m=hand.offsets.tolist(),
         alignment='Per-frame source hand basis mapped to neutral ORCA hand basis; one bone-length scale',
         limitations=['Contacts are static mesh intersections, not support forces or physical replay.',
@@ -232,6 +304,7 @@ def main():
             # never changes the next frame's baseline fit or the object pose.
             previous=result.x.copy()
             position=hand.center+scale*((objects[frame,:3]-center)@rotation)@hand.rotation.T
+            position+=np.array([0.,0.,args.object_z_offset_mm/1000])
             quat=np.empty(4)
             mapped=object_rotation(objects[frame,3:],rotation,hand.rotation)
             mujoco.mju_mat2Quat(quat,mapped.ravel())
