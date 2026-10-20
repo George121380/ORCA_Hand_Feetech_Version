@@ -1,0 +1,3635 @@
+{
+  "timestamp": "2026-10-20T16:48:42.039940+00:00",
+  "status": "complete",
+  "purpose": "Synthetic-at-rest, nominal-physics stationary hold diagnostic; not trajectory or policy acceptance",
+  "is_physics_rollout": true,
+  "acceptance_met": false,
+  "randomization_applied": false,
+  "seconds_per_hold": 1.0,
+  "maximum_holds": 128,
+  "reference_sha256": "c99297a2780445caaa93123e5a5dc85489134090da92dcdb6791f1d671ea0ead",
+  "source_sha256": "ca0b9b5dfc5de0170538bb13e95c56d5c2f20853e22b8405fe4b6853180b8348",
+  "source_url": "https://github.com/wuji-technology/wuji-mjlab/releases/tag/v2026.9.27",
+  "reference_attribution": "Copyright2026 Wuji Technology Co., Ltd.; see docs/sim2real/third-party/wuji/",
+  "model_sha256": "fad505b767154916bebe9f048f13004328dcb49ae51981903d05a8640ee98a42",
+  "geometry_sha256": "4b2937c1c2e2035d375a9686d2db34f5a743759489226d77cc817f7be95ea0b9",
+  "script_sha256": "14e20de595964aac939bdd39294932f40b485dc206fda4cec7aa7500e9415ad8",
+  "runtime": {
+    "system": "Linux",
+    "python": "3.11.15",
+    "mujoco": "3.13.0",
+    "numpy": "2.3.5"
+  },
+  "conditions": {
+    "initial_velocities": "Zero only at synthetic initialization",
+    "control": "Constant nominal position-servo targets; fixed wrist equality",
+    "diagnostic_preservation_angle_deg": 8.0,
+    "physics_timestep_s": 0.002,
+    "sample_interval_s": 0.05
+  },
+  "limitations": [
+    "No approach from a canonical reset, trajectory replay, retiming, delay or randomization.",
+    "Static hold failure does not prove a moving reference phase is infeasible.",
+    "Summed normal contact forces do not establish force closure.",
+    "A stationary hold is not rotation success or deployment acceptance."
+  ],
+  "trials": [
+    {
+      "frame": 0,
+      "time_s": 0.0,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19254982083020683,
+            0.03721232619459398,
+            0.20893966253702081
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 4.355184701180715,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.006753549924372454,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.16946637933008044,
+            0.03425861184418853,
+            0.17075762957232993
+          ],
+          "displacement_m": 0.04471506839165395,
+          "rotation_change_deg": 100.7615289748699,
+          "shaft_change_deg": 25.87100849424896,
+          "linear_speed_mps": 0.0002588730036453747,
+          "angular_speed_rps": 0.04003827213256611,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.3956815895552493,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00012845218633851432,
+          "retained": false,
+          "resting": false,
+          "command_error_rms_rad": 0.012424742608540243
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": false,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.05432798378990501,
+        "peak_linear_speed_mps": 0.5811249477446399,
+        "peak_angular_speed_rps": 11.568290169908332,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19254982083020683,
+            0.03721232619459398,
+            0.20893966253702081
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 2.113436235950848,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005950016811183496,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.16915961603110835,
+            0.02733697393932191,
+            0.1708790095581435
+          ],
+          "displacement_m": 0.04575191327024477,
+          "rotation_change_deg": 153.0810446982632,
+          "shaft_change_deg": 16.200053078831104,
+          "linear_speed_mps": 0.004803531572396291,
+          "angular_speed_rps": 0.5924534433731848,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.3956241315292459,
+          "tower_contact": false,
+          "deepest_penetration_m": 7.12751892156748e-05,
+          "retained": false,
+          "resting": false,
+          "command_error_rms_rad": 0.012519417384229634
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": false,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.06155105329876399,
+        "peak_linear_speed_mps": 0.683805920393243,
+        "peak_angular_speed_rps": 39.457507819636064,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 12,
+      "time_s": 0.24,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.1925821965965388,
+            0.03672399228921021,
+            0.20885746016005924
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.5561624717731912,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.007034660346188863,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.169044991526306,
+            0.0354119774207472,
+            0.1706217271604529
+          ],
+          "displacement_m": 0.044918734215808505,
+          "rotation_change_deg": 82.5876409617275,
+          "shaft_change_deg": 23.35268131148898,
+          "linear_speed_mps": 0.00011220508402316919,
+          "angular_speed_rps": 0.010920587655233568,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.4042377246263821,
+          "tower_contact": false,
+          "deepest_penetration_m": 7.290854713291059e-05,
+          "retained": false,
+          "resting": false,
+          "command_error_rms_rad": 0.015088194984318107
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": false,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.05499091635550168,
+        "peak_linear_speed_mps": 0.6030366680276551,
+        "peak_angular_speed_rps": 10.604904017891302,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.1925821965965388,
+            0.03672399228921021,
+            0.20885746016005924
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.0097611797268087,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005986412504848104,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17012941589769687,
+            0.024120828311715185,
+            0.1708411801856836
+          ],
+          "displacement_m": 0.04591518971368878,
+          "rotation_change_deg": 141.93421968119821,
+          "shaft_change_deg": 14.292948781510994,
+          "linear_speed_mps": 0.000626429341575326,
+          "angular_speed_rps": 0.07844016832480695,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.39635576517191085,
+          "tower_contact": false,
+          "deepest_penetration_m": 7.718657938812117e-05,
+          "retained": false,
+          "resting": false,
+          "command_error_rms_rad": 0.01443227814421678
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": false,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.06126281829160643,
+        "peak_linear_speed_mps": 0.5294927985966545,
+        "peak_angular_speed_rps": 44.775689785400246,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 24,
+      "time_s": 0.48,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19255388949051705,
+            0.03759252427269673,
+            0.2081215525820224
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.590167610789716,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.007001363380852824,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1690942681047368,
+            0.036060737259806984,
+            0.17064545398467337
+          ],
+          "displacement_m": 0.04423978043678835,
+          "rotation_change_deg": 54.989861289736496,
+          "shaft_change_deg": 23.792951526984993,
+          "linear_speed_mps": 9.668356375705116e-05,
+          "angular_speed_rps": 0.010502901406316087,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.41104666912449866,
+          "tower_contact": false,
+          "deepest_penetration_m": 8.865317154622824e-05,
+          "retained": false,
+          "resting": false,
+          "command_error_rms_rad": 0.01773837004201914
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": false,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.05326179803703478,
+        "peak_linear_speed_mps": 0.5848687733964718,
+        "peak_angular_speed_rps": 10.329530392837327,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19255388949051705,
+            0.03759252427269673,
+            0.2081215525820224
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.0387293110429863,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005996596959621792,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17068217791268295,
+            0.02297359343933351,
+            0.17067364895725406
+          ],
+          "displacement_m": 0.04576494719700391,
+          "rotation_change_deg": 132.65962498705258,
+          "shaft_change_deg": 17.65225207286092,
+          "linear_speed_mps": 0.0006110060676814383,
+          "angular_speed_rps": 0.0887574120580231,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.39310152739604953,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00010140798803419436,
+          "retained": false,
+          "resting": false,
+          "command_error_rms_rad": 0.016207605024340682
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": false,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.06088534384263115,
+        "peak_linear_speed_mps": 0.5120631753246992,
+        "peak_angular_speed_rps": 44.44458542868423,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 36,
+      "time_s": 0.72,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19328209027465876,
+            0.043252642790417795,
+            0.2123353487143124
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 2.091309789151873e-06,
+          "shaft_change_deg": 1.7075472925031877e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 7.826871220855494,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.011210084127587644,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17225552337588454,
+            0.038067298578827784,
+            0.17238941579792363
+          ],
+          "displacement_m": 0.045438770523661055,
+          "rotation_change_deg": 38.185115524407905,
+          "shaft_change_deg": 22.597423011662972,
+          "linear_speed_mps": 0.038716194993922856,
+          "angular_speed_rps": 5.280181188182091,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.3815806478727004,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00020778141947938545,
+          "retained": false,
+          "resting": false,
+          "command_error_rms_rad": 0.0037730326972810714
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": false,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.06378258152917635,
+        "peak_linear_speed_mps": 0.5509467642954905,
+        "peak_angular_speed_rps": 18.882463562944352,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19328209027465876,
+            0.043252642790417795,
+            0.2123353487143124
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 2.091309789151873e-06,
+          "shaft_change_deg": 1.7075472925031877e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 2.046842644352216,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0006397280104115709,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.16896829346001666,
+            0.017334751929940297,
+            0.17111997194659434
+          ],
+          "displacement_m": 0.05442063087014222,
+          "rotation_change_deg": 130.02033633908877,
+          "shaft_change_deg": 16.628923614326496,
+          "linear_speed_mps": 0.009142381784073122,
+          "angular_speed_rps": 1.20680930304844,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.3976105578898854,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00012500120116606082,
+          "retained": false,
+          "resting": false,
+          "command_error_rms_rad": 0.0029298104753283454
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": false,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.059963718910011995,
+        "peak_linear_speed_mps": 0.6964628562977794,
+        "peak_angular_speed_rps": 23.405270972033218,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 47,
+      "time_s": 0.9400000000000001,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19465073716482395,
+            0.04423045764811843,
+            0.20863876851708332
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 1.2074182697257333e-06,
+          "shaft_change_deg": 8.537736462515939e-07,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 8.151872815284724,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.009192999022308319,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.16872337279107275,
+            0.032914023515118955,
+            0.1720217849809299
+          ],
+          "displacement_m": 0.04627195033865235,
+          "rotation_change_deg": 132.33802318730736,
+          "shaft_change_deg": 25.870576460603676,
+          "linear_speed_mps": 0.034380530695477717,
+          "angular_speed_rps": 4.3030557074184115,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.39279648232758174,
+          "tower_contact": false,
+          "deepest_penetration_m": 6.320425803697202e-05,
+          "retained": false,
+          "resting": false,
+          "command_error_rms_rad": 0.003793761374658512
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": false,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.06020105210175953,
+        "peak_linear_speed_mps": 0.5839548601778516,
+        "peak_angular_speed_rps": 26.319087914301903,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19465073716482395,
+            0.04423045764811843,
+            0.20863876851708332
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 1.2074182697257333e-06,
+          "shaft_change_deg": 8.537736462515939e-07,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 2.251340162268197,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0006073019196616875,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.185204942440049,
+            0.04458765669067169,
+            0.2002369109954057
+          ],
+          "displacement_m": 0.01264681141446958,
+          "rotation_change_deg": 25.50793378919691,
+          "shaft_change_deg": 25.067141985109387,
+          "linear_speed_mps": 0.0014240449364666613,
+          "angular_speed_rps": 0.012976245367543295,
+          "hand_contact": false,
+          "hand_normal_force_sum_n": 0.5942780578599394,
+          "tower_contact": true,
+          "deepest_penetration_m": 0.00012409039229531894,
+          "retained": false,
+          "resting": false,
+          "command_error_rms_rad": 0.0036523073113462487
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": false,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.01264681141446958,
+        "peak_linear_speed_mps": 0.2921941396367942,
+        "peak_angular_speed_rps": 6.176250754527902,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 59,
+      "time_s": 1.18,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19832453775230977,
+            0.04397689872337314,
+            0.20472566174602924
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 11.831071072785392,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0111494561164484,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.18342923148267193,
+            0.03867546489391263,
+            0.21681938489046063
+          ],
+          "displacement_m": 0.0199056145096959,
+          "rotation_change_deg": 36.713481190745725,
+          "shaft_change_deg": 36.44348212881412,
+          "linear_speed_mps": 0.0012772845801215336,
+          "angular_speed_rps": 0.1921705162745819,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 5.0666637630350495,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0004161460584957456,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.01956052921416454
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.0199056145096959,
+        "peak_linear_speed_mps": 0.16237385354898037,
+        "peak_angular_speed_rps": 4.084432432651618,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19832453775230977,
+            0.04397689872337314,
+            0.20472566174602924
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 2.5605035274910746,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0006461199407828404,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1891298141591542,
+            0.044865281680213726,
+            0.20650781336497798
+          ],
+          "displacement_m": 0.009407881303750493,
+          "rotation_change_deg": 35.55948609957306,
+          "shaft_change_deg": 29.679662916893935,
+          "linear_speed_mps": 0.0003904208784702602,
+          "angular_speed_rps": 0.11831583571224066,
+          "hand_contact": false,
+          "hand_normal_force_sum_n": 0.9878956658384596,
+          "tower_contact": true,
+          "deepest_penetration_m": 0.00019974155645229204,
+          "retained": false,
+          "resting": false,
+          "command_error_rms_rad": 0.012813508681880376
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": false,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.014150620381479849,
+        "peak_linear_speed_mps": 0.17138368738486012,
+        "peak_angular_speed_rps": 5.588864091903311,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 71,
+      "time_s": 1.42,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19845886374499136,
+            0.039700254807682654,
+            0.20275006371101065
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 1.2074182697257333e-06,
+          "shaft_change_deg": 1.2074182697257333e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 28.559965055370867,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.008721401690994088,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.19039398933055202,
+            0.03450905533954187,
+            0.2086197966833756
+          ],
+          "displacement_m": 0.011244755062053234,
+          "rotation_change_deg": 37.84939748256579,
+          "shaft_change_deg": 35.46557130333559,
+          "linear_speed_mps": 0.0009037487527263131,
+          "angular_speed_rps": 0.06692111529094559,
+          "hand_contact": false,
+          "hand_normal_force_sum_n": 12.706906741819346,
+          "tower_contact": true,
+          "deepest_penetration_m": 0.0011016696203991526,
+          "retained": false,
+          "resting": false,
+          "command_error_rms_rad": 0.046326990304897266
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": false,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.0144896622397521,
+        "peak_linear_speed_mps": 0.1556831652724977,
+        "peak_angular_speed_rps": 4.4050171844282175,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19845886374499136,
+            0.039700254807682654,
+            0.20275006371101065
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 1.2074182697257333e-06,
+          "shaft_change_deg": 1.2074182697257333e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 2.514808671045536,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0006064258096809701,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1786907508415044,
+            0.039589944036534444,
+            0.182361584706376
+          ],
+          "displacement_m": 0.02839860088725616,
+          "rotation_change_deg": 34.904131414201665,
+          "shaft_change_deg": 17.297118662723072,
+          "linear_speed_mps": 0.0021293141705235456,
+          "angular_speed_rps": 0.027841541838071127,
+          "hand_contact": false,
+          "hand_normal_force_sum_n": 1.7753950002248016,
+          "tower_contact": true,
+          "deepest_penetration_m": 0.0004885765680417574,
+          "retained": false,
+          "resting": false,
+          "command_error_rms_rad": 0.005243374812470656
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": false,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.029238747500529835,
+        "peak_linear_speed_mps": 0.3402148787646937,
+        "peak_angular_speed_rps": 7.774357343234464,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 83,
+      "time_s": 1.6600000000000001,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.1956995632589673,
+            0.031233856043358297,
+            0.20745234355371683
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 1.7075472925031877e-06,
+          "shaft_change_deg": 1.2074182697257333e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 19.371391303572178,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.011430618957735197,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.18889070397250643,
+            0.02717305125339575,
+            0.22107448465198196
+          ],
+          "displacement_m": 0.015761136647654925,
+          "rotation_change_deg": 14.265905818132552,
+          "shaft_change_deg": 13.31929865193589,
+          "linear_speed_mps": 0.0013259084276970037,
+          "angular_speed_rps": 0.0916144533873164,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 13.479290593946923,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.001309711172830504,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.04830981448708144
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.015761136647654925,
+        "peak_linear_speed_mps": 0.15857702638572074,
+        "peak_angular_speed_rps": 1.9820053412595715,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.1956995632589673,
+            0.031233856043358297,
+            0.20745234355371683
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 1.7075472925031877e-06,
+          "shaft_change_deg": 1.2074182697257333e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 3.915183170186488,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005664534050085928,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1858717655438627,
+            0.030712594420117416,
+            0.21853765490609225
+          ],
+          "displacement_m": 0.014823678672582679,
+          "rotation_change_deg": 12.056597617667279,
+          "shaft_change_deg": 11.580674972007508,
+          "linear_speed_mps": 0.0010563922321811798,
+          "angular_speed_rps": 0.08606871511533765,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 2.750029155590302,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00046964727267963816,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.01805393264791319
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.01570515431773013,
+        "peak_linear_speed_mps": 0.16367534407318834,
+        "peak_angular_speed_rps": 1.8661753773747913,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 95,
+      "time_s": 1.9000000000000001,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19784372557791569,
+            0.02854733570700145,
+            0.21279520961612086
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 2.091309789151873e-06,
+          "shaft_change_deg": 1.7075472925031877e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 21.492988686332104,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00935978818298421,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1910059301721783,
+            0.028126224265341223,
+            0.23037837904573455
+          ],
+          "displacement_m": 0.01887062871362589,
+          "rotation_change_deg": 23.257837848812777,
+          "shaft_change_deg": 18.95321189788268,
+          "linear_speed_mps": 0.01522390996436651,
+          "angular_speed_rps": 1.4179994015466457,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 10.860932589780735,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.001163195350585555,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.04475320359936394
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.01887062871362589,
+        "peak_linear_speed_mps": 0.17299385988651425,
+        "peak_angular_speed_rps": 6.782510121230862,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19784372557791569,
+            0.02854733570700145,
+            0.21279520961612086
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 2.091309789151873e-06,
+          "shaft_change_deg": 1.7075472925031877e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 2.9432011856874936,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.000558477521400732,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1857250612170732,
+            0.029393625346096356,
+            0.2197590365053657
+          ],
+          "displacement_m": 0.01400261107748705,
+          "rotation_change_deg": 24.763713238713134,
+          "shaft_change_deg": 24.57170707457751,
+          "linear_speed_mps": 0.0010414639906883634,
+          "angular_speed_rps": 0.07182540304504888,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.5032541712911618,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0002321634843840979,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.013079625182296084
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.01613611158757254,
+        "peak_linear_speed_mps": 0.1756694598939973,
+        "peak_angular_speed_rps": 2.371943734643188,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 107,
+      "time_s": 2.14,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19556313753626964,
+            0.025053459959658693,
+            0.20890612511208684
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 2.4148365394514667e-06,
+          "shaft_change_deg": 1.9090959104164224e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 20.11989593811086,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.012260206286497675,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.18899271147079866,
+            0.01494387238005139,
+            0.21133313558470238
+          ],
+          "displacement_m": 0.012298969044019755,
+          "rotation_change_deg": 33.22884212580488,
+          "shaft_change_deg": 21.843501640237527,
+          "linear_speed_mps": 0.012415189480760714,
+          "angular_speed_rps": 0.2874597550060123,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 9.397955858748535,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0007050641548491481,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.04312911724331988
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.013705904801203176,
+        "peak_linear_speed_mps": 0.13872456424996304,
+        "peak_angular_speed_rps": 4.262583307655134,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19556313753626964,
+            0.025053459959658693,
+            0.20890612511208684
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 2.4148365394514667e-06,
+          "shaft_change_deg": 1.9090959104164224e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 2.992014832927982,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005866678465016946,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.18584311259773117,
+            0.025805258719514605,
+            0.20022306330813894
+          ],
+          "displacement_m": 0.013055253673227091,
+          "rotation_change_deg": 12.262268654818735,
+          "shaft_change_deg": 12.262071454925952,
+          "linear_speed_mps": 0.0018403196006876077,
+          "angular_speed_rps": 0.06040626124973817,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.9038751335957164,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00016378925696721672,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.013306150823970736
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.014978342500816878,
+        "peak_linear_speed_mps": 0.475902519158174,
+        "peak_angular_speed_rps": 4.392749171369988,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 119,
+      "time_s": 2.38,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19680151334391788,
+            0.024227543087163662,
+            0.20304823061709598
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 1.2074182697257333e-06,
+          "shaft_change_deg": 8.537736462515939e-07,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 94.53930217120211,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.013990134293711478,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.18839714172306732,
+            0.01644117885689809,
+            0.20302958968440665
+          ],
+          "displacement_m": 0.011456931428270352,
+          "rotation_change_deg": 51.40127100753145,
+          "shaft_change_deg": 36.32602726090562,
+          "linear_speed_mps": 0.0022479041758901993,
+          "angular_speed_rps": 0.06327431820488366,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 16.04031973661244,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0017979628288454959,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.05972504506243764
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.012161873706042015,
+        "peak_linear_speed_mps": 0.15745707722231703,
+        "peak_angular_speed_rps": 6.620930452506974,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19680151334391788,
+            0.024227543087163662,
+            0.20304823061709598
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 1.2074182697257333e-06,
+          "shaft_change_deg": 8.537736462515939e-07,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 3.886613566552156,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005580118074079536,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.18619975843133943,
+            0.020740489080193835,
+            0.19114899862110257
+          ],
+          "displacement_m": 0.01631405758750345,
+          "rotation_change_deg": 35.83814152202029,
+          "shaft_change_deg": 13.84992897111531,
+          "linear_speed_mps": 0.0039564700922214,
+          "angular_speed_rps": 0.1568621367457103,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.932708707786749,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00022370988379375768,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.043189807336741735
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.01631405758750345,
+        "peak_linear_speed_mps": 0.22410997360686796,
+        "peak_angular_speed_rps": 5.7917250850642175,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 131,
+      "time_s": 2.62,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18859058120966765,
+            0.027000324047650254,
+            0.20368443858252816
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 46.38582941692598,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.013097601029305914,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.18494355539780857,
+            0.02277680801639167,
+            0.2138234640660048
+          ],
+          "displacement_m": 0.011573189823607553,
+          "rotation_change_deg": 10.641223587144394,
+          "shaft_change_deg": 10.14874624732314,
+          "linear_speed_mps": 0.003284579888447528,
+          "angular_speed_rps": 0.16470419962398128,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 17.823932225855813,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0018603780153284238,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.06590631593373396
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.013079043731592303,
+        "peak_linear_speed_mps": 0.12978700925998,
+        "peak_angular_speed_rps": 1.74963991859045,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18859058120966765,
+            0.027000324047650254,
+            0.20368443858252816
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 11.479542126701402,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.000579973150719284,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1799422066899686,
+            0.023960152037786304,
+            0.2109401634319284
+          ],
+          "displacement_m": 0.01169113214247209,
+          "rotation_change_deg": 7.095338643979048,
+          "shaft_change_deg": 5.27712967274265,
+          "linear_speed_mps": 0.002079349565653717,
+          "angular_speed_rps": 0.061969036396722785,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 3.072400844410825,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0003691585907435752,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.06716112235628147
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": true,
+        "full_pose_preserved_last_200ms": true,
+        "peak_displacement_m": 0.013862544839267136,
+        "peak_linear_speed_mps": 0.14680716823492412,
+        "peak_angular_speed_rps": 1.6037868165065543,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 142,
+      "time_s": 2.84,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18968884154270546,
+            0.02552107833180071,
+            0.20252106544161996
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 1.7075472925031877e-06,
+          "shaft_change_deg": 1.2074182697257333e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 40.06109922283766,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.012724287106829608,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.18399504429025482,
+            0.020764852729040682,
+            0.21841875945276112
+          ],
+          "displacement_m": 0.017543593816782183,
+          "rotation_change_deg": 21.695022374682125,
+          "shaft_change_deg": 18.38707584710699,
+          "linear_speed_mps": 0.016606256312234363,
+          "angular_speed_rps": 1.3540073444111684,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 10.906277836188943,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0015785786364577777,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.060053295920206584
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.017543593816782183,
+        "peak_linear_speed_mps": 0.1416287108941833,
+        "peak_angular_speed_rps": 3.3010278538302473,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18968884154270546,
+            0.02552107833180071,
+            0.20252106544161996
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 1.7075472925031877e-06,
+          "shaft_change_deg": 1.2074182697257333e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 11.793248638497207,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.000565149123972389,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1817495989136613,
+            0.023200892287264917,
+            0.20666567694094098
+          ],
+          "displacement_m": 0.0092516291151556,
+          "rotation_change_deg": 10.335261835573231,
+          "shaft_change_deg": 8.913479079837503,
+          "linear_speed_mps": 0.01109741629368144,
+          "angular_speed_rps": 0.2924543320755125,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.8339652148532665,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00018879137946988694,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.062137268124585913
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.013636410787321699,
+        "peak_linear_speed_mps": 0.1459451219052244,
+        "peak_angular_speed_rps": 1.5411532053382995,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 154,
+      "time_s": 3.08,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.1912578160775823,
+            0.02555737867611346,
+            0.20353846598930078
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 1.7075472925031877e-06,
+          "shaft_change_deg": 1.2074182697257333e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 23.42785501235807,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00944371061799235,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.18764869713265891,
+            0.02513963631177582,
+            0.21405891289758047
+          ],
+          "displacement_m": 0.011130141571044772,
+          "rotation_change_deg": 29.321613228313886,
+          "shaft_change_deg": 14.876758205705894,
+          "linear_speed_mps": 0.0012734237149427676,
+          "angular_speed_rps": 0.1961685602965793,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 14.193049711358618,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.001475539029924847,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.05645498696660209
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.013950407199709896,
+        "peak_linear_speed_mps": 0.15140734542672843,
+        "peak_angular_speed_rps": 5.344605078605111,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.1912578160775823,
+            0.02555737867611346,
+            0.20353846598930078
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 1.7075472925031877e-06,
+          "shaft_change_deg": 1.2074182697257333e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 3.361722424355199,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0014783702154969759,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.18090302392511182,
+            0.026274120472675796,
+            0.21038275245231297
+          ],
+          "displacement_m": 0.012433008345190458,
+          "rotation_change_deg": 24.165054693316886,
+          "shaft_change_deg": 23.950463601935954,
+          "linear_speed_mps": 0.0023703514790573026,
+          "angular_speed_rps": 0.0238371104049742,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.2331979570133709,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00016283116028025847,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.032561089803453826
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.014890706628513833,
+        "peak_linear_speed_mps": 0.15434067525199546,
+        "peak_angular_speed_rps": 1.4864876446771254,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 166,
+      "time_s": 3.3200000000000003,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19085342334733996,
+            0.025494684879939732,
+            0.2040274117092592
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 21.769972048980677,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.009479937859520868,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17578858708472855,
+            0.021307102225291717,
+            0.2212642497966467
+          ],
+          "displacement_m": 0.023272166365845972,
+          "rotation_change_deg": 50.72226719279034,
+          "shaft_change_deg": 46.06708830517312,
+          "linear_speed_mps": 0.008372557818496117,
+          "angular_speed_rps": 0.6210584616987163,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.7252200880499924,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0003432126354326818,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.010903726795579747
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.024591053843954144,
+        "peak_linear_speed_mps": 0.15607562903500952,
+        "peak_angular_speed_rps": 5.524840349939741,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19085342334733996,
+            0.025494684879939732,
+            0.2040274117092592
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 2.512519973784779,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0014283915752214028,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.18095251405022028,
+            0.026414343391500096,
+            0.21000387889152503
+          ],
+          "displacement_m": 0.011601376498863258,
+          "rotation_change_deg": 28.14910714276093,
+          "shaft_change_deg": 27.907490600726593,
+          "linear_speed_mps": 0.004037846836608803,
+          "angular_speed_rps": 0.1456001934332859,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.3428728252930768,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00017268414195804806,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.013141269794603108
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.01519107198845396,
+        "peak_linear_speed_mps": 0.15723841838266372,
+        "peak_angular_speed_rps": 1.4295595587227348,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 178,
+      "time_s": 3.56,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18818902034584,
+            0.027552036176642144,
+            0.20518161375790556
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 24.214424342067637,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.007863539486080429,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17028847235512415,
+            0.021884891329651684,
+            0.2144297506163051
+          ],
+          "displacement_m": 0.020930221796158305,
+          "rotation_change_deg": 43.02101145203194,
+          "shaft_change_deg": 33.77663773384093,
+          "linear_speed_mps": 0.0035854137945176795,
+          "angular_speed_rps": 0.15993333328667553,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.98127588201674,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0001753464238986892,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.08823104659765099
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.02282212375198885,
+        "peak_linear_speed_mps": 0.22068941196857783,
+        "peak_angular_speed_rps": 3.048903427220918,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18818902034584,
+            0.027552036176642144,
+            0.20518161375790556
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 3.917461740615666,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005904746727765989,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1730298635577018,
+            -0.005668260560062666,
+            0.15557456196976321
+          ],
+          "displacement_m": 0.061597465344878546,
+          "rotation_change_deg": 52.598231133532494,
+          "shaft_change_deg": 47.46890088503126,
+          "linear_speed_mps": 0.003160208845537376,
+          "angular_speed_rps": 0.2391375426687932,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.3300090443038504,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0004143290154705262,
+          "retained": false,
+          "resting": false,
+          "command_error_rms_rad": 0.12302448503549893
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": false,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.06284925576630981,
+        "peak_linear_speed_mps": 0.4123782367476002,
+        "peak_angular_speed_rps": 7.515070103753737,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 190,
+      "time_s": 3.8000000000000003,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.1872237973421932,
+            0.022903811539641297,
+            0.20390043945062133
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 1.2074182697257333e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 2.988688071538887,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.005656964575728958,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.16159192698312508,
+            0.010437031830846417,
+            0.17268721589690142
+          ],
+          "displacement_m": 0.042269122288334654,
+          "rotation_change_deg": 105.89687434868664,
+          "shaft_change_deg": 40.18125373329532,
+          "linear_speed_mps": 0.0033269473322015976,
+          "angular_speed_rps": 0.22369744850170373,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.38806021509178057,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00015649986616264578,
+          "retained": false,
+          "resting": false,
+          "command_error_rms_rad": 0.06963558504859448
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": false,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.04380452159272973,
+        "peak_linear_speed_mps": 0.4365342184905817,
+        "peak_angular_speed_rps": 18.743161681403254,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.1872237973421932,
+            0.022903811539641297,
+            0.20390043945062133
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 1.2074182697257333e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.312451100375072,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005816969079831856,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.16376074839946803,
+            0.019851601152516715,
+            0.17202115060903783
+          ],
+          "displacement_m": 0.03970037419195313,
+          "rotation_change_deg": 95.74891442830743,
+          "shaft_change_deg": 30.8017565253323,
+          "linear_speed_mps": 0.0032928981401915518,
+          "angular_speed_rps": 0.38512570293644544,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.40518384364455373,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0001354403620611854,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.060897067928215684
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.045170744497844056,
+        "peak_linear_speed_mps": 0.3209211238135144,
+        "peak_angular_speed_rps": 27.564217738995975,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 202,
+      "time_s": 4.04,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18566701927947662,
+            0.007765515234379211,
+            0.19414412345367288
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 1.2074182697257333e-06,
+          "shaft_change_deg": 1.2074182697257333e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 4.15450305566311,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.004137809304611724,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.16759604238886278,
+            0.008818787625859718,
+            0.17087355558991724
+          ],
+          "displacement_m": 0.02948201006060156,
+          "rotation_change_deg": 40.22245616359684,
+          "shaft_change_deg": 33.05860563344504,
+          "linear_speed_mps": 0.002016349641547769,
+          "angular_speed_rps": 0.2533901975494416,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.4001858752200275,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0001228064323355693,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.004294088842691791
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.03492553923793632,
+        "peak_linear_speed_mps": 0.5535526120722667,
+        "peak_angular_speed_rps": 8.520361753989775,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18566701927947662,
+            0.007765515234379211,
+            0.19414412345367288
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 1.2074182697257333e-06,
+          "shaft_change_deg": 1.2074182697257333e-06,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.274357155514628,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005195077311157675,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.16810874962634711,
+            0.0012927096534808716,
+            0.1687844089534439
+          ],
+          "displacement_m": 0.0315167441978584,
+          "rotation_change_deg": 103.44383127673301,
+          "shaft_change_deg": 20.400856370672244,
+          "linear_speed_mps": 0.0019625961953206347,
+          "angular_speed_rps": 0.06789585618366785,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.44023237991210945,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00010591278628699737,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.004297000695156435
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.03665217792378771,
+        "peak_linear_speed_mps": 0.47430783442010915,
+        "peak_angular_speed_rps": 27.82878605302312,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 214,
+      "time_s": 4.28,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19103847253374734,
+            0.023559349293262442,
+            0.20250573402755073
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 2.039725676960003,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.005145869139151819,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.16956902851991823,
+            0.02522779600936437,
+            0.1713400541664932
+          ],
+          "displacement_m": 0.03788166234353161,
+          "rotation_change_deg": 31.56969201050445,
+          "shaft_change_deg": 15.518260016440184,
+          "linear_speed_mps": 0.00017253878993050517,
+          "angular_speed_rps": 0.003566047724517935,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.5303527359178554,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00014245563886973456,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0036912882585213276
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.04248989649104,
+        "peak_linear_speed_mps": 0.5749414598081908,
+        "peak_angular_speed_rps": 18.931639019754844,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.19103847253374734,
+            0.023559349293262442,
+            0.20250573402755073
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.7629907198119668,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.000510649220053336,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17128100971959992,
+            0.026851817236350106,
+            0.1708205080187183
+          ],
+          "displacement_m": 0.037485346860332905,
+          "rotation_change_deg": 142.641018799549,
+          "shaft_change_deg": 17.90541232821631,
+          "linear_speed_mps": 0.00013737830214690912,
+          "angular_speed_rps": 0.011785577482231354,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.41446803262849635,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00011075650640625379,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.002822342657876092
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.04124526699675361,
+        "peak_linear_speed_mps": 0.6148995172888838,
+        "peak_angular_speed_rps": 26.58498085736084,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 226,
+      "time_s": 4.5200000000000005,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18748421355709688,
+            0.01980783236571778,
+            0.20473157560850055
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.9910385232321284,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0062359486412316804,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17148940600492296,
+            0.018035033633398808,
+            0.2088792621548435
+          ],
+          "displacement_m": 0.016618663835071275,
+          "rotation_change_deg": 24.14315695641467,
+          "shaft_change_deg": 22.847362986801077,
+          "linear_speed_mps": 0.015565667019851478,
+          "angular_speed_rps": 0.3961759974949807,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.035759116886284,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00024060233064871297,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.0059886299390699855
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.018071802576135453,
+        "peak_linear_speed_mps": 0.18297182539904538,
+        "peak_angular_speed_rps": 1.0623586509821437,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18748421355709688,
+            0.01980783236571778,
+            0.20473157560850055
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.8551582557030517,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005126838714256707,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17157547743862822,
+            0.01655662284593798,
+            0.17056615997392338
+          ],
+          "displacement_m": 0.03782768660269864,
+          "rotation_change_deg": 103.65208306542472,
+          "shaft_change_deg": 18.794243667461807,
+          "linear_speed_mps": 0.0008759545861690832,
+          "angular_speed_rps": 0.09974692285579721,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.4367095195733138,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00014448997733590213,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.002671311611598386
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.04156549321023426,
+        "peak_linear_speed_mps": 0.7976575938464054,
+        "peak_angular_speed_rps": 24.374840878980816,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 237,
+      "time_s": 4.74,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18770473010156,
+            0.020157126821250267,
+            0.20407406256236615
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 2.232469899427387,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.007652458500061878,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.16714377221500268,
+            0.017051966079971996,
+            0.19869001007829704
+          ],
+          "displacement_m": 0.02147982852802066,
+          "rotation_change_deg": 45.53387402251007,
+          "shaft_change_deg": 24.128723526647534,
+          "linear_speed_mps": 0.007572671526949298,
+          "angular_speed_rps": 0.8435291107268711,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.871894911997117,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0006339150360553104,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.004976281782875068
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.02147982852802066,
+        "peak_linear_speed_mps": 0.28537063766469295,
+        "peak_angular_speed_rps": 16.828382949829813,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18770473010156,
+            0.020157126821250267,
+            0.20407406256236615
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.7400120872773484,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005255443712534894,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17222872947098003,
+            0.016774181149933867,
+            0.17047362737414037
+          ],
+          "displacement_m": 0.037147545837793255,
+          "rotation_change_deg": 107.09533819116433,
+          "shaft_change_deg": 19.737394586631048,
+          "linear_speed_mps": 0.00012916811471499424,
+          "angular_speed_rps": 0.006551906749994835,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.44641178584794233,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00012596564245854992,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0026749906923943263
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.04070553281164705,
+        "peak_linear_speed_mps": 0.6140229299376576,
+        "peak_angular_speed_rps": 22.93553266764919,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 249,
+      "time_s": 4.98,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.1871727734317213,
+            0.020477026899951657,
+            0.20481145418778332
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 8.537736462515939e-07,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 2.03752521393752,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.006567734582002601,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.16690446813046192,
+            0.017003764228172204,
+            0.19633932564496337
+          ],
+          "displacement_m": 0.022240609600869772,
+          "rotation_change_deg": 58.08877717756283,
+          "shaft_change_deg": 27.387951206184123,
+          "linear_speed_mps": 0.024904218113107807,
+          "angular_speed_rps": 1.0687232370180886,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.9740278544165657,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00037178490601533643,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.004724970709050995
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.022240609600869772,
+        "peak_linear_speed_mps": 0.18204846803340377,
+        "peak_angular_speed_rps": 7.552031868214294,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.1871727734317213,
+            0.020477026899951657,
+            0.20481145418778332
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 8.537736462515939e-07,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.8519172245294037,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005202384265835429,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17181272309192983,
+            0.016521010877837892,
+            0.17054307197170415
+          ],
+          "displacement_m": 0.03776113384043758,
+          "rotation_change_deg": 105.61664519604885,
+          "shaft_change_deg": 17.961024525735958,
+          "linear_speed_mps": 0.0023004088564294403,
+          "angular_speed_rps": 0.26183446440697233,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.4328260233559578,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0001404162504030455,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0026733537344846795
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.04240227312556747,
+        "peak_linear_speed_mps": 0.7633519592534849,
+        "peak_angular_speed_rps": 27.311606108005712,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 261,
+      "time_s": 5.22,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18689989425277587,
+            0.02035137037235983,
+            0.20469640144064227
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 2.064741293814518,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.006712955294650725,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.16704445944782428,
+            0.017120801086880945,
+            0.19865197915898647
+          ],
+          "displacement_m": 0.02100499726067441,
+          "rotation_change_deg": 43.75099978415572,
+          "shaft_change_deg": 23.870269862221505,
+          "linear_speed_mps": 0.01965234791313322,
+          "angular_speed_rps": 1.067159449614277,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.7738471331916437,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0007174539040616687,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.003997493695833373
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.02100499726067441,
+        "peak_linear_speed_mps": 0.18465837859857612,
+        "peak_angular_speed_rps": 8.938734910115857,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18689989425277587,
+            0.02035137037235983,
+            0.20469640144064227
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.7674266545113638,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005210394449396941,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17196894610010247,
+            0.016407194894084227,
+            0.17050913782264535
+          ],
+          "displacement_m": 0.03751344727731201,
+          "rotation_change_deg": 103.68176635436815,
+          "shaft_change_deg": 17.9122055744785,
+          "linear_speed_mps": 0.0006555118022354158,
+          "angular_speed_rps": 0.07836022775658844,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.4329288441463872,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00014127830462000012,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0026727658809636216
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.04172125633491332,
+        "peak_linear_speed_mps": 0.7814785828593881,
+        "peak_angular_speed_rps": 26.149468023788234,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 273,
+      "time_s": 5.46,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.9999396432843604,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.006402049341944205,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17028439347264313,
+            0.017979304118146393,
+            0.20843870735377967
+          ],
+          "displacement_m": 0.017127273634613326,
+          "rotation_change_deg": 21.851396094533857,
+          "shaft_change_deg": 21.03571838386327,
+          "linear_speed_mps": 0.012469432008601171,
+          "angular_speed_rps": 0.3436591331544104,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.9384234508627038,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00021876971437479104,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.005510075162412868
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.018104161917120137,
+        "peak_linear_speed_mps": 0.18341924833931175,
+        "peak_angular_speed_rps": 0.9082565876578491,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.8477146698037915,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005189532116471362,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17196615476754035,
+            0.015962728068193936,
+            0.17050457507375621
+          ],
+          "displacement_m": 0.03782682013628268,
+          "rotation_change_deg": 99.58402226977326,
+          "shaft_change_deg": 17.20426146280554,
+          "linear_speed_mps": 0.0003196449321754511,
+          "angular_speed_rps": 0.03941507045436908,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.4016515994657921,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00013977473304245362,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.002671153016385234
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.04199821613692591,
+        "peak_linear_speed_mps": 0.781678365392481,
+        "peak_angular_speed_rps": 26.27926923042751,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 285,
+      "time_s": 5.7,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.9999389821674072,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.006402044507265546,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1702843946426203,
+            0.01797930361063884,
+            0.2084387082518267
+          ],
+          "displacement_m": 0.017127272740905253,
+          "rotation_change_deg": 21.851382996325928,
+          "shaft_change_deg": 21.03570922665891,
+          "linear_speed_mps": 0.012469427047008385,
+          "angular_speed_rps": 0.3436594336264718,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.9384222268950891,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00021876946953100094,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.005510068927141219
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.018104160232823286,
+        "peak_linear_speed_mps": 0.1834192366825687,
+        "peak_angular_speed_rps": 0.9082559337772133,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.8477147030113935,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005189532122560394,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1719669878500666,
+            0.01596244690824593,
+            0.1705045997469386
+          ],
+          "displacement_m": 0.03782649889484937,
+          "rotation_change_deg": 99.58753372390025,
+          "shaft_change_deg": 17.204215246492264,
+          "linear_speed_mps": 0.0003667226927537994,
+          "angular_speed_rps": 0.043888040951236086,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.4018498441811938,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00013961452390200916,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.002671151321793785
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.04199821641666305,
+        "peak_linear_speed_mps": 0.7816783665405378,
+        "peak_angular_speed_rps": 26.2792693308836,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 297,
+      "time_s": 5.94,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.9999389226233388,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.006402044178104268,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1702843946703499,
+            0.017979303565994562,
+            0.20843870825789387
+          ],
+          "displacement_m": 0.01712727272070899,
+          "rotation_change_deg": 21.85138197424789,
+          "shaft_change_deg": 21.03570835255284,
+          "linear_speed_mps": 0.012469426911038918,
+          "angular_speed_rps": 0.3436594531063238,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.9384220925521656,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00021876944001782356,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.005510067989588797
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.018104160109913774,
+        "peak_linear_speed_mps": 0.18341923644221073,
+        "peak_angular_speed_rps": 0.908255864287544,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.8477146831872621,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005189532113375182,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17196614743759306,
+            0.015962721872602743,
+            0.17050457569667707
+          ],
+          "displacement_m": 0.03782682314537857,
+          "rotation_change_deg": 99.58414199573168,
+          "shaft_change_deg": 17.204252510576918,
+          "linear_speed_mps": 0.0003196467294862375,
+          "angular_speed_rps": 0.03941507683293301,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.4016511897124037,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00013977547306122254,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0026711530508536615
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.041998216248697144,
+        "peak_linear_speed_mps": 0.781678366697572,
+        "peak_angular_speed_rps": 26.27926924147194,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 309,
+      "time_s": 6.18,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.999938970303029,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.006402044201911278,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1702843946253592,
+            0.017979303582529547,
+            0.20843870831946573
+          ],
+          "displacement_m": 0.017127272774745093,
+          "rotation_change_deg": 21.85138223795518,
+          "shaft_change_deg": 21.035708648516664,
+          "linear_speed_mps": 0.012469426899715114,
+          "angular_speed_rps": 0.3436594551717706,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.9384221055522712,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00021876944334635285,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.005510068143521433
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.018104160210870836,
+        "peak_linear_speed_mps": 0.18341923515750058,
+        "peak_angular_speed_rps": 0.9082558761839294,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.8477152646886708,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005189534173797186,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1719676920364148,
+            0.015962844641060764,
+            0.17050448563970916
+          ],
+          "displacement_m": 0.037826280920749834,
+          "rotation_change_deg": 99.58082611500645,
+          "shaft_change_deg": 17.205499986637292,
+          "linear_speed_mps": 0.0003107014888577739,
+          "angular_speed_rps": 0.03937329028053835,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.40181878788154585,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00013960187235234275,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0026711602902025873
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.041998235363480206,
+        "peak_linear_speed_mps": 0.781677214859091,
+        "peak_angular_speed_rps": 26.27931769312571,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 321,
+      "time_s": 6.42,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.9999389674868355,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.006402044231911413,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17028439464661504,
+            0.01797930358735638,
+            0.2084387083056828
+          ],
+          "displacement_m": 0.017127272750723534,
+          "rotation_change_deg": 21.851382464742805,
+          "shaft_change_deg": 21.03570888445418,
+          "linear_speed_mps": 0.0124694269316767,
+          "angular_speed_rps": 0.3436594554317762,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.9384221095452224,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0002187694444260994,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.005510067986095088
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.01810416020834448,
+        "peak_linear_speed_mps": 0.183419235525544,
+        "peak_angular_speed_rps": 0.9082558912739489,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.8477142789292319,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005189532292653012,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17196550422160528,
+            0.015962570121856385,
+            0.17050469933940537
+          ],
+          "displacement_m": 0.03782698141855492,
+          "rotation_change_deg": 99.58913148282014,
+          "shaft_change_deg": 17.203977436116688,
+          "linear_speed_mps": 0.00031492199011599447,
+          "angular_speed_rps": 0.039072800484056834,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.4016942117918265,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00013983163789715435,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0026711363823738636
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.04199820322173521,
+        "peak_linear_speed_mps": 0.7816791854455608,
+        "peak_angular_speed_rps": 26.279234995981792,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 332,
+      "time_s": 6.640000000000001,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.9999390439350284,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00640204418317535,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1702843944342024,
+            0.017979303621280796,
+            0.2084387084927294
+          ],
+          "displacement_m": 0.017127272990496562,
+          "rotation_change_deg": 21.851381641008643,
+          "shaft_change_deg": 21.035708070712655,
+          "linear_speed_mps": 0.012469426469854406,
+          "angular_speed_rps": 0.3436594438616567,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.9384221999981627,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0002187694650958743,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.005510070040840393
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.018104160391299428,
+        "peak_linear_speed_mps": 0.18341923325442422,
+        "peak_angular_speed_rps": 0.90825587085385,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.8477146884978596,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005189532088548473,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1719661494309249,
+            0.0159627234099103,
+            0.17050457552903087
+          ],
+          "displacement_m": 0.03782682234161893,
+          "rotation_change_deg": 99.58411202968587,
+          "shaft_change_deg": 17.20425491417442,
+          "linear_speed_mps": 0.00031964628169673596,
+          "angular_speed_rps": 0.03941507721584996,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.40165129163480584,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00013977528578546037,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.002671153139202758
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.04199821621019651,
+        "peak_linear_speed_mps": 0.7816783708684653,
+        "peak_angular_speed_rps": 26.27926908312701,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 344,
+      "time_s": 6.88,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.9999389534998295,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.006402044124194804,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17028439461090208,
+            0.017979303574237823,
+            0.20843870829557015
+          ],
+          "displacement_m": 0.017127272785022685,
+          "rotation_change_deg": 21.85138195139088,
+          "shaft_change_deg": 21.03570828597798,
+          "linear_speed_mps": 0.012469427018973214,
+          "angular_speed_rps": 0.3436594558027845,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.9384220644216077,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00021876943303298735,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.005510067651408028
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.01810416017899353,
+        "peak_linear_speed_mps": 0.1834192350193784,
+        "peak_angular_speed_rps": 0.9082558420023343,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.8477146225310994,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005189532105894202,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.1719661775861388,
+            0.01596274729913744,
+            0.17050457311239187
+          ],
+          "displacement_m": 0.037826810795169225,
+          "rotation_change_deg": 99.58364775301209,
+          "shaft_change_deg": 17.204289453124073,
+          "linear_speed_mps": 0.0003196402704294973,
+          "angular_speed_rps": 0.03941512823737546,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.4016528810121399,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00013977245405118882,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0026711528365684473
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.04199821577497547,
+        "peak_linear_speed_mps": 0.7816783604899157,
+        "peak_angular_speed_rps": 26.279269217888878,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 356,
+      "time_s": 7.12,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.9999389975308655,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.006402044217578368,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17028439456856828,
+            0.01797930358416992,
+            0.2084387083520421
+          ],
+          "displacement_m": 0.01712727283627092,
+          "rotation_change_deg": 21.851382225911433,
+          "shaft_change_deg": 21.035708603335102,
+          "linear_speed_mps": 0.012469426934415101,
+          "angular_speed_rps": 0.34365945446016616,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.9384221063730973,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0002187694431697592,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.005510068079303291
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.018104160276972557,
+        "peak_linear_speed_mps": 0.18341923443465358,
+        "peak_angular_speed_rps": 0.9082558678313097,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.8477146561020986,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005189532106534557,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17196616215091418,
+            0.01596273420059243,
+            0.17050457444723865
+          ],
+          "displacement_m": 0.03782681711625099,
+          "rotation_change_deg": 99.5839033136564,
+          "shaft_change_deg": 17.20427065012695,
+          "linear_speed_mps": 0.00031964312231321467,
+          "angular_speed_rps": 0.039415061308707755,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.401652006780686,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00013977399639163992,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.002671152995226953
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.041998216000360404,
+        "peak_linear_speed_mps": 0.7816783665876372,
+        "peak_angular_speed_rps": 26.27926912264626,
+        "sample_count": 20
+      }
+    },
+    {
+      "frame": 368,
+      "time_s": 7.36,
+      "baseline": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 1.999938962007723,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.006402044117073692,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17028439460967779,
+            0.01797930357783911,
+            0.20843870830837802
+          ],
+          "displacement_m": 0.01712727278833823,
+          "rotation_change_deg": 21.85138200332364,
+          "shaft_change_deg": 21.035708359134834,
+          "linear_speed_mps": 0.012469427003854014,
+          "angular_speed_rps": 0.34365945714090235,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.9384220654616233,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00021876943348263038,
+          "retained": true,
+          "resting": false,
+          "command_error_rms_rad": 0.005510067744521495
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": false,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.018104160193204825,
+        "peak_linear_speed_mps": 0.18341923469229676,
+        "peak_angular_speed_rps": 0.9082558449840096,
+        "sample_count": 20
+      },
+      "refined": {
+        "initial": {
+          "time_s": 0.0,
+          "object_position_m": [
+            0.18692800066101725,
+            0.02010154055257133,
+            0.2049992372738951
+          ],
+          "displacement_m": 0.0,
+          "rotation_change_deg": 0.0,
+          "shaft_change_deg": 0.0,
+          "linear_speed_mps": 0.0,
+          "angular_speed_rps": 0.0,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.8477142455277364,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.0005189531988512627,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0
+        },
+        "end": {
+          "time_s": 1.0000000000000007,
+          "object_position_m": [
+            0.17196553371194007,
+            0.015962544567438692,
+            0.1705046835102123
+          ],
+          "displacement_m": 0.03782698698446354,
+          "rotation_change_deg": 99.58805392506098,
+          "shaft_change_deg": 17.20400039256412,
+          "linear_speed_mps": 0.0003155874050982875,
+          "angular_speed_rps": 0.03911399256572946,
+          "hand_contact": true,
+          "hand_normal_force_sum_n": 0.40169547703296477,
+          "tower_contact": false,
+          "deepest_penetration_m": 0.00013984304023322318,
+          "retained": true,
+          "resting": true,
+          "command_error_rms_rad": 0.0026711394030332035
+        },
+        "simulated_s": 1.0000000000000007,
+        "warnings": {},
+        "numerical_failure": null,
+        "retained_at_end": true,
+        "resting_last_200ms": true,
+        "shaft_preserved_last_200ms": false,
+        "full_pose_preserved_last_200ms": false,
+        "peak_displacement_m": 0.04199820203711608,
+        "peak_linear_speed_mps": 0.7816792437996354,
+        "peak_angular_speed_rps": 26.279232448953053,
+        "sample_count": 20
+      }
+    }
+  ],
+  "summary": {
+    "baseline": {
+      "holds": 32,
+      "retained_at_end": 25,
+      "resting_last_200ms": 8,
+      "shaft_preserved_last_200ms": 0,
+      "full_pose_preserved_last_200ms": 0,
+      "numerical_failures": 0,
+      "mean_end_displacement_m": 0.02327168758200786,
+      "mean_end_rotation_change_deg": 40.83901022810864,
+      "mean_end_shaft_change_deg": 24.481432931484136,
+      "mean_end_command_error_rms_rad": 0.0232209729322914,
+      "maximum_linear_speed_mps": 0.6030366680276551,
+      "maximum_angular_speed_rps": 26.319087914301903
+    },
+    "refined": {
+      "holds": 32,
+      "retained_at_end": 24,
+      "resting_last_200ms": 21,
+      "shaft_preserved_last_200ms": 1,
+      "full_pose_preserved_last_200ms": 1,
+      "numerical_failures": 0,
+      "mean_end_displacement_m": 0.03145216586486313,
+      "mean_end_rotation_change_deg": 78.72110816909998,
+      "mean_end_shaft_change_deg": 19.092245720509453,
+      "mean_end_command_error_rms_rad": 0.017381319955483983,
+      "maximum_linear_speed_mps": 0.7976575938464054,
+      "maximum_angular_speed_rps": 44.775689785400246
+    }
+  },
+  "ended_at": "2026-10-20T16:48:43.749268+00:00",
+  "artifact_kind": "Summary with all 32 paired initial states, endpoints and peak statistics",
+  "full_report_sha256": "199772bbd67be72ae43f50ca0ac9ee36e4136070b0297bfa899f67d197486585",
+  "full_report_location": "Jarvis:/home/peiqi/projects/orca-hand-rl-referenceprobe/runs/reference-hold32-axis/probe.json",
+  "omitted_fields": [
+    "trials.*.baseline.samples",
+    "trials.*.refined.samples"
+  ],
+  "replication": {
+    "runtime": {
+      "system": "Darwin",
+      "python": "3.11.1",
+      "mujoco": "3.13.0",
+      "numpy": "2.3.5"
+    },
+    "summary": {
+      "baseline": {
+        "holds": 32,
+        "retained_at_end": 25,
+        "resting_last_200ms": 8,
+        "shaft_preserved_last_200ms": 0,
+        "full_pose_preserved_last_200ms": 0,
+        "numerical_failures": 0,
+        "mean_end_displacement_m": 0.023635953912116356,
+        "mean_end_rotation_change_deg": 42.90489796837335,
+        "mean_end_shaft_change_deg": 24.799963636691785,
+        "mean_end_command_error_rms_rad": 0.022908939882544777,
+        "maximum_linear_speed_mps": 0.6030366680276784,
+        "maximum_angular_speed_rps": 26.31908791431899
+      },
+      "refined": {
+        "holds": 32,
+        "retained_at_end": 24,
+        "resting_last_200ms": 20,
+        "shaft_preserved_last_200ms": 1,
+        "full_pose_preserved_last_200ms": 1,
+        "numerical_failures": 0,
+        "mean_end_displacement_m": 0.03143560757348656,
+        "mean_end_rotation_change_deg": 78.17676025010597,
+        "mean_end_shaft_change_deg": 18.985849512133182,
+        "mean_end_command_error_rms_rad": 0.01734525409092525,
+        "maximum_linear_speed_mps": 0.7976575938464142,
+        "maximum_angular_speed_rps": 44.775689785400324
+      }
+    },
+    "note": "Same frozen reference and script; nonlinear contact dynamics need not be bit-identical across platforms."
+  }
+}
