@@ -505,6 +505,10 @@ Linux四项成功数依次为7/14、12/14、2/14、0/14，Mac为9/14、12/14、2
 
 [两平台全部开发回合与证据索引](../sim2real/grasp-exploration-probe.json)保存源码56f45ca、冻结模型哈希、配对状态签名、失败分类和命令偏移。两平台各通过2项新增检查，[完整CI通过](https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39487066703)。Linux原始轨迹、源码与冻结policy/config归档为`orca-hand-rl-grasp-diagnostics/runs/source/grasp-exploration-evidence.tar.gz`，SHA256为`4f8629b1e8eced4ccd08ff0788b958d9f5436b8398427005766bb674a6dd60c1`；已下载校验，Mac原始轨迹也单独归档。本诊断不构成转笔或真机验收。
 
+原20万步试验在开发集上最终policy为14/28、15万步best_model为20/28，均无掉落，因此按原规则选择后者，SHA256为`c3d97e953b74b89ed1a4196f822e86883d73184e5562b126b0d0a0e86b8bcf44`。正式2211000..2211099为68/100成功、掉落0%，Wilson95%区间约58.3%–76.3%，未达到80%。结束原因68次成功、30次horizon、1次视觉超时、1次释放初态拒绝；拒绝的初态也计失败，不重抽。相同100回合的hold/random尚在完成，完整job门槛结果另行保留。
+
+下一项[冻结方案](../../configs/training/pen-grasp-v1-r03-lowexplore.json)只将全新训练的初始log标准差由-2改为-4（标准差约0.1353→0.01832），其余训练参数、随机种子0、网络均值初始化方式、20万步预算和全部任务门槛不变。依据是先前开发配对噪声诊断，不能提前声称策略会改善；本轮不同时改成零均值网络，以便区分初始探索幅度的影响。开发2111000..2111027继续用于选择，正式改为未使用的2311000..2311099，因此不能将新旧正式分数作同初态配对改善。原job及三个正式评估全部结束后才启动独立目录；质量追加0，不自动进入旋转。
+
 `scripts/training_heartbeat.py`作为独立于监督器的systemd用户服务，每300秒检查状态，原子更新`runs/pen-v6-heartbeat/latest.json`并追加`heartbeats.jsonl`；即使监督器因质量预算耗尽退出，心跳仍记录`needs_attention`。也会标记运行中监督器状态超过120秒未更新、训练进度超过300秒未更新、监督服务未运行等问题。进程恢复由30秒轮询的监督器及systemd负责。这个心跳只记录服务器状态，不会唤醒聊天代理，也没有聊天、邮件或手机推送。`--once`用于启动检查，不能把心跳日志等同于人工或代理已完成诊断。
 
 会话跟进改用Mac的launchd定时执行`scripts/queue_rl_heartbeat.py`，通过已安装Codex CLI的`queue --thread ... --message ...`给同一个任务派发检查，不创建另一个代理。旧的工具单元内JavaScript计时器在结束回复后未按预期持续执行，不能再用它声称自动复查。用户相关线程号、CLI路径、开关与序号放在被忽略的`local/orca-rl-agent-heartbeat.json`，不上传GitHub。每300秒最多派发一个未确认消息；代理完成SSH检查后用`--ack --note '检查证据'`记录实际检查时间，`queue`成功回执只证明排队成功。超过15分钟未确认会标记`needs_attention`。Mac必须保持唤醒、原生Codex服务可用；服务器的systemd监控独立运行。停止时先用`--disable`关闭派发，再卸载对应launchd任务；不要影响PPO训练，除非用户也要求停训。

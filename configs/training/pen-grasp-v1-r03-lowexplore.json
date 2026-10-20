@@ -1,0 +1,52 @@
+{
+  "purpose": "Single-change bounded grasp exploration ablation after original policy formal68/100; not pen rotation",
+  "arguments": {
+    "task_family": "pen-grasp-v1",
+    "object": "pen",
+    "angle": 10,
+    "turns": 1,
+    "horizon": 140,
+    "randomization": 0.3,
+    "steps": 200000,
+    "num_envs": 8,
+    "device": "cuda",
+    "seed": 0,
+    "learning_rate": 0.0001,
+    "entropy_coef": 0.001,
+    "target_kl": 0.02,
+    "initial_log_std": -4,
+    "checkpoint_every": 20000,
+    "eval_every": 50000,
+    "selection_episodes": 28,
+    "selection_seed": 2111000,
+    "test_episodes": 100,
+    "test_seed": 2311000
+  },
+  "watchdog": {
+    "max_restarts": 2,
+    "quality_retries": 0,
+    "poll_seconds": 30,
+    "stall_seconds": 300
+  },
+  "promotion": "100-episode grasp success>=80%, drops<=10%, and policy success/drop counts at least as good as matched hold baseline; no auto-rotation",
+  "training_reset": "All seven placement buckets plus frozen continuous position/yaw jitter; no retries or outcome filtering",
+  "controlled_comparison": {
+    "parent_plan": "configs/training/pen-grasp-v1-r03-pilot.json",
+    "training_changes": {
+      "initial_log_std": {
+        "before": -2,
+        "after": -4
+      }
+    },
+    "unchanged": "Fresh seed0 PPO architecture, initial network mean construction, optimizer, reward, physical/reset/observation/action contracts, training budget and development selection",
+    "development_seeds_reused": true,
+    "new_formal_seeds": [
+      2311000,
+      2311099
+    ],
+    "formal_comparison": "New formal cases; do not claim a paired improvement over the previous68/100",
+    "launch_precondition": "Previous200k job and all policy/hold/random evaluations complete; previous failed job and quality gate preserved",
+    "no_automatic_rotation_or_quality_extension": true,
+    "rationale": "Paired14-case development probe: exp(-4) zero-mean noise12/14 vs exp(-2)2/14 on both platforms; this supports testing the initial noise scale, not a claim of learned-policy benefit"
+  }
+}
