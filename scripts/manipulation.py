@@ -24,6 +24,20 @@ def write(path, value):
     temporary.replace(path)
 
 
+def fresh_ppo(env,args):
+    """Shared exact initialization recipe for training and development diagnostics."""
+    from stable_baselines3 import PPO
+    model=PPO("MlpPolicy",env,seed=args.seed,device=args.device,n_steps=256,
+        batch_size=min(1024,256*args.num_envs),n_epochs=5,learning_rate=args.learning_rate,
+        ent_coef=args.entropy_coef,gamma=.99,gae_lambda=.95,target_kl=args.target_kl,
+        policy_kwargs={"net_arch":{"pi":[256,256],"vf":[256,256]},"log_std_init":args.initial_log_std},
+        tensorboard_log=str(args.output/"tb"),verbose=1)
+    if getattr(args,'zero_initial_action_mean',False):
+        from orca_feetech.policy_initialization import zero_actor_mean
+        zero_actor_mean(model.policy)
+    return model
+
+
 
 
 def train(args, *, config_class=TaskConfig, env_class=None, task_id=TASK_ID,
@@ -44,13 +58,19 @@ def train(args, *, config_class=TaskConfig, env_class=None, task_id=TASK_ID,
                         mass_kg=args.mass_kg, friction=args.friction,
                         delay_max_steps=args.delay_max_ms // 50,
                         command_bias_deg=args.command_bias_deg, encoder_bias_deg=args.encoder_bias_deg)
+    zero_mean=getattr(args,'zero_initial_action_mean',False)
+    if zero_mean and task_id!='orca-v1-pen-grasp-v1':
+        raise ValueError('This initialization experiment is restricted to the explicit grasp task')
     if args.device_config:
         from orca_feetech.hardware import load_device
         _, _, lo, hi = load_device(args.device_config)
         config.lower, config.upper = lo.tolist(), hi.tolist()
         config.__post_init__()
     if args.resume:
-        previous, _ = config_loader(args.resume)
+        previous, previous_meta = config_loader(args.resume)
+        if zero_mean and not previous_meta.get('zero_initial_action_mean',False):
+            raise ValueError('Zero mean initialization is fresh-only; cannot reset a learned actor')
+        zero_mean=previous_meta.get('zero_initial_action_mean',False)
         # The curriculum may change angle, turns, horizon and randomization.
         # Physical/observation/action definitions must remain fixed.
         keys = ("object", "mass_kg", "friction", "max_velocity", "max_acceleration", "lower", "upper")
@@ -80,6 +100,7 @@ def train(args, *, config_class=TaskConfig, env_class=None, task_id=TASK_ID,
                     learning_rate=args.learning_rate, entropy_coef=args.entropy_coef,
                     target_kl=args.target_kl, initial_log_std=args.initial_log_std,
                     reset_log_std=args.reset_log_std,
+                    zero_initial_action_mean=zero_mean,
                     training_negative_goal_probability=args.negative_goal_probability,
                     training_goal_angle_mixture=(None if args.minimum_goal_angle is None else
                         dict(minimum_deg=args.minimum_goal_angle, maximum_deg=args.angle,
@@ -119,12 +140,7 @@ def train(args, *, config_class=TaskConfig, env_class=None, task_id=TASK_ID,
         model = (PPO.load(args.resume, env=env, device=args.device,
                           batch_size=min(1024, 256 * args.num_envs), learning_rate=args.learning_rate,
                           ent_coef=args.entropy_coef, target_kl=args.target_kl) if args.resume else
-                 PPO("MlpPolicy", env, seed=args.seed, device=args.device, n_steps=256,
-                     batch_size=min(1024, 256 * args.num_envs), n_epochs=5, learning_rate=args.learning_rate,
-                     ent_coef=args.entropy_coef, gamma=.99, gae_lambda=.95, target_kl=args.target_kl,
-                     policy_kwargs={"net_arch": {"pi": [256, 256], "vf": [256, 256]},
-                                    "log_std_init": args.initial_log_std},
-                     tensorboard_log=str(args.output / "tb"), verbose=1))
+                 fresh_ppo(env,args))
         if args.reset_log_std is not None:
             with torch.no_grad():
                 model.policy.log_std.fill_(args.reset_log_std)
@@ -135,6 +151,8 @@ def train(args, *, config_class=TaskConfig, env_class=None, task_id=TASK_ID,
         metadata["sde_sample_freq"] = model.sde_sample_freq
         metadata["action_mean_penalty_coef"] = getattr(model.policy, "mean_penalty_coef", 0.)
         write(args.output / "config.json", metadata)
+        if args.resume is None:
+            model.save(args.output/'initial_policy.zip')
         model.tensorboard_log = str(args.output / "tb")
         started = time.monotonic()
         initial_steps = model.num_timesteps
@@ -272,6 +290,7 @@ def main(*, train_fn=train, evaluate_fn=evaluate, train_defaults=None):
     t.add_argument("--entropy-coef", type=float, default=.01)
     t.add_argument("--target-kl", type=float, default=.03)
     t.add_argument("--initial-log-std", type=float, default=0.)
+    t.add_argument('--zero-initial-action-mean',action='store_true',help='Grasp-only fresh actor head starts at zero; learned checkpoints stay intact')
     t.add_argument("--reset-log-std", type=float, help="Explicit exploration reset for a new fine-tuning stage")
     t.add_argument("--negative-goal-probability", type=float, default=.5,
                    help="Training-only negative-direction frequency; evaluations remain balanced")

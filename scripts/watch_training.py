@@ -106,6 +106,8 @@ def job_command(options, output, resume=None):
                     "--prefix-reset-probability",str(options.get("prefix_reset_probability",.75))]
     if options.get("video"):
         command += ["--video"]
+    if options.get('zero_initial_action_mean'):
+        command += ['--zero-initial-action-mean']
     return command
 
 

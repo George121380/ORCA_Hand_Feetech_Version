@@ -49,7 +49,7 @@ def failure_flags(samples):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--checkpoint',type=Path,required=True,help='Frozen checkpoint copy, never a live best_model path')
-    parser.add_argument('--checkpoint-steps',type=int,choices=(40000,100000),default=40000,
+    parser.add_argument('--checkpoint-steps',type=int,choices=(0,40000,100000),default=40000,
                         help='Freeze by this declared step count, never evaluation score')
     parser.add_argument('--mean-vs-hold',action='store_true',help='Only zero action and frozen policy mean;28 episodes')
     parser.add_argument('--output',type=Path,required=True)

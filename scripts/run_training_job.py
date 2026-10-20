@@ -88,6 +88,7 @@ def main():
     parser.add_argument("--entropy-coef", type=float, default=.01)
     parser.add_argument("--target-kl", type=float, default=.03)
     parser.add_argument("--initial-log-std", type=float, default=0.)
+    parser.add_argument('--zero-initial-action-mean',action='store_true')
     parser.add_argument("--reset-log-std", type=float)
     parser.add_argument("--negative-goal-probability", type=float, default=.5)
     parser.add_argument("--minimum-goal-angle", type=float)
@@ -254,6 +255,8 @@ def main():
                 if value is not None:
                     command += ["--" + key.replace("_", "-"), str(value)]
             command += ["--negative-goal-probability", str(args.negative_goal_probability)]
+            if args.zero_initial_action_mean:
+                command += ['--zero-initial-action-mean']
             if args.prefix_reset_checkpoint is not None:
                 command += ["--prefix-reset-checkpoint",str(args.prefix_reset_checkpoint),
                             "--prefix-reset-probability",str(args.prefix_reset_probability)]
