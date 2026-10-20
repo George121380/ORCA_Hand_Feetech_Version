@@ -48,6 +48,33 @@ def test_new_grasp_job_forwards_explicit_cli_and_persists_family(monkeypatch,tmp
     assert state['arguments']['zero_initial_action_mean']
 
 
+def test_rotation_job_initializes_once_then_recovers_rotation_checkpoint(monkeypatch,tmp_path):
+    monkeypatch.setattr(job.platform,'system',lambda:'Linux')
+    monkeypatch.setattr('orca_feetech.pen_rotate.validate_grasp_prefix',lambda path:None)
+    output=tmp_path/'rotation'
+    calls=[]
+    class Failed:
+        pid=99999998
+        def __init__(self,argv,**kwargs):calls.append(argv)
+        def wait(self):return 7
+    monkeypatch.setattr(job.subprocess,'Popen',Failed)
+    monkeypatch.setattr(job.sys,'argv',['job','--output',str(output),'--task-family','pen-rotate-v1',
+        '--angle','15','--horizon','140','--initialize-policy','/frozen/grasp/policy.zip'])
+    with pytest.raises(RuntimeError,match='train exited 7'):
+        job.main()
+    assert Path(calls[0][1]).name=='pen_rotate.py'
+    assert calls[0][calls[0].index('--initialize-policy')+1]=='/frozen/grasp/policy.zip'
+    (output/'model').mkdir()
+    checkpoint=output/'model/checkpoint_20000_steps.zip'
+    monkeypatch.setattr(job,'running_processes',lambda *a:[])
+    monkeypatch.setattr(job,'latest_checkpoint',lambda *a,**kw:(checkpoint,20000))
+    monkeypatch.setattr(job.sys,'argv',['job','--output',str(output),'--continue-existing'])
+    with pytest.raises(RuntimeError,match='train-recovery-1 exited 7'):
+        job.main()
+    assert '--initialize-policy' not in calls[1]
+    assert calls[1][calls[1].index('--resume')+1]==str(checkpoint)
+
+
 def test_training_failure_stops_job_and_preserves_command(monkeypatch, tmp_path):
     monkeypatch.setattr(job.platform, "system", lambda: "Linux")
     output = tmp_path / "job"
