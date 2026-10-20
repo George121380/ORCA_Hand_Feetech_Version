@@ -109,13 +109,18 @@ class HandKinematics:
                        for b,v in zip(self.distal,self.offsets)])
         return tips,self.data.xpos[self.proximal].copy()
 
-    def fit(self,tips,proximal,previous,object_pose=None,*,self_contact_aware=False):
+    def fit(self,tips,proximal,previous,object_pose=None,*,self_contact_aware=False,proximal_weight=.25,
+            optimizer_max_nfev=60):
         if self_contact_aware and object_pose is None:
             raise ValueError('Self-contact refinement requires an object pose')
+        if proximal_weight not in (0.,.25):
+            raise ValueError('Use proximal weight 0 or 0.25 for the bounded ablation')
+        if optimizer_max_nfev not in (60,120):
+            raise ValueError('Use a fixed optimizer budget of 60 or 120')
         def residual(q):
             actual,anchors=self.points(q)
             terms=[(actual-tips).ravel()/.01,
-                   .25*(anchors-proximal).ravel()/.01,.02*(q-previous)]
+                   proximal_weight*(anchors-proximal).ravel()/.01,.02*(q-previous)]
             if object_pose is not None:
                 # Fixed-length, per-geom residual: changing contact counts may
                 # not change the least-squares vector's shape. Allow 0.5 mm
@@ -128,7 +133,7 @@ class HandKinematics:
         result=least_squares(residual,np.clip(previous,self.spec.lower[:16]+1e-8,
                                                self.spec.upper[:16]-1e-8),
                              bounds=(self.spec.lower[:16],self.spec.upper[:16]),
-                             max_nfev=60,ftol=1e-7,xtol=1e-7,gtol=1e-7)
+                             max_nfev=optimizer_max_nfev,ftol=1e-7,xtol=1e-7,gtol=1e-7)
         actual,_=self.points(result.x)
         return result,actual
 

@@ -55,6 +55,24 @@ def test_actual_mjcf_ik_recovers_reachable_points_and_preserves_wrist(probe):
         hand.close()
 
 
+def test_proximal_ablation_preserves_default_fit_and_reports_valid_tip_only_fit(probe):
+    hand=probe.HandKinematics()
+    try:
+        known=.8*hand.spec.neutral[:16]+.2*hand.spec.upper[:16]
+        tips,proximal=hand.points(known)
+        original,_=hand.fit(tips,proximal,hand.spec.neutral[:16])
+        explicit,_=hand.fit(tips,proximal,hand.spec.neutral[:16],proximal_weight=.25)
+        np.testing.assert_allclose(original.x,explicit.x,atol=1e-12)
+        fit,actual=hand.fit(tips,proximal,hand.spec.neutral[:16],proximal_weight=0.)
+        assert np.max(np.linalg.norm(actual-tips,axis=1))<.0005
+        assert np.all(fit.x>=hand.spec.lower[:16]) and np.all(fit.x<=hand.spec.upper[:16])
+        assert hand.data.qpos[hand.env.qadr[-1]]==hand.spec.neutral[-1]
+        with pytest.raises(ValueError,match='proximal weight'):
+            hand.fit(tips,proximal,hand.spec.neutral[:16],proximal_weight=.1)
+    finally:
+        hand.close()
+
+
 def test_contact_refinement_reduces_real_mesh_overlap_without_moving_object(probe):
     hand=probe.HandKinematics()
     try:
