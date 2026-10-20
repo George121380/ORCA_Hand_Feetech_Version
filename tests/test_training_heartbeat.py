@@ -1,4 +1,5 @@
 import importlib.util
+from concurrent.futures import ThreadPoolExecutor
 import json
 import os
 from pathlib import Path
@@ -52,3 +53,16 @@ def test_heartbeat_reports_checkpoint_selection_progress_without_training(tmp_pa
     report = heartbeat.snapshot(state)
     assert not report["needs_attention"] and report["phase"] == "screen"
     assert report["progress"]["evaluations_completed"] == 7
+
+
+def test_service_and_once_inspections_can_write_concurrently(tmp_path):
+    output=tmp_path/'heartbeat'
+    reports=[dict(timestamp=str(i),state_dir='/current',sequence=i) for i in range(32)]
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures=[pool.submit(heartbeat.write_report,output,row) for row in reports]
+        for future in futures:
+            future.result()  # Every writer must complete, without rename races.
+    rows=[json.loads(line) for line in (output/'heartbeats.jsonl').read_text().splitlines()]
+    assert sorted(r['sequence'] for r in rows)==list(range(32))
+    assert json.loads((output/'latest.json').read_text()) in reports
+    assert not list(output.glob('.latest-*.tmp'))

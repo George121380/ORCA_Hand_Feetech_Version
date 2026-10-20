@@ -7,9 +7,11 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, timezone
+import fcntl
 import json
 from pathlib import Path
 import subprocess
+import tempfile
 import time
 
 
@@ -50,11 +52,20 @@ def snapshot(state_dir, now=None):
 
 def write_report(output, report):
     output.mkdir(parents=True, exist_ok=True)
-    temporary = output / "latest.tmp"
-    temporary.write_text(json.dumps(report, indent=2) + "\n")
-    temporary.replace(output / "latest.json")
-    with (output / "heartbeats.jsonl").open("a") as log:
-        log.write(json.dumps(report) + "\n")
+    # A service startup and an authorized --once inspection can overlap.
+    # Serialize writers and use a unique temporary file so neither can rename
+    # or remove the other writer's pending snapshot.
+    with (output / '.write.lock').open('a') as lock:
+        fcntl.flock(lock,fcntl.LOCK_EX)
+        with tempfile.NamedTemporaryFile(mode='w',dir=output,prefix='.latest-',suffix='.tmp',delete=False) as stream:
+            temporary=Path(stream.name)
+            stream.write(json.dumps(report,indent=2)+'\n')
+        try:
+            temporary.replace(output/'latest.json')
+        finally:
+            temporary.unlink(missing_ok=True)
+        with (output / "heartbeats.jsonl").open("a") as log:
+            log.write(json.dumps(report) + "\n")
     print(json.dumps({k: report.get(k) for k in ("timestamp", "monitor_status", "stage",
                                                "job_status", "progress", "needs_attention",
                                                "attention_reasons")}), flush=True)
