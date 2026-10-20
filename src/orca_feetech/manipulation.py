@@ -139,7 +139,7 @@ class ObservationCodec:
         return np.concatenate(self.frames)
 
 
-def build_model(config, *, object_spec=None):
+def build_model(config, *, object_spec=None, task_id=TASK_ID):
     """Build the canonical task; raw design reviews can supply a candidate solid.
 
     ManipulationEnv always uses the canonical geometry, so checkpoint contracts
@@ -147,7 +147,7 @@ def build_model(config, *, object_spec=None):
     """
     source = upstream("orca_sim") / "src/orca_sim/models/v1/right_cube_orientation.mjcf"
     root = ET.parse(source).getroot()
-    root.set("model", TASK_ID)
+    root.set("model", task_id)
     for mesh in root.findall("asset/mesh"):
         mesh.set("file", str((source.parent / mesh.get("file")).resolve()))
     # Keep original 17 joints, lock the wrist with an equality constraint.
@@ -175,6 +175,8 @@ def build_model(config, *, object_spec=None):
 
 class ManipulationEnv(gym.Env):
     metadata = {"render_modes": ["rgb_array"], "render_fps": 20}
+    model_builder = staticmethod(build_model)
+    action_codec_class = ActionCodec
 
     def __init__(self, config=None, render_mode=None, negative_goal_probability=.5,
                  minimum_goal_angle=None):
@@ -187,7 +189,7 @@ class ManipulationEnv(gym.Env):
         if minimum_goal_angle is not None and not 10 <= minimum_goal_angle <= self.config.angle:
             raise ValueError("Training minimum goal angle must be between 10 and task angle")
         self.minimum_goal_angle = minimum_goal_angle
-        self.model = build_model(self.config)
+        self.model = self.model_builder(self.config)
         self.data = mujoco.MjData(self.model)
         self.hand_spec = ModelSpec.load()
         self.lower, self.upper = limits(self.config)
@@ -258,11 +260,16 @@ class ManipulationEnv(gym.Env):
             retained = (self.contact() and pos[2] > .12
                         and np.linalg.norm(pos[:2] - [spawn_x, .049]) < .07)
             resting = (retained and np.linalg.norm(vel[:3]) < RESET_LINEAR_SPEED
-                       and np.linalg.norm(vel[3:]) < RESET_ANGULAR_SPEED)
+                       and np.linalg.norm(vel[3:]) < RESET_ANGULAR_SPEED and self._reset_ready())
             stable = stable + 1 if resting else 0
             if stable >= RESET_STABLE_SAMPLES:
                 return sample + 1
         return None
+
+    def _reset_ready(self):
+        # Legacy v7 only waits for object rest. New contracts can additionally
+        # require the physical hand to settle, without changing old rollouts.
+        return True
 
     def reset(self, *, seed=None, options=None):
         super().reset(seed=seed)
@@ -299,7 +306,7 @@ class ManipulationEnv(gym.Env):
             self.goal_angle = float(self.np_random.uniform(self.minimum_goal_angle, self.config.angle))
         self.increment = yaw_rotation(np.deg2rad(self.goal_angle) * self.direction)
         self.goal = self.increment @ rot
-        self.codec = ActionCodec(self.config, self.hand_spec.neutral)
+        self.codec = self.action_codec_class(self.config, self.hand_spec.neutral)
         self.observer = ObservationCodec(self.config)
         self.queue = deque([self.hand_spec.neutral.copy() for _ in range(self.delay + 1)], maxlen=self.delay + 1)
         self.steps = self.stable = self.completed = 0

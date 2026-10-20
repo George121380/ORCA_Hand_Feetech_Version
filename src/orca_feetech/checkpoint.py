@@ -15,10 +15,10 @@ def load_v6_config_for_migration(checkpoint):
     return _load_config(checkpoint, "orca-v1-printable-yaw-v6", 58)
 
 
-def _load_config(checkpoint, task_id, frame_size):
+def _load_config(checkpoint, task_id, frame_size, config_class=TaskConfig):
     checkpoint = Path(checkpoint)
     meta = json.loads((checkpoint.parent / "config.json").read_text())
-    cfg = TaskConfig(**meta["task"])
+    cfg = config_class(**meta["task"])
     if (meta["task_id"] != task_id or tuple(meta["joint_names"]) != JOINT_NAMES
             or meta["fingerprint"] != cfg.fingerprint(task_id=task_id) or meta["upstream"] != provenance()
             or meta["history"] != HISTORY or meta["frame_size"] != frame_size):

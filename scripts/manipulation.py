@@ -26,7 +26,8 @@ def write(path, value):
 
 
 
-def train(args):
+def train(args, *, config_class=TaskConfig, env_class=None, task_id=TASK_ID,
+          config_loader=load_config, task_contract=None):
     import torch
     from stable_baselines3 import PPO
     from stable_baselines3.common.callbacks import BaseCallback, CheckpointCallback, EvalCallback
@@ -36,7 +37,9 @@ def train(args):
     torch.set_num_threads(1)
     if args.device == "cuda" and not torch.cuda.is_available():
         raise RuntimeError("CUDA unavailable; run setup_4090.sh and inspect the NVIDIA driver")
-    config = TaskConfig(object=args.object, angle=args.angle, turns=args.turns,
+    if env_class is not None and args.prefix_reset_checkpoint is not None:
+        raise ValueError('Explicit new task does not accept a legacy prefix teacher')
+    config = config_class(object=args.object, angle=args.angle, turns=args.turns,
                         horizon=args.horizon, randomization=args.randomization,
                         mass_kg=args.mass_kg, friction=args.friction,
                         delay_max_steps=args.delay_max_ms // 50,
@@ -47,7 +50,7 @@ def train(args):
         config.lower, config.upper = lo.tolist(), hi.tolist()
         config.__post_init__()
     if args.resume:
-        previous, _ = load_config(args.resume)
+        previous, _ = config_loader(args.resume)
         # The curriculum may change angle, turns, horizon and randomization.
         # Physical/observation/action definitions must remain fixed.
         keys = ("object", "mass_kg", "friction", "max_velocity", "max_acceleration", "lower", "upper")
@@ -65,7 +68,7 @@ def train(args):
         revision = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
     except (OSError, subprocess.CalledProcessError):
         revision = None
-    metadata = dict(task_id=TASK_ID, task=asdict(config), fingerprint=config.fingerprint(),
+    metadata = dict(task_id=task_id, task=asdict(config), fingerprint=config.fingerprint(),
                     joint_names=JOINT_NAMES, history=HISTORY, frame_size=FRAME_SIZE,
                     upstream=provenance(), geometry=specification(config.object), seed=args.seed,
                     num_envs=args.num_envs, device=args.device, requested_steps=args.steps,
@@ -80,15 +83,22 @@ def train(args):
                         dict(minimum_deg=args.minimum_goal_angle, maximum_deg=args.angle,
                              full_angle_probability=.5)),
                     training_prefix_reset=prefix_proof,trained=False)
+    if task_contract is not None:
+        metadata['task_contract'] = task_contract
     write(args.output / "config.json", metadata)
 
     def factory(index, evaluation=False):
         def make():
             from orca_feetech.prefix_reset import (make_training_environment,PhysicalPrefixReset,PREFIX_INFO)
-            base = make_training_environment(config,evaluation=evaluation,
-                negative_goal_probability=args.negative_goal_probability,minimum_goal_angle=args.minimum_goal_angle,
-                prefix_checkpoint=args.prefix_reset_checkpoint,prefix_probability=args.prefix_reset_probability,
-                seed=args.seed+index)
+            if env_class is None:
+                base = make_training_environment(config,evaluation=evaluation,
+                    negative_goal_probability=args.negative_goal_probability,minimum_goal_angle=args.minimum_goal_angle,
+                    prefix_checkpoint=args.prefix_reset_checkpoint,prefix_probability=args.prefix_reset_probability,
+                    seed=args.seed+index)
+            else:
+                base = env_class(config,
+                    negative_goal_probability=.5 if evaluation else args.negative_goal_probability,
+                    minimum_goal_angle=None if evaluation else args.minimum_goal_angle)
             keys = ("is_success", "dropped", "angle_error_deg", "completed_turns", "goal_angle_deg")
             if isinstance(base,PhysicalPrefixReset):
                 keys += PREFIX_INFO
@@ -173,17 +183,17 @@ def wilson(successes, n):
     return [float(center-half), float(center+half)]
 
 
-def evaluate(args):
+def evaluate(args, *, env_class=ManipulationEnv, config_loader=load_config):
     import torch
     from stable_baselines3 import PPO
     torch.set_num_threads(1)
-    config, meta = load_config(args.checkpoint)
+    config, meta = config_loader(args.checkpoint)
     if args.seed < 20000:
         raise ValueError("Use held-out evaluation seeds >=20000")
     args.output.mkdir(parents=True, exist_ok=False)
     write(args.output / "config.json", meta)
     policy = PPO.load(args.checkpoint, device="cpu")
-    env = ManipulationEnv(config)
+    env = env_class(config)
     records = []
     writer = None
     if args.video:
@@ -235,7 +245,7 @@ def evaluate(args):
     print(json.dumps({k: v for k, v in result.items() if k != "trials"}, indent=2))
 
 
-def main():
+def main(*, train_fn=train, evaluate_fn=evaluate):
     p = argparse.ArgumentParser(description=__doc__)
     sub = p.add_subparsers(dest="command", required=True)
     t = sub.add_parser("train")
@@ -295,11 +305,11 @@ def main():
                 or not 0 < args.target_kl <= 1 or not -5 <= args.initial_log_std <= 2
                 or args.reset_log_std is not None and not -5 <= args.reset_log_std <= 2):
             p.error("Invalid PPO optimization/exploration parameters")
-        train(args)
+        train_fn(args)
     else:
         if args.episodes < 1:
             p.error("Episodes must be positive")
-        evaluate(args)
+        evaluate_fn(args)
 
 
 if __name__ == "__main__":

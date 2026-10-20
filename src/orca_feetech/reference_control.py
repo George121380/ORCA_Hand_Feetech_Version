@@ -1,4 +1,4 @@
-"""Candidate command contract for future reference tasks; legacy v7 is unchanged.
+"""Braking command contract for explicit v8/reference tasks; legacy v7 is unchanged.
 
 Positions use q_next = q + velocity_next * DT. A discrete stopping-distance
 constraint reserves enough ROM for all subsequent deceleration steps. This
@@ -27,8 +27,8 @@ class BrakingActionCodec:
     """Separate opt-in contract, not a drop-in migration for trained v7 actors.
 
     Invalid object observations request bounded deceleration rather than an
-    instantaneous position hold. No training/deployment entrypoint selects
-    this codec yet. The future task must version that loss-of-vision behavior.
+    instantaneous position hold. The explicit v8 training task versions this
+    behavior; the legacy v7 training and deployment entrypoints do not select it.
     """
     controller_id=CONTROLLER_ID
 
