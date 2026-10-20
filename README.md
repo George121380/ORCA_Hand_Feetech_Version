@@ -2,7 +2,7 @@
 
 基于 **ORCA Hand v1 右手、17 个 STS3215 V12 舵机**的复现项目，包含硬件装配资料，以及真机控制、仿真学习和 RGB 视频遥操作软件。
 
-**[可打印物体与 sim-to-real 交互方案](https://orca-v1-sim2real-lab.peiqi.chatgpt.site)**：方块与两端贴码训练笔的三维模型、打印下载、视觉闭环和训练路线。[4090 安装、分阶段训练与部署说明](docs/software/sim2real.md)记录Jarvis实验：v6笔任务15°已通过仿真门槛，30°及连续旋转仍未通过；v7新增控制器状态输入，尚待验收，也未验证真机迁移。
+**[可打印物体与 sim-to-real 交互方案](https://orca-v1-sim2real-lab.peiqi.chatgpt.site)**：方块与两端贴码训练笔的三维模型、打印下载、视觉闭环和训练路线。[4090 安装、分阶段训练与部署说明](docs/software/sim2real.md)记录Jarvis实验：v6笔任务15°已通过仿真门槛；v7加入控制器状态输入后，30°独立100回合成功率81%、掉落0%，达到该阶段门槛。45°及连续旋转仍待验收，也未验证真机迁移。
 
 **[英文会议 Slides（5 页）](docs/meeting.html)**：项目想法、实时遥操作、转笔任务与团队下一步。下载 HTML 后可离线播放内嵌视频；方向键翻页，`F` 全屏，`N` 显示英文讲稿。见 [演示说明](docs/software/meeting.md)。
 
