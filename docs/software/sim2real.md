@@ -513,6 +513,14 @@ Linux四项成功数依次为7/14、12/14、2/14、0/14，Mac为9/14、12/14、2
 
 [原试验全部评估、配对结果和新启动方案](../sim2real/grasp-pilot-r03-result.json)保存原job及失败门槛。完整模型/checkpoint、日志、评估、监督状态、启动参数和源码归档在`orca-hand-rl-grasp-lowexplore/runs/source/grasp-r03-pilot-evidence.tar.gz`，SHA256为`1468297d2c6090e9653499af805235db55c9578fe76af14170eff65142d40372`；本机已下载并校验所选模型哈希。新试验尚待验收，不因更小噪声或旧开发诊断提前宣称成功。
 
+### 低噪声试验的中期均值诊断
+
+低噪声试验5/10/15万步的内部20回合均为0成功，进程正常，尚未使用正式2311000区间。为区分采样噪声与确定性策略动作，在独立诊断工作树冻结恰好100000步checkpoint（按步数选择，非best_model），SHA256为`cd349b0c3aafd2ed8828d5432b88a29419df7649b807cfab2f478f63fe1fcb88`。扩展原诊断脚本的`--checkpoint-steps 100000 --mean-vs-hold`，仅在原14个开发初态上分别运行零动作和策略均值，共28回合；逐种子完整物理/模型/控制器/观测/RNG签名一致，也与先前Linux探测的初态签名一致。
+
+零动作7/14成功，确定性策略0/14，其中2次位移超限、12次horizon；后12次均未满足完整末段受载对握，6次另有朝向跨度超限、2次另有位置跨度及静止要求失败，分类可以重叠。策略平均最大单关节命令偏移约0.8106rad（46.4°）；中指PIP命令在14/14回合触及上界，环指PIP在5/14触及下界。这里统计的是控制器位置目标，不把它冒充实际关节测量。这一无策略采样噪声的比较说明，较小初始噪声尚未避免所学均值的积分漂移；不能仅凭此前零均值小噪声12/14诊断，推断PPO也会学好。
+
+[28回合诊断、命令边界与证据索引](../sim2real/grasp-lowexplore-mean-probe.json)保留全部结果。诊断源码e74efd0在Mac和Jarvis各通过原2项状态/失败分类检查，另实际验证错误checkpoint步数声明会在创建输出前被拒绝，[完整CI通过](https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39490156659)。原始逐步轨迹、冻结policy/config和源码归档为`orca-hand-rl-grasp-diagnostics/runs/source/grasp-lowexplore-mean100k-evidence.tar.gz`，SHA256为`8a90f6f0e2be37a434d5f4fde7eaa804f361ac3241a663a7854990444df458ee`，已下载并校验冻结模型哈希。运行中的训练仍固定92d957c、原20万步预算和全部正式门槛，没有中途改奖励、控制器或重置分布；中期失败诊断不替代最终模型选择和正式评估。
+
 `scripts/training_heartbeat.py`作为独立于监督器的systemd用户服务，每300秒检查状态，原子更新`runs/pen-v6-heartbeat/latest.json`并追加`heartbeats.jsonl`；即使监督器因质量预算耗尽退出，心跳仍记录`needs_attention`。也会标记运行中监督器状态超过120秒未更新、训练进度超过300秒未更新、监督服务未运行等问题。进程恢复由30秒轮询的监督器及systemd负责。这个心跳只记录服务器状态，不会唤醒聊天代理，也没有聊天、邮件或手机推送。`--once`用于启动检查，不能把心跳日志等同于人工或代理已完成诊断。
 
 会话跟进改用Mac的launchd定时执行`scripts/queue_rl_heartbeat.py`，通过已安装Codex CLI的`queue --thread ... --message ...`给同一个任务派发检查，不创建另一个代理。旧的工具单元内JavaScript计时器在结束回复后未按预期持续执行，不能再用它声称自动复查。用户相关线程号、CLI路径、开关与序号放在被忽略的`local/orca-rl-agent-heartbeat.json`，不上传GitHub。每300秒最多派发一个未确认消息；代理完成SSH检查后用`--ack --note '检查证据'`记录实际检查时间，`queue`成功回执只证明排队成功。超过15分钟未确认会标记`needs_attention`。Mac必须保持唤醒、原生Codex服务可用；服务器的systemd监控独立运行。停止时先用`--disable`关闭派发，再卸载对应launchd任务；不要影响PPO训练，除非用户也要求停训。
