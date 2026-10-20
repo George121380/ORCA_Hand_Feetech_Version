@@ -133,6 +133,8 @@ prepare_a1mini.py需要本机Bambu Studio官方预设。4090安装脚本之后�
 
 `scripts/training_heartbeat.py`作为独立于监督器的systemd用户服务，每300秒检查状态，原子更新`runs/pen-v6-heartbeat/latest.json`并追加`heartbeats.jsonl`；即使监督器因质量预算耗尽退出，心跳仍记录`needs_attention`。也会标记运行中监督器状态超过120秒未更新、训练进度超过300秒未更新、监督服务未运行等问题。进程恢复由30秒轮询的监督器及systemd负责。这个心跳只记录服务器状态，不会唤醒聊天代理，也没有聊天、邮件或手机推送。`--once`用于启动检查，不能把心跳日志等同于人工或代理已完成诊断。
 
+会话跟进改用Mac的launchd定时执行`scripts/queue_rl_heartbeat.py`，通过已安装Codex CLI的`queue --thread ... --message ...`给同一个任务派发检查，不创建另一个代理。旧的工具单元内JavaScript计时器在结束回复后未按预期持续执行，不能再用它声称自动复查。用户相关线程号、CLI路径、开关与序号放在被忽略的`local/orca-rl-agent-heartbeat.json`，不上传GitHub。每300秒最多派发一个未确认消息；代理完成SSH检查后用`--ack --note '检查证据'`记录实际检查时间，`queue`成功回执只证明排队成功。超过15分钟未确认会标记`needs_attention`。Mac必须保持唤醒、原生Codex服务可用；服务器的systemd监控独立运行。停止时先用`--disable`关闭派发，再卸载对应launchd任务；不要影响PPO训练，除非用户也要求停训。
+
 首轮的正式测试种子20000..20099已经使用，后续调参改用新的正式测试区间。当前精度微调试验从开发集选定的checkpoint续训50万步，学习率1e-4、熵系数0.001、KL阈值0.01，初始探索标准差显式设为exp(-1)；开发集仍使用30000..30039，下一正式测试使用21000..21099。参数通过`--learning-rate`、`--entropy-coef`、`--target-kl`、`--reset-log-std`记录；机械故障恢复会保留checkpoint中已学到的标准差，不重复重置探索。这是待验收试验，不能预先声称有效。
 
 建议先方块 15°，再 45°，再 90°，最后四次同向 90°；训练笔独立重新开始，不复用方块权重作为已学会的模型。
