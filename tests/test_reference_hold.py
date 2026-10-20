@@ -75,3 +75,29 @@ def test_snapshot_distinguishes_axial_roll_from_directed_shaft_motion(hold_probe
         assert sample['shaft_change_deg']==pytest.approx(0,abs=1e-6)
     finally:
         env.close()
+
+
+def test_preload_target_does_not_teleport_actual_joint_state(hold_probe,monkeypatch):
+    import mujoco
+    env=ManipulationEnv(TaskConfig(object='pen',randomization=0))
+    actual=(env.lower[:16]+env.upper[:16])/2
+    target=actual+.03
+    step=mujoco.mj_step
+    checked=[]
+    def observe_initial_state(model,data,**kwargs):
+        if not checked:
+            np.testing.assert_allclose(data.qpos[env.qadr[:16]],actual)
+            np.testing.assert_allclose(data.ctrl[env.actuators[:16]],target)
+            checked.append(True)
+        return step(model,data,**kwargs)
+    monkeypatch.setattr(mujoco,'mj_step',observe_initial_state)
+    try:
+        result=hold_probe.hold(env,actual,[.6,0,.8,1,0,0,0],.5,target=target)
+        assert checked and result['simulated_s']==pytest.approx(.5)
+        assert result['initial']['command_error_rms_rad']==pytest.approx(.03)
+        assert result['peak_displacement_m']>.2  # Object remains dynamically free.
+        for invalid in ([0.]*15,env.upper[:16]+.01,np.full(16,np.nan)):
+            with pytest.raises(ValueError,match='16 finite joint positions'):
+                hold_probe.hold(env,actual,[.6,0,.8,1,0,0,0],.5,target=invalid)
+    finally:
+        env.close()

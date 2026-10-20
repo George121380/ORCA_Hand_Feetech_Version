@@ -79,13 +79,20 @@ def snapshot(env,origin,rotation,command):
                 command_error_rms_rad=float(np.sqrt(np.mean((env.data.qpos[env.qadr[:16]]-command[:16])**2))))
 
 
-def hold(env,q,pose,seconds):
+def hold(env,q,pose,seconds,*,target=None):
     if not .5<=seconds<=2 or abs(seconds/.05-round(seconds/.05))>1e-8:
         raise ValueError('Use 0.5..2 seconds in 0.05 second intervals')
-    command=env.hand_spec.neutral.copy()
-    command[:16]=q
+    actual=env.hand_spec.neutral.copy()
+    actual[:16]=q
+    command=actual.copy()
+    if target is not None:
+        target=np.asarray(target,float)
+        if (target.shape!=(16,) or not np.isfinite(target).all()
+                or np.any(target<env.lower[:16]) or np.any(target>env.upper[:16])):
+            raise ValueError('Target must contain 16 finite joint positions within ROM')
+        command[:16]=target
     mujoco.mj_resetData(env.model,env.data)
-    env.data.qpos[env.qadr]=command
+    env.data.qpos[env.qadr]=actual
     env.data.qpos[env.oq:env.oq+7]=pose
     env.data.ctrl[env.actuators]=command
     mujoco.mj_forward(env.model,env.data)
