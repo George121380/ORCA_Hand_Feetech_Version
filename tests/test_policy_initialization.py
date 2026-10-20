@@ -60,8 +60,10 @@ def test_real_grasp_cli_snapshots_zero_initial_policy_and_resume_keeps_learned_h
     out=tmp_path/'fresh'
     monkeypatch.setattr(sys,'argv',base+['--output',str(out)])
     cli.main(train_fn=partial(cli.train,**kwargs))
-    initial=PPO.load(out/'initial_policy.zip',device='cpu')
+    initial=PPO.load(out/'initial/policy.zip',device='cpu')
     assert torch.count_nonzero(initial.policy.action_net.weight)==0
+    assert load_grasp_config(out/'initial/policy.zip')[1]['actual_steps']==0
+    assert not load_grasp_config(out/'initial/policy.zip')[1]['trained']
     trained=PPO.load(out/'policy.zip',device='cpu')
     expected={k:v.clone() for k,v in trained.policy.state_dict().items()}
     assert torch.count_nonzero(expected['action_net.weight'])>0
@@ -76,5 +78,5 @@ def test_real_grasp_cli_snapshots_zero_initial_policy_and_resume_keeps_learned_h
     resumed=tmp_path/'resumed'
     monkeypatch.setattr(sys,'argv',base+['--output',str(resumed),'--resume',str(out/'policy.zip')])
     cli.main(train_fn=partial(cli.train,**kwargs))
-    assert not (resumed/'initial_policy.zip').exists()
+    assert not (resumed/'initial').exists()
     assert load_grasp_config(resumed/'policy.zip')[1]['zero_initial_action_mean']

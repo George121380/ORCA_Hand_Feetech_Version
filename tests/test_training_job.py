@@ -38,12 +38,14 @@ def test_new_grasp_job_forwards_explicit_cli_and_persists_family(monkeypatch,tmp
         def wait(self):return 7
     monkeypatch.setattr(job.subprocess,'Popen',Failed)
     monkeypatch.setattr(job.sys,'argv',['job','--output',str(output),'--task-family','pen-grasp-v1',
-        '--object','pen','--angle','10','--horizon','140','--randomization','0'])
+        '--object','pen','--angle','10','--horizon','140','--randomization','0','--zero-initial-action-mean'])
     with pytest.raises(RuntimeError,match='train exited 7'):
         job.main()
     assert Path(calls[0][1]).name=='pen_grasp.py'
+    assert '--zero-initial-action-mean' in calls[0]
     state=json.loads((output/'job.json').read_text())
     assert state['arguments']['task_family']=='pen-grasp-v1' and not state['acceptance_met']
+    assert state['arguments']['zero_initial_action_mean']
 
 
 def test_training_failure_stops_job_and_preserves_command(monkeypatch, tmp_path):

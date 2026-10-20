@@ -151,6 +151,15 @@ def test_prefix_teacher_survives_plan_options_and_job_launch(monkeypatch,tmp_pat
     assert argv[argv.index("--turns")+1] == "2" and "--minimum-goal-angle" not in argv
 
 
+def test_grasp_zero_mean_provenance_is_forwarded_with_checkpoint_recovery(monkeypatch,tmp_path):
+    monkeypatch.syspath_prepend(str(Path(__file__).parents[1]/'scripts'))
+    import watch_training as watch
+    argv=watch.job_command(dict(task_family='pen-grasp-v1',zero_initial_action_mean=True),
+                           tmp_path/'job',resume=tmp_path/'checkpoint.zip')
+    assert '--zero-initial-action-mean' in argv
+    assert argv[argv.index('--resume')+1]==str(tmp_path/'checkpoint.zip')
+
+
 def test_explicit_plan_advances_only_after_pass_and_is_immutable_on_restart(monkeypatch, tmp_path):
     monkeypatch.syspath_prepend(str(Path(__file__).parents[1] / "scripts"))
     spec = importlib.util.spec_from_file_location("watch", Path(__file__).parents[1] / "scripts/watch_training.py")

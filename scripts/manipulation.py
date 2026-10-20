@@ -152,7 +152,11 @@ def train(args, *, config_class=TaskConfig, env_class=None, task_id=TASK_ID,
         metadata["action_mean_penalty_coef"] = getattr(model.policy, "mean_penalty_coef", 0.)
         write(args.output / "config.json", metadata)
         if args.resume is None:
-            model.save(args.output/'initial_policy.zip')
+            initial=args.output/'initial'
+            initial.mkdir()
+            model.save(initial/'policy.zip')
+            write(initial/'config.json',dict(metadata,trained=False,actual_steps=0,requested_steps=0,
+                                            artifact_role='before_first_learning_update'))
         model.tensorboard_log = str(args.output / "tb")
         started = time.monotonic()
         initial_steps = model.num_timesteps
