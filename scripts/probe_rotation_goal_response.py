@@ -53,6 +53,8 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--checkpoint',type=Path,required=True)
     p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--residual-gain',type=float,choices=(0.,1.,2.,4.,8.),default=1.,
+                   help='Development-only amplify goal-conditioned residual around the fixed zero-goal actor response')
     args=p.parse_args()
     import torch
     from stable_baselines3 import PPO
@@ -69,7 +71,9 @@ def main():
             prefix='Actual empty reach, manual release,140 frozen grasp actions; all failures count without retry',
             pairing='Same seed/placement for both directions; exact physical/controller/camera/RNG/model signature required',
             action_audit='Counterfactual copy changes only active G entries; real preparation history kept, alternate action never applied',
-            credit='Actor sensitivity is not physical controllability; world-Z progress and off-axis motion from actual dynamics, no acceptance'),
+            credit='Actor sensitivity is not physical controllability; world-Z progress and off-axis motion from actual dynamics, no acceptance',
+            residual_gain=args.residual_gain,
+            diagnostic_action='u0 + gain*(u_goal-u0), u0 predicted after replacing active goals with measured prefix-end rotation; gain1 uses original actor output exactly; same braking/clipping/audits'),
         cases=[],pairs=[])
     policy=PPO.load(args.checkpoint,device='cpu')
     env=PenRotateEnv(cfg)
@@ -93,14 +97,18 @@ def main():
                     before=physical_control_signature(env.carrier)
                     alternate,mask=counterfactual_goal(obs,env.goal,opposite)
                     action=policy.predict(obs,deterministic=True)[0]
+                    neutral_obs,_=counterfactual_goal(obs,env.goal,env.goal_capture_rotation)
+                    neutral=policy.predict(neutral_obs,deterministic=True)[0]
+                    applied=(action if args.residual_gain==1 else neutral+args.residual_gain*(action-neutral))
                     counter=policy.predict(alternate,deterministic=True)[0]
                     source=env.prefix.predict(obs,deterministic=True)[0]
                     source_counter=env.prefix.predict(alternate,deterministic=True)[0]
                     if before!=physical_control_signature(env.carrier):
                         raise RuntimeError('Actor audit mutated physical/controller/camera/RNG state')
-                    obs,reward,done,truncated,info=env.step(action)
+                    obs,reward,done,truncated,info=env.step(applied)
                     rotation=env.pose()[1]
-                    row['samples'].append(dict(tick=tick+1,action=action.tolist(),counterfactual_action=counter.tolist(),
+                    row['samples'].append(dict(tick=tick+1,action=applied.tolist(),actor_action=action.tolist(),
+                        zero_goal_action=neutral.tolist(),counterfactual_action=counter.tolist(),
                         active_goal_frames=mask.tolist(),action_goal_delta_norm=float(np.linalg.norm(action-counter)),
                         source_action=source.tolist(),source_counterfactual_action=source_counter.tolist(),
                         source_goal_delta_norm=float(np.linalg.norm(source-source_counter)),

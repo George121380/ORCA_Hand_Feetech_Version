@@ -1,0 +1,18 @@
+{
+  "purpose": "Bounded development diagnosis after rotation formal0/100 and matched goal-response gain about0.10; no new PPO training",
+  "source_checkpoint_steps": 100000,
+  "source_checkpoint_sha256": "a64f95f2b23029efcc02ad77237d019c3d72d0e228bdd913b858bd502bf090fb",
+  "source_choice": "Fixed100k time point declared before formal results, never selected on formal score",
+  "seeds": [2511000,2511001,2511002,2511003,2511004,2511005,2511006],
+  "directions": [-1,1],
+  "new_gains": [0,2,4,8],
+  "baseline_gain1": "Completed14-case rotation100k-goalresponse-v1; exact same source, seeds, physical prefix and goals",
+  "maximum_new_episodes": 56,
+  "action": "u0 + k*(u_goal-u0), where u0 replaces only active goal matrices by the measured prefix-end orientation; real preparation history retained",
+  "bounds": "Original16-action clipping,0.8rad/s velocity,2rad/s^2 acceleration, all2ms geometry/force/excluded-support/release-origin displacement audits",
+  "gates": "Original full7s continuation and final1s strict fullSO3/loaded-pinch/rest/span requirements; every prefix failure or hard abort retained",
+  "interpretation": "Counterfactual neutral-goal actor response is a diagnostic decomposition, not a validated hold controller; sensitivity and residual gain do not establish global reachability",
+  "promotion": "Development evidence only, no formal seed use or acceptance credit, no source-policy relabeling; any promising synthesized controller needs its own versioned artifact and fresh formal evaluation before further claims",
+  "automatic_extensions": 0,
+  "hardware_actions": false
+}
