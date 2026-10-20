@@ -569,6 +569,16 @@ Jarvis相关34项检查通过，包含实际短程抓持训练和续训、独立
 
 [带时间戳的启动快照、初始化证明、14个逐例开发结果和进程检查](../sim2real/rotation-v1-pilot.json)保留模型哈希、方案和归档索引。训练源码归档`runs/source/pen-rotate-v1-source-ebb861c.tar.gz`的SHA256为`e4be4cb3254da3b14c4c443689930c39abab2cdd2c8c11cecb2b73789b77b007`，已下载校验。现有`orca-rl-watchdog`与`orca-rl-heartbeat`服务已切换，原v6的latest.json指向新监督目录，Mac沿用原launchd。切换时一次即时检查与服务竞争旧的latest.tmp，心跳自动重启一次，训练未受影响；随后加入写锁和独立临时文件，并通过Mac/Jarvis各4项检查。修复版心跳单独固定在`orca-hand-rl-ops`的b392d70工作树，运行中的训练源码不改动。
 
+### 旋转5万步内部评估与6万步配对诊断
+
+2026-10-20T21:17Z实际SSH检查：训练到61440步，5万步内部20回合为0成功；18次运行到140步horizon，2次抓持前缀失败。这个内部评估不是100回合正式门槛，不能作为已经验收或可以无限续训的依据。[心跳写入修复的完整CI](https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39498440503)已通过；运行中的源码与超参数保持原样，没有重复运行已通过的检查。
+
+另将固定60000步checkpoint冻结到`runs/rotation60k-dev14-frozen-v1`，SHA256为`bee19b7bd4cc68b30a2245d7b977e21b506abc598de525389bc4eb0d9fe32f60`；只在已有2511000..2511013开发用例做14回合诊断。与迁移后零步参考逐例核对，初始姿态、目标、方向、重置速度和前缀状态全部精确相同：两者均0/14成功，6万步模型0掉落，13次前缀成功、1次前缀失败均保留。所有13个成功前缀在最终时刻仍有≥8°目标误差，而且整个后段从未出现单个满足目标角度及严格接触/速度条件的tick，因此不能把失败只归因于最后1秒的连续保持要求。
+
+全部14例平均最终误差从14.963°到14.407°；仅描述配对开发样本，不宣称已取得可靠改善。13个成功前缀的6万步模型平均实际朝向变化8.201°、平均最终目标误差14.379°，最终静止13/13、受载对握3/13。实际发生朝向变化不代表沿正确目标完成了15°定向；这些指标定位了当前门槛障碍，尚不能确定学习受限的因果机制。正式2611000..2611099仍未启用，本轮继续完成原20万步预算，不改成功标准、不自动追加训练。
+
+[原始14回合结果、逐例配对、5万步内部评估与归档索引](../sim2real/rotation-v1-pilot.json)已保存。冻结模型/config、完整评估、零步参考指标、SSH检查及固定源码归档于`orca-hand-rl-rotate-v1/runs/source/rotation60k-dev14-evidence.tar.gz`，SHA256为`69e1c5145246ed8dda235ef3e70257faa22855fbc8196113fc07420431cdffd8`，已下载并校验归档及内部policy哈希。21:19:59Z训练到77824步，监督/心跳均active、恢复0次，2/4/6万步checkpoint参数有限；没有硬件操作。
+
 `scripts/training_heartbeat.py`作为独立于监督器的systemd用户服务，每300秒检查状态，原子更新`runs/pen-v6-heartbeat/latest.json`并追加`heartbeats.jsonl`；即使监督器因质量预算耗尽退出，心跳仍记录`needs_attention`。也会标记运行中监督器状态超过120秒未更新、训练进度超过300秒未更新、监督服务未运行等问题。进程恢复由30秒轮询的监督器及systemd负责。这个心跳只记录服务器状态，不会唤醒聊天代理，也没有聊天、邮件或手机推送。`--once`用于启动检查，不能把心跳日志等同于人工或代理已完成诊断。
 
 会话跟进改用Mac的launchd定时执行`scripts/queue_rl_heartbeat.py`，通过已安装Codex CLI的`queue --thread ... --message ...`给同一个任务派发检查，不创建另一个代理。旧的工具单元内JavaScript计时器在结束回复后未按预期持续执行，不能再用它声称自动复查。用户相关线程号、CLI路径、开关与序号放在被忽略的`local/orca-rl-agent-heartbeat.json`，不上传GitHub。每300秒最多派发一个未确认消息；代理完成SSH检查后用`--ack --note '检查证据'`记录实际检查时间，`queue`成功回执只证明排队成功。超过15分钟未确认会标记`needs_attention`。Mac必须保持唤醒、原生Codex服务可用；服务器的systemd监控独立运行。停止时先用`--disable`关闭派发，再卸载对应launchd任务；不要影响PPO训练，除非用户也要求停训。
