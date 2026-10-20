@@ -8,6 +8,7 @@ Uses the existing watchdog service and heartbeat state format.
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import argparse
 import fcntl
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -18,6 +19,7 @@ import subprocess
 import sys
 import threading
 import time
+import zipfile
 
 from orca_feetech.checkpoint import load_config
 from orca_feetech.training_supervision import checkpoint_steps
@@ -42,8 +44,22 @@ def validate_protocol(protocol):
         blocks.append((seed, count))
 
 
+def policy_signature(path):
+    """Conservatively deduplicate identical serialized weights and architecture.
+
+    Outer ZIP timestamps, optimizer state and training counters cannot change
+    inference. Different policy classes/kwargs remain distinct candidates.
+    """
+    with zipfile.ZipFile(path) as archive:
+        data = json.loads(archive.read("data"))
+        payload = dict(weights=hashlib.sha256(archive.read("policy.pth")).hexdigest(),
+                       policy_class=data.get("policy_class"), policy_kwargs=data.get("policy_kwargs"),
+                       use_sde=data.get("use_sde"))
+    return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
+
+
 def manifest(directories, *, screen_seed, confirmation_seed, test_seed):
-    candidates, hashes, fingerprint = [], set(), None
+    candidates, models, fingerprint = [], {}, None
     for directory in sorted(Path(d).resolve() for d in directories):
         for path in sorted(directory.glob("*.zip")):
             if path.stem not in ("policy", "best_model") and not path.stem.startswith("checkpoint_"):
@@ -57,16 +73,21 @@ def manifest(directories, *, screen_seed, confirmation_seed, test_seed):
             fingerprint = metadata["fingerprint"]
             steps = checkpoint_steps(path, check_weights=True)
             digest = sha256(path)
-            if digest in hashes:
+            signature = policy_signature(path)
+            if signature in models:
+                models[signature].setdefault("equivalent_checkpoints", []).append(
+                    dict(checkpoint=str(path), sha256=digest))
                 continue
-            hashes.add(digest)
-            candidates.append(dict(id=digest, checkpoint=str(path), sha256=digest,
-                                   config_sha256=sha256(path.parent/"config.json"), steps=steps))
+            candidate = dict(id=digest, checkpoint=str(path), sha256=digest, policy_signature=signature,
+                             config_sha256=sha256(path.parent/"config.json"), steps=steps)
+            candidates.append(candidate)
+            models[signature] = candidate
     protocol = dict(schema=1, kind="checkpoint_selection", fingerprint=fingerprint,
                     candidates=candidates, workers=4, top_k=min(3, len(candidates)),
                     screen=dict(seed=screen_seed, episodes=40),
                     confirmation=dict(seed=confirmation_seed, episodes=200),
                     test=dict(seed=test_seed, episodes=100), video=True,
+                    deduplication="serialized_policy_and_architecture_v1",
                     purpose="Development-only selection before one frozen independent formal test")
     validate_protocol(protocol)
     return protocol
@@ -76,12 +97,34 @@ def cached_metrics(output, candidate, episodes, seed, baseline=None):
     try:
         data = json.loads((output/"metrics.json").read_text())
         valid = ((output/"checkpoint.sha256").read_text().strip() == candidate["sha256"]
+                 and sha256(output/"config.json") == candidate["config_sha256"]
                  and data["episodes"] == episodes
                  and data["policy"] == (baseline or candidate["checkpoint"])
                  and [t["seed"] for t in data["trials"]] == list(range(seed, seed+episodes)))
         return data if valid else None
     except (OSError, ValueError, KeyError, TypeError):
         return None
+
+
+def adopt_development_cache(protocol, previous_job, state_dir):
+    """Copy only exact development caches into a new, separately frozen run."""
+    previous_job, state_dir = Path(previous_job), Path(state_dir)
+    if (state_dir/"protocol.json").exists() or (state_dir/"job/job.json").exists():
+        raise ValueError("Import caches before starting the new protocol")
+    counts = dict(screen=0, confirmation=0)
+    for split in counts:
+        block = protocol[split]
+        for candidate in protocol["candidates"]:
+            source = previous_job/split/candidate["id"]
+            if cached_metrics(source, candidate, block["episodes"], block["seed"]):
+                target = state_dir/"job"/split/candidate["id"]
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copytree(source, target)
+                counts[split] += 1
+    state_dir.mkdir(parents=True, exist_ok=True)
+    save(state_dir/"cache-import.json", dict(previous_job=str(previous_job), imported=counts,
+                                           formal_caches_imported=0))
+    return counts
 
 
 class SelectionJob:
@@ -125,6 +168,7 @@ class SelectionJob:
             if self.evaluator:
                 result = self.evaluator(candidate, output, episodes, seed, baseline, video)
                 output.mkdir(exist_ok=False)
+                shutil.copy2(Path(candidate["checkpoint"]).parent/"config.json", output/"config.json")
                 save(output/"metrics.json", result)
             else:
                 argv = [sys.executable, str(ROOT/"scripts/manipulation.py"), "evaluate",
@@ -269,6 +313,8 @@ def main():
                 or config.horizon != 240 or config.randomization != 1
                 or metadata["fingerprint"] != protocol["fingerprint"] or sha256(path) != candidate["sha256"]
                 or sha256(path.parent/"config.json") != candidate["config_sha256"]
+                or (candidate.get("policy_signature") is not None
+                    and policy_signature(path) != candidate["policy_signature"])
                 or checkpoint_steps(path, check_weights=True) != candidate["steps"]):
             raise ValueError("Candidate differs from frozen manifest")
     job = SelectionJob(protocol, args.state_dir).run()

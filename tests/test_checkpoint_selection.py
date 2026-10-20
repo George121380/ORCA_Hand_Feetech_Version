@@ -1,6 +1,9 @@
 import importlib.util
 import json
 from pathlib import Path
+import shutil
+from types import SimpleNamespace
+import zipfile
 
 import pytest
 
@@ -104,8 +107,45 @@ def test_protocol_rejects_overlap_and_excessive_budget_and_cache_requires_exact_
     output = tmp_path/"cache"
     output.mkdir()
     (output/"metrics.json").write_text(json.dumps(metrics(c, 40, 140000, .7, None)))
+    shutil.copy2(Path(c["checkpoint"]).parent/"config.json", output/"config.json")
     (output/"checkpoint.sha256").write_text(c["sha256"])
     assert selector.cached_metrics(output, c, 40, 140000)
     assert selector.cached_metrics(output, c, 40, 140001) is None
     (output/"checkpoint.sha256").write_text("wrong")
     assert selector.cached_metrics(output, c, 40, 140000) is None
+
+
+def test_manifest_deduplicates_networks_despite_archive_and_optimizer_differences(selector, tmp_path, monkeypatch):
+    config = SimpleNamespace(object="pen", angle=35, turns=1, horizon=240, randomization=1.)
+    monkeypatch.setattr(selector, "load_config", lambda _: (config, dict(fingerprint="same-contract")))
+    monkeypatch.setattr(selector, "checkpoint_steps", lambda *a, **kw: 100)
+    for name, counter, architecture in [("best_model", 100, 16), ("checkpoint_100_steps", 200, 16),
+                                        ("checkpoint_200_steps", 300, 32)]:
+        with zipfile.ZipFile(tmp_path/(name+".zip"), "w") as archive:
+            archive.writestr("data", json.dumps(dict(num_timesteps=counter, policy_class="ActorCriticPolicy",
+                                                    policy_kwargs=dict(net_arch=[architecture]), use_sde=False)))
+            archive.writestr("policy.pth", b"identical-network-serialization")
+            archive.writestr("policy.optimizer.pth", str(counter))
+    (tmp_path/"config.json").write_text("{}")
+    p = selector.manifest([tmp_path], screen_seed=140000, confirmation_seed=820000, test_seed=830000)
+    assert len(p["candidates"]) == 2
+    assert len(p["candidates"][0]["equivalent_checkpoints"]) == 1
+    assert p["candidates"][0]["policy_signature"] != p["candidates"][1]["policy_signature"]
+
+
+def test_cache_import_is_development_only_and_requires_unchanged_metadata(selector, tmp_path):
+    p = protocol(selector, tmp_path)
+    c = p["candidates"][0]
+    previous = tmp_path/"previous"
+    for split in ["screen", "confirmation", "test"]:
+        output = previous/split/c["id"]
+        output.mkdir(parents=True)
+        block = p[split]
+        (output/"metrics.json").write_text(json.dumps(metrics(c, block["episodes"], block["seed"], .7, None)))
+        (output/"checkpoint.sha256").write_text(c["sha256"])
+        shutil.copy2(Path(c["checkpoint"]).parent/"config.json", output/"config.json")
+    state = tmp_path/"new"
+    assert selector.adopt_development_cache(p, previous, state) == dict(screen=1, confirmation=1)
+    assert not (state/"job/test").exists()
+    (previous/"screen"/c["id"]/"config.json").write_text("changed")
+    assert selector.cached_metrics(previous/"screen"/c["id"], c, 40, 140000) is None

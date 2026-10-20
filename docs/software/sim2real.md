@@ -191,6 +191,10 @@ v7首轮事先固定为从最后一轮v6开发集选定模型迁移，追加200�
 
 该选择任务在独立工作树`orca-hand-rl-checkpoints`的`runs/pen-checkpoint-selection-supervised`记录每项结果、缓存校验和、所用种子与恢复次数；已完成评估只有checkpoint哈希、种子序列和回合数全部匹配才复用。协议、源文件或已冻结赢家发生变化会拒绝恢复；最多3次进程启动，单项评估超时180秒。复用现有`orca-rl-watchdog.service`运行选择器和现有独立心跳，不新增定时器。心跳会报告评估项数；它属于CPU评估阶段，训练步数记录为0，不伪报GPU训练。
 
+首轮44个ZIP的开发筛选最高30/40，但前三名的200回合复核为68%、68%、61%，未达到80%，未消耗正式830000区间。其中两个ZIP的`policy.pth`成员SHA256完全相同（4f66959b…），虽ZIP外层哈希不同，实际占用了重复网络名额。选择器现按序列化网络权重及策略类/参数去重，忽略ZIP时间戳、优化器状态和训练计数；保留等价文件清单。原协议和结果保持不变，新独立工作树`orca-hand-rl-checkpoints-distinct`、状态目录`runs/pen-checkpoint-distinct-supervised`重新冻结去重清单，仅导入源模型/元数据哈希、种子与回合数均一致的开发缓存，补齐第三个不同网络的200回合复核。正式缓存不导入，原830000正式区间继续保持未使用，且复核达标后才启用。
+
+另一次不改变动力学的原始35°策略开发轨迹接触诊断中，12个失败回合包括7次horizon、5次视觉超时；这些失败均从未进入完整姿态误差8°以内，horizon回合满足手内接触和位移约束，未见底座接触阻碍，速度仅在少数早期步骤超限。部分末端轴向误差已较小，但仍有滚转误差。该诊断不用于模型选择或正式验收，不能把单次接触相关性认定为因果；结果保存为原选择工作树`runs/raw35-contact-diagnostic.json`。
+
 `scripts/training_heartbeat.py`作为独立于监督器的systemd用户服务，每300秒检查状态，原子更新`runs/pen-v6-heartbeat/latest.json`并追加`heartbeats.jsonl`；即使监督器因质量预算耗尽退出，心跳仍记录`needs_attention`。也会标记运行中监督器状态超过120秒未更新、训练进度超过300秒未更新、监督服务未运行等问题。进程恢复由30秒轮询的监督器及systemd负责。这个心跳只记录服务器状态，不会唤醒聊天代理，也没有聊天、邮件或手机推送。`--once`用于启动检查，不能把心跳日志等同于人工或代理已完成诊断。
 
 会话跟进改用Mac的launchd定时执行`scripts/queue_rl_heartbeat.py`，通过已安装Codex CLI的`queue --thread ... --message ...`给同一个任务派发检查，不创建另一个代理。旧的工具单元内JavaScript计时器在结束回复后未按预期持续执行，不能再用它声称自动复查。用户相关线程号、CLI路径、开关与序号放在被忽略的`local/orca-rl-agent-heartbeat.json`，不上传GitHub。每300秒最多派发一个未确认消息；代理完成SSH检查后用`--ack --note '检查证据'`记录实际检查时间，`queue`成功回执只证明排队成功。超过15分钟未确认会标记`needs_attention`。Mac必须保持唤醒、原生Codex服务可用；服务器的systemd监控独立运行。停止时先用`--disable`关闭派发，再卸载对应launchd任务；不要影响PPO训练，除非用户也要求停训。
