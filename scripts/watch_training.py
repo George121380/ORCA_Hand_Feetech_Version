@@ -93,7 +93,8 @@ def job_command(options, output, resume=None):
     for key in ("object", "angle", "turns", "horizon", "randomization", "steps", "num_envs", "device",
                 "seed", "device_config", "mass_kg", "friction", "selection_episodes", "selection_seed",
                 "test_episodes", "test_seed", "checkpoint_every", "eval_every", "learning_rate",
-                "entropy_coef", "target_kl", "initial_log_std", "negative_goal_probability"):
+                "entropy_coef", "target_kl", "initial_log_std", "negative_goal_probability",
+                "minimum_goal_angle"):
         if options.get(key) is not None:
             command += ["--" + key.replace("_", "-"), str(options[key])]
     if resume:

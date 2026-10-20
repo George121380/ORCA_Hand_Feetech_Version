@@ -176,13 +176,17 @@ def build_model(config, *, object_spec=None):
 class ManipulationEnv(gym.Env):
     metadata = {"render_modes": ["rgb_array"], "render_fps": 20}
 
-    def __init__(self, config=None, render_mode=None, negative_goal_probability=.5):
+    def __init__(self, config=None, render_mode=None, negative_goal_probability=.5,
+                 minimum_goal_angle=None):
         if not 0 <= negative_goal_probability <= 1:
             raise ValueError("Goal sampling probability must be in [0,1]")
         # Training-only goal distribution. The canonical evaluation and real
         # goal interface retain both directions and the same task contract.
         self.negative_goal_probability = negative_goal_probability
         self.config = config or TaskConfig()
+        if minimum_goal_angle is not None and not 10 <= minimum_goal_angle <= self.config.angle:
+            raise ValueError("Training minimum goal angle must be between 10 and task angle")
+        self.minimum_goal_angle = minimum_goal_angle
         self.model = build_model(self.config)
         self.data = mujoco.MjData(self.model)
         self.hand_spec = ModelSpec.load()
@@ -287,7 +291,13 @@ class ManipulationEnv(gym.Env):
         self.direction = options.get("direction", direction)
         if self.direction not in (-1, 1):
             raise ValueError("Direction must be -1 or 1")
-        self.increment = yaw_rotation(np.deg2rad(self.config.angle) * self.direction)
+        # Training-only mixture: half at the full task angle, half uniform
+        # from the requested minimum. The default consumes no extra RNG and
+        # keeps canonical evaluation and deployment goals unchanged.
+        self.goal_angle = self.config.angle
+        if self.minimum_goal_angle is not None and self.np_random.random() < .5:
+            self.goal_angle = float(self.np_random.uniform(self.minimum_goal_angle, self.config.angle))
+        self.increment = yaw_rotation(np.deg2rad(self.goal_angle) * self.direction)
         self.goal = self.increment @ rot
         self.codec = ActionCodec(self.config, self.hand_spec.neutral)
         self.observer = ObservationCodec(self.config)
@@ -317,7 +327,8 @@ class ManipulationEnv(gym.Env):
         dropped = bool(pos[2] < .10 or displacement > .12)
         stable = (error < np.deg2rad(8) and displacement < .04 and self.contact()
                   and linear_speed < .08 and angular_speed < 1.)
-        return dict(angle_error_deg=float(np.rad2deg(error)), displacement_m=displacement,
+        return dict(angle_error_deg=float(np.rad2deg(error)), goal_angle_deg=self.goal_angle,
+                    displacement_m=displacement,
                     dropped=dropped, stable=bool(stable), completed_turns=self.completed,
                     is_success=self.completed >= self.config.turns, vision_age=self.age,
                     object_position=pos.tolist(), linear_speed_mps=linear_speed,

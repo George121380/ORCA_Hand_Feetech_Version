@@ -91,7 +91,7 @@ def test_quality_pilot_stays_on_failed_skill_uses_new_test_and_stops_at_budget(m
     initial.mkdir()
     options = dict(device="cpu", steps=100, num_envs=2, object="pen", angle=45, turns=1,
                    horizon=240, randomization=.3, selection_seed=50000, test_seed=60000,
-                   learning_rate=.0003, entropy_coef=.01)
+                   learning_rate=.0003, entropy_coef=.01, minimum_goal_angle=15)
     original = dict(status="complete", acceptance_met=False, arguments=options)
     (initial / "job.json").write_text(json.dumps(original))
     launches = []
@@ -118,6 +118,7 @@ def test_quality_pilot_stays_on_failed_skill_uses_new_test_and_stops_at_budget(m
     assert argv[argv.index("--steps")+1] == "200"
     assert argv[argv.index("--test-seed")+1] == "160000"
     assert argv[argv.index("--selection-seed")+1] == "50000"
+    assert argv[argv.index("--minimum-goal-angle")+1] == "15"
     assert "--reset-log-std" not in argv
     assert json.loads((initial / "job.json").read_text()) == original
 
@@ -136,7 +137,7 @@ def test_explicit_plan_advances_only_after_pass_and_is_immutable_on_restart(monk
     initial = tmp_path / "initial"
     initial.mkdir()
     options = dict(device="cpu", num_envs=2, object="pen", selection_seed=70000,
-                   selection_episodes=40, test_seed=80000, test_episodes=100,
+                   selection_episodes=40, test_seed=80000, test_episodes=100, minimum_goal_angle=15,
                    **{k: v for k, v in plan[0].items() if k != "name"})
     (initial / "job.json").write_text(json.dumps(dict(status="complete", acceptance_met=True,
                                                      arguments=options)))
@@ -160,6 +161,7 @@ def test_explicit_plan_advances_only_after_pass_and_is_immutable_on_restart(monk
     assert state["plan"] == plan and len(launches) == 1
     argv = launches[0]
     assert argv[argv.index("--angle")+1] == "45"
+    assert argv[argv.index("--minimum-goal-angle")+1] == "15"
     assert argv[argv.index("--test-seed")+1] == "81000"
     assert argv[argv.index("--resume")+1] == str(initial / "selected/policy.zip")
     plan[1]["angle"] = 90

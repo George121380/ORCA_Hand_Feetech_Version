@@ -217,6 +217,41 @@ def test_training_goal_sampler_changes_direction_without_changing_physics_or_con
             env.close()
 
 
+def test_training_angle_mixture_preserves_initial_physics_and_full_angle_evaluation():
+    cfg = TaskConfig(object="pen", angle=35, randomization=1.)
+    training = ManipulationEnv(cfg, minimum_goal_angle=15)
+    evaluation = ManipulationEnv(cfg)
+    explicit_default = ManipulationEnv(cfg, minimum_goal_angle=None)
+    angles = []
+    try:
+        for seed in range(12):
+            training.reset(seed=seed)
+            obs, _ = evaluation.reset(seed=seed)
+            default_obs, _ = explicit_default.reset(seed=seed)
+            assert np.array_equal(training.data.qpos, evaluation.data.qpos)
+            assert training.direction == evaluation.direction
+            assert training.config.fingerprint() == evaluation.config.fingerprint()
+            angles.append(training.info()["goal_angle_deg"])
+            assert 15 <= angles[-1] <= 35
+            assert training.info()["angle_error_deg"] == pytest.approx(angles[-1])
+            assert evaluation.info()["angle_error_deg"] == pytest.approx(35)
+            assert np.array_equal(obs, default_obs)
+            # The default path must retain the canonical vision-noise RNG too.
+            next_obs = evaluation.step(np.zeros(16))[0]
+            default_next = explicit_default.step(np.zeros(16))[0]
+            assert np.array_equal(next_obs, default_next)
+        assert any(angle < 35 for angle in angles) and any(angle == 35 for angle in angles)
+    finally:
+        for env in (training, evaluation, explicit_default):
+            env.close()
+
+
+@pytest.mark.parametrize("minimum", [9, 36, float("nan"), float("inf")])
+def test_training_angle_mixture_rejects_invalid_range(minimum):
+    with pytest.raises(ValueError, match="minimum goal angle"):
+        ManipulationEnv(TaskConfig(object="pen", angle=35), minimum_goal_angle=minimum)
+
+
 K = np.array([[1400., 0, 960], [0, 1400, 540], [0, 0, 1]])
 R = np.array([2.8, .1, .1])
 T = np.array([.015, .015, .28])

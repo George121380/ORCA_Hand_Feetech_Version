@@ -81,6 +81,7 @@ def main():
     parser.add_argument("--initial-log-std", type=float, default=0.)
     parser.add_argument("--reset-log-std", type=float)
     parser.add_argument("--negative-goal-probability", type=float, default=.5)
+    parser.add_argument("--minimum-goal-angle", type=float)
     parser.add_argument("--continue-existing", action="store_true",
                         help="Recover an interrupted job without repeating completed evaluations")
     parser.add_argument("--recovery-num-envs", type=int,
@@ -111,6 +112,8 @@ def main():
     if min(args.steps, args.num_envs, args.selection_episodes, args.test_episodes,
            args.checkpoint_every, args.eval_every) < 1:
         parser.error("Budgets must be positive")
+    if args.minimum_goal_angle is not None and not 10 <= args.minimum_goal_angle <= args.angle:
+        parser.error("Training minimum goal angle must be between 10 and task angle")
     selection_seeds = set(range(args.selection_seed, args.selection_seed + args.selection_episodes))
     test_seeds = set(range(args.test_seed, args.test_seed + args.test_episodes))
     if min(args.selection_seed, args.test_seed) < 20000 or selection_seeds & test_seeds:
@@ -215,7 +218,8 @@ def main():
                 command += ["--reset-log-std", str(args.reset_log_std)]
             for key in ("object", "angle", "turns", "horizon", "randomization", "num_envs", "device",
                         "seed", "device_config", "mass_kg", "friction", "checkpoint_every", "eval_every",
-                        "learning_rate", "entropy_coef", "target_kl", "initial_log_std"):
+                        "learning_rate", "entropy_coef", "target_kl", "initial_log_std",
+                        "minimum_goal_angle"):
                 value = getattr(args, key)
                 if value is not None:
                     command += ["--" + key.replace("_", "-"), str(value)]
