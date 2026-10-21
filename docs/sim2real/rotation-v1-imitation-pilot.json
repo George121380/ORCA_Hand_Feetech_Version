@@ -1,0 +1,122 @@
+{
+  "timestamp": "2026-10-21T03:54:51.263127+00:00",
+  "status": "awaiting_host_reconnection",
+  "source_revision": "9496e53651d953f9b6465544334a45adc9c23bc8",
+  "plan": {
+    "purpose": "One finite actor-only imitation pilot if the frozen new training corpus meets its original admission gate",
+    "collection_plan_sha256": "39a2ce2ab1b0f768f50396cc09bd7a8f0cd57f6764ccf8814721dd2a7b8d8aad",
+    "updates": 2000,
+    "batch_size": 256,
+    "learning_rate": 0.0001,
+    "seed": 0,
+    "sampling": "Uniform distinct successful training state, then uniform recorded tick across that state's native successful variants",
+    "initialization": "Copy all accepted frozen grasp actor/critic/log_std tensors into a fresh rotation PPO container; empty optimizer, zero rotation environment steps and zero PPO updates",
+    "optimization": "Actor policy_net and action_net only; critic and log_std frozen and bitwise checked. Censored action MSE; Adam eps1e-5, gradient norm<=0.5. No contact, true velocity, clock or planner inputs",
+    "development": {
+      "seed": 3211000,
+      "episodes": 28,
+      "checkpoints": [
+        "before_bc",
+        "after_bc"
+      ]
+    },
+    "bounded_ppo_admission": {
+      "minimum_candidate_successes": 4,
+      "minimum_success_gain": 3,
+      "maximum_drops": 0,
+      "both_directions_successful": true
+    },
+    "limits": "Training demonstrations are selected successes, not an independent success rate. BC fit error does not qualify the policy. No formal seeds, PPO, continuous acceptance, hardware or automatic budget extension in this pilot",
+    "candidates": 1,
+    "extensions": 0
+  },
+  "source_project": "/home/peiqi/projects/orca-hand-rl-grasp-diagnostics",
+  "pilot_report": "runs/rotation-imitation-pilot-v1/pilot.json",
+  "last_observed_phase": "development-after",
+  "last_observed_remote_status": "running",
+  "last_observed_supervisor_pid": 156012,
+  "last_observed_evaluation_pid": 156380,
+  "offline_imitation": {
+    "status": "complete",
+    "updates": 2000,
+    "device": "NVIDIA GeForce RTX 4090",
+    "torch_version": "2.8.0+cu128",
+    "completed_at": "2026-10-21T03:46:20.838756+00:00",
+    "additional_environment_steps": 0,
+    "ppo_updates": 0,
+    "checkpoint_sha256": "2ce69cfa9dd9c10fcdbe2cd6c90bbcd319d03d4ce301be4bafe342dbe8406412",
+    "loss_before_by_state": [
+      0.0014334829756990075,
+      0.0017837592167779803,
+      0.002007310278713703,
+      0.0007326255436055362,
+      0.0006822702125646174,
+      0.0009392377687618136,
+      0.0016807070933282375,
+      0.0014808971900492907
+    ],
+    "loss_after_by_state": [
+      0.000490028818603605,
+      0.0002548903867136687,
+      0.0004698065749835223,
+      7.338192517636344e-05,
+      7.237149111460894e-05,
+      0.00013683656288776547,
+      0.0002766408724710345,
+      0.00011852569878101349
+    ],
+    "state_balanced_mse_reduction": 0.8237959793001376,
+    "critic_and_log_std_bitwise_unchanged": true,
+    "ppo_optimizer_empty": true,
+    "successful_training_states": 8,
+    "successful_trajectories": 12,
+    "observable_training_pairs": 1680,
+    "actor_inputs": 296,
+    "actor_actions": 16,
+    "checkpoint_download_and_full_pilot_archive": "pending_reconnection"
+  },
+  "development_before": {
+    "episodes": 28,
+    "seed": 3211000,
+    "success_rate": 0.0,
+    "drop_rate": 0.0,
+    "mean_final_error_deg": 15.549616673600884
+  },
+  "development_after": null,
+  "bounded_ppo_admitted": null,
+  "connectivity": {
+    "local_tailscale_backend": "Running",
+    "local_health": [],
+    "jarvis_online": false,
+    "jarvis_last_seen": "2026-10-21T03:48:59.1Z",
+    "ssh_retries_timed_out": 3,
+    "tailscale_ping_attempts": 2,
+    "tailscale_ping_replies": 0,
+    "limitation": "Peer offline does not establish whether the evaluation process ended or host storage changed; do not infer candidate score or restart it without inspection"
+  },
+  "checks": {
+    "mac_targeted_tests": 13,
+    "jarvis_targeted_tests": 13,
+    "ruff": "passed",
+    "ci": {
+      "id": 39540360695,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39540360695"
+    }
+  },
+  "original_neural_policy_formal_score": {
+    "successes": 0,
+    "episodes": 100,
+    "unchanged": true
+  },
+  "monitoring": {
+    "existing_launchd_interval_seconds": 300,
+    "preserved": true,
+    "new_timers": 0,
+    "new_agents": 0
+  },
+  "acceptance_met": false,
+  "continuous_rotation_accepted": false,
+  "hardware_actions": 0
+}
