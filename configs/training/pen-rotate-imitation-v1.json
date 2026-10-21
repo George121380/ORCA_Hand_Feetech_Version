@@ -1,0 +1,16 @@
+{
+  "purpose": "One finite actor-only imitation pilot if the frozen new training corpus meets its original admission gate",
+  "collection_plan_sha256": "39a2ce2ab1b0f768f50396cc09bd7a8f0cd57f6764ccf8814721dd2a7b8d8aad",
+  "updates": 2000,
+  "batch_size": 256,
+  "learning_rate": 0.0001,
+  "seed": 0,
+  "sampling": "Uniform distinct successful training state, then uniform recorded tick across that state's native successful variants",
+  "initialization": "Copy all accepted frozen grasp actor/critic/log_std tensors into a fresh rotation PPO container; empty optimizer, zero rotation environment steps and zero PPO updates",
+  "optimization": "Actor policy_net and action_net only; critic and log_std frozen and bitwise checked. Censored action MSE; Adam eps1e-5, gradient norm<=0.5. No contact, true velocity, clock or planner inputs",
+  "development": {"seed": 3211000, "episodes": 28, "checkpoints": ["before_bc", "after_bc"]},
+  "bounded_ppo_admission": {"minimum_candidate_successes": 4, "minimum_success_gain": 3, "maximum_drops": 0, "both_directions_successful": true},
+  "limits": "Training demonstrations are selected successes, not an independent success rate. BC fit error does not qualify the policy. No formal seeds, PPO, continuous acceptance, hardware or automatic budget extension in this pilot",
+  "candidates": 1,
+  "extensions": 0
+}
