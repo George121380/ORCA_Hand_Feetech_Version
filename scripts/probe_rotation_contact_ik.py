@@ -133,11 +133,12 @@ def propose(env,anchors,condition):
 def run_continuation(env,state,knots,expected_signature,role,output,report,save,*,
                      maximum_cases=18,maximum_continuations=15):
     number=len(report['cases'])
-    if number>=maximum_cases:
+    if number>=maximum_cases or sum('end' in c for c in report['cases'])>=maximum_continuations:
         raise RuntimeError('Contact experiment budget exhausted')
     report['active_case']=dict(index=number,role=role,**state)
     save()
-    obs,initial=env.reset(seed=state['seed'],options=dict(placement_index=state['placement_index'],direction=1))
+    obs,initial=env.reset(seed=state['seed'],options=dict(placement_index=state['placement_index'],
+                                                      direction=state['direction']))
     signature=paired_signature(env.carrier)
     initial_command=env.carrier.codec.q.copy()
     previous_command=initial_command.copy()
