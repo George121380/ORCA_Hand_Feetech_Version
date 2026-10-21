@@ -45,3 +45,23 @@ def test_actor_fit_preserves_critic_exploration_optimizer_and_rotation_counters(
         if not name.startswith(('mlp_extractor.policy_net.','action_net.')):
             assert torch.equal(value,before[name])
         assert value.requires_grad
+
+
+def test_paired_development_gate_requires_both_directions_and_gain(monkeypatch):
+    from copy import deepcopy
+    monkeypatch.syspath_prepend(str(Path(__file__).parents[1]/'scripts'))
+    from run_rotation_imitation_pilot import development_comparison
+    source=dict(trials=[dict(seed=3211000+i,placement_index=i%7,direction=-1 if (i//7)%2==0 else 1,
+        initial_position=[i,0,0],initial_rotation=[1,0,0],goal_rotation=[1,0,0],prefix_grasp_success=True,
+        prefix_steps=140,prefix_end_reason='success',is_success=False,dropped=False) for i in range(28)])
+    candidate=deepcopy(source)
+    for i in (0,1,7,8):
+        candidate['trials'][i]['is_success']=True
+    assert development_comparison(source,candidate)['bounded_ppo_admitted']
+    candidate['trials'][7]['direction']=-1
+    with pytest.raises(ValueError,match='matched original physical prefixes'):
+        development_comparison(source,candidate)
+    candidate=deepcopy(source)
+    for i in range(4):
+        candidate['trials'][i]['is_success']=True
+    assert not development_comparison(source,candidate)['bounded_ppo_admitted']
