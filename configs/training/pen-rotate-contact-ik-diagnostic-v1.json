@@ -1,0 +1,43 @@
+{
+  "purpose": "Contact-target-guided IK proposals after0/100 rotation and failed bounded joint trajectory search; privileged development diagnostic, no neural training or hardware",
+  "rotation_fingerprint": "66eafa068a1067879c8d7d26227ebc05c1e76d4af1f3ced90079c5ee2372bc2b",
+  "prefix_checkpoint_sha256": "9ff037afb2ae122b50ec7128fe792314216d60c6536d1c8eba94e09a6928c374",
+  "parent_report_sha256": "97c13437b0a5755dc46c2af6c204f5396020a27597a0093ff3690e68c54dc842",
+  "trajectory_report_sha256": "135d1cd4864e600d4d65e22c6da1a45f1b402e8d1522a455a474432c96cf687e",
+  "states": [
+    {"seed": 2511000, "placement_index": 0, "direction": 1},
+    {"seed": 2511001, "placement_index": 1, "direction": 1},
+    {"seed": 2511002, "placement_index": 2, "direction": 1}
+  ],
+  "conditions": [
+    {"name": "points-center-fixed", "normal_targets": false, "lift_m": 0.0},
+    {"name": "points-normals-center-fixed", "normal_targets": true, "lift_m": 0.0},
+    {"name": "points-lift3mm", "normal_targets": false, "lift_m": 0.003},
+    {"name": "points-normals-lift3mm", "normal_targets": true, "lift_m": 0.003}
+  ],
+  "knot_seconds": [1.25, 2.5, 3.75, 5.0],
+  "object_path": "SO3 geodesic from actual prefix-end orientation to the unchanged measured +/-15deg task goal, fractions0.25/0.5/0.75/1; center fixed or linearly lifted3mm. Contact targets are the corresponding rigid transform of original anchors",
+  "contact_selection": "Require loaded thumb_dp and middle_ip. Strongest positive-normal-force contact per required body, plus strongest contact per other finger if>=5percent object weight; maximum5 anchors. Virtual attached points at actual contact positions, not a force-closure guarantee",
+  "ik": {
+    "joint_delta_limit_rad": 0.3,
+    "max_nfev_per_fit": 60,
+    "position_scale_m": 0.001,
+    "normal_scale_rad": 0.08726646259971647,
+    "initial_posture_regularization": 0.05,
+    "previous_knot_regularization": 0.05,
+    "knots_per_proposal": 4,
+    "maximum_fits": 48
+  },
+  "preload": "Command target=prefix command+(IK actual-joint target-prefix actual joints). Bounds intersect original actual-joint ROM, +/-0.3rad and original command ROM after preload offset; no ROM enlargement or reset of inherited controller velocity",
+  "planning_isolation": "New MjData for FK only; live qpos/qvel/time/controller/queue/camera/RNG/model signature must remain identical before/after all fits. Hypothetical geometry, positions and normal targets never enter live physics. Compiled pinned model has16 controlled finger hinges and one fixed-wrist equality; reject unsupported passive hinges",
+  "physical_budget": "Per state: one physical prefix-only planning preparation, one zero-offset7s reference and four separately executed7s IK proposals. Three states=>18 maximum preparations/rollouts,15 full continuations. No retries, success filtering, snapshots, or extra replay",
+  "maximum_cases": 18,
+  "maximum_continuations": 15,
+  "rollout": "Every case independently executes original6.5s reach, one release and7s frozen grasp. All six prefixes per state must match. Interpolate command knots quintically, hold final target5..7s; original16D actions, braking speed/acceleration, delays and invalid-observation behavior. Keep all2ms audits and failures",
+  "nonconverged_fits": "Record optimizer status/residuals and physically test finite bounded proposals even if IK does not converge. Nonfinite or invalid-bound proposals are skipped as failures without refit or extra budget",
+  "quality": "Unmodified15deg/140tick environment and final1s fullSO3<8deg, loaded opposition, velocities,2deg/2mm spans and original hard gates. All conditions/states retained, no winner chosen to tune other states or formal seeds",
+  "logging": "Every action logs original296D observation,16D action, command, full qpos/qvel/time for later faithful geometry visualization, contact data and original task information",
+  "limits": "Previously seen development states, positive direction only, privileged contact/joint truth for planning. No independent100-case, continuous rotation or sim2real acceptance credit; no automatic PPO/BC or budget extension",
+  "sources": ["https://mujoco.readthedocs.io/en/stable/APIreference/APIfunctions.html#mj-kinematics", "https://mujoco.readthedocs.io/en/stable/XMLreference.html#equality-joint"],
+  "extensions": 0
+}

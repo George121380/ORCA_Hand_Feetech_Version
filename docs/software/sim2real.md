@@ -623,6 +623,16 @@ policy正式91次前缀成功后均为horizon失败、9次前缀失败保留；9
 
 18485组296维观测/16维动作均有限且尺寸正确，全部逐例文件SHA256已校验，原速度/加速度限制保持。完整原始轨迹、报告、父报告、冻结抓持模型与源码归档为`orca-hand-rl-grasp-diagnostics/runs/source/rotation-trajectory-v1-evidence.tar.gz`，大小53029142字节、SHA256为`86a09c1ee6c9fcaaa1b10b56c023d8ce798cfe75f9c2c80073e3c0fa5e34502b`；本机已下载并校验归档、源码、父报告、结果报告及抓持模型哈希。`runs/pen-v6-heartbeat/active-diagnostic.json`已标记本诊断complete，原正式policy失败状态保留。当前没有新的PPO、模仿训练或额外搜索预算；下一假设是生成随物体目标移动的指尖接触轨迹，再在完整动力学下验证，尚未实现或证明。连续旋转仍未完成，原有两个心跳保留。
 
+### 接触目标引导的隔离IK提案
+
+对当前编译模型作结构复核：nq=24、nv=23、17个手部hinge（16个手指控制关节及固定手腕），其余为物体free joint，仅一条手腕equality，没有额外独立被动DIP关节。此前关于被动耦合的概括不能当作当前模型具有额外被动自由度的证据；旧方案和原始报告保持不改，在此明确更正。这也不证明真实手的传动和本模型完全一致。
+
+在原完整轨迹搜索失败后，登记[接触引导IK诊断](../../configs/training/pen-rotate-contact-ik-diagnostic-v1.json)：固定三个已见开发初态，每个选取实际受载拇指/中指接触锚点及其他受载手指的最强接触。用独立MjData副本计算指尖随物体目标移动的关节轨迹，四个条件为仅位置/位置加法线，各配固定中心/抬高3mm，沿实际初始姿态到原任务目标的完整SO3路径取四个节点。优化只用16个实际控制关节；命令保留前缀的command-actual预载差，单关节改变量≤0.3rad，并取原ROM交集。规划前后必须验证完整live状态签名不变，假想物体位姿只存在于副本。
+
+每状态一次真实前缀准备、一次零偏置7秒对照、四次分别重新执行前缀的7秒提案，三状态共最多18次准备/回放、48个单起点IK求解（每个max_nfev60），无重试或自动追加。有限但未收敛的提案仍物理验证，保留求解残差和所有中止；不按结果挑新的种子或调门槛。每条动作记录296维原观测、控制命令和全qpos/qvel，便于后续复核真实几何。全部条件均由原15°/7秒环境判定，接触真值仅用于该特权规划，尚无新神经策略或正式验收信用。
+
+[运行索引与模型结构更正](../sim2real/rotation-v1-contact-ik.json)记录状态，目前代码与方案尚未运行。依据[MuJoCo正向运动学API](https://mujoco.readthedocs.io/en/stable/APIreference/APIfunctions.html#mj-kinematics)和[关节equality参考](https://mujoco.readthedocs.io/en/stable/XMLreference.html#equality-joint)，FK计算不是施加接触运动约束，仍必须由原动力学检验提案。
+
 `scripts/training_heartbeat.py`作为独立于监督器的systemd用户服务，每300秒检查状态，原子更新`runs/pen-v6-heartbeat/latest.json`并追加`heartbeats.jsonl`；即使监督器因质量预算耗尽退出，心跳仍记录`needs_attention`。也会标记运行中监督器状态超过120秒未更新、训练进度超过300秒未更新、监督服务未运行等问题。进程恢复由30秒轮询的监督器及systemd负责。这个心跳只记录服务器状态，不会唤醒聊天代理，也没有聊天、邮件或手机推送。`--once`用于启动检查，不能把心跳日志等同于人工或代理已完成诊断。
 
 会话跟进改用Mac的launchd定时执行`scripts/queue_rl_heartbeat.py`，通过已安装Codex CLI的`queue --thread ... --message ...`给同一个任务派发检查，不创建另一个代理。旧的工具单元内JavaScript计时器在结束回复后未按预期持续执行，不能再用它声称自动复查。用户相关线程号、CLI路径、开关与序号放在被忽略的`local/orca-rl-agent-heartbeat.json`，不上传GitHub。每300秒最多派发一个未确认消息；代理完成SSH检查后用`--ack --note '检查证据'`记录实际检查时间，`queue`成功回执只证明排队成功。超过15分钟未确认会标记`needs_attention`。Mac必须保持唤醒、原生Codex服务可用；服务器的systemd监控独立运行。停止时先用`--disable`关闭派发，再卸载对应launchd任务；不要影响PPO训练，除非用户也要求停训。

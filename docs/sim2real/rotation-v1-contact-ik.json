@@ -1,0 +1,10 @@
+{
+  "status": "registered_not_started",
+  "plan": "../../configs/training/pen-rotate-contact-ik-diagnostic-v1.json",
+  "plan_sha256": "29d8d83fb8c88032cdd99799bee4fbc5d2967c7630b06fc17773f0ac6f316aa4",
+  "acceptance_met": false,
+  "continuous_rotation_accepted": false,
+  "runtime_directory": "/home/peiqi/projects/orca-hand-rl-grasp-diagnostics/runs/rotation-contact-ik-v1",
+  "local_tests": "Mac8 passed; ruff passed",
+  "model_structure_correction": "Compiled pinned model nq24/nv23/nu17/neq1:16 controlled finger hinges plus fixed wrist, no independent passive DIP hinges. Earlier generic descriptions of passive coupling are not a description of extra DOFs in this compiled model; preserve original reports and source archives."
+}
