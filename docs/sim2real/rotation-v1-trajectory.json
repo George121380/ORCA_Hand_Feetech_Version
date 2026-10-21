@@ -1,0 +1,11 @@
+{
+  "status": "registered_not_started",
+  "plan": "../../configs/training/pen-rotate-trajectory-diagnostic-v1.json",
+  "plan_sha256": "51e844eea26c1df02face825929979171ed296f633fec93bf086a73703eb2312",
+  "acceptance_met": false,
+  "continuous_rotation_accepted": false,
+  "reason": "Parent local1deg pulse passed prediction but failed physical validation; directly evaluate nonlinear full-duration trajectories before using them as demonstrations.",
+  "limits": "One positive direction and one search state only. Transfer seeds were previously seen development states, not fresh formal evidence. No formal2611 reuse, no training or hardware actions; no automatic budget extension",
+  "runtime_directory": "/home/peiqi/projects/orca-hand-rl-grasp-diagnostics/runs/rotation-trajectory-v1",
+  "local_tests": "Mac7 passed; ruff passed"
+}
