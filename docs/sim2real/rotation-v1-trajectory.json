@@ -1,5 +1,5 @@
 {
-  "status": "registered_not_started",
+  "status": "running",
   "plan": "../../configs/training/pen-rotate-trajectory-diagnostic-v1.json",
   "plan_sha256": "51e844eea26c1df02face825929979171ed296f633fec93bf086a73703eb2312",
   "acceptance_met": false,
@@ -7,5 +7,40 @@
   "reason": "Parent local1deg pulse passed prediction but failed physical validation; directly evaluate nonlinear full-duration trajectories before using them as demonstrations.",
   "limits": "One positive direction and one search state only. Transfer seeds were previously seen development states, not fresh formal evidence. No formal2611 reuse, no training or hardware actions; no automatic budget extension",
   "runtime_directory": "/home/peiqi/projects/orca-hand-rl-grasp-diagnostics/runs/rotation-trajectory-v1",
-  "local_tests": "Mac7 passed; ruff passed"
+  "local_tests": {
+    "mac": "7 passed",
+    "jarvis": "7 passed",
+    "ruff": "passed"
+  },
+  "source_revision": "48f2a7f380a04ac33de1fe855887ad5d9882ca54",
+  "script_sha256": "469f48e7e2203531fe6a772e7620e32a7f61b296e4c3e98be65d747539c9d5d0",
+  "rotation_fingerprint": "66eafa068a1067879c8d7d26227ebc05c1e76d4af1f3ced90079c5ee2372bc2b",
+  "timestamp": "2026-10-21T02:58:04.669727+00:00",
+  "progress": {
+    "completed_cases": 62,
+    "maximum_cases": 164,
+    "native_task_successes": 0,
+    "full_uncensored_cases": 35
+  },
+  "generations": [
+    {
+      "generation": 0,
+      "best_case": 20,
+      "best_score": 1.0447231858842618,
+      "best_error_deg": 14.990347878365244,
+      "native_task_successes": 0,
+      "full_uncensored_cases": 16
+    }
+  ],
+  "source_archive": {
+    "path": "/home/peiqi/projects/orca-hand-rl-grasp-diagnostics/runs/source/rotation-trajectory-source-48f2a7f.tar.gz",
+    "sha256": "31383aa166d80490a7a4f11748b3b3b71c82795ecdf9489622a3ba42775ffddc"
+  },
+  "monitor_manifest": "/home/peiqi/projects/orca-hand-rl-v6/runs/pen-v6-heartbeat/active-diagnostic.json",
+  "baseline_repeat_exact": true,
+  "ci": {
+    "run_id": 39535727399,
+    "url": "https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39535727399",
+    "status": "in_progress"
+  }
 }
