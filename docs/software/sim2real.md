@@ -631,7 +631,13 @@ policy正式91次前缀成功后均为horizon失败、9次前缀失败保留；9
 
 每状态一次真实前缀准备、一次零偏置7秒对照、四次分别重新执行前缀的7秒提案，三状态共最多18次准备/回放、48个单起点IK求解（每个max_nfev60），无重试或自动追加。有限但未收敛的提案仍物理验证，保留求解残差和所有中止；不按结果挑新的种子或调门槛。每条动作记录296维原观测、控制命令和全qpos/qvel，便于后续复核真实几何。全部条件均由原15°/7秒环境判定，接触真值仅用于该特权规划，尚无新神经策略或正式验收信用。
 
-[运行索引与模型结构更正](../sim2real/rotation-v1-contact-ik.json)记录状态，目前代码与方案尚未运行。依据[MuJoCo正向运动学API](https://mujoco.readthedocs.io/en/stable/APIreference/APIfunctions.html#mj-kinematics)和[关节equality参考](https://mujoco.readthedocs.io/en/stable/XMLreference.html#equality-joint)，FK计算不是施加接触运动约束，仍必须由原动力学检验提案。
+[运行索引与模型结构更正](../sim2real/rotation-v1-contact-ik.json)保存完整结果。源码8f97997已在Jarvis完成18次准备/回放及48次IK拟合，全部拟合数值收敛，3个零偏置对照和12条提案均完整运行7秒、无硬限制中止，原任务成功仍为0。Mac/Jarvis针对性测试各8项及ruff通过，[完整CI](https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39537325632)通过。同初态各条件前缀精确匹配，规划前后live状态签名均不变，首个零偏置对照也与原CEM的对照精确相同。
+
+开发seed2511002的“位置+法线、中心固定”提案（case15）最终完整误差7.7378°，末1秒20/20tick均误差<8°且静止，姿态/位置跨度0.1596°/0.8873mm。拇指和中指最小法向力分别约0.4166/0.5795倍物体重力，受力充分，但接触法向点积约-0.3826835，夹角112.5°，未达到原<=-0.5（至少120°）的对向要求。失败项是接触法向关系，不能误述为两指没受力，也不把该局部事件重标为完整成功。其他初态没有复现这个姿态与保持事件。
+
+IK终点残差按手指拆开后，固定中心的位置提案中拇指约0.48..1.42mm、中指接近0，小指近节锚点却约11.42..12.40mm；各条件小指残差范围9.58..12.40mm。因此数值优化收敛不等于全部刚性锚点几何可达，也不证明全局转动不可能。下一独立假设为小指辅助接触的释放/滑移或终末对握调整，仍保留原法向阈值及完整验收；尚未实现或验证，不追加当前预算。
+
+2100组观测/动作尺寸及有限值、18份逐例文件SHA256均核对通过，完整qpos/qvel保留。全部轨迹、父报告、模型与源码归档于`orca-hand-rl-grasp-diagnostics/runs/source/rotation-contact-ik-v1-evidence.tar.gz`，大小10030186字节、SHA256为`cf2b17affad1e67b435713be19493811ed1172d415fb87e4a900894256db4a3f`，本机已下载并核对归档、源码、两个父报告、结果报告和冻结抓持模型哈希。没有修改物理、原验收门槛、正式种子、现有策略权重或硬件。依据[MuJoCo正向运动学API](https://mujoco.readthedocs.io/en/stable/APIreference/APIfunctions.html#mj-kinematics)和[关节equality参考](https://mujoco.readthedocs.io/en/stable/XMLreference.html#equality-joint)，FK计算不是施加接触运动约束，仍必须由原动力学检验提案。
 
 `scripts/training_heartbeat.py`作为独立于监督器的systemd用户服务，每300秒检查状态，原子更新`runs/pen-v6-heartbeat/latest.json`并追加`heartbeats.jsonl`；即使监督器因质量预算耗尽退出，心跳仍记录`needs_attention`。也会标记运行中监督器状态超过120秒未更新、训练进度超过300秒未更新、监督服务未运行等问题。进程恢复由30秒轮询的监督器及systemd负责。这个心跳只记录服务器状态，不会唤醒聊天代理，也没有聊天、邮件或手机推送。`--once`用于启动检查，不能把心跳日志等同于人工或代理已完成诊断。
 
