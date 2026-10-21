@@ -1,0 +1,21 @@
+{
+  "purpose": "One separately registered1deg local pulse validation of the fixed33-case response model; not an extension or relabeling of the failed2deg admission",
+  "parent_report_sha256": "97c13437b0a5755dc46c2af6c204f5396020a27597a0093ff3690e68c54dc842",
+  "source_checkpoint_sha256": "a64f95f2b23029efcc02ad77237d019c3d72d0e228bdd913b858bd502bf090fb",
+  "seed": 2511000,
+  "placement_index": 0,
+  "direction": 1,
+  "local_target_deg": 1.0,
+  "pulse_ticks": 10,
+  "pulse_seconds": 0.5,
+  "residual_action_bound": 0.04,
+  "fit_regularization": 0.1,
+  "maximum_cases": 1,
+  "admission": "Same parent Jacobian,1mm/1deg scaling and ridge0.1. Run only if predicted fullSO3 error to1deg world-Z<0.5deg and displacement<1mm; otherwise skip without another target or fit",
+  "physical_preparation": "Independently execute original reach/release/frozen7s grasp once; require exact physical/controller/camera/RNG/model signature matching the parent reference; no snapshot injection, retries or success filtering",
+  "base_action": "Identical frozen100k neutral-goal actor feedback plus one constant fitted residual for10ticks; retain original action clipping, delays, controller and every2ms force/penetration/support/displacement audit",
+  "scoring": "Keep prediction and actual local fullSO3 and translation errors, model discrepancy, all contacts and failure reasons; no7s rotation or continuous-rotation acceptance credit",
+  "unchanged_full_task": "15deg target,7s duration,8deg final error and all original contact/stability gates unchanged; formal2611000..2611099 remain consumed",
+  "rationale": "Verify a smaller local motion before trusting a finite-difference model or designing trajectories; not evidence that the full15deg motion is reachable",
+  "extensions": 0
+}
