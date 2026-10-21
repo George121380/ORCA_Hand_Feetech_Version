@@ -1,0 +1,11 @@
+{
+  "status": "registered_not_started",
+  "plan": "../../configs/training/pen-rotate-terminal-grip-diagnostic-v1.json",
+  "acceptance_met": false,
+  "continuous_rotation_accepted": false,
+  "maximum_static_postures": 2187,
+  "maximum_physical_cases": 7,
+  "runtime_directory": "/home/peiqi/projects/orca-hand-rl-grasp-diagnostics/runs/rotation-terminal-grip-v1",
+  "local_tests": "Mac11 passed; ruff passed",
+  "scope": "Development tuning of one partial event with two previously seen non-search development states, positive direction only. No formal100-case, policy, continuous-rotation or sim2real acceptance; no automatic PPO/BC or budget extension"
+}

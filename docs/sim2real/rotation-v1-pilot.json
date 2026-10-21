@@ -52710,5 +52710,6 @@
   "local_validation_evidence": "rotation-v1-local-validation.json",
   "nonlinear_trajectory_evidence": "rotation-v1-trajectory.json",
   "contact_guided_ik_evidence": "rotation-v1-contact-ik.json",
-  "model_structure_correction": "Compiled pinned model nq24/nv23/nu17/neq1:16 controlled finger hinges plus fixed wrist, no independent passive DIP hinges. Earlier generic descriptions of passive coupling are not a description of extra DOFs in this compiled model; preserve original reports and source archives."
+  "model_structure_correction": "Compiled pinned model nq24/nv23/nu17/neq1:16 controlled finger hinges plus fixed wrist, no independent passive DIP hinges. Earlier generic descriptions of passive coupling are not a description of extra DOFs in this compiled model; preserve original reports and source archives.",
+  "terminal_grip_evidence": "rotation-v1-terminal-grip.json"
 }

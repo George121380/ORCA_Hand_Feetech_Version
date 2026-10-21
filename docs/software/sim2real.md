@@ -639,6 +639,14 @@ IK终点残差按手指拆开后，固定中心的位置提案中拇指约0.48..
 
 2100组观测/动作尺寸及有限值、18份逐例文件SHA256均核对通过，完整qpos/qvel保留。全部轨迹、父报告、模型与源码归档于`orca-hand-rl-grasp-diagnostics/runs/source/rotation-contact-ik-v1-evidence.tar.gz`，大小10030186字节、SHA256为`cf2b17affad1e67b435713be19493811ed1172d415fb87e4a900894256db4a3f`，本机已下载并核对归档、源码、两个父报告、结果报告和冻结抓持模型哈希。没有修改物理、原验收门槛、正式种子、现有策略权重或硬件。依据[MuJoCo正向运动学API](https://mujoco.readthedocs.io/en/stable/APIreference/APIfunctions.html#mj-kinematics)和[关节equality参考](https://mujoco.readthedocs.io/en/stable/XMLreference.html#equality-joint)，FK计算不是施加接触运动约束，仍必须由原动力学检验提案。
 
+### 原门槛下的终末对握调整
+
+对上一轮case15（开发seed2511002）的局部姿态保持事件，单独登记[终末抓姿诊断](../../configs/training/pen-rotate-terminal-grip-diagnostic-v1.json)。这次来源是已观察的开发事件，不是独立验收样本，旧12条失败保持不变。固定七个拇指/中指关节，枚举-0.08/0/+0.08rad的2187个静态姿态；仅在独立MjData中检查记录末态附近的接触法向与碰撞，原物体位姿保持为记录值，live物理/控制/RNG/model完整签名必须不变。静态合格候选最多选三个，在物理回放前冻结，不根据回放重搜。
+
+偏置只加在原四节点的后两个，权重0/0/0.5/1，保持早期路径与预载；全部命令仍受原ROM及相对前缀≤0.3rad约束，使用原控制器和全部2ms审计。最多一次真实前缀准备、一次原轨迹参考、三条候选和两个非搜索开发初态转移，共7次准备/回放。若静态候选为空，保留参考失败并跳过后续，不放宽法向或穿透阈值。候选完整得分冻结后，两个转移使用各自原IK模板加同一个偏置，不重新优化。
+
+[运行索引](../sim2real/rotation-v1-terminal-grip.json)记录状态；目前方案和代码尚未运行。原15°/7秒任务、法向点积<=-0.5、力/速度/稳定窗口、正式0/100与连续转笔未验收的状态均不变。
+
 `scripts/training_heartbeat.py`作为独立于监督器的systemd用户服务，每300秒检查状态，原子更新`runs/pen-v6-heartbeat/latest.json`并追加`heartbeats.jsonl`；即使监督器因质量预算耗尽退出，心跳仍记录`needs_attention`。也会标记运行中监督器状态超过120秒未更新、训练进度超过300秒未更新、监督服务未运行等问题。进程恢复由30秒轮询的监督器及systemd负责。这个心跳只记录服务器状态，不会唤醒聊天代理，也没有聊天、邮件或手机推送。`--once`用于启动检查，不能把心跳日志等同于人工或代理已完成诊断。
 
 会话跟进改用Mac的launchd定时执行`scripts/queue_rl_heartbeat.py`，通过已安装Codex CLI的`queue --thread ... --message ...`给同一个任务派发检查，不创建另一个代理。旧的工具单元内JavaScript计时器在结束回复后未按预期持续执行，不能再用它声称自动复查。用户相关线程号、CLI路径、开关与序号放在被忽略的`local/orca-rl-agent-heartbeat.json`，不上传GitHub。每300秒最多派发一个未确认消息；代理完成SSH检查后用`--ack --note '检查证据'`记录实际检查时间，`queue`成功回执只证明排队成功。超过15分钟未确认会标记`needs_attention`。Mac必须保持唤醒、原生Codex服务可用；服务器的systemd监控独立运行。停止时先用`--disable`关闭派发，再卸载对应launchd任务；不要影响PPO训练，除非用户也要求停训。

@@ -130,9 +130,10 @@ def propose(env,anchors,condition):
                 all_optimizers_converged=all(f['success'] for f in fits))
 
 
-def run_continuation(env,state,knots,expected_signature,role,output,report,save):
+def run_continuation(env,state,knots,expected_signature,role,output,report,save,*,
+                     maximum_cases=18,maximum_continuations=15):
     number=len(report['cases'])
-    if number>=18:
+    if number>=maximum_cases:
         raise RuntimeError('Contact experiment budget exhausted')
     report['active_case']=dict(index=number,role=role,**state)
     save()
@@ -200,8 +201,8 @@ def run_continuation(env,state,knots,expected_signature,role,output,report,save)
     brief.update(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest())
     report['cases'].append(brief)
     report['active_case']=None
-    report['progress']=dict(cases=len(report['cases']),maximum_cases=18,
-        continuations=sum('end' in c for c in report['cases']),maximum_continuations=15)
+    report['progress']=dict(cases=len(report['cases']),maximum_cases=maximum_cases,
+        continuations=sum('end' in c for c in report['cases']),maximum_continuations=maximum_continuations)
     save()
     print(json.dumps(dict(case=number,role=role,seed=state['seed'],ticks=len(row['samples']),
         end_error_deg=info['angle_error_deg'],reason=info['termination_reason'],

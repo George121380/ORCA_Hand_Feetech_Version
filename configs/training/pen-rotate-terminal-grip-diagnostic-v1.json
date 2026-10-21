@@ -1,0 +1,33 @@
+{
+  "purpose": "Separately registered terminal grip refinement after development case15 meets pose/rest but fails original opposed-normal gate; no relabeling, neural training or hardware",
+  "parent_report_sha256": "78308c3fcc376e1f18fa3d663da0076ed971a187df12ded7f1410c7c8a0dd274",
+  "rotation_fingerprint": "66eafa068a1067879c8d7d26227ebc05c1e76d4af1f3ced90079c5ee2372bc2b",
+  "prefix_checkpoint_sha256": "9ff037afb2ae122b50ec7128fe792314216d60c6536d1c8eba94e09a6928c374",
+  "source_case": 15,
+  "source_seed": 2511002,
+  "source_placement_index": 2,
+  "source_condition": "points-normals-center-fixed",
+  "source_selection": "Empirically selected partial development event, not an independent test: all final1s pose/rest/spans met but native success false due normal dot-.3826835. Preserve all12 earlier failures",
+  "grid_joint_names": ["thumb_mcp", "thumb_abd", "thumb_pip", "thumb_dip", "middle_abd", "middle_mcp", "middle_pip"],
+  "grid_values_rad": [-0.08, 0.0, 0.08],
+  "maximum_static_postures": 2187,
+  "maximum_candidates": 3,
+  "terminal_knot_weights": [0.0, 0.0, 0.5, 1.0],
+  "total_command_delta_limit_rad": 0.3,
+  "maximum_cases": 7,
+  "maximum_continuations": 6,
+  "transfers": [
+    {"seed": 2511000, "placement_index": 0, "direction": 1},
+    {"seed": 2511001, "placement_index": 1, "direction": 1}
+  ],
+  "static_isolation": "One freshly executed source grasp prefix supplies the exact randomized model, matching parent signature. On a NEW MjData only, load recorded final qpos/qvel and score hypothetical joint deltas at the unchanged recorded object pose. No mj_step, live state injection, velocity clearing, force application, model editing or task credit. Entire live signature unchanged before/after grid",
+  "static_bounds": "Only modified actual-joint targets must be in original ROM. All4 modified command knots must remain within original ROM and +/-0.3rad from original prefix command; never clip an invalid grid candidate into a different one",
+  "static_admission": "No excluded support, self/object overlap<=2mm, positive-normal-force thumb_dp/middle_ip contacts, minimum normal dot<=-0.5. Static solver forces are proposal screening only, not equilibrium, force closure or full-task acceptance",
+  "static_ranking": "score=(max(0,dot+0.7)/0.2)^2+0.05mean((delta/0.08)^2)+0.1(object_penetration/0.002)^2. Stable grid-order tie break. Freeze at most3 admitted candidates before physical trials; no additional grid or looser threshold if none admitted",
+  "execution": "Original four IK command knots, terminal delta weights0/0/0.5/1 at1.25/2.5/3.75/5s; hold5..7s. Every physical trial independently executes original reach/manual release/frozen7s grasp, exact parent prefix signature required. Original controller/delays/all2ms limits and native15deg/7s success unchanged",
+  "physical_budget": "One prefix-only static preparation, one original partial-trajectory reference, up to3 frozen static candidates, then2 development transfers of the selected delta: at most7 cases/6 continuations. If no static candidate, retain reference failure and skip candidates/transfers without retry",
+  "selection_and_transfer": "Select once by unchanged rotation_trajectory.trajectory_cost on physical source-state results, with per-tick handoff displacement and terminal delta for regularization. Freeze delta before transfers; each transfer uses that state's original parent points+normals/fixed-center plan plus the same delta. Infeasible transfer command bounds count as skipped failure, no clipping or reoptimization",
+  "quality": "Original native fullSO3<8deg, final1s loaded opposite thumb/middle dot<=-0.5, adequate force, velocity and2deg/2mm span gates; penetration<=2mm, force<=10weights, release displacement<4cm, vision/ROM/controller gates unchanged",
+  "limits": "Development tuning of one partial event with two previously seen non-search development states, positive direction only. No formal100-case, policy, continuous-rotation or sim2real acceptance; no automatic PPO/BC or budget extension",
+  "extensions": 0
+}
