@@ -1,0 +1,63 @@
+{
+  "render_only": true,
+  "additional_physics_steps": 0,
+  "scope": "All recorded continuations in original order; geometry only, labels from original task. No force re-evaluation or policy/hardware acceptance.",
+  "report_sha256": "1d73925b4556fdba9fb358b9076431ab9a9be97445efe9ef3952ec173af4c087",
+  "script_sha256": "6e1c1c36b400bae57ca9aa20bcc619e09d429e2f0edb94904ba20a6c508c50f0",
+  "model_source_sha256": "fad505b767154916bebe9f048f13004328dcb49ae51981903d05a8640ee98a42",
+  "mujoco_version": "3.13.0",
+  "fps": 20,
+  "frames": 840,
+  "duration_seconds": 42.0,
+  "cases": [
+    {
+      "index": 1,
+      "seed": 2511002,
+      "role": "frozen-partial-reference",
+      "native_task_success": false,
+      "frames": 140,
+      "case_sha256": "283be77c274ca327b9bf8669757d99a8bcc7fbfd56509f11a2b70d02971aab4d"
+    },
+    {
+      "index": 2,
+      "seed": 2511002,
+      "role": "static-candidate-1084",
+      "native_task_success": true,
+      "frames": 140,
+      "case_sha256": "c8adb2ac960fe1e216834d05499e1c24e03716023a12821b120edaa58b1b30be"
+    },
+    {
+      "index": 3,
+      "seed": 2511002,
+      "role": "static-candidate-1327",
+      "native_task_success": false,
+      "frames": 140,
+      "case_sha256": "ce1c67cec80713c938e49adb1f35ea2bbe506448de98b53ccd966e47b117b4a9"
+    },
+    {
+      "index": 4,
+      "seed": 2511002,
+      "role": "static-candidate-1543",
+      "native_task_success": false,
+      "frames": 140,
+      "case_sha256": "da02df059b598efabe3a4a622945505715cc18b53fe56fbd19a0e9879a2bf57e"
+    },
+    {
+      "index": 5,
+      "seed": 2511000,
+      "role": "selected-delta-development-transfer",
+      "native_task_success": true,
+      "frames": 140,
+      "case_sha256": "8d96b7965efe1a962c35821ab3b7f2d2951dded48f6661e66dad644c46686188"
+    },
+    {
+      "index": 6,
+      "seed": 2511001,
+      "role": "selected-delta-development-transfer",
+      "native_task_success": false,
+      "frames": 140,
+      "case_sha256": "09d80574a7d5fc06732c44eae788f23ce63f9ae8503da03c4cb627a76d1b889e"
+    }
+  ],
+  "video_sha256": "e39d75f082b68e20471d1df4f280a0a8932df9371e0bc37438f3632bae275e64"
+}
