@@ -17152,5 +17152,6 @@
     }
   },
   "interpretation": "Full rank of one local estimated response does not prove bounded/global reachability. The registered2deg/0.5s fitted prediction failed admission; no validation pulse was executed and original constraints remain unchanged.",
-  "local_archive_verified": true
+  "local_archive_verified": true,
+  "separate_followup_evidence": "rotation-v1-local-validation.json"
 }

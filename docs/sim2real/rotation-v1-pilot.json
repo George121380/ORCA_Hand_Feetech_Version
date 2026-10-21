@@ -52706,5 +52706,6 @@
     },
     "interpretation": "NVML query fails because loaded kernel595.91.07 and installed595.99.02 differ; Torch can initialize4090 and execute a CUDA matrix kernel. No driver or system mutation performed."
   },
-  "local_authority_evidence": "rotation-v1-authority.json"
+  "local_authority_evidence": "rotation-v1-authority.json",
+  "local_validation_evidence": "rotation-v1-local-validation.json"
 }

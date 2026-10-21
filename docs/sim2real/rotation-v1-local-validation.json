@@ -1,0 +1,914 @@
+{
+  "status": "complete",
+  "timestamp": "2026-10-21T02:48:50.991731+00:00",
+  "plan": {
+    "purpose": "One separately registered1deg local pulse validation of the fixed33-case response model; not an extension or relabeling of the failed2deg admission",
+    "parent_report_sha256": "97c13437b0a5755dc46c2af6c204f5396020a27597a0093ff3690e68c54dc842",
+    "source_checkpoint_sha256": "a64f95f2b23029efcc02ad77237d019c3d72d0e228bdd913b858bd502bf090fb",
+    "seed": 2511000,
+    "placement_index": 0,
+    "direction": 1,
+    "local_target_deg": 1.0,
+    "pulse_ticks": 10,
+    "pulse_seconds": 0.5,
+    "residual_action_bound": 0.04,
+    "fit_regularization": 0.1,
+    "maximum_cases": 1,
+    "admission": "Same parent Jacobian,1mm/1deg scaling and ridge0.1. Run only if predicted fullSO3 error to1deg world-Z<0.5deg and displacement<1mm; otherwise skip without another target or fit",
+    "physical_preparation": "Independently execute original reach/release/frozen7s grasp once; require exact physical/controller/camera/RNG/model signature matching the parent reference; no snapshot injection, retries or success filtering",
+    "base_action": "Identical frozen100k neutral-goal actor feedback plus one constant fitted residual for10ticks; retain original action clipping, delays, controller and every2ms force/penetration/support/displacement audit",
+    "scoring": "Keep prediction and actual local fullSO3 and translation errors, model discrepancy, all contacts and failure reasons; no7s rotation or continuous-rotation acceptance credit",
+    "unchanged_full_task": "15deg target,7s duration,8deg final error and all original contact/stability gates unchanged; formal2611000..2611099 remain consumed",
+    "rationale": "Verify a smaller local motion before trusting a finite-difference model or designing trajectories; not evidence that the full15deg motion is reachable",
+    "extensions": 0
+  },
+  "plan_sha256": "8d4a2542cc4e12af4765c170befcc1f5e98db4c4b3881783d30793be42cc6435",
+  "source_revision": "b2043740e6999308b0fe62c198a675b611ca5c6c",
+  "script_sha256": "1a02d86c10960c69525287e9ed0a8f1658686eb1897fada6205da539f692c7ec",
+  "checkpoint_sha256": "a64f95f2b23029efcc02ad77237d019c3d72d0e228bdd913b858bd502bf090fb",
+  "parent_report_sha256": "97c13437b0a5755dc46c2af6c204f5396020a27597a0093ff3690e68c54dc842",
+  "parent_two_degree_validation": {
+    "skipped": true,
+    "reason": "Bounded fitted prediction did not meet predeclared local target"
+  },
+  "fit": {
+    "valid_columns": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "censored_columns": [],
+    "scales": [
+      1000.0,
+      1000.0,
+      1000.0,
+      57.29577951308232,
+      57.29577951308232,
+      57.29577951308232
+    ],
+    "bound": 0.04,
+    "regularization": 0.1,
+    "solver_success": true,
+    "rank": 6,
+    "singular_values": [
+      59.99054940570773,
+      10.772607423824146,
+      8.641144341176435,
+      6.726095956829431,
+      4.196835656472601,
+      1.3993084745747049
+    ],
+    "residual_action": [
+      0.03999999999999999,
+      0.039999999999999994,
+      -0.039999999999999994,
+      -0.010556976867870337,
+      -0.039999999999999994,
+      0.039999999999999994,
+      0.03999993348781673,
+      -0.039999999999999994,
+      0.004088292846097678,
+      -0.039999999999999994,
+      0.039999999999999994,
+      -0.02281320160999876,
+      -0.039999999999999994,
+      0.022302007179671676,
+      0.039999999999999994,
+      -0.039999999999999994
+    ],
+    "predicted_delta": [
+      0.00022932522875134448,
+      -0.0001788827981195298,
+      0.00025065180341546313,
+      0.006934732852723234,
+      -0.011352280424820331,
+      0.012912465139101251
+    ],
+    "weighted_tracking_error": 0.5083154412605324,
+    "residual_norm": 0.14263933633452777,
+    "solver_message": "The first-order optimality measure is less than `tol`.",
+    "desired_delta": [
+      0.00024743502880753,
+      -0.0003585638232608754,
+      0.00035801186007725083,
+      0.001862967996345678,
+      -0.008905064561332192,
+      0.018704800313208318
+    ],
+    "predicted_pose": {
+      "world_rotvec_deg": [
+        0.2921528188598181,
+        -0.1397307729036751,
+        0.6692980550846342
+      ],
+      "off_axis_rotation_deg": 0.32384866599076195,
+      "position_displacement_m": 0.0002100938300387298,
+      "target_error_deg": 0.46285966830733183,
+      "local_pose_tracking_met": true
+    }
+  },
+  "acceptance_met": false,
+  "continuous_rotation_accepted": false,
+  "finished_at": "2026-10-21T02:48:53.110034+00:00",
+  "summary": {
+    "cases": 1,
+    "all_prefixes_exactly_matched": true,
+    "full_uncensored_duration": true,
+    "actual_pose": {
+      "world_rotvec_deg": [
+        0.15104536276291072,
+        0.3801328735820795,
+        0.3682836323608332
+      ],
+      "off_axis_rotation_deg": 0.40904242223753334,
+      "position_displacement_m": 0.00014474602291065152,
+      "target_error_deg": 0.7525802449331834,
+      "local_pose_tracking_met": false
+    },
+    "local_pose_tracking_verified": false,
+    "model_position_error_m": 6.852891545152014e-05,
+    "model_rotation_error_deg": 0.6170708129677955,
+    "end": {
+      "angle_error_deg": 15.07825424474823,
+      "goal_angle_deg": 15.0,
+      "displacement_m": 0.01583299963031975,
+      "dropped": false,
+      "stable": false,
+      "completed_turns": 0,
+      "is_success": false,
+      "vision_age": 0.0,
+      "object_position": [
+        0.19572097181270473,
+        0.058824373234455496,
+        0.1976412585395415
+      ],
+      "linear_speed_mps": 0.0005554047092020558,
+      "angular_speed_rps": 0.02542180061750113,
+      "shaft_error_deg": 13.582602487536594,
+      "normal_force_by_body_n": {
+        "right_thumb_dp": 0.42769021752860004,
+        "right_middle_ip": 0.4343992101703958,
+        "right_pinky_pp": 0.1216225041039091
+      },
+      "minimum_thumb_target_normal_dot": -0.8314700383165776,
+      "summed_normal_force_n": 0.983711931802905,
+      "object_weight_n": 0.40565375033840967,
+      "loaded_opposition": true,
+      "pair_score": 1.0,
+      "excluded_force_support": false,
+      "resting": true,
+      "placement_index": 0,
+      "reset_failure": null,
+      "completed_holds": 0,
+      "preparation_seconds": 13.5,
+      "manual_release_initialization": true,
+      "peak_self_penetration_m": 0.0,
+      "peak_object_penetration_m": 0.0013319066196858969,
+      "peak_normal_force_n": 1.0308865666945448,
+      "maximum_displacement_m": 0.015833357772952653,
+      "termination_reason": null,
+      "source_grasp_completed": true,
+      "source_grasp_stable": true,
+      "completed_subgoals": 0,
+      "prefix_grasp_success": true,
+      "prefix_steps": 140,
+      "prefix_end_reason": "success",
+      "rotation_steps": 10,
+      "prefix_seconds": 7.0,
+      "first_goal_tick": null,
+      "rotation_from_handoff_deg": 0.5504076099245132,
+      "final_1s_orientation_span_deg": null,
+      "final_1s_position_span_m": null
+    }
+  },
+  "cases": [
+    {
+      "initial": {
+        "angle_error_deg": 15.441022240029692,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.0157021955130582,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.195750190595205,
+          0.058701336169455984,
+          0.19771168264432076
+        ],
+        "linear_speed_mps": 0.0010548079951005571,
+        "angular_speed_rps": 0.013017675291835597,
+        "shaft_error_deg": 14.031802454056683,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.3355488141514727,
+          "right_middle_ip": 0.3435145628640843,
+          "right_pinky_pp": 0.11266214663657197
+        },
+        "minimum_thumb_target_normal_dot": -0.8314700383165641,
+        "summed_normal_force_n": 0.7917255236521289,
+        "object_weight_n": 0.40565375033840967,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 0,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0013319066196858969,
+        "peak_normal_force_n": 1.0308865666945448,
+        "maximum_displacement_m": 0.0157021955130582,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 0,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 0.0,
+        "reset_attempts": 1,
+        "settle_seconds": 0.0
+      },
+      "prefix_signature": "49addc55bcd9e3290528b4ec60ade931c4601d3d1e312049ca785189082f73e9",
+      "start_position": [
+        0.195750190595205,
+        0.058701336169455984,
+        0.19771168264432076
+      ],
+      "start_rotation": [
+        [
+          0.08019605720341993,
+          -0.267520431650176,
+          0.9602090454993278
+        ],
+        [
+          -0.41049589992390734,
+          0.8689676659291875,
+          0.2763843550478977
+        ],
+        [
+          -0.9083290750354126,
+          -0.41632681179487396,
+          -0.04012825969349165
+        ]
+      ],
+      "start_time_s": 6.999999999999451,
+      "residual_action": [
+        0.03999999999999999,
+        0.039999999999999994,
+        -0.039999999999999994,
+        -0.010556976867870337,
+        -0.039999999999999994,
+        0.039999999999999994,
+        0.03999993348781673,
+        -0.039999999999999994,
+        0.004088292846097678,
+        -0.039999999999999994,
+        0.039999999999999994,
+        -0.02281320160999876,
+        -0.039999999999999994,
+        0.022302007179671676,
+        0.039999999999999994,
+        -0.039999999999999994
+      ],
+      "initial_contacts": {
+        "excluded": [],
+        "hand_contacts": [
+          {
+            "body": "right_thumb_dp",
+            "position_m": [
+              0.195164976687418,
+              0.034416653427635224,
+              0.2062955472344487
+            ],
+            "normal_world": [
+              0.9119469237895468,
+              0.3678436251097264,
+              0.1817797449027748
+            ],
+            "force_world_n": [
+              0.1626920121619607,
+              0.05282539914479907,
+              0.04830889984718143
+            ],
+            "torque_world_nm": [
+              -4.224541902501998e-06,
+              -1.7040145290329316e-06,
+              -8.420842587820554e-07
+            ],
+            "dimension": 4,
+            "friction": [
+              1.050376517158092,
+              1.050376517158092,
+              0.01,
+              0.002,
+              0.002
+            ],
+            "penetration_m": 0.0001681729737493218
+          },
+          {
+            "body": "right_thumb_dp",
+            "position_m": [
+              0.1952702744846803,
+              0.03351682388632035,
+              0.20734314629536027
+            ],
+            "normal_world": [
+              0.9119469237895068,
+              0.36784362510974605,
+              0.18177974490293583
+            ],
+            "force_world_n": [
+              0.0751509412201822,
+              0.017891148036954938,
+              0.030507315466207725
+            ],
+            "torque_world_nm": [
+              -4.1208287577251725e-06,
+              -1.6621807137626758e-06,
+              -8.214109624441974e-07
+            ],
+            "dimension": 4,
+            "friction": [
+              1.050376517158092,
+              1.050376517158092,
+              0.01,
+              0.002,
+              0.002
+            ],
+            "penetration_m": 7.909643752943733e-05
+          },
+          {
+            "body": "right_thumb_dp",
+            "position_m": [
+              0.19541407194390342,
+              0.032961874504352985,
+              0.20759957925196404
+            ],
+            "normal_world": [
+              0.9119469237895765,
+              0.3678436251095843,
+              0.18177974490291274
+            ],
+            "force_world_n": [
+              0.0298267442321815,
+              0.0012098167463797055,
+              0.01843796694203305
+            ],
+            "torque_world_nm": [
+              -4.0953569215071336e-06,
+              -1.6519063739639427e-06,
+              -8.163336232161255e-07
+            ],
+            "dimension": 4,
+            "friction": [
+              1.050376517158092,
+              1.050376517158092,
+              0.01,
+              0.002,
+              0.002
+            ],
+            "penetration_m": 2.632718874570107e-05
+          },
+          {
+            "body": "right_thumb_dp",
+            "position_m": [
+              0.1955391631065972,
+              0.03312198194383818,
+              0.2067025024877692
+            ],
+            "normal_world": [
+              0.911946923789512,
+              0.3678436251096709,
+              0.1817797449030611
+            ],
+            "force_world_n": [
+              0.04473962381897772,
+              0.005648426573945353,
+              0.02439139692391457
+            ],
+            "torque_world_nm": [
+              -4.101898840367512e-06,
+              -1.6545451274774e-06,
+              -8.176376336922338e-07
+            ],
+            "dimension": 4,
+            "friction": [
+              1.050376517158092,
+              1.050376517158092,
+              0.01,
+              0.002,
+              0.002
+            ],
+            "penetration_m": 4.6128421956714133e-05
+          },
+          {
+            "body": "right_middle_ip",
+            "position_m": [
+              0.21141932493150295,
+              0.03222246085690189,
+              0.20771680504299236
+            ],
+            "normal_world": [
+              -0.9310964028200285,
+              -0.12193621672237845,
+              0.3437892489695345
+            ],
+            "force_world_n": [
+              -0.12270861004062011,
+              -0.033861674309969426,
+              0.0576385003105597
+            ],
+            "torque_world_nm": [
+              6.492973585585169e-06,
+              8.503186478936757e-07,
+              -2.3974042921942374e-06
+            ],
+            "dimension": 4,
+            "friction": [
+              1.050376517158092,
+              1.050376517158092,
+              0.01,
+              0.002,
+              0.002
+            ],
+            "penetration_m": 0.0001385532292018845
+          },
+          {
+            "body": "right_middle_ip",
+            "position_m": [
+              0.21137691530739214,
+              0.03319791027708899,
+              0.20798490411566242
+            ],
+            "normal_world": [
+              -0.9310964028200118,
+              -0.12193621672240433,
+              0.34378924896957025
+            ],
+            "force_world_n": [
+              -0.14718102724606516,
+              -0.0372420978314643,
+              0.06686254832204276
+            ],
+            "torque_world_nm": [
+              6.549887218911227e-06,
+              8.577720470335168e-07,
+              -2.4184185450667714e-06
+            ],
+            "dimension": 4,
+            "friction": [
+              1.050376517158092,
+              1.050376517158092,
+              0.01,
+              0.002,
+              0.002
+            ],
+            "penetration_m": 0.00016398205999294292
+          },
+          {
+            "body": "right_middle_ip",
+            "position_m": [
+              0.21000836657183608,
+              0.030738515333172664,
+              0.20538268525548278
+            ],
+            "normal_world": [
+              -0.7042583030435213,
+              0.11854903875173566,
+              0.6999759767344157
+            ],
+            "force_world_n": [
+              -0.00956489898851008,
+              -0.007609214394323088,
+              0.019551779509183985
+            ],
+            "torque_world_nm": [
+              1.04343123494701e-05,
+              -1.756426148927637e-06,
+              -1.0370865273165202e-05
+            ],
+            "dimension": 4,
+            "friction": [
+              1.050376517158092,
+              1.050376517158092,
+              0.01,
+              0.002,
+              0.002
+            ],
+            "penetration_m": 6.953646097930446e-06
+          },
+          {
+            "body": "right_middle_ip",
+            "position_m": [
+              0.20873464603442282,
+              0.034871112377167286,
+              0.20340439054598794
+            ],
+            "normal_world": [
+              -0.704258303045611,
+              0.11854903875179823,
+              0.6999759767323027
+            ],
+            "force_world_n": [
+              -0.010257924688014335,
+              -0.007628100718254543,
+              0.021299660110689005
+            ],
+            "torque_world_nm": [
+              1.0435238418364813e-05,
+              -1.7565820357291044e-06,
+              -1.0371785710925856e-05
+            ],
+            "dimension": 4,
+            "friction": [
+              1.050376517158092,
+              1.050376517158092,
+              0.01,
+              0.002,
+              0.002
+            ],
+            "penetration_m": 1.1323445703048226e-05
+          },
+          {
+            "body": "right_pinky_pp",
+            "position_m": [
+              0.1809666368211317,
+              0.11598030549933475,
+              0.16240455739790802
+            ],
+            "normal_world": [
+              -0.48303883542238707,
+              0.2529142626200413,
+              0.8382767199661129
+            ],
+            "force_world_n": [
+              -0.009327044464778132,
+              0.003016247325315305,
+              0.053939108397785145
+            ],
+            "torque_world_nm": [
+              4.647764267965636e-06,
+              -2.433522496460179e-06,
+              -8.065837154312924e-06
+            ],
+            "dimension": 4,
+            "friction": [
+              1.050376517158092,
+              1.050376517158092,
+              0.01,
+              0.002,
+              0.002
+            ],
+            "penetration_m": 4.184310363995747e-05
+          },
+          {
+            "body": "right_pinky_pp",
+            "position_m": [
+              0.18152789635259275,
+              0.11660981636179153,
+              0.16254479666175498
+            ],
+            "normal_world": [
+              -0.48303883542230913,
+              0.2529142626203733,
+              0.8382767199660576
+            ],
+            "force_world_n": [
+              -0.013379553454746982,
+              0.005904930259777423,
+              0.06468244293732338
+            ],
+            "torque_world_nm": [
+              4.6533344331149405e-06,
+              -2.4364389787589803e-06,
+              -8.075503747201499e-06
+            ],
+            "dimension": 4,
+            "friction": [
+              1.050376517158092,
+              1.050376517158092,
+              0.01,
+              0.002,
+              0.002
+            ],
+            "penetration_m": 5.316597414217056e-05
+          }
+        ]
+      },
+      "end": {
+        "angle_error_deg": 15.07825424474823,
+        "goal_angle_deg": 15.0,
+        "displacement_m": 0.01583299963031975,
+        "dropped": false,
+        "stable": false,
+        "completed_turns": 0,
+        "is_success": false,
+        "vision_age": 0.0,
+        "object_position": [
+          0.19572097181270473,
+          0.058824373234455496,
+          0.1976412585395415
+        ],
+        "linear_speed_mps": 0.0005554047092020558,
+        "angular_speed_rps": 0.02542180061750113,
+        "shaft_error_deg": 13.582602487536594,
+        "normal_force_by_body_n": {
+          "right_thumb_dp": 0.42769021752860004,
+          "right_middle_ip": 0.4343992101703958,
+          "right_pinky_pp": 0.1216225041039091
+        },
+        "minimum_thumb_target_normal_dot": -0.8314700383165776,
+        "summed_normal_force_n": 0.983711931802905,
+        "object_weight_n": 0.40565375033840967,
+        "loaded_opposition": true,
+        "pair_score": 1.0,
+        "excluded_force_support": false,
+        "resting": true,
+        "placement_index": 0,
+        "reset_failure": null,
+        "completed_holds": 0,
+        "preparation_seconds": 13.5,
+        "manual_release_initialization": true,
+        "peak_self_penetration_m": 0.0,
+        "peak_object_penetration_m": 0.0013319066196858969,
+        "peak_normal_force_n": 1.0308865666945448,
+        "maximum_displacement_m": 0.015833357772952653,
+        "termination_reason": null,
+        "source_grasp_completed": true,
+        "source_grasp_stable": true,
+        "completed_subgoals": 0,
+        "prefix_grasp_success": true,
+        "prefix_steps": 140,
+        "prefix_end_reason": "success",
+        "rotation_steps": 10,
+        "prefix_seconds": 7.0,
+        "first_goal_tick": null,
+        "rotation_from_handoff_deg": 0.5504076099245132,
+        "final_1s_orientation_span_deg": null,
+        "final_1s_position_span_m": null
+      },
+      "end_position": [
+        0.19572097181270473,
+        0.058824373234455496,
+        0.1976412585395415
+      ],
+      "end_rotation": [
+        [
+          0.07679359887425949,
+          -0.27585248401423257,
+          0.9581274185801772
+        ],
+        [
+          -0.4075946512525087,
+          0.8683134675525473,
+          0.28266291291433043
+        ],
+        [
+          -0.9099282078506427,
+          -0.41223431338262717,
+          -0.045755080894571726
+        ]
+      ],
+      "end_time_s": 7.499999999999396,
+      "full_uncensored_duration": true
+    }
+  ],
+  "archive": {
+    "timestamp": "2026-10-21T02:49:25.390294+00:00",
+    "path": "/home/peiqi/projects/orca-hand-rl-grasp-diagnostics/runs/source/rotation-local-validation-v2-evidence.tar.gz",
+    "size_bytes": 85102325,
+    "sha256": "a3b3aaafdc77f77e104f78ef7c7d4296b7a35e41a490e40f056a6cf8f013f503",
+    "report_sha256": "8be1eb4dbd4bd953d6022821d01b543431f4036dc40525a33057f56fd15bc02f",
+    "checkpoint_sha256": "a64f95f2b23029efcc02ad77237d019c3d72d0e228bdd913b858bd502bf090fb",
+    "source_revision": "b2043740e6999308b0fe62c198a675b611ca5c6c",
+    "source_archive_sha256": "70aff217675ca5e34a792be2fbdb519684a5999dcf077010f1c06169f27eb131"
+  },
+  "local_tests": {
+    "mac": "10 passed",
+    "jarvis": "10 passed",
+    "ruff": "passed"
+  },
+  "interpretation": "Single development-state local1deg model validation failed despite predicted admission. Keep parent2deg admission failure and formal15deg0/100 unchanged. This rejects trusting this fitted constant pulse, not all physical trajectories.",
+  "posthoc_endpoint_additivity_audit": {
+    "method": "No new rollout or fitting. Use the same parent +/- motor differences to predict endpoint controller command, measured motor-joint qpos/qvel increments for the one validated pulse; compare actual increments against the same neutral reference endpoint.",
+    "metrics": {
+      "command": {
+        "predicted_change_l2": 0.057103806467383084,
+        "actual_change_l2": 0.05710947097071533,
+        "prediction_error_l2": 2.7571819214399375e-05,
+        "maximum_absolute_prediction_error": 1.5539328563518584e-05,
+        "predicted": [
+          0.01599058970408791,
+          0.016046530432069626,
+          -0.015972764526106544,
+          -0.004242042437026941,
+          -0.016050407858429365,
+          0.01608383474308111,
+          0.015853056914617903,
+          -0.016054998667453513,
+          0.0015864453325486415,
+          -0.0159897996722355,
+          0.01603249888394252,
+          -0.009137361331697473,
+          -0.016049224610444602,
+          0.009031181300221503,
+          0.015955471534798593,
+          -0.016021951913580006,
+          0.0
+        ],
+        "actual": [
+          0.016001206751912966,
+          0.01604961883649242,
+          -0.015964272323995665,
+          -0.004239021725219727,
+          -0.016048157544806707,
+          0.016075545553117992,
+          0.015850960144060483,
+          -0.01605228836089373,
+          0.001596598939081928,
+          -0.015995858147740183,
+          0.016029523968696557,
+          -0.00914221925958984,
+          -0.01606476393900812,
+          0.009034067194149453,
+          0.01596248070616275,
+          -0.016022042728960524,
+          0.0
+        ],
+        "error": [
+          1.0617047825057374e-05,
+          3.088404422792179e-06,
+          8.49220211087895e-06,
+          3.020711807214145e-06,
+          2.2503136226578735e-06,
+          -8.289189963116284e-06,
+          -2.096770557419997e-06,
+          2.7103065597840204e-06,
+          1.0153606533286428e-05,
+          -6.058475504683997e-06,
+          -2.97491524596169e-06,
+          -4.857927892365846e-06,
+          -1.5539328563518584e-05,
+          2.885893927950106e-06,
+          7.009171364157768e-06,
+          -9.081538051777804e-08,
+          0.0
+        ]
+      },
+      "hand_qpos": {
+        "predicted_change_l2": 0.04043195233687883,
+        "actual_change_l2": 0.04034171668172314,
+        "prediction_error_l2": 0.0017794044291293508,
+        "maximum_absolute_prediction_error": 0.0007150383846390648,
+        "predicted": [
+          0.009422605749507734,
+          0.009777281150291887,
+          -0.01300148485517142,
+          -0.0039733339711158396,
+          -0.011510014447649751,
+          0.011765448305650501,
+          0.01124873036581783,
+          -0.010155782201879801,
+          -0.0008401598226862676,
+          -0.012061302584062114,
+          0.011682763707813345,
+          -0.006615168323067731,
+          -0.0116097196643371,
+          0.005869748992319737,
+          0.011798838396673776,
+          -0.011405067259568828,
+          5.660398865843263e-07
+        ],
+        "actual": [
+          0.009262780072107457,
+          0.00941050989125819,
+          -0.013716523239810485,
+          -0.0042044663824304385,
+          -0.010979999653315031,
+          0.01222949911319144,
+          0.010688084926822723,
+          -0.01069561051493026,
+          -0.0006426512560141484,
+          -0.011514198407210463,
+          0.01119901068944909,
+          -0.006331321314008204,
+          -0.011114753444451071,
+          0.006081347173485185,
+          0.012108988500895824,
+          -0.011953372572748304,
+          4.5916777183241386e-07
+        ],
+        "error": [
+          -0.0001598256774002771,
+          -0.0003667712590336974,
+          -0.0007150383846390648,
+          -0.0002311324113145989,
+          0.0005300147943347201,
+          0.0004640508075409392,
+          -0.0005606454389951061,
+          -0.000539828313050458,
+          0.00019750856667211916,
+          0.000547104176851651,
+          -0.0004837530183642545,
+          0.00028384700905952683,
+          0.000494966219886029,
+          0.00021159818116544844,
+          0.000310150104222048,
+          -0.0005483053131794761,
+          -1.0687211475191247e-07
+        ]
+      },
+      "hand_qvel": {
+        "predicted_change_l2": 0.08209379746735086,
+        "actual_change_l2": 0.08164079813761706,
+        "prediction_error_l2": 0.007117751294247058,
+        "maximum_absolute_prediction_error": 0.0030663812819033305,
+        "predicted": [
+          0.022497880221976803,
+          0.020046354353677565,
+          -0.020712836374465898,
+          -0.005952020438606361,
+          -0.023379495669606305,
+          0.022057943405403645,
+          0.02311941566511577,
+          -0.021231365844709454,
+          -0.004876673805460238,
+          -0.03108049534434,
+          0.022636056326302608,
+          -0.012881235367871982,
+          -0.02241265257910325,
+          0.011947134375490916,
+          0.022440727605640094,
+          -0.023059835572034757,
+          2.9146980799700254e-05
+        ],
+        "actual": [
+          0.01986903838528037,
+          0.02118265273405887,
+          -0.02262056997601556,
+          -0.006404971512799295,
+          -0.02337437946870226,
+          0.02204347692618712,
+          0.02311518652140178,
+          -0.023826732709946178,
+          -0.0025400410366186693,
+          -0.02801411406243667,
+          0.022628367544881782,
+          -0.013638850728957168,
+          -0.022449487071185412,
+          0.014924634473140498,
+          0.019688288025227024,
+          -0.02304482228165273,
+          2.675313141373035e-05
+        ],
+        "error": [
+          -0.002628841836696434,
+          0.0011362983803813037,
+          -0.0019077336015496625,
+          -0.00045295107419293396,
+          5.116200904042856e-06,
+          -1.4466479216525274e-05,
+          -4.229143713990052e-06,
+          -0.0025953668652367243,
+          0.002336632768841569,
+          0.0030663812819033305,
+          -7.688781420826102e-06,
+          -0.0007576153610851857,
+          -3.683449208216269e-05,
+          0.002977500097649582,
+          -0.0027524395804130707,
+          1.5013290382028671e-05,
+          -2.3938493859699033e-06
+        ]
+      }
+    },
+    "limitations": "Closed-loop command and joint motion also need not add linearly; this is descriptive, not isolation of a contact, actuator or neural-policy root cause."
+  },
+  "local_archive_verified": true,
+  "ci": {
+    "run_id": 39535067307,
+    "url": "https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39535067307",
+    "head_sha": "b2043740e6999308b0fe62c198a675b611ca5c6c",
+    "conclusion": "success"
+  }
+}
