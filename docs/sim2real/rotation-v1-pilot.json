@@ -1997,6 +1997,11 @@
       "revision": "ed37463",
       "run_id": 39503965748,
       "conclusion": "success"
+    },
+    {
+      "revision": "257406b",
+      "run_id": 39516940985,
+      "conclusion": "success"
     }
   ],
   "progress_updates": [
@@ -52675,5 +52680,30 @@
     "sha256": "e23c5152250cdb5d9622aefc42fdb8ef72e2a8f17da495785b24fa39ee36bc48",
     "selected_checkpoint_sha256": "d00c6ffc2ca9b7d594759beab0ee78d09cfd39546be6a6604347fb0bb3b2ceb9"
   },
-  "residual_gain_evidence": "rotation-v1-residual-gain.json"
+  "residual_gain_evidence": "rotation-v1-residual-gain.json",
+  "post_run_gpu_inspection": {
+    "timestamp": "2026-10-21T01:28:00.298548+00:00",
+    "loaded_kernel_driver": "NVRM version: NVIDIA UNIX x86_64 Kernel Module  595.91.07  Wed Jul 29 02:50:21 UTC 2026\nGCC version:  gcc version 12.3.0 (Ubuntu 12.3.0-1ubuntu1~22.04.3) \n",
+    "torch_version": "2.8.0+cu128",
+    "torch_cuda_build": "12.8",
+    "installed_module": {
+      "returncode": 0,
+      "stdout": "595.99.02\n",
+      "stderr": ""
+    },
+    "driver_packages": {
+      "returncode": 0,
+      "stdout": "libnvidia-compute-495 \nlibnvidia-compute-495-server \nlibnvidia-compute-590 590.48.01-0ubuntu0.22.04.4\nlibnvidia-compute-590 590.48.01-0ubuntu0.22.04.4\nlibnvidia-compute-595 595.99.02-0ubuntu0.22.04.1\nlibnvidia-compute-595 595.99.02-0ubuntu0.22.04.1\nnvidia-driver-590 590.48.01-0ubuntu0.22.04.4\nnvidia-driver-595 595.99.02-0ubuntu0.22.04.1\nnvidia-driver-binary \nnvidia-utils-590 590.48.01-0ubuntu0.22.04.4\nnvidia-utils-595 595.99.02-0ubuntu0.22.04.1\n",
+      "stderr": ""
+    },
+    "torch_cuda_available": true,
+    "torch_cuda_device": "NVIDIA GeForce RTX 4090",
+    "cuda_compute_probe": {
+      "timestamp": "2026-10-21T01:29:11.155959+00:00",
+      "device": "NVIDIA GeForce RTX 4090",
+      "matrix_sum": 512.0,
+      "passed": true
+    },
+    "interpretation": "NVML query fails because loaded kernel595.91.07 and installed595.99.02 differ; Torch can initialize4090 and execute a CUDA matrix kernel. No driver or system mutation performed."
+  }
 }

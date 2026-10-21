@@ -601,6 +601,8 @@ policy正式91次前缀成功后均为horizon失败、9次前缀失败保留；9
 
 [56回合逐例结果、四组摘要与源码](../sim2real/rotation-v1-residual-gain.json)已保存，完整原始轨迹、固定100k模型、基线及源码归档于`orca-hand-rl-grasp-diagnostics/runs/source/rotation-goal-residual-grid-evidence.tar.gz`，SHA256为`0113038203a55f7de77e8c2a3af1b3e1ef20b7eb30d80e5a5956910f0fe0e095`，已下载并核对内部模型哈希。[目标响应完整CI](https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39503206478)及[增益诊断完整CI](https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39503965748)均通过。所有训练/诊断进程已按预算结束，没有新的PPO训练或硬件动作。
 
+归档后的后续检查发现NVML报告Driver/library version mismatch：已加载内核595.91.07，磁盘模块及用户库595.99.02。2026-10-21T01:29Z实测PyTorch2.8/cu128仍能识别RTX4090并执行8×8 CUDA矩阵算例，结果正确；该状态查询问题不解释此前已完成的0/100。没有修改驱动、重启服务器或操作手部硬件，CUDA小算例也不替代下一轮长训练验证。证据附在主JSON。
+
 下一项[局部物理响应辨识方案](../../configs/training/pen-rotate-authority-diagnostic.json)仅预先登记、尚未启动：固定首个开发seed与实际抓持前缀，对16个电机做正负小幅0.5秒动作差值，33个探测加至多1个线性拟合验证，总上限34例。它将测量目标转动与其他轴/位移响应，包含真实延迟、被动关节耦合和接触，并保留所有中止；不改变摩擦、接触维度、求解器或目标成功标准。这个局部辨识不是完整转向验收；其目的是先寻找物理可行的动作组合，再考虑轨迹示范与下一轮学习。连续旋转尚未完成，原launchd与服务器心跳继续保留。
 
 `scripts/training_heartbeat.py`作为独立于监督器的systemd用户服务，每300秒检查状态，原子更新`runs/pen-v6-heartbeat/latest.json`并追加`heartbeats.jsonl`；即使监督器因质量预算耗尽退出，心跳仍记录`needs_attention`。也会标记运行中监督器状态超过120秒未更新、训练进度超过300秒未更新、监督服务未运行等问题。进程恢复由30秒轮询的监督器及systemd负责。这个心跳只记录服务器状态，不会唤醒聊天代理，也没有聊天、邮件或手机推送。`--once`用于启动检查，不能把心跳日志等同于人工或代理已完成诊断。
