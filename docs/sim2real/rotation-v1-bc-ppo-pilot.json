@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-10-22T06:01:30.666122+00:00",
+  "timestamp": "2026-10-22T06:04:48.897309+00:00",
   "canonical": {
-    "timestamp": "2026-10-22T06:01:30.666122+00:00",
+    "timestamp": "2026-10-22T06:04:48.897309+00:00",
     "state_dir": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-supervised",
     "needs_attention": false,
     "monitor_status": "monitoring",
     "stage": "initial",
     "active_job": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0",
     "job_status": "running",
-    "phase": "test-policy",
+    "phase": "test-hold",
     "monitor_age_seconds": 12.050760746002197,
     "quality_attempt": 0,
     "results": [],
@@ -71,10 +71,10 @@
     "restarts": 0,
     "stage_results": [],
     "started_at": "2026-10-22T05:25:03.740300+00:00",
-    "last_progress_at": 1792648721.3238206,
+    "last_progress_at": 1792648961.3288102,
     "sample": [
       "model",
-      "test-policy",
+      "test-hold",
       200704,
       0
     ],
@@ -82,22 +82,22 @@
     "quality_attempt": 0,
     "quality_retries": 0,
     "quality_retry_steps": 2000000,
-    "updated_at": "2026-10-22T06:01:11.327113+00:00",
+    "updated_at": "2026-10-22T06:04:41.331399+00:00",
     "supervisor_pid": 11891,
     "poll_seconds": 30.0,
     "stall_seconds": 300.0,
     "max_restarts": 2,
     "job_status": "running",
-    "job_phase": "test-policy",
+    "job_phase": "test-hold",
     "progress": [
       "model",
-      "test-policy",
+      "test-hold",
       200704,
       0
     ],
     "live_pids": [
       4079,
-      12979
+      13500
     ]
   },
   "job": {
@@ -252,8 +252,31 @@
           "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/test-policy"
         ],
         "started_at": "2026-10-22T05:58:38.291154+00:00",
+        "status": "complete",
+        "pid": 12979,
+        "returncode": 0,
+        "ended_at": "2026-10-22T06:02:17.882240+00:00"
+      },
+      {
+        "name": "test-hold",
+        "argv": [
+          "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/.venv/bin/python",
+          "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/scripts/pen_rotate.py",
+          "evaluate",
+          "--checkpoint",
+          "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/selected/policy.zip",
+          "--episodes",
+          "100",
+          "--seed",
+          "3511000",
+          "--output",
+          "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/test-hold",
+          "--baseline",
+          "hold"
+        ],
+        "started_at": "2026-10-22T06:02:17.885960+00:00",
         "status": "running",
-        "pid": 12979
+        "pid": 13500
       }
     ],
     "acceptance_met": false,
@@ -263,7 +286,7 @@
     ],
     "current_model": "model",
     "recovery_checkpoint": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/frozen-rotation-bc-v1/policy.zip",
-    "phase": "test-policy",
+    "phase": "test-hold",
     "selected_from": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/model/policy.zip",
     "selected_sha256": "cf158294722b651362427bf78a874ae6971d28d78624497bc79645a1677de811",
     "validation": {
@@ -390,7 +413,26 @@
     {
       "steps": 50000,
       "episodes": 20,
-      "successes": 6
+      "successes": 6,
+      "file": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/model/evaluation/evaluations.npz"
+    },
+    {
+      "steps": 100000,
+      "episodes": 20,
+      "successes": 8,
+      "file": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/model/evaluation/evaluations.npz"
+    },
+    {
+      "steps": 150000,
+      "episodes": 20,
+      "successes": 8,
+      "file": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/model/evaluation/evaluations.npz"
+    },
+    {
+      "steps": 200000,
+      "episodes": 20,
+      "successes": 5,
+      "file": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/model/evaluation/evaluations.npz"
     }
   ],
   "development_evaluations": {
