@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-22T05:24:10.735350+00:00",
+  "timestamp": "2026-10-22T05:25:39.353690+00:00",
   "status": "complete_after_single_infrastructure_recovery",
   "source_revision": "9496e53651d953f9b6465544334a45adc9c23bc8",
   "plan": {
@@ -178,7 +178,8 @@
     "progress_path": "runs/rotation-imitation-evaluation-recovery-v1/recovery.json",
     "registration_revision": "4fceeda",
     "evaluation_source_revision": "9496e53651d953f9b6465544334a45adc9c23bc8",
-    "paired_prefixes_and_goals_exact": true
+    "paired_prefixes_and_goals_exact": true,
+    "finished_at": "2026-10-22T05:23:13.376692+00:00"
   },
   "comparison": {
     "source_successes": 0,
@@ -204,11 +205,21 @@
   },
   "next_ppo_pilot": {
     "plan": "configs/training/pen-rotate-bc-ppo-v1.json",
-    "status": "registered_not_launched",
+    "status": "running",
     "steps": 200704,
     "seed": 0,
     "new_development_seed": 3411000,
     "new_formal_seed": 3511000,
-    "original_native_gates_unchanged": true
+    "original_native_gates_unchanged": true,
+    "started_at": "2026-10-22T05:24:42.804790+00:00",
+    "project": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1",
+    "progress": {
+      "total_steps": 10240,
+      "steps_per_second": 261.611228634102,
+      "elapsed_s": 39.14205050199996
+    },
+    "state_dir": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-supervised",
+    "evidence": "docs/sim2real/rotation-v1-bc-ppo-pilot.json",
+    "registration_revision": "90e17b3"
   }
 }
