@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-10-22T06:32:12.967947+00:00",
+  "checked_at": "2026-10-22T06:35:22.607209+00:00",
   "status": "running",
   "phase": "train",
   "target_steps": 500736,
   "progress": {
-    "total_steps": 194560,
-    "steps_per_second": 80.22182459773427,
-    "elapsed_s": 2374.21675366
+    "total_steps": 207872,
+    "steps_per_second": 79.4661879709754,
+    "elapsed_s": 2564.3107487489997
   },
   "bc_weights_loaded": false,
   "initialization_kind": "pure_ppo_fresh_zero_actor_no_bc",
@@ -45,6 +45,11 @@
     },
     {
       "steps": 154096,
+      "episodes": 20,
+      "successes": 0
+    },
+    {
+      "steps": 204096,
       "episodes": 20,
       "successes": 0
     }

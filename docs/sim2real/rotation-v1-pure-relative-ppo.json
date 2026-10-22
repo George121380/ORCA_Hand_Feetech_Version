@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-10-22T06:32:12.967947+00:00",
+  "timestamp": "2026-10-22T06:35:22.607209+00:00",
   "canonical": {
-    "timestamp": "2026-10-22T06:29:11.265250+00:00",
+    "timestamp": "2026-10-22T06:34:11.268659+00:00",
     "state_dir": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-supervised",
     "needs_attention": false,
     "monitor_status": "monitoring",
@@ -9,17 +9,17 @@
     "active_job": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-seed0",
     "job_status": "running",
     "phase": "train",
-    "monitor_age_seconds": 29.884602546691895,
+    "monitor_age_seconds": 29.88080096244812,
     "quality_attempt": 0,
     "results": [],
     "latest_test": null,
     "target_total_steps": 500736,
     "progress": {
-      "total_steps": 180224,
-      "steps_per_second": 80.4506537013381,
-      "elapsed_s": 2189.2674810649996
+      "total_steps": 203776,
+      "steps_per_second": 80.63461647010061,
+      "elapsed_s": 2476.3557975599997
     },
-    "progress_age_seconds": 15.378372192382812,
+    "progress_age_seconds": 28.29378843307495,
     "attention_reasons": [],
     "watchdog_service": "active"
   },
@@ -72,18 +72,18 @@
     "restarts": 0,
     "stage_results": [],
     "started_at": "2026-10-22T05:54:11.305691+00:00",
-    "last_progress_at": 1792650731.3858726,
+    "last_progress_at": 1792650911.3979,
     "sample": [
       "model",
       "train",
-      194560,
-      182090
+      207872,
+      195097
     ],
     "pending_restart": null,
     "quality_attempt": 0,
     "quality_retries": 0,
     "quality_retry_steps": 2000000,
-    "updated_at": "2026-10-22T06:32:11.386028+00:00",
+    "updated_at": "2026-10-22T06:35:11.398158+00:00",
     "supervisor_pid": 11893,
     "poll_seconds": 30.0,
     "stall_seconds": 300.0,
@@ -93,8 +93,8 @@
     "progress": [
       "model",
       "train",
-      194560,
-      182090
+      207872,
+      195097
     ],
     "live_pids": [
       11667,
@@ -956,7 +956,7 @@
     },
     "exact_prefix_goal_pairing": true
   },
-  "public_scope": "Timestamped live training inspection, not formal acceptance. Three completed internal checks each0/20. Fixed64k and104k diagnostic reviews remain0/5, mean errors21.68 and17.98deg. Original gates and500736-step budget unchanged. Next fixed video review204096 checkpoint not present at this inspection.",
+  "public_scope": "Timestamped training snapshot; no pure PPO formal acceptance. Fixed 204096-step five-case diagnostic review: 0/5 success, mean13.713deg. All prior review datasets/videos retained. Original native gates unchanged.",
   "ci_snapshot": [
     {
       "name": "Software checks",
@@ -981,11 +981,16 @@
       "steps": 154096,
       "episodes": 20,
       "successes": 0
+    },
+    {
+      "steps": 204096,
+      "episodes": 20,
+      "successes": 0
     }
   ],
   "intermediate_reviews": {
     "registry": "docs/sim2real/review-snapshots.json",
-    "latest_steps": 104096,
+    "latest_steps": 204096,
     "comparison_reused": true,
     "actual_rollouts_this_review": 5,
     "formal_seeds_used": false,
@@ -1001,17 +1006,26 @@
       "drops": 0
     },
     "published_site_version": 9,
-    "next_review_steps": 204096,
+    "next_review_steps": 304096,
     "review_recorder_ci": {
       "status": "passed",
       "commit": "1be19aa",
       "url": "https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39733597190"
+    },
+    "failure_summary_204k": {
+      "episodes": 5,
+      "successes": 0,
+      "mean_error_deg": 13.713067395415925,
+      "final_pose_error_at_least8deg": 5,
+      "final_frame_loaded_opposition_missing": 5,
+      "final_frame_resting": 5,
+      "drops": 0
     }
   },
   "progress": {
-    "total_steps": 194560,
-    "steps_per_second": 80.22182459773427,
-    "elapsed_s": 2374.21675366
+    "total_steps": 207872,
+    "steps_per_second": 79.4661879709754,
+    "elapsed_s": 2564.3107487489997
   },
   "status": "running",
   "phase": "train"
