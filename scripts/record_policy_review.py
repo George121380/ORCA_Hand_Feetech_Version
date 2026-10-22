@@ -35,8 +35,10 @@ def main():
         ["git", "rev-parse", "HEAD"], cwd=args.project, text=True).strip()
     if revision != plan["native_source_revision"]:
         raise ValueError("Native source must match the registered revision")
-    if plan["maximum_rollouts"] != 2 * plan["episodes_per_checkpoint"]:
-        raise ValueError("Review budget must cover exactly two checkpoints")
+    cache = plan.get("comparison_review_cache")
+    expected_rollouts = (1 if cache else 2) * plan["episodes_per_checkpoint"]
+    if plan["maximum_rollouts"] != expected_rollouts:
+        raise ValueError("Review budget must match the uncached checkpoint rollouts")
     args.output.mkdir(parents=True, exist_ok=False)
     shutil.copy2(args.plan, args.output / "plan.json")
     shutil.copy2(__file__, args.output / "recorder.py")
@@ -49,7 +51,8 @@ def main():
     state = dict(status="recording", started_at=datetime.now(timezone.utc).isoformat(),
                  native_revision=revision, plan_sha256=digest(args.plan),
                  recorder_sha256=digest(__file__),
-                 reference_sha256=digest(reference_path), models={})
+                 reference_sha256=digest(reference_path), models={},
+                 executed_rollouts=0, cached_rollouts=0)
     status_path = args.output / "review.json"
     write(status_path, state)
     env = dict(os.environ, ORCA_WORKSPACE=str(args.project),
@@ -81,17 +84,41 @@ def main():
                          status="running", started_at=datetime.now(timezone.utc).isoformat())
             state["models"][name] = entry
             write(status_path, state)
-            with (args.output / (name + ".log")).open("w") as log:
-                result = subprocess.run(command, cwd=args.project, env=env,
-                                        stdout=log, stderr=subprocess.STDOUT, check=False)
-            entry["returncode"] = result.returncode
-            if result.returncode:
-                raise RuntimeError(f"{name} recording failed; no automatic retry")
+            if name == "comparison" and cache:
+                cached = Path(cache)
+                previous = read(cached / "review.json")
+                evidence = previous["models"]["comparison"]
+                if previous["status"] != "complete" or evidence["checkpoint_sha256"] != source_hash:
+                    raise ValueError("Cached comparison provenance does not match")
+                for filename, hash_key in [("metrics.json", "metrics_sha256"),
+                                           ("evaluation.mp4", "video_sha256")]:
+                    if digest(cached / "comparison" / filename) != evidence[hash_key]:
+                        raise ValueError("Cached comparison content changed")
+                if digest(cached / "comparison-frozen/config.json") != entry["config_sha256"]:
+                    raise ValueError("Cached comparison config changed")
+                output.mkdir()
+                for filename in ["metrics.json", "evaluation.mp4", "config.json"]:
+                    shutil.copy2(cached / "comparison" / filename, output / filename)
+                entry.update(mode="verified_cache_no_rollout", argv=[],
+                             cached_from=str(cached), returncode=0)
+                state["cached_rollouts"] += plan["episodes_per_checkpoint"]
+            else:
+                entry["mode"] = "native_rollout"
+                state["executed_rollouts"] += plan["episodes_per_checkpoint"]
+                write(status_path, state)
+                with (args.output / (name + ".log")).open("w") as log:
+                    result = subprocess.run(command, cwd=args.project, env=env,
+                                            stdout=log, stderr=subprocess.STDOUT, check=False)
+                entry["returncode"] = result.returncode
+                if result.returncode:
+                    raise RuntimeError(f"{name} recording failed; no automatic retry")
             metrics = read(output / "metrics.json")
             trials = metrics["trials"]
             initial_fields = ["seed", "direction", "initial_position", "initial_rotation",
                               "goal_rotation", "reset_attempts", "settle_seconds",
-                              "reset_linear_speed_mps", "reset_angular_speed_rps"]
+                              "reset_linear_speed_mps", "reset_angular_speed_rps",
+                              "prefix_grasp_success", "prefix_steps", "prefix_end_reason",
+                              "prefix_seconds"]
             paired = len(trials) == len(reference) and all(
                 all(t[key] == r[key] for key in initial_fields)
                 for t, r in zip(trials, reference))
