@@ -1,0 +1,38 @@
+{
+  "purpose": "One explicitly registered infrastructure recovery of the interrupted after-BC development evaluation; no retraining or new candidate",
+  "original_source_revision": "9496e53651d953f9b6465544334a45adc9c23bc8",
+  "original_plan_sha256": "1e4d3df350f0acd4880bc84b7e8079864f5e36e7db76c05d87fa2aca76ca3516",
+  "checkpoint_sha256": "2ce69cfa9dd9c10fcdbe2cd6c90bbcd319d03d4ce301be4bafe342dbe8406412",
+  "task_fingerprint": "66eafa068a1067879c8d7d26227ebc05c1e76d4af1f3ced90079c5ee2372bc2b",
+  "preconditions": [
+    "Original pilot and all model/config/log files archived and downloaded before launch",
+    "Original supervisor and evaluation PIDs absent; no matching active evaluation",
+    "Original development-after contains config only and no metrics",
+    "Validate original source, model hash, finite weights, zero PPO counters and unchanged task contract"
+  ],
+  "development": {
+    "seed": 3211000,
+    "episodes": 28,
+    "checkpoint": "same after-BC model",
+    "before_metrics": "reuse existing complete 28-state before-BC results",
+    "pairing": "Original exact prefixes, goal matrices, placement and direction checks"
+  },
+  "budget": {
+    "additional_evaluation_rollouts_maximum": 28,
+    "attempts": 1,
+    "timeout_seconds": 900,
+    "training_updates": 0,
+    "ppo_environment_steps": 0,
+    "extensions": 0
+  },
+  "interrupted_attempt": "No per-episode progress was persisted; unknown how many of its at-most28 rollouts finished. Preserve this limitation; these are repeated development states, never independent additional samples.",
+  "bounded_ppo_admission": {
+    "minimum_candidate_successes": 4,
+    "minimum_success_gain": 3,
+    "maximum_drops": 0,
+    "both_directions_successful": true
+  },
+  "limits": "No model/seed/threshold changes, no automatic training launch, no formal seeds, no hardware, no new heartbeat timer or agent",
+  "acceptance_met": false,
+  "continuous_rotation_accepted": false
+}

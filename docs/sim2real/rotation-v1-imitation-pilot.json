@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-10-21T03:54:51.263127+00:00",
-  "status": "awaiting_host_reconnection",
+  "timestamp": "2026-10-22T05:21:11.642063+00:00",
+  "status": "reconnected_evaluation_recovery_registered",
   "source_revision": "9496e53651d953f9b6465544334a45adc9c23bc8",
   "plan": {
     "purpose": "One finite actor-only imitation pilot if the frozen new training corpus meets its original admission gate",
@@ -33,7 +33,7 @@
   "source_project": "/home/peiqi/projects/orca-hand-rl-grasp-diagnostics",
   "pilot_report": "runs/rotation-imitation-pilot-v1/pilot.json",
   "last_observed_phase": "development-after",
-  "last_observed_remote_status": "running",
+  "last_observed_remote_status": "interrupted_after_host_restart",
   "last_observed_supervisor_pid": 156012,
   "last_observed_evaluation_pid": 156380,
   "offline_imitation": {
@@ -73,7 +73,7 @@
     "observable_training_pairs": 1680,
     "actor_inputs": 296,
     "actor_actions": 16,
-    "checkpoint_download_and_full_pilot_archive": "pending_reconnection"
+    "checkpoint_download_and_full_pilot_archive": "interrupted archive downloaded and verified on Mac"
   },
   "development_before": {
     "episodes": 28,
@@ -84,16 +84,6 @@
   },
   "development_after": null,
   "bounded_ppo_admitted": null,
-  "connectivity": {
-    "local_tailscale_backend": "Running",
-    "local_health": [],
-    "jarvis_online": false,
-    "jarvis_last_seen": "2026-10-21T03:48:59.1Z",
-    "ssh_retries_timed_out": 3,
-    "tailscale_ping_attempts": 2,
-    "tailscale_ping_replies": 0,
-    "limitation": "Peer offline does not establish whether the evaluation process ended or host storage changed; do not infer candidate score or restart it without inspection"
-  },
   "checks": {
     "mac_targeted_tests": 13,
     "jarvis_targeted_tests": 13,
@@ -118,5 +108,51 @@
   },
   "acceptance_met": false,
   "continuous_rotation_accepted": false,
-  "hardware_actions": 0
+  "hardware_actions": 0,
+  "connectivity_history": {
+    "local_tailscale_backend": "Running",
+    "local_health": [],
+    "jarvis_online": false,
+    "jarvis_last_seen": "2026-10-21T03:48:59.1Z",
+    "ssh_retries_timed_out": 3,
+    "tailscale_ping_attempts": 2,
+    "tailscale_ping_replies": 0,
+    "limitation": "Peer offline does not establish whether the evaluation process ended or host storage changed; do not infer candidate score or restart it without inspection"
+  },
+  "connectivity": {
+    "checked_at": "2026-10-22T05:19:31Z",
+    "jarvis_online": true,
+    "ssh_exit_code": 0
+  },
+  "interrupted_archive": {
+    "bytes": 2622552,
+    "sha256": "f0dd96965dba7e276011ebdbbd1c064d920ac12d72f870f17098dbfc25ba611a",
+    "remote": "runs/source/rotation-imitation-v1-interrupted-evidence.tar.gz",
+    "model_sha256_verified_on_mac": true
+  },
+  "reconnection_validation": {
+    "timestamp": "2026-10-22T05:20:53.510710+00:00",
+    "boot_id": "421c99a3-3d25-428b-8a53-daf4c19c7327",
+    "uptime_seconds": 330.43,
+    "checkpoint_sha256": "2ce69cfa9dd9c10fcdbe2cd6c90bbcd319d03d4ce301be4bafe342dbe8406412",
+    "finite_weights": true,
+    "ppo_steps": 0,
+    "ppo_updates": 0,
+    "ppo_optimizer_empty": true,
+    "original_pids_absent": true,
+    "development_after_metrics_present": false,
+    "source_revision": "9496e53651d953f9b6465544334a45adc9c23bc8"
+  },
+  "recovery": {
+    "plan": "configs/training/pen-rotate-imitation-recovery-v1.json",
+    "plan_sha256": "034b4852793148a6fc6b49c90f2aa7ea9730d9c18eda5f7c5b626e9f80b7e446",
+    "status": "registered_not_launched",
+    "same_model_same_28_development_states": true,
+    "additional_rollouts_maximum": 28,
+    "attempts": 1,
+    "timeout_seconds": 900,
+    "imitation_repeated": false,
+    "original_attempt_rollouts_completed": "unknown; evaluation only writes metrics after all episodes",
+    "original_pilot_and_partial_output_preserved": true
+  }
 }
