@@ -1,30 +1,31 @@
 {
-  "timestamp": "2026-10-22T06:35:22.607209+00:00",
+  "timestamp": "2026-10-22T06:41:29.064979+00:00",
   "canonical": {
-    "timestamp": "2026-10-22T06:34:11.268659+00:00",
+    "timestamp": "2026-10-22T06:41:29.064979+00:00",
     "state_dir": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-supervised",
     "needs_attention": false,
-    "monitor_status": "monitoring",
+    "monitor_status": "paused_by_user",
     "stage": "initial",
     "active_job": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-seed0",
-    "job_status": "running",
-    "phase": "train",
+    "job_status": "paused_by_user",
+    "phase": "paused",
     "monitor_age_seconds": 29.88080096244812,
     "quality_attempt": 0,
     "results": [],
     "latest_test": null,
     "target_total_steps": 500736,
     "progress": {
-      "total_steps": 203776,
-      "steps_per_second": 80.63461647010061,
-      "elapsed_s": 2476.3557975599997
+      "total_steps": 238188,
+      "steps_per_second": 0,
+      "source": "verified interrupted.zip num_timesteps"
     },
     "progress_age_seconds": 28.29378843307495,
     "attention_reasons": [],
-    "watchdog_service": "active"
+    "watchdog_service": "inactive",
+    "status": "paused_by_user"
   },
   "watchdog": {
-    "status": "monitoring",
+    "status": "paused_by_user",
     "initial_job": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-seed0",
     "course": false,
     "plan": null,
@@ -88,7 +89,7 @@
     "poll_seconds": 30.0,
     "stall_seconds": 300.0,
     "max_restarts": 2,
-    "job_status": "running",
+    "job_status": "paused_by_user",
     "job_phase": "train",
     "progress": [
       "model",
@@ -96,13 +97,11 @@
       207872,
       195097
     ],
-    "live_pids": [
-      11667,
-      11668
-    ]
+    "live_pids": [],
+    "phase": "paused"
   },
   "job": {
-    "status": "running",
+    "status": "paused_by_user",
     "started_at": "2026-10-22T05:52:23.573320+00:00",
     "pid": 11667,
     "hostname": "Jarvis",
@@ -204,7 +203,7 @@
     ],
     "current_model": "model",
     "recovery_checkpoint": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/preflight4096/policy.zip",
-    "phase": "train"
+    "phase": "paused"
   },
   "preflight_proof": {
     "timestamp": "2026-10-22T05:52:23.449551+00:00",
@@ -849,7 +848,7 @@
     "sha256": "3a0aafd3ad93396e266cfb8a45a56a59a5f9965a8afe828353b9dcabb7f40975",
     "downloaded_and_verified_on_mac": true
   },
-  "services": "MainPID=11893\nNRestarts=0\nId=orca-rl-watchdog.service\nActiveState=active\nSubState=running\n\nMainPID=11895\nNRestarts=0\nId=orca-rl-heartbeat.service\nActiveState=active\nSubState=running\n",
+  "services": "MainPID=0\nId=orca-rl-watchdog.service\nActiveState=inactive\nSubState=dead\nUnitFileState=disabled\n\nMainPID=0\nId=orca-rl-heartbeat.service\nActiveState=inactive\nSubState=dead\nUnitFileState=disabled\n\nMainPID=0\nId=orca-rl-bc-comparison-watchdog.service\nActiveState=inactive\nSubState=dead\nUnitFileState=disabled\n",
   "acceptance_met": false,
   "continuous_rotation_accepted": false,
   "plan": {
@@ -956,7 +955,7 @@
     },
     "exact_prefix_goal_pairing": true
   },
-  "public_scope": "Timestamped training snapshot; no pure PPO formal acceptance. Fixed 204096-step five-case diagnostic review: 0/5 success, mean13.713deg. All prior review datasets/videos retained. Original native gates unchanged.",
+  "public_scope": "Paused at user request. Checkpoint saved at238188 steps; all training processes exited and auto-monitor/restarts disabled. Existing diagnostic videos, checkpoints and failed gates preserved. No pure PPO formal acceptance or continuous rotation acceptance.",
   "ci_snapshot": [
     {
       "name": "Software checks",
@@ -1006,7 +1005,7 @@
       "drops": 0
     },
     "published_site_version": 9,
-    "next_review_steps": 304096,
+    "next_review_steps": null,
     "review_recorder_ci": {
       "status": "passed",
       "commit": "1be19aa",
@@ -1020,13 +1019,78 @@
       "final_frame_loaded_opposition_missing": 5,
       "final_frame_resting": 5,
       "drops": 0
-    }
+    },
+    "reporting_status": "paused_by_user"
   },
   "progress": {
-    "total_steps": 207872,
-    "steps_per_second": 79.4661879709754,
-    "elapsed_s": 2564.3107487489997
+    "total_steps": 238188,
+    "steps_per_second": 0,
+    "source": "verified interrupted.zip num_timesteps"
   },
-  "status": "running",
-  "phase": "train"
+  "status": "paused_by_user",
+  "phase": "paused",
+  "pause": {
+    "requested_at": "2026-10-22T06:40:41.778178+00:00",
+    "reason": "user_requested_pause",
+    "job": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-seed0",
+    "worker_pid": 11668,
+    "wrapper_pid": 11667,
+    "signal": "SIGINT",
+    "automatic_monitoring": "stopped",
+    "acceptance_met": false,
+    "checkpoint": {
+      "path": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-seed0/model/interrupted.zip",
+      "num_timesteps": 238188,
+      "sha256": "0277aa5f469c2e28c0c08f66fd59572d2530e15617bb4e82e7828fc97527b5b1",
+      "bytes": 3520518,
+      "zip_integrity_verified": true
+    },
+    "cleanup_signals": [
+      {
+        "pid": 11667,
+        "signal": "SIGTERM",
+        "reason": "finish shutdown after verified interrupted checkpoint"
+      },
+      {
+        "pid": 11668,
+        "signal": "SIGTERM",
+        "reason": "finish shutdown after verified interrupted checkpoint"
+      },
+      {
+        "pid": 11673,
+        "signal": "SIGTERM",
+        "reason": "finish shutdown after verified interrupted checkpoint"
+      },
+      {
+        "pid": 11674,
+        "signal": "SIGTERM",
+        "reason": "finish shutdown after verified interrupted checkpoint"
+      },
+      {
+        "pid": 11675,
+        "signal": "SIGTERM",
+        "reason": "finish shutdown after verified interrupted checkpoint"
+      },
+      {
+        "pid": 11676,
+        "signal": "SIGTERM",
+        "reason": "finish shutdown after verified interrupted checkpoint"
+      },
+      {
+        "pid": 11672,
+        "signal": "SIGTERM",
+        "reason": "finish shutdown after verified interrupted checkpoint"
+      }
+    ],
+    "shutdown_checked_at": "2026-10-22T06:41:14.451250+00:00",
+    "status": "paused_by_user",
+    "verified_at": "2026-10-22T06:41:29.064979+00:00",
+    "live_processes": [],
+    "services": "MainPID=0\nId=orca-rl-watchdog.service\nActiveState=inactive\nSubState=dead\nUnitFileState=disabled\n\nMainPID=0\nId=orca-rl-heartbeat.service\nActiveState=inactive\nSubState=dead\nUnitFileState=disabled\n\nMainPID=0\nId=orca-rl-bc-comparison-watchdog.service\nActiveState=inactive\nSubState=dead\nUnitFileState=disabled\n",
+    "local_heartbeat_disabled": true,
+    "local_launchd_unloaded": true,
+    "automatic_restart_allowed": false,
+    "continuous_rotation_accepted": false
+  },
+  "checked_at": "2026-10-22T06:41:29.064979+00:00"
 }

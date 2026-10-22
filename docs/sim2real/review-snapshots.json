@@ -1,6 +1,6 @@
 {
   "latest_steps": 204096,
-  "next_review_steps": 304096,
+  "next_review_steps": null,
   "versions": [
     {
       "steps": 64096,
@@ -20,5 +20,7 @@
       "video": "pure204k-review.mp4",
       "poster": "pure204k-review.jpg"
     }
-  ]
+  ],
+  "status": "paused_by_user",
+  "pause_evidence": "user-requested-pause-20261022.json"
 }

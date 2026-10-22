@@ -159,7 +159,7 @@
       const o = document.createElement('option'); o.value = v.steps; o.textContent = `纯 PPO · ${fmt(v.steps)} 步`; return o;
     }));
     el('reviewSnapshot').value = d.latest_steps;
-    el('reviewNext').textContent = `旧路线未通过，纯 RL 尚未取得可用结果。下一录像点为 ${fmt(d.next_review_steps)} 步，继续使用相同五回合，保留所有旧版本。`;
+    el('reviewNext').textContent = d.status === 'paused_by_user' ? '已按用户要求暂停训练与自动录像，所有既有版本保留。当前策略尚未通过验收。' : `旧路线未通过，纯 RL 尚未取得可用结果。下一录像点为 ${fmt(d.next_review_steps)} 步，继续使用相同五回合，保留所有旧版本。`;
     return loadSnapshot(d.latest_steps);
   }).catch(e => { el('reviewError').textContent = e.message; });
 })();

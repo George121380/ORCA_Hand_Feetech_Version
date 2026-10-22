@@ -1,0 +1,63 @@
+{
+  "requested_at": "2026-10-22T06:40:41.778178+00:00",
+  "reason": "user_requested_pause",
+  "job": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-seed0",
+  "worker_pid": 11668,
+  "wrapper_pid": 11667,
+  "signal": "SIGINT",
+  "automatic_monitoring": "stopped",
+  "acceptance_met": false,
+  "checkpoint": {
+    "path": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-seed0/model/interrupted.zip",
+    "num_timesteps": 238188,
+    "sha256": "0277aa5f469c2e28c0c08f66fd59572d2530e15617bb4e82e7828fc97527b5b1",
+    "bytes": 3520518,
+    "zip_integrity_verified": true
+  },
+  "cleanup_signals": [
+    {
+      "pid": 11667,
+      "signal": "SIGTERM",
+      "reason": "finish shutdown after verified interrupted checkpoint"
+    },
+    {
+      "pid": 11668,
+      "signal": "SIGTERM",
+      "reason": "finish shutdown after verified interrupted checkpoint"
+    },
+    {
+      "pid": 11673,
+      "signal": "SIGTERM",
+      "reason": "finish shutdown after verified interrupted checkpoint"
+    },
+    {
+      "pid": 11674,
+      "signal": "SIGTERM",
+      "reason": "finish shutdown after verified interrupted checkpoint"
+    },
+    {
+      "pid": 11675,
+      "signal": "SIGTERM",
+      "reason": "finish shutdown after verified interrupted checkpoint"
+    },
+    {
+      "pid": 11676,
+      "signal": "SIGTERM",
+      "reason": "finish shutdown after verified interrupted checkpoint"
+    },
+    {
+      "pid": 11672,
+      "signal": "SIGTERM",
+      "reason": "finish shutdown after verified interrupted checkpoint"
+    }
+  ],
+  "shutdown_checked_at": "2026-10-22T06:41:14.451250+00:00",
+  "status": "paused_by_user",
+  "verified_at": "2026-10-22T06:41:29.064979+00:00",
+  "live_processes": [],
+  "services": "MainPID=0\nId=orca-rl-watchdog.service\nActiveState=inactive\nSubState=dead\nUnitFileState=disabled\n\nMainPID=0\nId=orca-rl-heartbeat.service\nActiveState=inactive\nSubState=dead\nUnitFileState=disabled\n\nMainPID=0\nId=orca-rl-bc-comparison-watchdog.service\nActiveState=inactive\nSubState=dead\nUnitFileState=disabled\n",
+  "local_heartbeat_disabled": true,
+  "local_launchd_unloaded": true,
+  "automatic_restart_allowed": false,
+  "continuous_rotation_accepted": false
+}
