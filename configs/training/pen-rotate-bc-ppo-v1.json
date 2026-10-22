@@ -1,0 +1,72 @@
+{
+  "purpose": "One bounded small-update PPO pilot initialized from the admitted offline BC actor; original native rotation task",
+  "evaluation_source_revision": "9496e53651d953f9b6465544334a45adc9c23bc8",
+  "admission": {
+    "candidate_successes": 8,
+    "episodes": 28,
+    "source_successes": 0,
+    "successes_per_direction": {
+      "-1": 4,
+      "1": 4
+    },
+    "drops": 0,
+    "paired_prefixes_and_goals_exact": true
+  },
+  "initial_checkpoint_sha256": "2ce69cfa9dd9c10fcdbe2cd6c90bbcd319d03d4ce301be4bafe342dbe8406412",
+  "initial_rotation_environment_steps": 0,
+  "initial_ppo_updates": 0,
+  "initial_optimizer": "empty; preserve learned BC actor and original critic/log_std",
+  "task": {
+    "family": "pen-rotate-v1",
+    "object": "pen",
+    "angle": 15,
+    "turns": 1,
+    "horizon": 140,
+    "randomization": 0.3,
+    "negative_goal_probability": 0.5
+  },
+  "training": {
+    "steps": 200704,
+    "num_envs": 8,
+    "seed": 0,
+    "device": "cuda",
+    "learning_rate": 1e-05,
+    "entropy_coef": 0.001,
+    "target_kl": 0.02,
+    "checkpoint_every": 20000,
+    "eval_every": 50000,
+    "reset_log_std": null
+  },
+  "development": {
+    "seed": 3411000,
+    "episodes": 28,
+    "candidates": [
+      "final",
+      "internal_best"
+    ],
+    "selection": "Original success/drop/final-error order; never formal scores"
+  },
+  "formal": {
+    "seed": 3511000,
+    "episodes": 100,
+    "baselines": [
+      "hold",
+      "random",
+      "grasp"
+    ],
+    "gate": "Original >=80% success, <=10% drop and matched hold/grasp comparisons; no weaker native contact/pose/1s-hold standard",
+    "fixed_first5_video": true
+  },
+  "reserved_formal_3311000": "untouched",
+  "budget": {
+    "training_seeds": 1,
+    "quality_retries": 0,
+    "infrastructure_restarts_maximum": 2,
+    "extensions": 0,
+    "automatic_curriculum": false
+  },
+  "limitations": "Development admission is not formal acceptance; one15degree target never counts as continuous rotation or sim2real success",
+  "acceptance_met": false,
+  "continuous_rotation_accepted": false,
+  "hardware_actions": 0
+}

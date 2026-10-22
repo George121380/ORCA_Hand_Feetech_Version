@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-10-22T05:21:11.642063+00:00",
-  "status": "reconnected_evaluation_recovery_registered",
+  "timestamp": "2026-10-22T05:24:10.735350+00:00",
+  "status": "complete_after_single_infrastructure_recovery",
   "source_revision": "9496e53651d953f9b6465544334a45adc9c23bc8",
   "plan": {
     "purpose": "One finite actor-only imitation pilot if the frozen new training corpus meets its original admission gate",
@@ -82,8 +82,19 @@
     "drop_rate": 0.0,
     "mean_final_error_deg": 15.549616673600884
   },
-  "development_after": null,
-  "bounded_ppo_admitted": null,
+  "development_after": {
+    "policy": "/home/peiqi/projects/orca-hand-rl-grasp-diagnostics/runs/rotation-imitation-pilot-v1/model/policy.zip",
+    "episodes": 28,
+    "success_rate": 0.2857142857142857,
+    "success_95ci": [
+      0.15253815848329969,
+      0.470596357370175
+    ],
+    "drop_rate": 0.0,
+    "mean_final_error_deg": 11.812852260307235,
+    "acceptance_met": false
+  },
+  "bounded_ppo_admitted": true,
   "checks": {
     "mac_targeted_tests": 13,
     "jarvis_targeted_tests": 13,
@@ -93,6 +104,13 @@
       "status": "completed",
       "conclusion": "success",
       "url": "https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39540360695"
+    },
+    "post_reboot": {
+      "jarvis_targeted_tests": 3,
+      "result": "passed",
+      "torch": "2.8.0+cu128",
+      "cuda_device": "NVIDIA GeForce RTX 4090",
+      "cuda_8x8_matmul_sum": 512.0
     }
   },
   "original_neural_policy_formal_score": {
@@ -146,13 +164,51 @@
   "recovery": {
     "plan": "configs/training/pen-rotate-imitation-recovery-v1.json",
     "plan_sha256": "034b4852793148a6fc6b49c90f2aa7ea9730d9c18eda5f7c5b626e9f80b7e446",
-    "status": "registered_not_launched",
+    "status": "complete",
     "same_model_same_28_development_states": true,
     "additional_rollouts_maximum": 28,
     "attempts": 1,
     "timeout_seconds": 900,
     "imitation_repeated": false,
     "original_attempt_rollouts_completed": "unknown; evaluation only writes metrics after all episodes",
-    "original_pilot_and_partial_output_preserved": true
+    "original_pilot_and_partial_output_preserved": true,
+    "started_at": "2026-10-22T05:21:46.900112Z",
+    "supervisor_pid": 3540,
+    "evaluation_pid": 3541,
+    "progress_path": "runs/rotation-imitation-evaluation-recovery-v1/recovery.json",
+    "registration_revision": "4fceeda",
+    "evaluation_source_revision": "9496e53651d953f9b6465544334a45adc9c23bc8",
+    "paired_prefixes_and_goals_exact": true
+  },
+  "comparison": {
+    "source_successes": 0,
+    "candidate_successes": 8,
+    "success_gain": 8,
+    "candidate_drops": 0,
+    "successes_per_direction": {
+      "-1": 4,
+      "1": 4
+    },
+    "bounded_ppo_admitted": true,
+    "gained": 8,
+    "lost": 0,
+    "is_formal_evaluation": false,
+    "acceptance_met": false,
+    "continuous_rotation_accepted": false
+  },
+  "recovered_archive": {
+    "bytes": 2652175,
+    "sha256": "9b9f18b3226bf6a85e6ec9fdcab73b4f5332c9919295272eed6368cd79989fbc",
+    "remote": "runs/source/rotation-imitation-v1-recovered-evidence.tar.gz",
+    "downloaded_and_verified_on_mac": true
+  },
+  "next_ppo_pilot": {
+    "plan": "configs/training/pen-rotate-bc-ppo-v1.json",
+    "status": "registered_not_launched",
+    "steps": 200704,
+    "seed": 0,
+    "new_development_seed": 3411000,
+    "new_formal_seed": 3511000,
+    "original_native_gates_unchanged": true
   }
 }
