@@ -56,6 +56,45 @@
     "project_id": "appgprj_6ad64e16af0c819189ee0a10aedcd045",
     "access_mode": "public",
     "path": "/policy.html",
-    "publication_status": "pending"
+    "publication_status": "succeeded",
+    "url": "https://orca-v1-sim2real-lab.peiqi.chatgpt.site/policy",
+    "source_commit": "2c8168619009c42676b4ae25f29bb5a45a496a7f",
+    "version_id": "appgprj_6ad64e16af0c819189ee0a10aedcd045~appgver_70f05430bf588191beaf44e767c1997a",
+    "deployment_id": "appgdep_6ad9a135daa881919a38f9808b7070b9",
+    "anonymous_http_checks": [
+      {
+        "path": "policy.html",
+        "final_url": "https://orca-v1-sim2real-lab.peiqi.chatgpt.site/policy",
+        "http_status": 200,
+        "anonymous": true,
+        "bytes": 8444,
+        "sha256": "c556d9752f8b6a3c3cc246ad232520a16381142662f3f4f64c048b5b7b58f3bc"
+      },
+      {
+        "path": "policy.js",
+        "final_url": "https://orca-v1-sim2real-lab.peiqi.chatgpt.site/policy.js",
+        "http_status": 200,
+        "anonymous": true,
+        "bytes": 5791,
+        "sha256": "ad7cab1dc4de9661215a5204254389cdb4e4f741ac791d5412481b1cc751850b"
+      },
+      {
+        "path": "bc-policy-view.json",
+        "final_url": "https://orca-v1-sim2real-lab.peiqi.chatgpt.site/bc-policy-view.json",
+        "http_status": 200,
+        "anonymous": true,
+        "bytes": 25507,
+        "sha256": "1d67224d63cd4dd9f66d704ea7c27a5968cd10ca62885e3a018682ae7edc1a42"
+      },
+      {
+        "path": "bc-after-first5.mp4",
+        "final_url": "https://orca-v1-sim2real-lab.peiqi.chatgpt.site/bc-after-first5.mp4",
+        "http_status": 200,
+        "anonymous": true,
+        "bytes": 445716,
+        "sha256": "7cdf3f2054c144923c8ed6d49eff22a98593e9faf3905f51e3f66c9a5e755af9"
+      }
+    ],
+    "browser_opened_public_url": true
   }
 }

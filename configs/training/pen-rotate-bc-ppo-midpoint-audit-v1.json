@@ -1,0 +1,17 @@
+{
+  "purpose": "User-requested diagnostic: one fixed100k PPO checkpoint vs the existing paired BC development results, with full native-gate traces; no further imitation or PPO updates",
+  "checkpoint_steps": 100000,
+  "checkpoint_sha256": "9f3cb684a8ed2903c656af33a2b29eb9fd76ff03d10e72356e05186e5c882a72",
+  "bc_metrics_sha256": "6a88770d4a55a913900a31c66fabb96a63c036ee037abce70c00d1903f776a74",
+  "seed": 3211000,
+  "episodes": 28,
+  "maximum_physical_rollouts": 28,
+  "maximum_attempts": 1,
+  "timeout_seconds": 900,
+  "extensions": 0,
+  "formal_seeds_used": false,
+  "pairing": "Exact initial physical pose, original measured goal and frozen-prefix outcome match, verified against original BC endpoint records",
+  "limits": "Original native task and all constraints unchanged; reused development set only, no independent acceptance or policy selection. Midpoint chosen by step before viewing this comparison.",
+  "acceptance_met": false,
+  "continuous_rotation_accepted": false
+}
