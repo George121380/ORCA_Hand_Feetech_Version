@@ -1,0 +1,18 @@
+{
+  "latest_steps": 104096,
+  "next_review_steps": 204096,
+  "versions": [
+    {
+      "steps": 64096,
+      "data": "intermediate-policy-review.json",
+      "video": "pure64k-review.mp4",
+      "poster": "pure64k-review.jpg"
+    },
+    {
+      "steps": 104096,
+      "data": "intermediate-policy-review104k.json",
+      "video": "pure104k-review.mp4",
+      "poster": "pure104k-review.jpg"
+    }
+  ]
+}

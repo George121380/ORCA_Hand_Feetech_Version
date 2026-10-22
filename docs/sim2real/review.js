@@ -4,6 +4,8 @@
   const el = id => document.getElementById(id);
   const videos = [el('reviewOld'), el('reviewPure')];
   let review, index = 0, playing = false, time = 0, started = 0;
+  let snapshots, request = 0;
+  const fmt = x => Number(x).toLocaleString('en-US');
   const speed = () => Number(el('reviewSpeed').value);
   const names = ['comparison', 'pure'];
   const cases = () => names.map(name => review.models[name].trials[index]);
@@ -72,20 +74,23 @@
     const ns = 'http://www.w3.org/2000/svg';
     const svg = document.createElementNS(ns, 'svg');
     svg.setAttribute('viewBox', '0 0 640 240'); svg.setAttribute('role', 'img');
-    svg.setAttribute('aria-label', '旧 PPO 内部成功率在5万、10万、15万、20万步分别为30%、40%、40%、25%；纯 PPO在54096步为0%。各点20回合，不是正式成绩。');
+    svg.setAttribute('aria-label', names.map(name => `${name}：${review.curves[name].map(p => `${p.steps}步${p.successes}/${p.episodes}`).join('；')}`).join('。') + '。内部检查不是正式成绩。');
     const add = (tag, attrs, text) => {
       const n = document.createElementNS(ns, tag);
       Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
       if (text !== undefined) n.textContent = text;
       svg.append(n); return n;
     };
-    const x = steps => 48 + steps / 200000 * 550;
-    const y = rate => 194 - rate / .5 * 155;
-    [0, .1, .2, .3, .4, .5].forEach(rate => {
+    const points = names.flatMap(name => review.curves[name]);
+    const xmax = Math.max(200000, ...points.map(p => p.steps));
+    const ymax = Math.max(.5, Math.ceil(Math.max(...points.map(p => p.successes/p.episodes))*10)/10);
+    const x = steps => 48 + steps / xmax * 550;
+    const y = rate => 194 - rate / ymax * 155;
+    Array.from({length:6}, (_, i) => ymax * i / 5).forEach(rate => {
       add('line', {x1:48, x2:600, y1:y(rate), y2:y(rate), stroke:'#cdd3c5'});
-      add('text', {x:10, y:y(rate)+4, fill:'#68746d', 'font-size':12}, `${rate*100}%`);
+      add('text', {x:10, y:y(rate)+4, fill:'#68746d', 'font-size':12}, `${Math.round(rate*100)}%`);
     });
-    [50000, 100000, 150000, 200000].forEach(steps => add('text', {x:x(steps), y:220, 'text-anchor':'middle', 'font-size':12, fill:'#68746d'}, `${steps/10000}万步`));
+    [1, 2, 3, 4].map(i => xmax*i/4).forEach(steps => add('text', {x:x(steps), y:220, 'text-anchor':'middle', 'font-size':12, fill:'#68746d'}, `${(steps/10000).toFixed(1)}万步`));
     names.forEach((name, k) => {
       const points = review.curves[name]; const color = k ? '#ba5937' : '#335e46';
       add('polyline', {points:points.map(p => `${x(p.steps)},${y(p.successes/p.episodes)}`).join(' '), fill:'none', stroke:color, 'stroke-width':3});
@@ -113,15 +118,48 @@
   el('reviewSeek').addEventListener('input', e => { pause(); frame(Number(e.target.value)); });
   el('reviewSpeed').addEventListener('change', () => { pause(); frame(time); });
   videos.forEach(v => v.addEventListener('loadedmetadata', () => { if (review) frame(time); }));
-  fetch('intermediate-policy-review.json', {cache:'no-store'}).then(r => {
-    if (!r.ok) throw Error('中间结果数据加载失败'); return r.json();
+  async function loadSnapshot(id) {
+    pause(); const serial = ++request;
+    document.querySelectorAll('#review button,#review input,#reviewEpisode,#reviewSpeed').forEach(n => n.disabled = true);
+    try {
+      const snapshot = snapshots.versions.find(v => String(v.steps) === String(id));
+      if (!snapshot) throw Error('检查点不存在');
+      const response = await fetch(snapshot.data, {cache:'no-store'});
+      if (!response.ok) throw Error('中间结果数据加载失败');
+      const d = await response.json(); if (serial !== request) return;
+      review = d; time = 0;
+      videos[1].poster = snapshot.poster; videos[1].src = snapshot.video; videos[1].load();
+      videos[1].setAttribute('aria-label', `纯PPO${fmt(snapshot.steps)}步固定五回合录像`);
+      el('reviewPureLabel').textContent = `新路线 / 纯 PPO · ${fmt(snapshot.steps)} 步`;
+      el('reviewPureHeading').textContent = `新纯 PPO · ${fmt(snapshot.steps)} 步`;
+      el('reviewPureCount').textContent = `固定诊断回合 ${d.models.pure.successes} / 5`;
+      const check = d.curves.pure.filter(p => p.steps <= snapshot.steps).at(-1);
+      el('reviewPureCheck').textContent = check ? `${fmt(check.steps)}步内部检查 ${check.successes}/${check.episodes}` : '尚无内部检查';
+      el('reviewDownload').href = snapshot.video; el('reviewRaw').href = snapshot.data;
+      el('reviewRecorded').textContent = `录像记录：${new Date(d.recorded_at).toISOString().replace('T',' ').slice(0,19)} UTC · 两边均为固定诊断五回合`;
+      const selected = Math.min(index, d.models.pure.trials.length - 1);
+      el('reviewEpisode').replaceChildren(...d.models.pure.trials.map((c, i) => {
+        const o = document.createElement('option'); o.value = i; o.textContent = `${i+1}/5 · seed ${c.seed}`; return o;
+      }));
+      const old = d.models.comparison, fresh = d.models.pure;
+      const relation = fresh.mean_error_deg > old.mean_error_deg ? '更高' : fresh.mean_error_deg < old.mean_error_deg ? '更低' : '相同';
+      el('reviewSummary').textContent = `这 5 个固定初态：旧 PPO ${old.successes}/5，纯 PPO ${fmt(snapshot.steps)}步 ${fresh.successes}/5。平均末态误差 ${old.mean_error_deg.toFixed(2)}° → ${fresh.mean_error_deg.toFixed(2)}°；纯 RL 在这五例的误差${relation}。`;
+      document.querySelectorAll('#review button,#review select,#review input').forEach(n => n.disabled = false);
+      el('reviewError').textContent = ''; select(selected); chart();
+    } catch (e) {
+      if (serial === request) el('reviewError').textContent = e.message;
+    }
+  }
+  el('reviewSnapshot').addEventListener('change', e => loadSnapshot(e.target.value));
+  fetch('review-snapshots.json', {cache:'no-store'}).then(r => {
+    if (!r.ok) throw Error('检查点列表加载失败'); return r.json();
   }).then(d => {
-    review = d;
-    d.models.pure.trials.forEach((c, i) => {
-      const o = document.createElement('option'); o.value = i; o.textContent = `${i+1}/5 · seed ${c.seed}`; el('reviewEpisode').append(o);
-    });
-    el('reviewSummary').textContent = `这 5 个固定初态：旧 PPO ${d.models.comparison.successes}/5，新纯 PPO ${d.models.pure.successes}/5。平均末态误差 ${d.models.comparison.mean_error_deg.toFixed(2)}° → ${d.models.pure.mean_error_deg.toFixed(2)}°；当前纯 RL 中期表现更差。`;
-    document.querySelectorAll('#review button,#review select,#review input').forEach(n => n.disabled = false);
-    select(0); chart();
+    snapshots = d;
+    el('reviewSnapshot').replaceChildren(...d.versions.map(v => {
+      const o = document.createElement('option'); o.value = v.steps; o.textContent = `纯 PPO · ${fmt(v.steps)} 步`; return o;
+    }));
+    el('reviewSnapshot').value = d.latest_steps;
+    el('reviewNext').textContent = `旧路线未通过，纯 RL 尚未取得可用结果。下一录像点为 ${fmt(d.next_review_steps)} 步，继续使用相同五回合，保留所有旧版本。`;
+    return loadSnapshot(d.latest_steps);
   }).catch(e => { el('reviewError').textContent = e.message; });
 })();

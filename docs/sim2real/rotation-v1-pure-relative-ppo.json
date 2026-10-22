@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-10-22T06:15:05.300267+00:00",
+  "timestamp": "2026-10-22T06:24:36.786508+00:00",
   "canonical": {
-    "timestamp": "2026-10-22T06:14:11.246675+00:00",
+    "timestamp": "2026-10-22T06:24:11.261916+00:00",
     "state_dir": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-supervised",
     "needs_attention": false,
     "monitor_status": "monitoring",
@@ -9,17 +9,17 @@
     "active_job": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-seed0",
     "job_status": "running",
     "phase": "train",
-    "monitor_age_seconds": 29.902775764465332,
+    "monitor_age_seconds": 29.888349533081055,
     "quality_attempt": 0,
     "results": [],
     "latest_test": null,
     "target_total_steps": 500736,
     "progress": {
-      "total_steps": 116736,
-      "steps_per_second": 83.07542219721799,
-      "elapsed_s": 1355.8763469369997
+      "total_steps": 158720,
+      "steps_per_second": 80.19132658761892,
+      "elapsed_s": 1928.1885779189997
     },
-    "progress_age_seconds": 10.678780555725098,
+    "progress_age_seconds": 12.473247051239014,
     "attention_reasons": [],
     "watchdog_service": "active"
   },
@@ -72,18 +72,18 @@
     "restarts": 0,
     "stage_results": [],
     "started_at": "2026-10-22T05:54:11.305691+00:00",
-    "last_progress_at": 1792649681.345608,
+    "last_progress_at": 1792650251.3753848,
     "sample": [
       "model",
       "train",
-      114688,
-      106063
+      155648,
+      145290
     ],
     "pending_restart": null,
     "quality_attempt": 0,
     "quality_retries": 0,
     "quality_retry_steps": 2000000,
-    "updated_at": "2026-10-22T06:14:41.345759+00:00",
+    "updated_at": "2026-10-22T06:24:11.375534+00:00",
     "supervisor_pid": 11893,
     "poll_seconds": 30.0,
     "stall_seconds": 300.0,
@@ -93,8 +93,8 @@
     "progress": [
       "model",
       "train",
-      114688,
-      106063
+      155648,
+      145290
     ],
     "live_pids": [
       11667,
@@ -956,7 +956,7 @@
     },
     "exact_prefix_goal_pairing": true
   },
-  "public_scope": "Pure PPO internal54096 and104096 checks both0/20, no formal result yet. Fixed64k diagnostic5-case video compared against immutable old200704 checkpoint; both0/5, mean errors21.68deg vs9.55deg. Not usable.",
+  "public_scope": "Pure PPO is not accepted. Internal54096 and104096 checks0/20; fixed five diagnostic seeds at64k and104k both0/5. Mean error21.68 to17.98 degrees; old200704 comparator9.55 degrees, formal35/100.",
   "ci_snapshot": [
     {
       "name": "Software checks",
@@ -976,6 +976,29 @@
       "steps": 104096,
       "episodes": 20,
       "successes": 0
+    },
+    {
+      "steps": 154096,
+      "episodes": 20,
+      "successes": 0
     }
-  ]
+  ],
+  "intermediate_reviews": {
+    "registry": "docs/sim2real/review-snapshots.json",
+    "latest_steps": 104096,
+    "comparison_reused": true,
+    "actual_rollouts_this_review": 5,
+    "formal_seeds_used": false,
+    "mean_error_64k": 21.67527000621771,
+    "mean_error_104k": 17.979031211130255,
+    "successes_104k": 0,
+    "failure_summary_104k": {
+      "episodes": 5,
+      "all_failed_native_gate": true,
+      "final_pose_error_at_least8deg": 5,
+      "final_frame_loaded_opposition_missing": 4,
+      "final_frame_resting": 5,
+      "drops": 0
+    }
+  }
 }
