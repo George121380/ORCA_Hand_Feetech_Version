@@ -1,0 +1,20 @@
+{
+  "purpose": "User-requested intermediate policy review. Fixed first5 previously used BC development seeds, all outcomes retained; not formal evaluation or policy selection.",
+  "native_source_revision": "67c18a87ac85157cfaeb8659861e6d78fc72bf79",
+  "pure_checkpoint_steps": 64096,
+  "pure_checkpoint": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-seed0/model/checkpoint_64096_steps.zip",
+  "comparison_checkpoint": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/selected/policy.zip",
+  "comparison_checkpoint_sha256": "cf158294722b651362427bf78a874ae6971d28d78624497bc79645a1677de811",
+  "reference_metrics": "/home/peiqi/projects/orca-hand-rl-grasp-diagnostics/runs/rotation-imitation-evaluation-recovery-v1/development-after/metrics.json",
+  "seed": 3211000,
+  "episodes_per_checkpoint": 5,
+  "maximum_rollouts": 10,
+  "timeout_seconds_per_checkpoint": 240,
+  "maximum_attempts_per_checkpoint": 1,
+  "formal_seeds_used": false,
+  "additional_training_updates": 0,
+  "checkpoint_selection": "Fixed64096 step chosen before viewing these rollouts; comparison is preselected by original job development protocol.",
+  "source_data": "Native original physics/reward/success gates, zero hardware actions. Do not retry failures or filter video episodes.",
+  "future_review": "Next existing heartbeat should review fixed104096 checkpoint when available; do not create a timer. Preserve this first review before additional work.",
+  "grasp_checkpoint": "/home/peiqi/projects/orca-hand-rl-rotate-v1/runs/frozen-grasp94-prefix-v1/policy.zip"
+}
