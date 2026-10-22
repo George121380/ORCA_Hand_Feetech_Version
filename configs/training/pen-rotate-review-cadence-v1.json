@@ -1,0 +1,33 @@
+{
+  "purpose": "User requested visible intermediate results before deciding adjustments. This adds reporting, not training extensions or a timer.",
+  "existing_trigger": "Existing launchd heartbeat only; no additional timer/agent.",
+  "metrics_reporting": "At each actual heartbeat inspection, publish progress and every newly completed20-case internal check; report regression, gate failure, interruption and baseline results promptly in Chinese.",
+  "video_review_steps": [
+    64096,
+    104096,
+    204096,
+    304096,
+    404096,
+    500736
+  ],
+  "first_review": "runs/user-policy-reviews-v1/paired64k-v1",
+  "fixed_diagnostic_seeds": [
+    3211000,
+    3211001,
+    3211002,
+    3211003,
+    3211004
+  ],
+  "episodes_per_pure_checkpoint": 5,
+  "cached_old_comparison": "Reuse immutable200704-step old PPO video and metrics from first review; do not rerun old comparison.",
+  "maximum_total_rollouts_including_initial_comparison": 35,
+  "maximum_attempts_per_checkpoint": 1,
+  "timeout_seconds_per_checkpoint": 240,
+  "training_updates_added": 0,
+  "formal_seeds_used": false,
+  "selection_allowed": false,
+  "hardware_actions": false,
+  "preserve_prior_versions": true,
+  "publish": "Keep timestamped JSON and actual fixed-case MP4s on GitHub; update public Site policy#review; retain earlier review files.",
+  "quality": "Do not promote a low internal score to usability, discard failures, modify original gates, or restart the budget because of a bad review."
+}
