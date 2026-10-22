@@ -1,0 +1,83 @@
+{
+  "purpose": "User-requested pure PPO alternative: fresh actor and critic, no BC labels or weights; explicit relative rotation error from existing visual inputs",
+  "hypothesis": "Fixed100k PPO audit still has17 failures in the final pose window. G@R.T gives the MLP the current-to-goal error directly; this improvement hypothesis is not yet proven.",
+  "initialization": {
+    "actor": "Fresh256x256 MLP, action head exactly zero",
+    "critic": "Fresh256x256 MLP",
+    "optimizer": "Fresh empty Adam",
+    "source_environment_steps": 0,
+    "source_ppo_updates": 0,
+    "bc_weights_copied": false,
+    "bc_examples_used": 0,
+    "grasp_prefix": "Original physically executed frozen94/100 grasp prefix, unchanged; no rotation imitation"
+  },
+  "features": {
+    "raw_observation_dim": 296,
+    "feature_dim": 296,
+    "transform": "Each of4 original frames: replace G47:56 by G@R.T using measured R38:47. All other entries unchanged. R is retained so original G is recoverable.",
+    "extra_truth_inputs": false
+  },
+  "task": {
+    "family": "pen-rotate-v1",
+    "angle": 15,
+    "horizon": 140,
+    "randomization": 0.3,
+    "negative_goal_probability": 0.5,
+    "original_physics_reward_success_unchanged": true
+  },
+  "training": {
+    "total_environment_steps": 500736,
+    "seed": 0,
+    "num_envs": 4,
+    "device": "cuda",
+    "learning_rate": 1e-05,
+    "entropy_coef": 0.001,
+    "target_kl": 0.02,
+    "initial_log_std": -3.0,
+    "zero_initial_action_mean": true,
+    "relative_goal_features": true,
+    "checkpoint_every": 20000,
+    "eval_every": 50000
+  },
+  "preflight": {
+    "steps": 4096,
+    "num_envs": 4,
+    "timeout_seconds": 240,
+    "counted_in_total_budget": true,
+    "check": "Reload zero-step initial snapshot and finite4096-step model, then resume same weights/counters without re-zeroing"
+  },
+  "long_job": {
+    "resume_preflight_steps": 4096,
+    "additional_steps": 496640,
+    "target_total_steps": 500736
+  },
+  "development": {
+    "seed": 3611000,
+    "episodes": 28,
+    "candidates": [
+      "final",
+      "internal_best"
+    ]
+  },
+  "formal": {
+    "seed": 3711000,
+    "episodes": 100,
+    "baselines": [
+      "hold",
+      "random",
+      "grasp"
+    ],
+    "gate": "Original native rotation gate and matched baselines",
+    "video_fixed_first5": true
+  },
+  "budget": {
+    "training_seeds": 1,
+    "quality_retries": 0,
+    "infrastructure_restarts_maximum": 2,
+    "extensions": 0
+  },
+  "comparison": "Preserve existing200704-step BC-initialized PPO and its held-out evaluations. This multi-change alternative is not a single-factor ablation.",
+  "hardware_actions": 0,
+  "acceptance_met": false,
+  "continuous_rotation_accepted": false
+}

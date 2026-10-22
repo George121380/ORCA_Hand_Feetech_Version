@@ -27,10 +27,14 @@ def write(path, value):
 def fresh_ppo(env,args):
     """Shared exact initialization recipe for training and development diagnostics."""
     from stable_baselines3 import PPO
+    policy_kwargs={"net_arch":{"pi":[256,256],"vf":[256,256]},"log_std_init":args.initial_log_std}
+    if getattr(args,'relative_goal_features',False):
+        from orca_feetech.policy_features import RelativeGoalExtractor
+        policy_kwargs['features_extractor_class']=RelativeGoalExtractor
     model=PPO("MlpPolicy",env,seed=args.seed,device=args.device,n_steps=256,
         batch_size=min(1024,256*args.num_envs),n_epochs=5,learning_rate=args.learning_rate,
         ent_coef=args.entropy_coef,gamma=.99,gae_lambda=.95,target_kl=args.target_kl,
-        policy_kwargs={"net_arch":{"pi":[256,256],"vf":[256,256]},"log_std_init":args.initial_log_std},
+        policy_kwargs=policy_kwargs,
         tensorboard_log=str(args.output/"tb"),verbose=1)
     if getattr(args,'zero_initial_action_mean',False):
         from orca_feetech.policy_initialization import zero_actor_mean
@@ -59,11 +63,14 @@ def train(args, *, config_class=TaskConfig, env_class=None, task_id=TASK_ID,
                         delay_max_steps=args.delay_max_ms // 50,
                         command_bias_deg=args.command_bias_deg, encoder_bias_deg=args.encoder_bias_deg)
     zero_mean=getattr(args,'zero_initial_action_mean',False)
+    relative_features=getattr(args,'relative_goal_features',False)
     initialize_policy=getattr(args,'initialize_policy',None)
+    if relative_features and (task_id!='orca-v1-pen-rotate-v1' or initialize_policy is not None):
+        raise ValueError('Relative goal features require explicit rotation and no transferred actor weights')
     if initialize_policy is not None and (args.resume or task_id!='orca-v1-pen-rotate-v1'):
         raise ValueError('Explicit grasp-to-rotation initialization is fresh-only and requires rotation v1')
-    if zero_mean and task_id!='orca-v1-pen-grasp-v1':
-        raise ValueError('This initialization experiment is restricted to the explicit grasp task')
+    if zero_mean and task_id!='orca-v1-pen-grasp-v1' and not relative_features:
+        raise ValueError('Zero mean requires explicit grasp or fresh relative-goal rotation')
     if args.device_config:
         from orca_feetech.hardware import load_device
         _, _, lo, hi = load_device(args.device_config)
@@ -71,6 +78,9 @@ def train(args, *, config_class=TaskConfig, env_class=None, task_id=TASK_ID,
         config.__post_init__()
     if args.resume:
         previous, previous_meta = config_loader(args.resume)
+        if relative_features and not previous_meta.get('relative_goal_features',False):
+            raise ValueError('Cannot change learned checkpoint features on resume')
+        relative_features=previous_meta.get('relative_goal_features',False)
         if zero_mean and not previous_meta.get('zero_initial_action_mean',False):
             raise ValueError('Zero mean initialization is fresh-only; cannot reset a learned actor')
         zero_mean=previous_meta.get('zero_initial_action_mean',False)
@@ -104,6 +114,7 @@ def train(args, *, config_class=TaskConfig, env_class=None, task_id=TASK_ID,
                     target_kl=args.target_kl, initial_log_std=args.initial_log_std,
                     reset_log_std=args.reset_log_std,
                     zero_initial_action_mean=zero_mean,
+                    relative_goal_features=relative_features,
                     training_negative_goal_probability=args.negative_goal_probability,
                     training_goal_angle_mixture=(None if args.minimum_goal_angle is None else
                         dict(minimum_deg=args.minimum_goal_angle, maximum_deg=args.angle,
@@ -111,6 +122,10 @@ def train(args, *, config_class=TaskConfig, env_class=None, task_id=TASK_ID,
                     training_prefix_reset=prefix_proof,trained=False)
     if task_contract is not None:
         metadata['task_contract'] = task_contract
+    if relative_features:
+        metadata['initialization_kind']=(previous_meta.get('initialization_kind','relative_goal_checkpoint_resume')
+            if args.resume else 'pure_ppo_fresh_zero_actor_no_bc' if zero_mean else 'pure_ppo_fresh_no_bc')
+        metadata['feature_transform']='Each original frame: replace G by G @ R.T; keep raw input296'
     write(args.output / "config.json", metadata)
 
     def factory(index, evaluation=False):
@@ -315,7 +330,8 @@ def main(*, train_fn=train, evaluate_fn=evaluate, train_defaults=None):
     t.add_argument("--entropy-coef", type=float, default=.01)
     t.add_argument("--target-kl", type=float, default=.03)
     t.add_argument("--initial-log-std", type=float, default=0.)
-    t.add_argument('--zero-initial-action-mean',action='store_true',help='Grasp-only fresh actor head starts at zero; learned checkpoints stay intact')
+    t.add_argument('--zero-initial-action-mean',action='store_true',help='Fresh grasp or relative-goal rotation actor starts at zero; resume preserves learned weights')
+    t.add_argument('--relative-goal-features',action='store_true',help='Fresh rotation PPO derives goal error from original vision inputs; no BC weight transfer')
     t.add_argument("--reset-log-std", type=float, help="Explicit exploration reset for a new fine-tuning stage")
     t.add_argument("--negative-goal-probability", type=float, default=.5,
                    help="Training-only negative-direction frequency; evaluations remain balanced")
