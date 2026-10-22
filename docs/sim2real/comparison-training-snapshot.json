@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-10-22T06:03:16.208034+00:00",
+  "timestamp": "2026-10-22T06:15:05.300267+00:00",
   "canonical": {
-    "timestamp": "2026-10-22T06:01:30.666122+00:00",
+    "timestamp": "2026-10-22T06:15:05.300267+00:00",
     "state_dir": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-supervised",
     "needs_attention": false,
-    "monitor_status": "monitoring",
+    "monitor_status": "quality_gate_failed",
     "stage": "initial",
     "active_job": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0",
-    "job_status": "running",
-    "phase": "test-hold",
+    "job_status": "complete",
+    "phase": "complete",
     "monitor_age_seconds": 12.050760746002197,
     "quality_attempt": 0,
     "results": [],
@@ -48,6 +48,6 @@
     "completed_revolutions": 0
   },
   "acceptance_met": false,
-  "phase": "test-hold",
-  "status": "running"
+  "status": "complete",
+  "phase": "complete"
 }

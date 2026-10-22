@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-10-22T06:04:48.897309+00:00",
+  "timestamp": "2026-10-22T06:15:05.300267+00:00",
   "canonical": {
-    "timestamp": "2026-10-22T06:04:11.240272+00:00",
+    "timestamp": "2026-10-22T06:14:11.246675+00:00",
     "state_dir": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-supervised",
     "needs_attention": false,
     "monitor_status": "monitoring",
@@ -9,17 +9,17 @@
     "active_job": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-seed0",
     "job_status": "running",
     "phase": "train",
-    "monitor_age_seconds": 29.911285400390625,
+    "monitor_age_seconds": 29.902775764465332,
     "quality_attempt": 0,
     "results": [],
     "latest_test": null,
     "target_total_steps": 500736,
     "progress": {
-      "total_steps": 65536,
-      "steps_per_second": 84.39425946190669,
-      "elapsed_s": 728.0116013819998
+      "total_steps": 116736,
+      "steps_per_second": 83.07542219721799,
+      "elapsed_s": 1355.8763469369997
     },
-    "progress_age_seconds": 0.4936981201171875,
+    "progress_age_seconds": 10.678780555725098,
     "attention_reasons": [],
     "watchdog_service": "active"
   },
@@ -72,18 +72,18 @@
     "restarts": 0,
     "stage_results": [],
     "started_at": "2026-10-22T05:54:11.305691+00:00",
-    "last_progress_at": 1792649081.3312566,
+    "last_progress_at": 1792649681.345608,
     "sample": [
       "model",
       "train",
-      65536,
-      59156
+      114688,
+      106063
     ],
     "pending_restart": null,
     "quality_attempt": 0,
     "quality_retries": 0,
     "quality_retry_steps": 2000000,
-    "updated_at": "2026-10-22T06:04:41.331400+00:00",
+    "updated_at": "2026-10-22T06:14:41.345759+00:00",
     "supervisor_pid": 11893,
     "poll_seconds": 30.0,
     "stall_seconds": 300.0,
@@ -93,8 +93,8 @@
     "progress": [
       "model",
       "train",
-      65536,
-      59156
+      114688,
+      106063
     ],
     "live_pids": [
       11667,
@@ -298,7 +298,7 @@
   },
   "comparison": {
     "job": {
-      "status": "running",
+      "status": "complete",
       "started_at": "2026-10-22T05:24:42.836822+00:00",
       "pid": 4079,
       "hostname": "Jarvis",
@@ -472,8 +472,78 @@
             "hold"
           ],
           "started_at": "2026-10-22T06:02:17.885960+00:00",
-          "status": "running",
-          "pid": 13500
+          "status": "complete",
+          "pid": 13500,
+          "returncode": 0,
+          "ended_at": "2026-10-22T06:05:50.997817+00:00"
+        },
+        {
+          "name": "test-random",
+          "argv": [
+            "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/.venv/bin/python",
+            "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/scripts/pen_rotate.py",
+            "evaluate",
+            "--checkpoint",
+            "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/selected/policy.zip",
+            "--episodes",
+            "100",
+            "--seed",
+            "3511000",
+            "--output",
+            "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/test-random",
+            "--baseline",
+            "random"
+          ],
+          "started_at": "2026-10-22T06:05:51.000980+00:00",
+          "status": "complete",
+          "pid": 13676,
+          "returncode": 0,
+          "ended_at": "2026-10-22T06:08:12.741313+00:00"
+        },
+        {
+          "name": "test-grasp",
+          "argv": [
+            "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/.venv/bin/python",
+            "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/scripts/pen_rotate.py",
+            "evaluate",
+            "--checkpoint",
+            "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/selected/policy.zip",
+            "--episodes",
+            "100",
+            "--seed",
+            "3511000",
+            "--output",
+            "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/test-grasp",
+            "--baseline",
+            "grasp"
+          ],
+          "started_at": "2026-10-22T06:08:12.744596+00:00",
+          "status": "complete",
+          "pid": 13974,
+          "returncode": 0,
+          "ended_at": "2026-10-22T06:11:45.492710+00:00"
+        },
+        {
+          "name": "video",
+          "argv": [
+            "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/.venv/bin/python",
+            "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/scripts/pen_rotate.py",
+            "evaluate",
+            "--checkpoint",
+            "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/selected/policy.zip",
+            "--episodes",
+            "5",
+            "--seed",
+            "3511000",
+            "--output",
+            "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/video",
+            "--video"
+          ],
+          "started_at": "2026-10-22T06:11:45.499203+00:00",
+          "status": "complete",
+          "pid": 15097,
+          "returncode": 0,
+          "ended_at": "2026-10-22T06:11:59.029693+00:00"
         }
       ],
       "acceptance_met": false,
@@ -483,7 +553,7 @@
       ],
       "current_model": "model",
       "recovery_checkpoint": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/frozen-rotation-bc-v1/policy.zip",
-      "phase": "test-hold",
+      "phase": "complete",
       "selected_from": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/model/policy.zip",
       "selected_sha256": "cf158294722b651362427bf78a874ae6971d28d78624497bc79645a1677de811",
       "validation": {
@@ -497,7 +567,36 @@
         "drop_rate": 0.0,
         "mean_final_error_deg": 11.240439251975435,
         "acceptance_met": false
-      }
+      },
+      "test": {
+        "policy": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/selected/policy.zip",
+        "episodes": 100,
+        "success_rate": 0.35,
+        "success_95ci": [
+          0.2636410465347802,
+          0.4474573957080203
+        ],
+        "drop_rate": 0.0,
+        "mean_final_error_deg": 9.819982526939832,
+        "acceptance_met": false,
+        "policy_sample_threshold_met": false,
+        "baseline_comparisons": {
+          "hold": {
+            "matched_hold_success_rate": 0.0,
+            "matched_hold_drop_rate": 0.0,
+            "success_at_least_hold": true,
+            "drops_no_more_than_hold": true
+          },
+          "grasp": {
+            "matched_hold_success_rate": 0.0,
+            "matched_hold_drop_rate": 0.0,
+            "success_at_least_hold": true,
+            "drops_no_more_than_hold": true
+          }
+        },
+        "continuous_rotation_accepted": false
+      },
+      "ended_at": "2026-10-22T06:11:59.030123+00:00"
     },
     "progress": {
       "total_steps": 200704,
@@ -658,6 +757,18 @@
       }
     ],
     "formal_metrics": {
+      "video/metrics.json": {
+        "policy": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/selected/policy.zip",
+        "episodes": 5,
+        "success_rate": 0.6,
+        "success_95ci": [
+          0.23071993220883708,
+          0.8823817688407467
+        ],
+        "drop_rate": 0.0,
+        "mean_final_error_deg": 10.733987063334247,
+        "acceptance_met": false
+      },
       "test-policy/metrics.json": {
         "policy": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/selected/policy.zip",
         "episodes": 100,
@@ -668,6 +779,66 @@
         ],
         "drop_rate": 0.0,
         "mean_final_error_deg": 9.819982526939832,
+        "acceptance_met": false
+      },
+      "test-grasp/metrics.json": {
+        "policy": "grasp",
+        "episodes": 100,
+        "success_rate": 0.0,
+        "success_95ci": [
+          0.0,
+          0.03699480747600191
+        ],
+        "drop_rate": 0.0,
+        "mean_final_error_deg": 16.97758077375656,
+        "acceptance_met": false
+      },
+      "validation-policy/metrics.json": {
+        "policy": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/model/policy.zip",
+        "episodes": 28,
+        "success_rate": 0.2857142857142857,
+        "success_95ci": [
+          0.15253815848329969,
+          0.470596357370175
+        ],
+        "drop_rate": 0.0,
+        "mean_final_error_deg": 11.240439251975435,
+        "acceptance_met": false
+      },
+      "validation-best_model/metrics.json": {
+        "policy": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/model/best_model.zip",
+        "episodes": 28,
+        "success_rate": 0.17857142857142858,
+        "success_95ci": [
+          0.0787838582943011,
+          0.355917915485911
+        ],
+        "drop_rate": 0.0,
+        "mean_final_error_deg": 10.591372628940329,
+        "acceptance_met": false
+      },
+      "test-random/metrics.json": {
+        "policy": "random",
+        "episodes": 100,
+        "success_rate": 0.0,
+        "success_95ci": [
+          0.0,
+          0.03699480747600191
+        ],
+        "drop_rate": 0.0,
+        "mean_final_error_deg": 103.96412234475864,
+        "acceptance_met": false
+      },
+      "test-hold/metrics.json": {
+        "policy": "hold",
+        "episodes": 100,
+        "success_rate": 0.0,
+        "success_95ci": [
+          0.0,
+          0.03699480747600191
+        ],
+        "drop_rate": 0.0,
+        "mean_final_error_deg": 17.331252347538634,
         "acceptance_met": false
       }
     }
@@ -785,7 +956,7 @@
     },
     "exact_prefix_goal_pairing": true
   },
-  "public_scope": "New pure PPO first internal check at54096 steps:0/20; no independent development/formal result yet. BC-initialized PPO formal35/100 failed80% gate. Continuous rotation not accepted.",
+  "public_scope": "Pure PPO internal54096 and104096 checks both0/20, no formal result yet. Fixed64k diagnostic5-case video compared against immutable old200704 checkpoint; both0/5, mean errors21.68deg vs9.55deg. Not usable.",
   "ci_snapshot": [
     {
       "name": "Software checks",
@@ -799,8 +970,12 @@
     {
       "steps": 54096,
       "episodes": 20,
-      "successes": 0,
-      "file": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-seed0/model/evaluation/evaluations.npz"
+      "successes": 0
+    },
+    {
+      "steps": 104096,
+      "episodes": 20,
+      "successes": 0
     }
   ]
 }
