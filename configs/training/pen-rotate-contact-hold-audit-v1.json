@@ -1,0 +1,18 @@
+{
+  "purpose": "Bounded paired mechanism audit: does braked zero-action hold preserve loaded opposition that fixed pure204096 loses? Existing diagnostic seeds only. This does not demonstrate rotation feasibility or acceptance.",
+  "native_source_revision": "67c18a87ac85157cfaeb8659861e6d78fc72bf79",
+  "checkpoint": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/user-policy-reviews-v1/paired204k-v1/pure-frozen/policy.zip",
+  "checkpoint_sha256": "358fbf2596815e76ab1d589f2341cde41086ec4c9800e6bf3929b203c02d9586",
+  "comparison_metrics": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/user-policy-reviews-v1/paired204k-v1/pure/metrics.json",
+  "seed": 3211000,
+  "episodes": 5,
+  "baseline": "hold",
+  "maximum_rollouts": 5,
+  "maximum_attempts": 1,
+  "timeout_seconds": 180,
+  "additional_training_updates": 0,
+  "formal_seeds_used": false,
+  "separate_from_review_cadence_budget": true,
+  "physics_reward_gates_unchanged": true,
+  "hardware_actions": false
+}
