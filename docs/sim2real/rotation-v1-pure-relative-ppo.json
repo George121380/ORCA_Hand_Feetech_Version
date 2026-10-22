@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-10-22T06:24:36.786508+00:00",
+  "timestamp": "2026-10-22T06:30:40.030176+00:00",
   "canonical": {
-    "timestamp": "2026-10-22T06:24:11.261916+00:00",
+    "timestamp": "2026-10-22T06:29:11.265250+00:00",
     "state_dir": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-supervised",
     "needs_attention": false,
     "monitor_status": "monitoring",
@@ -9,17 +9,17 @@
     "active_job": "/home/peiqi/projects/orca-hand-rl-pure-relative-v1/runs/pure-relative-ppo-v1-seed0",
     "job_status": "running",
     "phase": "train",
-    "monitor_age_seconds": 29.888349533081055,
+    "monitor_age_seconds": 29.884602546691895,
     "quality_attempt": 0,
     "results": [],
     "latest_test": null,
     "target_total_steps": 500736,
     "progress": {
-      "total_steps": 158720,
-      "steps_per_second": 80.19132658761892,
-      "elapsed_s": 1928.1885779189997
+      "total_steps": 180224,
+      "steps_per_second": 80.4506537013381,
+      "elapsed_s": 2189.2674810649996
     },
-    "progress_age_seconds": 12.473247051239014,
+    "progress_age_seconds": 15.378372192382812,
     "attention_reasons": [],
     "watchdog_service": "active"
   },
@@ -72,18 +72,18 @@
     "restarts": 0,
     "stage_results": [],
     "started_at": "2026-10-22T05:54:11.305691+00:00",
-    "last_progress_at": 1792650251.3753848,
+    "last_progress_at": 1792650611.3832457,
     "sample": [
       "model",
       "train",
-      155648,
-      145290
+      185344,
+      173350
     ],
     "pending_restart": null,
     "quality_attempt": 0,
     "quality_retries": 0,
     "quality_retry_steps": 2000000,
-    "updated_at": "2026-10-22T06:24:11.375534+00:00",
+    "updated_at": "2026-10-22T06:30:11.383393+00:00",
     "supervisor_pid": 11893,
     "poll_seconds": 30.0,
     "stall_seconds": 300.0,
@@ -93,8 +93,8 @@
     "progress": [
       "model",
       "train",
-      155648,
-      145290
+      185344,
+      173350
     ],
     "live_pids": [
       11667,
@@ -849,7 +849,7 @@
     "sha256": "3a0aafd3ad93396e266cfb8a45a56a59a5f9965a8afe828353b9dcabb7f40975",
     "downloaded_and_verified_on_mac": true
   },
-  "services": "MainPID=11893\nNRestarts=0\nId=orca-rl-watchdog.service\nActiveState=active\nSubState=running\n\nMainPID=11895\nNRestarts=0\nId=orca-rl-heartbeat.service\nActiveState=active\nSubState=running\n\nMainPID=11891\nNRestarts=0\nId=orca-rl-bc-comparison-watchdog.service\nActiveState=active\nSubState=running\n",
+  "services": "MainPID=11893\nNRestarts=0\nId=orca-rl-watchdog.service\nActiveState=active\nSubState=running\n\nMainPID=11895\nNRestarts=0\nId=orca-rl-heartbeat.service\nActiveState=active\nSubState=running\n",
   "acceptance_met": false,
   "continuous_rotation_accepted": false,
   "plan": {
@@ -956,7 +956,7 @@
     },
     "exact_prefix_goal_pairing": true
   },
-  "public_scope": "Pure PPO is not accepted. Internal54096 and104096 checks0/20; fixed five diagnostic seeds at64k and104k both0/5. Mean error21.68 to17.98 degrees; old200704 comparator9.55 degrees, formal35/100.",
+  "public_scope": "At observed188416 steps, internal54096/104096/154096 checks each0/20, no formal pure PPO result. Fixed diagnostic64k and104k each0/5; mean error21.68 to17.98deg, old200704 comparator9.55deg and formal35/100. Not usable. Public version9 retains both video/dataset revisions.",
   "ci_snapshot": [
     {
       "name": "Software checks",
@@ -999,6 +999,18 @@
       "final_frame_loaded_opposition_missing": 4,
       "final_frame_resting": 5,
       "drops": 0
+    },
+    "published_site_version": 9,
+    "next_review_steps": 204096,
+    "review_recorder_ci": {
+      "status": "passed",
+      "commit": "1be19aa",
+      "url": "https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39733597190"
     }
-  }
+  },
+  "progress": {
+    "total_steps": 188416
+  },
+  "status": "running",
+  "phase": "train"
 }
