@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-10-22T05:25:28.626578+00:00",
+  "timestamp": "2026-10-22T05:36:15.842060+00:00",
   "canonical": {
-    "timestamp": "2026-10-22T05:25:28.612705+00:00",
+    "timestamp": "2026-10-22T05:36:15.834003+00:00",
     "state_dir": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-supervised",
     "needs_attention": false,
     "monitor_status": "monitoring",
@@ -9,17 +9,17 @@
     "active_job": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0",
     "job_status": "running",
     "phase": "train",
-    "monitor_age_seconds": 24.872732162475586,
+    "monitor_age_seconds": 12.050760746002197,
     "quality_attempt": 0,
     "results": [],
     "latest_test": null,
     "target_total_steps": 200704,
     "progress": {
-      "total_steps": 10240,
-      "steps_per_second": 261.611228634102,
-      "elapsed_s": 39.14205050199996
+      "total_steps": 90112,
+      "steps_per_second": 131.53906132190926,
+      "elapsed_s": 685.058864237
     },
-    "progress_age_seconds": 3.4681456089019775,
+    "progress_age_seconds": 4.7729527950286865,
     "attention_reasons": [],
     "watchdog_service": "active"
   },
@@ -53,19 +53,6 @@
     },
     "git_revision": "9496e53651d953f9b6465544334a45adc9c23bc8"
   },
-  "processes": [
-    "   4079       1       00:46  0.4 /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/.venv/bin/python -u /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/scripts/run_training_job.py --output /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0 --task-family pen-rotate-v1 --object pen --angle 15 --turns 1 --horizon 140 --randomization 0.3 --steps 200704 --num-envs 8 --device cuda --seed 0 --resume /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/frozen-rotation-bc-v1/policy.zip --selection-episodes 28 --selection-seed 3411000 --test-episodes 100 --test-seed 3511000 --checkpoint-every 20000 --eval-every 50000 --learning-rate 0.00001 --entropy-coef 0.001 --target-kl 0.02 --initial-log-std -4 --negative-goal-probability 0.5 --video",
-    "   4081    4079       00:46  6.2 /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/.venv/bin/python /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/scripts/pen_rotate.py train --output /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/model --steps 200704 --resume /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/frozen-rotation-bc-v1/policy.zip --object pen --angle 15.0 --turns 1 --horizon 140 --randomization 0.3 --num-envs 8 --device cuda --seed 0 --friction 1.0 --checkpoint-every 20000 --eval-every 50000 --learning-rate 1e-05 --entropy-coef 0.001 --target-kl 0.02 --initial-log-std -4.0 --negative-goal-probability 0.5",
-    "   4089    4081       00:45 56.6 /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=32, pipe_handle=34) --multiprocessing-fork",
-    "   4090    4081       00:45 57.3 /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=32, pipe_handle=34) --multiprocessing-fork",
-    "   4091    4081       00:45 58.8 /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=32, pipe_handle=34) --multiprocessing-fork",
-    "   4092    4081       00:45 55.7 /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=32, pipe_handle=34) --multiprocessing-fork",
-    "   4093    4081       00:45 58.9 /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=32, pipe_handle=34) --multiprocessing-fork",
-    "   4094    4081       00:45 57.0 /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=32, pipe_handle=34) --multiprocessing-fork",
-    "   4095    4081       00:45 60.2 /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=32, pipe_handle=34) --multiprocessing-fork",
-    "   4096    4081       00:45 60.6 /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/.venv/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=32, pipe_handle=34) --multiprocessing-fork",
-    "   4290    1217       00:25  0.3 /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/.venv/bin/python -u /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/scripts/watch_training.py --initial-job /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0 --state-dir /home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-supervised --max-restarts 2 --quality-retries 0 --poll-seconds 30 --stall-seconds 300"
-  ],
   "registration": {
     "timestamp": "2026-10-22T05:24:42.804790+00:00",
     "pid": 4079,
@@ -166,5 +153,12 @@
       "html_url": "https://github.com/George121380/ORCA_Hand_Feetech_Version/actions/runs/39540360695"
     }
   ],
-  "limitations": "Running training snapshot only; formal evaluation pending. BC development8/28 is admission, not rotation acceptance; original PPO formal0/100 preserved."
+  "limitations": "Running training snapshot only; formal evaluation pending. BC development8/28 is admission, not rotation acceptance; original PPO formal0/100 preserved.",
+  "internal_evaluations": [
+    {
+      "steps": 50000,
+      "episodes": 20,
+      "successes": 6
+    }
+  ]
 }

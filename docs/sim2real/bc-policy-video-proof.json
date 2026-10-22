@@ -1,0 +1,61 @@
+{
+  "timestamp": "2026-10-22T05:34:55.150020+00:00",
+  "purpose": "Fixed first5 paired BC-policy visualization, not an additional independent success-rate experiment",
+  "simulation_source_revision": "9496e53651d953f9b6465544334a45adc9c23bc8",
+  "plan": "configs/training/pen-rotate-bc-visualization-v1.json",
+  "maximum_visualization_rollouts": 10,
+  "actual_visualization_rollouts": 10,
+  "seed_start": 3211000,
+  "episodes_per_checkpoint": 5,
+  "after_checkpoint_sha256": "2ce69cfa9dd9c10fcdbe2cd6c90bbcd319d03d4ce301be4bafe342dbe8406412",
+  "all_10_full_trial_dictionaries_exactly_match_original": true,
+  "video": {
+    "before": {
+      "path": "bc-before-first5.mp4",
+      "sha256": "c15720abe126f2fd5b604532d8ee378771995f168944f6ae47a5b0eeae6dd2ac",
+      "bytes": 386708,
+      "frames": 700,
+      "fps": 20,
+      "duration_seconds": 35,
+      "fixed_seeds": [
+        3211000,
+        3211001,
+        3211002,
+        3211003,
+        3211004
+      ],
+      "exact_original_trial_replay": true
+    },
+    "after": {
+      "path": "bc-after-first5.mp4",
+      "sha256": "7cdf3f2054c144923c8ed6d49eff22a98593e9faf3905f51e3f66c9a5e755af9",
+      "bytes": 445716,
+      "frames": 700,
+      "fps": 20,
+      "duration_seconds": 35,
+      "fixed_seeds": [
+        3211000,
+        3211001,
+        3211002,
+        3211003,
+        3211004
+      ],
+      "exact_original_trial_replay": true
+    }
+  },
+  "browser_checks": [
+    "Native Chrome page loads and displays actual simulations",
+    "Synchronous play advances both videos",
+    "Switch to second fixed episode yields afterBC success5.90deg and before14.72deg",
+    "Frame button advances0.05s"
+  ],
+  "development_acceptance": false,
+  "formal_test_seeds_used": 0,
+  "hardware_actions": 0,
+  "site": {
+    "project_id": "appgprj_6ad64e16af0c819189ee0a10aedcd045",
+    "access_mode": "public",
+    "path": "/policy.html",
+    "publication_status": "pending"
+  }
+}

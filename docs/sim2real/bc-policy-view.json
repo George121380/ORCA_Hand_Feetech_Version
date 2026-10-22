@@ -1,0 +1,913 @@
+{
+  "title": "ORCA v1 \u00b7 \u7b56\u7565\u89c2\u5bdf\u5ba4",
+  "updated_at": "2026-10-22T05:32:24.891420+00:00",
+  "task": "\u00b115\u00b0\u638c\u5185\u8f6c\u5411\uff0c7\u79d2\uff0c\u672b\u6bb5\u8fde\u7eed1\u79d2\u4e25\u683c\u4fdd\u6301",
+  "training": {
+    "checked_at": "2026-10-22T05:30:48.746235+00:00",
+    "status": "running",
+    "phase": "train",
+    "target_steps": 200704,
+    "progress": {
+      "total_steps": 55296,
+      "steps_per_second": 154.53226361786653,
+      "elapsed_s": 357.82818853000003
+    },
+    "internal_evaluations": [
+      {
+        "steps": 50000,
+        "episodes": 20,
+        "mean_reward": 15.18974805,
+        "successes": 6
+      }
+    ]
+  },
+  "before": {
+    "episodes": 28,
+    "success_rate": 0.0,
+    "drop_rate": 0.0,
+    "mean_final_error_deg": 15.549616673600884
+  },
+  "after": {
+    "episodes": 28,
+    "success_rate": 0.2857142857142857,
+    "drop_rate": 0.0,
+    "mean_final_error_deg": 11.812852260307235
+  },
+  "trials": [
+    {
+      "before": {
+        "seed": 3211000,
+        "placement_index": 0,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 21.02971782465508,
+        "rotation_from_handoff_deg": 6.88726847029875,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211000,
+        "placement_index": 0,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 16.303650024790677,
+        "rotation_from_handoff_deg": 9.776237391612149,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211001,
+        "placement_index": 1,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 14.722189744519603,
+        "rotation_from_handoff_deg": 6.958744312812208,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211001,
+        "placement_index": 1,
+        "direction": -1,
+        "is_success": true,
+        "dropped": false,
+        "angle_error_deg": 5.898647347527754,
+        "rotation_from_handoff_deg": 11.806206170231196,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "success",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211002,
+        "placement_index": 2,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 13.612060060629409,
+        "rotation_from_handoff_deg": 4.120766277166662,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211002,
+        "placement_index": 2,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 8.614048128934511,
+        "rotation_from_handoff_deg": 7.9891064679389165,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211003,
+        "placement_index": 3,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 14.847248714010625,
+        "rotation_from_handoff_deg": 2.7936972664037305,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211003,
+        "placement_index": 3,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 9.726850404903221,
+        "rotation_from_handoff_deg": 8.17567985626974,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211004,
+        "placement_index": 4,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 20.17380733568885,
+        "rotation_from_handoff_deg": 5.363473321102442,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211004,
+        "placement_index": 4,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 19.75296915247842,
+        "rotation_from_handoff_deg": 13.150985069312444,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211005,
+        "placement_index": 5,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 15.289419025208941,
+        "rotation_from_handoff_deg": 12.97214596435864,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211005,
+        "placement_index": 5,
+        "direction": -1,
+        "is_success": true,
+        "dropped": false,
+        "angle_error_deg": 6.199332857274308,
+        "rotation_from_handoff_deg": 12.401486704683286,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "success",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211006,
+        "placement_index": 6,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 14.772469669570272,
+        "rotation_from_handoff_deg": 10.321049134456834,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211006,
+        "placement_index": 6,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 23.055479995734686,
+        "rotation_from_handoff_deg": 32.51342541548508,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211007,
+        "placement_index": 0,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 11.826346504932296,
+        "rotation_from_handoff_deg": 3.398740062848985,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211007,
+        "placement_index": 0,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 9.868666920701004,
+        "rotation_from_handoff_deg": 19.44350008644287,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211008,
+        "placement_index": 1,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 13.817500219618575,
+        "rotation_from_handoff_deg": 3.953578193785689,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211008,
+        "placement_index": 1,
+        "direction": 1,
+        "is_success": true,
+        "dropped": false,
+        "angle_error_deg": 6.895060686559079,
+        "rotation_from_handoff_deg": 15.019254173203201,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "success",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211009,
+        "placement_index": 2,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 16.039593883300295,
+        "rotation_from_handoff_deg": 2.760974006245026,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211009,
+        "placement_index": 2,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 7.353726066868567,
+        "rotation_from_handoff_deg": 10.633898357060621,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211010,
+        "placement_index": 3,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 13.286487719075495,
+        "rotation_from_handoff_deg": 2.0559934214802102,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211010,
+        "placement_index": 3,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 15.268639623814318,
+        "rotation_from_handoff_deg": 23.916714770285118,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211011,
+        "placement_index": 4,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 20.13850163523425,
+        "rotation_from_handoff_deg": 9.084621597044043,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211011,
+        "placement_index": 4,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 4.793456336889015,
+        "rotation_from_handoff_deg": 11.114558271882746,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211012,
+        "placement_index": 5,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 15.5581051858548,
+        "rotation_from_handoff_deg": 4.538509018776962,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211012,
+        "placement_index": 5,
+        "direction": 1,
+        "is_success": true,
+        "dropped": false,
+        "angle_error_deg": 6.548834178070638,
+        "rotation_from_handoff_deg": 13.382494756687922,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "success",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211013,
+        "placement_index": 6,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 15.483703150912975,
+        "rotation_from_handoff_deg": 2.091309789151873e-06,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "grasp_prefix_failed",
+        "steps": 1,
+        "prefix_grasp_success": false
+      },
+      "after": {
+        "seed": 3211013,
+        "placement_index": 6,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 15.483703150912975,
+        "rotation_from_handoff_deg": 2.091309789151873e-06,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "grasp_prefix_failed",
+        "steps": 1,
+        "prefix_grasp_success": false
+      }
+    },
+    {
+      "before": {
+        "seed": 3211014,
+        "placement_index": 0,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 13.287122346550639,
+        "rotation_from_handoff_deg": 10.966484114912527,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211014,
+        "placement_index": 0,
+        "direction": -1,
+        "is_success": true,
+        "dropped": false,
+        "angle_error_deg": 5.516644062498094,
+        "rotation_from_handoff_deg": 11.893330980221045,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "success",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211015,
+        "placement_index": 1,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 15.753440494261964,
+        "rotation_from_handoff_deg": 9.0607424963304,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211015,
+        "placement_index": 1,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 10.492224796783171,
+        "rotation_from_handoff_deg": 9.533843526333552,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211016,
+        "placement_index": 2,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 14.867507124117944,
+        "rotation_from_handoff_deg": 0.7076648168440338,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211016,
+        "placement_index": 2,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 9.121246753804813,
+        "rotation_from_handoff_deg": 8.391507713571892,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211017,
+        "placement_index": 3,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 21.936831448453407,
+        "rotation_from_handoff_deg": 7.996340742214781,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211017,
+        "placement_index": 3,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 24.224809267747077,
+        "rotation_from_handoff_deg": 16.438836245208304,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211018,
+        "placement_index": 4,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 16.397386065569115,
+        "rotation_from_handoff_deg": 2.0844817535117968,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211018,
+        "placement_index": 4,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 20.495508742349813,
+        "rotation_from_handoff_deg": 14.922463227464343,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211019,
+        "placement_index": 5,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 14.202200924315328,
+        "rotation_from_handoff_deg": 5.514564526739596,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211019,
+        "placement_index": 5,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 6.693697357063533,
+        "rotation_from_handoff_deg": 12.115236616325596,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211020,
+        "placement_index": 6,
+        "direction": -1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 13.715861914071793,
+        "rotation_from_handoff_deg": 7.3341080423110645,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211020,
+        "placement_index": 6,
+        "direction": -1,
+        "is_success": true,
+        "dropped": false,
+        "angle_error_deg": 7.333815018188205,
+        "rotation_from_handoff_deg": 14.086563499361842,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "success",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211021,
+        "placement_index": 0,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 12.532381357938759,
+        "rotation_from_handoff_deg": 3.3409289353741594,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211021,
+        "placement_index": 0,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 6.237966606517182,
+        "rotation_from_handoff_deg": 10.240412422797949,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211022,
+        "placement_index": 1,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 13.633146483039395,
+        "rotation_from_handoff_deg": 3.6034289180177352,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211022,
+        "placement_index": 1,
+        "direction": 1,
+        "is_success": true,
+        "dropped": false,
+        "angle_error_deg": 6.808572415120883,
+        "rotation_from_handoff_deg": 15.716088315941873,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "success",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211023,
+        "placement_index": 2,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 10.948505902454192,
+        "rotation_from_handoff_deg": 15.22243064977176,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211023,
+        "placement_index": 2,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 16.767851616170084,
+        "rotation_from_handoff_deg": 25.68186471477193,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211024,
+        "placement_index": 3,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 17.29027043356077,
+        "rotation_from_handoff_deg": 4.4012699411993905,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211024,
+        "placement_index": 3,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 8.654355501918813,
+        "rotation_from_handoff_deg": 9.412530006865602,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211025,
+        "placement_index": 4,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 28.17617167486633,
+        "rotation_from_handoff_deg": 18.63999771899221,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211025,
+        "placement_index": 4,
+        "direction": 1,
+        "is_success": true,
+        "dropped": false,
+        "angle_error_deg": 4.886954081290781,
+        "rotation_from_handoff_deg": 12.031211721498165,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "success",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211026,
+        "placement_index": 5,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 11.385457291015237,
+        "rotation_from_handoff_deg": 4.066645374576607,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211026,
+        "placement_index": 5,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 40.5757332235699,
+        "rotation_from_handoff_deg": 49.47680846813519,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    },
+    {
+      "before": {
+        "seed": 3211027,
+        "placement_index": 6,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 10.665832727398374,
+        "rotation_from_handoff_deg": 5.756980810937828,
+        "loaded_opposition": false,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      },
+      "after": {
+        "seed": 3211027,
+        "placement_index": 6,
+        "direction": 1,
+        "is_success": false,
+        "dropped": false,
+        "angle_error_deg": 7.187418970121059,
+        "rotation_from_handoff_deg": 15.073913116255625,
+        "loaded_opposition": true,
+        "resting": true,
+        "end_reason": "horizon",
+        "steps": 140,
+        "prefix_grasp_success": true
+      }
+    }
+  ],
+  "videos": {
+    "before": {
+      "path": "bc-before-first5.mp4",
+      "sha256": "c15720abe126f2fd5b604532d8ee378771995f168944f6ae47a5b0eeae6dd2ac",
+      "bytes": 386708,
+      "frames": 700,
+      "fps": 20,
+      "duration_seconds": 35,
+      "fixed_seeds": [
+        3211000,
+        3211001,
+        3211002,
+        3211003,
+        3211004
+      ],
+      "exact_original_trial_replay": true
+    },
+    "after": {
+      "path": "bc-after-first5.mp4",
+      "sha256": "7cdf3f2054c144923c8ed6d49eff22a98593e9faf3905f51e3f66c9a5e755af9",
+      "bytes": 445716,
+      "frames": 700,
+      "fps": 20,
+      "duration_seconds": 35,
+      "fixed_seeds": [
+        3211000,
+        3211001,
+        3211002,
+        3211003,
+        3211004
+      ],
+      "exact_original_trial_replay": true
+    }
+  },
+  "continuous_rotation_accepted": false
+}

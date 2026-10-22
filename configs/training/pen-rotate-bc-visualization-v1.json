@@ -1,0 +1,14 @@
+{
+  "purpose": "Visualization only: deterministic fixed first5 development episodes before and after BC; compare endpoints against existing immutable28-state metrics. No policy selection/training/formal acceptance.",
+  "checkpoint_after_sha256": "2ce69cfa9dd9c10fcdbe2cd6c90bbcd319d03d4ce301be4bafe342dbe8406412",
+  "seed": 3211000,
+  "episodes_per_checkpoint": 5,
+  "checkpoints": [
+    "before_bc",
+    "after_bc"
+  ],
+  "maximum_rollouts": 10,
+  "timeout_seconds_per_checkpoint": 240,
+  "candidates_added": 0,
+  "extensions": 0
+}
