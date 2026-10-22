@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-10-22T06:03:16.208034+00:00",
+  "canonical": {
+    "timestamp": "2026-10-22T06:01:30.666122+00:00",
+    "state_dir": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-supervised",
+    "needs_attention": false,
+    "monitor_status": "monitoring",
+    "stage": "initial",
+    "active_job": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0",
+    "job_status": "running",
+    "phase": "test-hold",
+    "monitor_age_seconds": 12.050760746002197,
+    "quality_attempt": 0,
+    "results": [],
+    "latest_test": null,
+    "target_total_steps": 200704,
+    "progress": {
+      "total_steps": 200704,
+      "steps_per_second": 105.1825156646488,
+      "elapsed_s": 1908.1498354619998
+    },
+    "progress_age_seconds": 4.7729527950286865,
+    "attention_reasons": [],
+    "watchdog_service": "active"
+  },
+  "formal_policy_result": {
+    "inspected_at": "2026-10-22T06:03:16.208034+00:00",
+    "metrics_path": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/test-policy/metrics.json",
+    "metrics_sha256": "5cfe3f19450e2aee717fae80495b12ca8f37ed83c63432336cb3ca79e1539d6c",
+    "selected_checkpoint_sha256": "cf158294722b651362427bf78a874ae6971d28d78624497bc79645a1677de811",
+    "selected_from": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/model/policy.zip",
+    "formal_seed_start": 3511000,
+    "metrics": {
+      "policy": "/home/peiqi/projects/orca-hand-rl-rotate-bc-v1/runs/pen-rotate-bc-v1-seed0/selected/policy.zip",
+      "episodes": 100,
+      "success_rate": 0.35,
+      "success_95ci": [
+        0.2636410465347802,
+        0.4474573957080203
+      ],
+      "drop_rate": 0.0,
+      "mean_final_error_deg": 9.819982526939832,
+      "acceptance_met": false
+    },
+    "successes": 35,
+    "drops": 0,
+    "job_phase": "test-hold",
+    "completed_revolutions": 0
+  },
+  "acceptance_met": false,
+  "phase": "test-hold",
+  "status": "running"
+}

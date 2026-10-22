@@ -1,0 +1,35 @@
+{
+  "checked_at": "2026-10-22T06:01:30.666122+00:00",
+  "status": "running",
+  "phase": "train",
+  "target_steps": 500736,
+  "progress": {
+    "total_steps": 52224,
+    "steps_per_second": 90.11825641853582,
+    "elapsed_s": 534.0538295899996
+  },
+  "bc_weights_loaded": false,
+  "initialization_kind": "pure_ppo_fresh_zero_actor_no_bc",
+  "native_fingerprint": "66eafa068a1067879c8d7d26227ebc05c1e76d4af1f3ced90079c5ee2372bc2b",
+  "midpoint_comparison": {
+    "bc_successes": 8,
+    "ppo_successes": 10,
+    "episodes": 28,
+    "gained": 6,
+    "lost": 4,
+    "drops": 0,
+    "successes_per_direction": {
+      "-1": 3,
+      "1": 7
+    },
+    "mean_final_error_deg": 9.379389975688037,
+    "overlapping_failure_counts": {
+      "incomplete_final_1s_pose": 17,
+      "final_1s_position_span": 3,
+      "final_1s_orientation_span": 3,
+      "prefix_failed": 1,
+      "incomplete_final_1s_contact": 1
+    },
+    "exact_prefix_goal_pairing": true
+  }
+}
